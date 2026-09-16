@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pact-research"
+version = "0.1.0"
+description = "Preservation-Aware Complementarity Training: diagnostic pilot"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+model = ["transformers[chat-template]==4.57.6", "peft==0.18.1", "accelerate==1.12.0", "pyarrow==22.0.0"]
+data = ["pyarrow==22.0.0"]
+
+[project.scripts]
+pact = "pact.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

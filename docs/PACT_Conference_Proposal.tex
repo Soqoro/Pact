@@ -1,0 +1,641 @@
+\documentclass[10pt,twocolumn]{article}
+\usepackage[letterpaper,margin=0.72in,columnsep=0.25in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{times}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,tabularx,array,multirow}
+\usepackage{microtype}
+\usepackage[round,authoryear]{natbib}
+\usepackage{algorithm,algpseudocode}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Robustness Must Survive Communication: Learning Complementary LLM Teams},pdfauthor={Anonymous Authors},pdfsubject={Submission-style research proposal; experimental results pending},pdfkeywords={multi-agent LLMs, adversarial robustness, complementarity, PACT}}
+\usepackage{url}
+\usepackage{balance}
+\setlength{\emergencystretch}{2em}
+\setlength{\parindent}{1em}
+\setlength{\parskip}{0pt}
+\setlength{\textfloatsep}{10pt plus 2pt minus 2pt}
+\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+\makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{16pt}
+\setlength{\@fpbot}{0pt plus 1fil}
+\setlength{\@dblfptop}{0pt}
+\setlength{\@dblfpsep}{16pt}
+\setlength{\@dblfpbot}{0pt plus 1fil}
+\makeatother
+\setlength{\abovedisplayskip}{6pt plus 2pt minus 2pt}
+\setlength{\belowdisplayskip}{6pt plus 2pt minus 2pt}
+\setlist{nosep,leftmargin=*}
+\newcommand{\method}{\textsc{PACT}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\ind}{\mathbf{1}}
+\newcommand{\KL}{\operatorname{KL}}
+\newcommand{\sg}{\operatorname{stopgrad}}
+\newcommand{\TBD}{\textsc{tbd}}
+\newcommand{\slot}[1]{\par\smallskip\noindent\fbox{\parbox{0.94\linewidth}{\small\textbf{Result placeholder.} #1}}\par\smallskip}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize Robustness Must Survive Communication}
+\fancyhead[R]{\footnotesize Research proposal}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\setlength{\headheight}{14pt}
+\title{\vspace{-0.5in}\bfseries Robustness Must Survive Communication:\\Learning Complementary LLM Teams}
+\author{Anonymous Authors\\\small Submission-style research proposal}
+\date{\small 16 September 2026}
+
+\begin{document}
+\raggedbottom
+\maketitle
+\thispagestyle{fancy}
+\begin{abstract}
+A language-model team can contain a correct answer and still fail after its members communicate. This raises a training problem that individual adversarial robustness does not resolve: a useful team must both avoid shared failures and preserve the value of its remaining correct alternatives. We study \emph{communication-preserving complementary robustness}, the ability to maintain successful collective decisions under adversarial messages without suppressing beneficial correction. We propose \method{}, Preservation-Aware Complementarity Training. The method uses counterfactual continuation rollouts to assign training responsibility according to an agent's contribution to the final decision, rather than its isolated accuracy. It couples this assignment with preference learning on matched harmful-influence and helpful-correction contexts, using a frozen backbone with a small collection of trainable adapters. An exact failure decomposition and a conditional marginal-contribution identity explain why pre-communication coverage alone is insufficient and motivate the training design. The evaluation separates correlated initial failure, loss of correct alternatives, and final readout failure, and compares joint training against independently diversified agents combined with a robust communication protocol. Experiments are designed for a single accelerator and include adaptive attacks, strength-matched controls, and executable tool-use transfer. \textbf{Empirical results: \TBD{}.} No empirical improvement is claimed in this proposal.
+\end{abstract}
+
+\noindent\textbf{Draft status.} The methodology and analysis below are proposed research. All experimental outcomes, measured resource requirements, and empirical conclusions remain explicit placeholders. Mathematical statements are accompanied by assumptions and proofs; they are not certificates for arbitrary language-model attacks.
+
+\section{Introduction}
+A team is not robust merely because at least one member knows the right answer. Consider three agents evaluating a proposed operation. One identifies a decisive constraint, another overlooks it, and a third remains uncertain. A persuasive but incorrect peer message can cause the first agent to abandon its valid objection. The resulting failure is not a lack of knowledge across the team. It is a failure to preserve and use the knowledge that was already available.
+
+This example exposes two distinct requirements. Before communication, the team should avoid having the same adversarial weaknesses: an attack that defeats one member should not automatically defeat the others. During communication, the team should retain access to correct alternatives while remaining willing to revise genuinely mistaken judgments. Maximizing disagreement addresses neither requirement reliably. A team whose members disagree because they are individually weak is not desirable, and a team that never revises cannot exploit useful collaboration.
+
+The ingredients surrounding this problem have substantial precedents. Adversarial ensemble learning diversifies vulnerabilities to reduce transfer \citep{pang2019adp,yang2020dverge}. LLM ensemble selection accounts for diversity and complementarity with a downstream summarizer \citep{tekin2024topla,zhang2026mca}. Learned specialization and role differentiation further show that complementary behavior can be optimized rather than supplied only through prompts \citep{cordero2026specialists,li2025mlc}. Meanwhile, heterogeneous-debate experiments already measure harmful revision under adversarial peers, and learned interaction controllers target conformity \citep{nilayam2026heterogeneous,wu2026dear}.
+
+Our question is therefore not whether diversity helps or whether discussion can hurt. It is whether \emph{the assignment of complementary robustness should itself depend on what survives the team's communication process}. A correct answer that is consistently erased or ignored has little collective value. Conversely, an agent that supplies a useful alternative on precisely the cases where its teammates fail may deserve a different training signal from an equally accurate but redundant agent.
+
+We propose \method{}, an alternating training procedure for a small team of adapter-based agents. Counterfactual rollouts estimate how changing one proposal changes the final outcome while holding the task, attack, and other proposals fixed. These estimates guide a soft assignment of task--attack examples across agents. Receiver-side preference training then distinguishes two cases that require opposite behavior: retaining a correct judgment against misleading peers, and replacing an incorrect judgment when useful evidence appears. Both stages update the same adapters and are refreshed against the current team, rather than being trained once as independent modules.
+
+The intended contributions are threefold. First, we formalize the distinction between initial coverage, preservation through interaction, and final answer selection. Second, we develop a communication-aware training assignment coupled to bidirectional correction learning. Third, we specify an evaluation that can falsify the need for this coupling, including a strong composition of separate diversity training and an existing communication defense. The contribution remains contingent on outperforming that composition without relying on lower clean utility, extra inference, or indiscriminate distrust.
+
+\section{Related Work and Scope}
+\label{sec:related}
+\paragraph{Complementarity and adversarial ensembles.}
+ADP regularizes non-target predictions, while DVERGE explicitly separates vulnerabilities using distilled non-robust features \citep{pang2019adp,yang2020dverge}. In LLM systems, LLM-TOPLA selects ensembles using error diversity, and MCA values a proposer by its contribution in combination with other proposers and a summarizer \citep{tekin2024topla,zhang2026mca}. Soft Specialists learns a distribution of LoRA-based specialists through an $\alpha$-R\'enyi objective \citep{cordero2026specialists}. Our proposal does not claim novelty for diversification, complementary selection, or shared-backbone specialists. It asks how to learn attack-conditioned complementarity when subsequent peer influence can change its usefulness.
+
+\paragraph{Interaction and adversarial team training.}
+MLC learns role differentiation; DEAR learns reference selection and generation behavior to reduce conformity \citep{li2025mlc,wu2026dear}. AdvEvo-MARL jointly trains attackers and defenders through adversarial co-evolution \citep{pan2025advevo}. SAC filters and refines peer responses under a Byzantine-fault formulation, while token-level collaboration changes how reasoning is combined \citep{lee2026sac,liu2026consensus}. These works are substantive alternatives, not weak baselines. The test for \method{} is whether \emph{learning which agent should cover a failure case, conditional on the downstream interaction}, adds value beyond robust training or communication protection alone.
+
+\paragraph{What must be controlled.}
+Heterogeneous debate under adversarial peers already connects model mixtures to harmful revision \citep{nilayam2026heterogeneous}. Debate-versus-voting analyses also motivate strong non-interacting comparisons \citep{choi2025vote}. Accordingly, we control individual capability, individual attacked accuracy, inference budget, and readout. A small shared-backbone team is a compute choice, not the novelty claim. We study bounded textual observation/message corruption, not parameter backdoors, arbitrary Byzantine majorities, or latent-message perturbations.
+
+\begin{table*}[t]
+\centering\small
+\caption{Closest precedents and the specific distinction to be tested. The right column describes our proposed evaluation target, not an exhaustive claim about everything a cited paper does.}
+\label{tab:position}
+\begin{tabularx}{\textwidth}{@{}p{0.23\textwidth}p{0.32\textwidth}X@{}}
+\toprule
+Precedent & Established contribution & Distinction required for this project \\
+\midrule
+ADP / DVERGE & Learn diversity in adversarial vulnerabilities. & Demonstrate that downstream communication changes which complementary capabilities should be learned. \\
+MCA / LLM-TOPLA & Select useful or complementary frozen proposers. & Train the agents themselves, with attack-conditioned continuation credit. \\
+Soft Specialists / MLC & Learn specialization or differentiated collaborative behavior. & Isolate complementary \emph{adversarial failures}, rather than output or role diversity. \\
+Heterogeneous adversarial debate & Measure preservation and harmful revision in fixed model mixtures. & Learn a strength-controlled team whose protection survives interaction. \\
+DEAR / SAC & Regulate or filter interactions to improve collective reliability. & Beat diversification plus an independently trained interaction defense. \\
+AdvEvo-MARL & Train team safety through adversarial interaction. & Establish gains from complementary responsibility beyond uniform adversarial team training. \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\section{Problem Formulation}
+\label{sec:problem}
+\subsection{A short communicating team}
+Let $x$ denote a trusted task, $y$ its correct answer where available, and $V_x(a)\in\{0,1\}$ an offline correctness evaluator. A team contains $m$ agents with parameters $\Theta=(\theta_1,\ldots,\theta_m)$. All agents receive the same trusted task in the primary experiments. They differ in learned adapters and sampling, not privileged access to the answer.
+
+Each agent first produces a private packet $z_i^0=(a_i^0,r_i^0)$ containing an answer and a concise justification. It then receives peer packets through a potentially corrupted communication channel and emits a revised packet:
+\begin{align}
+ z_i^0 &\sim \pi_{\theta_i}(\cdot\mid h_i^0), \\
+ z_i^1 &\sim \pi_{\theta_i}(\cdot\mid x,z_i^0,\mathcal M_i^\delta).
+\end{align}
+Here $h_i^0$ contains the task and any allowed low-trust input material, and $\mathcal M_i^\delta$ is the delivered peer context. The primary protocol uses one synchronous exchange. A fixed, frozen synthesizer $g$ maps the task and revised packets to a final answer,
+\begin{equation}
+ \widehat y=g(x,z_1^1,\ldots,z_m^1),\qquad Y=V_x(\widehat y).
+\end{equation}
+The synthesizer has no access to correctness labels or hidden evaluator state. Its prompt, model, and decoding are shared across corresponding methods. We also evaluate fixed voting and an alternative frozen synthesizer to test readout dependence.
+
+\subsection{Threat model}
+The adversary knows the team architecture, prompts, and defense procedure. It can optimize textual payloads through a bounded number of end-to-end queries. The trusted task, original answer options, adapter weights, private saved packets, evaluator, and tool implementation are not modifiable.
+
+We distinguish two one-payload settings. In \textbf{early exposure}, an attacker-controlled advisory note is placed in a designated low-trust observation slot before private proposals. The same payload is visible to all agents, exposing shared vulnerabilities. In \textbf{exchange corruption}, the attacker observes the private proposals and replaces one sender's outgoing packet, identically for its recipients, before revision. The sender retains its unmodified private packet. This is a message-integrity threat; it is not a claim that an arbitrary malicious policy controls the entire sender.
+
+Each setting permits at most one payload of a fixed length. A stronger combined setting permits one early and one exchange payload and is reported separately with its larger budget. Sender positions are balanced. Benign and malicious packets share the same serialization and source-envelope formats. A no-communication policy is an admissible baseline, not a forbidden solution; it must be competitive in useful task performance to be preferred.
+
+Let $\mathcal A_Q$ denote the specified attack search procedures with at most $Q$ feedback queries. The conceptual objective is
+\begin{equation}
+ \max_\Theta\;\E_x\left[\inf_{\mathcal A\in\mathcal A_Q}
+ \E[Y\mid x,\Theta,\mathcal A]\right],
+ \label{eq:robust-objective}
+\end{equation}
+subject to a clean-utility tolerance and matched resource budgets. Finite attack search approximates this objective; observed robustness is not a worst-case certificate. The optimization does not assume an independence model for agents' errors across tasks.
+
+\section{Why Coverage Alone Is Insufficient}
+\label{sec:analysis}
+Define individual correctness $C_i^t=V_x(a_i^t)$ and answer availability $O_t=\max_i C_i^t$. An available correct answer is a diagnostic property known to the evaluator, not an oracle available to the team.
+
+\begin{definition}[Coverage and utilization]
+For a fixed task distribution and specified attacker, let
+\begin{align}
+ c&=\Prob(O_0=1), & u&=\Prob(Y=1\mid O_0=1),\\
+ k&=\Prob(Y=1\mid O_0=0).
+\end{align}
+Coverage $c$ measures whether an initial correct alternative exists. Utilization $u$ measures successful final decisions on those cases. Construction $k$ allows the team or synthesizer to succeed even when every initial answer is wrong.
+\end{definition}
+The term utilization deliberately avoids asserting that the final answer was causally copied from a particular proposal. An initially available answer can be independently rediscovered. Controlled replay interventions are needed to measure causal contribution.
+
+\begin{proposition}[Exact outcome decomposition]
+\label{prop:decomposition}
+For any joint distribution of the agents' outputs and attacks,
+\begin{equation}
+ \Prob(Y=1)=cu+(1-c)k.
+ \label{eq:decomposition}
+\end{equation}
+If a conditioning event has probability zero, its conditional term is left undefined and its weighted contribution is zero.
+\end{proposition}
+\begin{proof}
+Partition the event $\{Y=1\}$ by $O_0\in\{0,1\}$ and apply the law of total probability.
+\end{proof}
+
+To localize losses further, let $d=\Prob(O_1=0\mid O_0=1)$ and $r=\Prob(O_1=1\mid O_0=0)$. Then
+\begin{equation}
+ \Prob(O_1=0)=(1-c)(1-r)+cd.
+ \label{eq:erasure}
+\end{equation}
+Final readout failure on available answers is measured separately by $\Prob(Y=0,O_1=1)$. Equations~\eqref{eq:decomposition}--\eqref{eq:erasure} neither assume independent errors nor prohibit useful revision.
+
+\paragraph{A counterexample.}
+Consider a binary task and three agents, each correct on one third of attacked instances. In Team A, all three are correct together on one third of instances and wrong together otherwise. In Team B, exactly one agent is correct on every instance, with that agent uniformly distributed. Team B has perfect initial coverage, while Team A has coverage $1/3$. Suppose discussion makes every agent adopt the initial majority, followed by majority readout. Team B then fails on every instance; Team A succeeds with probability $1/3$. Identical marginal accuracy and greater coverage therefore do not imply greater post-communication accuracy. This constructed example establishes possibility, not the frequency of this behavior in real LLMs.
+
+\subsection{A communication-aware marginal value}
+The correct training credit also depends on how a proposal affects the continuation. To make this explicit, consider a stylized intervention model. For a fixed task, independently sample correctness switches $B_i\sim\mathrm{Bernoulli}(p_i)$. Conditional on each switch, sample agent $i$'s packet from a fixed correct- or incorrect-packet distribution. Let $H(S)$ be the final success probability when exactly the agents in $S$ supply correct packets, integrating the fixed downstream protocol and a specified attacker policy.
+
+\begin{proposition}[Conditional marginal contribution]
+\label{prop:marginal}
+In this intervention model, let $F(p)=\E[H(\{i:B_i=1\})]$. Holding the conditional packet distributions and downstream policy fixed,
+\begin{equation}
+ \frac{\partial F}{\partial p_i}
+ =\E_{S\sim p_{-i}}\left[H(S\cup\{i\})-H(S)\right].
+ \label{eq:marginal}
+\end{equation}
+For the initial-coverage objective, the corresponding marginal value is $\Prob(S=\varnothing)$. These values need not agree.
+\end{proposition}
+\begin{proof}
+Condition on the correctness switches of all agents except $i$. The conditional expected outcome is $p_iH(S\cup\{i\})+(1-p_i)H(S)$. Differentiate and average over $S$. Coverage changes only when $S$ is empty.
+\end{proof}
+
+This is a standard conditional-expectation identity, related in spirit to counterfactual credit assignment \citep{foerster2018coma}; it is not claimed as a new general theorem about neural networks. In an actual LLM update, packet distributions also change, so Eq.~\eqref{eq:marginal} is not an exact parameter gradient. It motivates estimating terminal marginal contribution instead of treating a privately correct answer as equally useful everywhere. The independence of switches is confined to this illustrative intervention model; it is not assumed in empirical metric computation.
+
+\section{The PACT Training Method}
+\label{sec:method}
+\method{} combines communication-aware responsibility assignment with outcome-checked revision training. The assignments are recomputed after the communication behavior changes. No responsibility weights, correctness labels, or counterfactual rollouts are used at inference.
+
+\subsection{Counterfactual continuation bank}
+At outer iteration $t$, freeze a snapshot $\bar\Theta$ and collect short clean and attacked trajectories. For a task--attack example $b$ and agent $i$, sample a bounded set of alternative private packets under the same local context. When both a correct packet $v_{bi}^{+}$ and an incorrect packet $v_{bi}^{-}$ are obtained, replay the suffix twice:
+\begin{equation}
+ \widehat Q_{bi}^{\pm}=\frac{1}{K}\sum_{s=1}^{K}
+ V_{x_b}\!\left(g\left(\mathrm{Continue}_{\bar\Theta}
+ (Z_{b,-i}^0,v_{bi}^{\pm};\delta_b,\xi_s)\right)\right).
+ \label{eq:replay}
+\end{equation}
+The task, other private packets, attack payload and location, and suffix random seeds $\xi_s$ are paired. All affected downstream generations are rerun. The estimated contribution is
+\begin{equation}
+ \widehat\Delta_{bi}=\widehat Q_{bi}^{+}-\widehat Q_{bi}^{-}.
+ \label{eq:delta}
+\end{equation}
+A packet's answer is checked against the task label. For natural-language reasoning, this check does \emph{not} certify every sentence of its justification. We retain concise justifications, audit a prespecified sample, and avoid describing them as formally verified proofs.
+
+The replay fixes the attacker intervention to estimate a controlled contribution. It does not estimate how the optimal attacker would change in response to the alternative packet. Adaptive attacks are regenerated against the updated team during training refreshes and final evaluation. If a valid packet pair cannot be sampled within the cap, the corresponding credit is missing, not imputed as evidence of zero effect. Such examples still receive ordinary supervised training.
+
+\subsection{Assigning complementary responsibility}
+Let $\mathcal I_b$ be the agents with valid replay pairs for example $b$, and let $\ell_{bi}^{\rm ans}$ be the cross-entropy of the correct answer under the private context. This answer-level loss is available independently of rationale length. Define the assignment cost
+\begin{equation}
+ a_{bi}=\sg\!\left(\ell_{bi}^{\rm ans}
+ -\gamma\widehat\Delta_{bi}\right),\quad i\in\mathcal I_b.
+ \label{eq:assignment-cost}
+\end{equation}
+Thus, an example is attractive for an agent when the correct answer is learnable and its correct packet is useful after communication. The replay term distinguishes this cost from an isolated expert-selection objective.
+
+For a bank minibatch of $B$ eligible examples, solve the small convex assignment problem
+\begin{align}
+ R^*=\arg\min_{R\in\mathcal R}\;&
+ \frac{1}{B}\sum_{b,i}r_{bi}a_{bi}
+ +\frac{\tau}{B}\sum_{b,i}r_{bi}\log r_{bi}\nonumber\\
+ &+\lambda_{\rm bal}\KL(\bar r\,\|\,u_m),
+ \label{eq:routing}
+\end{align}
+where $\mathcal R$ requires $r_{bi}\geq0$, $\sum_i r_{bi}=1$, and $r_{bi}=0$ for missing cells; $\bar r_i=B^{-1}\sum_b r_{bi}$ and $u_m$ is uniform. The convention $0\log0=0$ applies. Entropy softens assignments; the balance penalty discourages assigning every task to one member without forcing specialization where replay support is absent. This CPU-sized optimization can be implemented with masked exponentiated-gradient updates.
+
+To emphasize fragile teams rather than already redundant successes, set $\omega_b=(1+\sum_i C_{bi}^0)^{-1}$ and normalize it to mean one within the minibatch. With $\ell_{bi}^{\rm pkt}$ the length-normalized negative log-likelihood of the correct sampled packet,
+\begin{equation}
+ \mathcal L_{\rm spec}=\frac{1}{B}\sum_b\omega_b
+ \sum_i\sg(r_{bi}^*)\ell_{bi}^{\rm pkt}.
+ \label{eq:spec}
+\end{equation}
+All agents additionally receive a uniform clean-and-attacked answer loss. No agent is rewarded for being wrong, disagreeing with a correct peer, or withholding a useful answer. Specialization allocates extra positive learning effort; it does not manufacture complementary errors.
+
+\subsection{Learning when to hold and when to revise}
+Responsibility assignment alone can select capabilities that the communication stage still erases. We therefore construct two types of revision context from saved private states: initially correct agents exposed to misleading peer content, and initially incorrect agents exposed to useful peer content. The packet envelope, source identity distribution, and length range are matched. Some contexts deliberately contain confident but correct advice, while others contain confident but incorrect advice.
+
+For each fixed receiver context $h$, obtain a correct completion $v^+$ and an incorrect completion $v^-$. Positives and negatives in a preference pair \emph{share the same prompt}; a positive from a benign prompt is never directly paired against a negative from a different attacked prompt. Membership in the hold or repair stratum is used only for balanced sampling, not exposed as an input label. Cases where both completions are correct or both are wrong do not produce an answer-correctness preference.
+
+Using a frozen warm-start reference policy $\pi_{\rm ref,i}$, apply direct preference optimization \citep{rafailov2023dpo}:
+\begin{align}
+ \mathcal L_{\rm rev}
+ =-\E_{(i,h,v^+,v^-)}\log\sigma\Bigg[\beta\Bigg(&
+ \log\frac{\pi_{\theta_i}(v^+\mid h)}{\pi_{\rm ref,i}(v^+\mid h)}\nonumber\\[-2pt]
+ &-\log\frac{\pi_{\theta_i}(v^-\mid h)}{\pi_{\rm ref,i}(v^-\mid h)}\Bigg)\Bigg].
+ \label{eq:dpo}
+\end{align}
+The two strata prevent ``always agree'' and ``never revise'' from satisfying the intended objective. Examples lacking sampled correct completions contribute only the ordinary supervised loss; we report their frequency. Downstream terminal success is monitored on every refreshed bank, so improved local correctness is not automatically treated as improved collaboration.
+
+\subsection{Alternating joint optimization}
+The same adapter is used for an agent's private and revision turns. Its overall objective is
+\begin{equation}
+ \mathcal L=\mathcal L_{\rm base}
+ +\lambda_{\rm spec}\mathcal L_{\rm spec}
+ +\lambda_{\rm rev}\mathcal L_{\rm rev},
+ \label{eq:total}
+\end{equation}
+where $\mathcal L_{\rm base}$ uniformly supervises all agents on clean and attacked labeled contexts. We alternate bounded attack/trajectory collection, responsibility estimation, and short adapter updates. Updated receivers can make previously ineffective correct proposals useful, changing the next assignment; updated proposal specialists change which corrections receivers encounter.
+
+This is an alternating, replay-based surrogate, not differentiable backpropagation through discrete conversations or an exact solver of Eq.~\eqref{eq:robust-objective}. The distinction matters empirically: we compare against a \emph{split-training} baseline that learns specialization and communication independently using the same total data and optimization budget. We also compare one-shot versus refreshed assignments. A gain caused only by additional collected trajectories must not be attributed to the coupling objective.
+
+\begin{algorithm}[t]
+\caption{\method{} with sequential adapter updates}
+\label{alg:pact}
+\begin{algorithmic}[1]
+\Require Frozen backbone $W$; $m$ warm-start adapters; labeled training tasks; fixed readout $g$
+\For{outer refresh $t=1,\ldots,T$}
+ \State Freeze snapshot $\bar\Theta\leftarrow\Theta$
+ \State Collect clean and bounded-adversarial trajectories
+ \State Save private packets, contexts, seeds, and outcomes
+ \For{eligible example $b$ and agent $i$}
+  \State Sample bounded correct/incorrect packet alternatives
+  \State Replay paired suffixes; estimate $\widehat\Delta_{bi}$
+ \EndFor
+ \State Solve masked soft assignments in Eq.~\eqref{eq:routing}
+ \State Build same-context hold and repair preferences
+ \For{agent $i=1,\ldots,m$}
+  \State Activate only adapter $i$; update Eq.~\eqref{eq:total}
+ \EndFor
+ \State Evaluate clean utility and attacked validation success
+\EndFor
+\State Select checkpoint by prespecified validation rule
+\State \Return adapters and fixed inference protocol
+\end{algorithmic}
+\end{algorithm}
+
+\section{Experimental Design}
+\label{sec:experiments}
+\subsection{Questions and datasets}
+The evaluation asks whether \method{} improves attacked task success beyond composition baselines; whether improvement is explained by complementary initial errors and lower downstream loss rather than stronger individuals; and whether agents still benefit from useful advice under held-out attacks and an executable workflow.
+
+\paragraph{Controlled reasoning tasks.}
+ARC-Challenge and the English release of LogiQA provide objectively labeled science and logical-reasoning questions \citep{clark2018arc,liu2020logiqa}. We use official training splits for learning and validation splits for selection. Before any model comparison, we select a fixed, stratified subset of 200 test items from each family using a published seed. All metrics use the same 400 items; per-family results and uncertainty are reported. A subsequent full-test evaluation is desirable but is not presumed completed. Test answer labels remain inaccessible to the defended system. An 80-item pilot is drawn from validation data, never from these test items.
+
+\paragraph{Executable transfer.}
+We adapt a prespecified 100-case slice of BFCL V3 Base Multi-Turn, balanced across its four primary API domains. BFCL evaluates both state changes and required response/execution behavior \citep{mao2024bfcl}. At each user turn, three agents propose short plans, exchange reviews, and revise; a frozen executor synthesizes the plans and runs the allowed tools. The underlying task and success checks remain unchanged, while this multi-agent orchestration and message attack are explicitly identified as an adaptation, not an official leaderboard setting. This is initially a zero-shot transfer test with no BFCL evaluation examples used for training.
+
+The QA availability metrics are not automatically applied to a partial tool plan: a correct next action need not be unique, and plan text is not a verified successful episode. Tool results therefore use terminal task success and controlled continuation effects. We do not relabel successful QA as evidence of real-world tool safety.
+
+\subsection{Models and resource envelope}
+The primary configuration is three LoRA adapters \citep{hu2022lora} on Qwen3-8B \citep{qwen2025model}, served sequentially on one available accelerator. The unadapted backbone also serves as the frozen readout. A second open-weight family is selected and pinned before transfer runs; the choice and exact revision are \TBD{}, not silently varied by test performance. Initial hyperparameters are rank 16, microbatch size one, gradient accumulation, and a 4,096-token QA context cap. These are proposed starting settings, not measured memory guarantees.
+
+No multi-GPU job, paid inference API, or privileged container runtime is required by the proposed core implementation. Colab Pro+ has variable accelerator availability and runtime limits \citep{google2026colab}; therefore collection, replay, training, and evaluation are separate resumable stages. Hardware model, actual VRAM, peak allocated memory, generated tokens, accelerator-hours, and consumed compute units are recorded. A subscription is not treated as a guarantee of a specific GPU or a fixed total experimental budget.
+
+\subsection{Attacks and adaptation}
+Training includes misleading task-specific arguments, fabricated peer agreement, and instruction-like redirection within the allowed low-trust slot. These are attack categories, not a claim that three templates exhaust the threat. Held-out tests change task content, paraphrase style, sender, and attack-generator model. A static common attack pool supports paired mechanism analysis. Separately, bounded search is rerun against each final defense, scoring the \emph{final team outcome}, not the easiest individual agent.
+
+The primary adaptive slice contains 80 prespecified test items, with $Q\in\{1,4,8,16\}$ end-to-end queries. Results are reported as a budget curve with attack-token and defender-query costs. Shared-payload corruption is primary; distinct per-recipient payloads and combined early-plus-late attacks are stronger supplementary conditions with explicit larger budgets. The adversary may use task labels to score candidate attacks in this conservative evaluation, but labels and evaluator feedback are never inserted into defender prompts.
+
+\subsection{Baselines and comparison fairness}
+\label{sec:baselines}
+The mandatory comparison set includes a budget-matched single agent; independently sampled agents with voting and with frozen synthesis; ordinary debate; independently adversarially trained agents; and a local-complementarity model with no continuation credit. The last uses the same adapter architecture and soft assignment with $\gamma=0$, serving as a directly controlled diversification baseline. A Soft Specialists-style objective is evaluated as a separate faithful implementation where feasible, not conflated with this ablation.
+
+The \textbf{decisive composition baseline} combines independently learned complementarity with SAC-style filtering/refinement. We report both a faithful protocol reproduction and a matched one-exchange adaptation when they differ. A second split-training baseline uses the same hold/repair preference data but freezes specialization before receiver training. All trained comparisons receive the same common attack bank and an equalized number of fresh trajectory/replay queries, preventing privileged data collection from explaining the result.
+
+Two simple controls are essential. \emph{Ignore peers} allocates the available token budget to independent reasoning. \emph{Archive all drafts} gives the frozen readout both initial and final packets. Archive is evaluated under both a matched total context budget and its natural larger context, with actual token costs shown. If either matches \method{} without a meaningful utility disadvantage, the case for learning preservation weakens.
+
+MCA-style proposer selection, heterogeneous fixed teams, DEAR, and AdvEvo-MARL are closest-work comparisons on a smaller prespecified slice. Reimplementations with changed models, rewards, or training schedules are labeled adaptations; a generic DPO baseline is not called an AdvEvo-MARL reproduction. Original published numbers are not substituted for matched experiments.
+
+\paragraph{Attack-surface alignment.}
+All systems can be compared under the same early advisory exposure. Pure single-agent and noncommunicating ensembles have no peer-revision channel, so the primary exchange-corruption result is \emph{not applicable}, not an automatic robust success. A separate boundary-corruption sensitivity test replaces one proposal before a noncommunicating synthesizer or voter reads it; this different attack location is labeled explicitly. Likewise, adaptive results are stratified by early versus exchange attacks, rather than pooling inapplicable conditions. Channel-free systems remain important clean/early-attack and cost controls: a simpler system that achieves comparable useful performance weakens the motivation for communication.
+
+
+\subsection{Metrics, hypotheses, and statistical tests}
+Unconditional clean and attacked task success are primary. For QA, we also report initial joint failure $1-c$, mean and best individual attacked accuracy, utilization $u$, construction $k$, answer-erasure rate $d$, and readout loss $\Prob(Y=0,O_1=1)$. Pairwise error overlap is secondary; embedding dissimilarity is not a robustness metric. Helpful correction is evaluated on initially wrong receivers with a genuinely useful peer packet; harmful revision is evaluated on initially correct receivers with misleading content. Denominators accompany all conditional rates.
+
+Clean-conditional attack success is reported with its method-specific denominator and a common-clean-correct subset as a sensitivity analysis. Abstentions, malformed answers, and unjustified refusal count as task failures. The primary mechanism analysis uses a fixed attack pool; adaptive robustness uses freshly optimized method-specific attacks. Their conditional statistics are not mixed as though they described an identical input distribution.
+
+We prespecify three training seeds for \method{}, independent adversarial training, and the strongest composition baseline. Other baselines begin with one seed and are expanded if competitive under the declared validation rule. Paired bootstrap intervals resample task IDs, clustering all attacks and continuations of a task. Training-seed variability is reported separately rather than hidden by treating repeated attacks as new independent tasks. We report paired effect sizes with 95\% intervals; small conditional cohorts are labeled inconclusive.
+
+The clean-utility tolerance is provisionally two percentage points relative to the matched independent adversarial baseline, assessed with a non-inferiority interval on final test data. Marginal individual robustness is matched using validation-selected checkpoints and compared through a reported frontier, not by deliberately corrupting a stronger agent. A positive result should improve attacked team performance beyond that frontier while retaining helpful-correction capability.
+
+\section{Results and Analysis: Placeholders}
+\label{sec:results}
+No table below contains measured outcomes. \TBD{} means an experiment has not been completed, not a zero score. Proposed sample sizes and hyperparameters elsewhere are design choices and are not experimental results.
+
+\begin{table*}[t]
+\centering\small
+\caption{Primary results template. Task success in percent; report paired 95\% confidence intervals and training-seed variation. Result entries are placeholders; N/A denotes an absent peer-revision channel. The adaptive column uses early exposure so it applies to all rows; adaptive exchange results are reported separately. Attack budgets are fixed across applicable methods.}
+\label{tab:main-results}
+\begin{tabularx}{\textwidth}{@{}Xcccccc@{}}
+\toprule
+Method & Clean & Early attack & Exchange attack & Adaptive $Q=8$ & Tool success & Tokens/task \\
+\midrule
+Budget-matched single agent & \TBD & \TBD & N/A & \TBD & \TBD & \TBD \\
+Independent ensemble + synthesis & \TBD & \TBD & N/A & \TBD & \TBD & \TBD \\
+Ordinary debate & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD \\
+Independent adversarial training & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD \\
+Local complementarity + debate & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD \\
+Local complementarity + SAC & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD \\
+Split specialization + revision & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD \\
+Archive all drafts & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD \\
+\method{} & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\subsection{Does joint training improve robust task success?}
+\slot{Insert the paired difference in attacked success between \method{} and the strongest composition baseline, its 95\% interval, clean-utility difference, and actual token/compute costs. Report early and exchange attacks separately. A positive average with a clean-utility violation does not establish the intended claim.}
+
+\subsection{Where does the improvement arise?}
+\slot{Report $c,u,k,d$ and readout loss on a common frozen attack pool, together with individual accuracy. State whether gains arise from lower shared failure, better utilization, new solution construction, or simply stronger agents. Do not infer a causal mechanism from these conditional rates alone.}
+
+\begin{table*}[t]
+\centering\small
+\caption{Mechanism and ablation template on the fixed attack pool. $\bar A_0$ is mean initial individual accuracy. Conditional denominators must be supplied in the completed table or accompanying text.}
+\label{tab:mechanism}
+\begin{tabularx}{\textwidth}{@{}Xccccccc@{}}
+\toprule
+Variant & $\bar A_0$ & Coverage $c$ & Utilization $u$ & Erasure $d$ & Construction $k$ & Helpful repair & Final success \\
+\midrule
+Independent adversarial training & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD \\
+Local complementarity + SAC & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD \\
+\method{} without continuation credit & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD \\
+\method{} without revision preferences & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD \\
+\method{} with hold-only preferences & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD \\
+\method{} with one-shot assignments & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD \\
+Full \method{} & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD & \TBD \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\subsection{Is the coupling necessary?}
+\slot{Compare joint refresh against split training using identical replay budgets, local complementarity plus SAC, and a shuffled-credit control. If continuation credit or refresh does not improve results, narrow the contribution rather than claiming communication-aware learning.}
+
+\subsection{Does robustness preserve useful collaboration?}
+\slot{Insert helpful-correction performance, ignore-peers and independent-ensemble comparisons, and outcomes when all initial answers are wrong. Report whether lower harmful revision is accompanied by excessive refusal, reduced revision, or loss of clean collaboration gain.}
+
+\subsection{Does the result survive adaptive evaluation and transfer?}
+\slot{Insert adaptive attack-budget curves; held-out generator and readout results; and executable tool-task success. State unsupported transfer claims explicitly. Do not characterize robustness on a static pool as adaptive robustness.}
+
+\section{Limitations and Scope of Claims}
+The method cannot guarantee independent vulnerabilities when adapters share a backbone. It can only encourage empirical complementarity under the sampled tasks and attacks. Moreover, useful packet pairs may be sparse, and counterfactual replay changes an observable message rather than isolating a model's internal belief. Fixed-attack interventions and finite suffix sampling can misestimate contribution, especially when the real adversary reacts differently to each proposed answer.
+
+Answer verification does not verify every natural-language justification. The frozen synthesizer remains a possible bottleneck, and an archive or stronger readout may eliminate the apparent advantage. The conditional identities explain evaluation targets but do not guarantee that the proposed surrogate improves them. A small controlled study may also lack power to distinguish modest effects or characterize rare safety failures.
+
+Finally, bounded message/observation corruption does not cover compromised weights, a malicious majority controlling final votes, adversarial tool code, or long-horizon persistence. Tool-use transfer is required to support an agentic interpretation beyond debate, but one adapted benchmark would still not establish deployment safety. These limitations are part of the proposed study rather than conditions to be hidden after unfavorable results.
+
+\section{Ethics and Reproducibility}
+Experiments use public or licensed benchmark tasks and isolated, simulated tool environments. Payloads target benchmark mistakes and may not contact real accounts, exfiltrate data, or execute arbitrary untrusted code. Generated tool calls are dispatched only to a whitelisted simulator interface. We will release split manifests, prompts, message envelopes, adapter configurations, attack budgets, seeds, sampled failure traces, and resource accounting subject to dataset and model licenses. Held-out labels and evaluator feedback are separated from defender inputs by explicit logging checks.
+
+\section{Conclusion}
+Complementary initial answers are only a potential source of robustness. Their value depends on whether interaction preserves and uses them while still correcting genuine mistakes. \method{} operationalizes this perspective through continuation-aware responsibility and bidirectional revision learning. The proposed experiments are designed to determine whether that coupling improves robust collective decisions beyond separately trained diversity and communication defenses. \textbf{The empirical conclusion remains \TBD{}.}
+
+\clearpage
+\begingroup\footnotesize
+\setlength{\bibsep}{3pt}
+\begin{thebibliography}{99}
+\bibitem[Pang et~al.(2019)] {pang2019adp}
+Tianyu Pang, Kun Xu, Chao Du, Ning Chen, Jun Zhu. 2019. Improving Adversarial Robustness via Promoting Ensemble Diversity. \emph{International Conference on Machine Learning}. \url{https://proceedings.mlr.press/v97/pang19a.html}.
+\bibitem[Yang et~al.(2020)] {yang2020dverge}
+Huanrui Yang, Jingyang Zhang, Hongliang Dong, Nathan Inkawhich, Andrew Gardner, Andrew Touchet, Wesley Wilkes, Heath Berry, Hai Li. 2020. DVERGE: Diversifying Vulnerabilities for Enhanced Robust Generation of Ensembles. \emph{Advances in Neural Information Processing Systems}. \url{https://arxiv.org/abs/2009.14720}.
+\bibitem[Tekin et~al.(2024)] {tekin2024topla}
+Selim Furkan Tekin, Fatih Ilhan, Tiansheng Huang, Sihao Hu, Ling Liu. 2024. LLM-TOPLA: Efficient LLM Ensemble by Maximising Diversity. \emph{Findings of the Association for Computational Linguistics: EMNLP}. \url{https://aclanthology.org/2024.findings-emnlp.698/}.
+\bibitem[Zhang et~al.(2026)] {zhang2026mca}
+Yichi Zhang, Kevin Lu, Yuang Zhang, Jie Gao, Lirong Xia, Fang-Yi Yu. 2026. Mixture of Complementary Agents for Robust LLM Ensemble. \emph{arXiv preprint arXiv:2605.24048}. \url{https://arxiv.org/abs/2605.24048}.
+\bibitem[Nilayam et~al.(2026)] {nilayam2026heterogeneous}
+Prashanti Nilayam, Kiran Kumar Ramanna, Prashil Tumbade, Sankalp Nayak. 2026. Heterogeneous LLM Debate Under Adversarial Peers: Honest Gains, Replacement Costs, and Resilience. \emph{arXiv preprint arXiv:2606.19826}. \url{https://arxiv.org/abs/2606.19826}.
+\bibitem[Cordero-Encinar et~al.(2026)] {cordero2026specialists}
+Paula Cordero-Encinar, Georgy Tyukin, Andrew B. Duncan. 2026. Soft Specialists: $\alpha$-R\'{e}nyi Ensembles for Uncertainty-Aware LLM Post-Training. \emph{arXiv preprint arXiv:2605.27747}. \url{https://arxiv.org/abs/2605.27747}.
+\bibitem[Li et~al.(2025)] {li2025mlc}
+Haoran Li, Ziyi Su, Yun Xue, Zhiliang Tian, Yiping Song, Minlie Huang. 2025. Advancing Collaborative Debates with Role Differentiation through Multi-Agent Reinforcement Learning. \emph{Annual Meeting of the Association for Computational Linguistics}. \url{https://aclanthology.org/2025.acl-long.1105/}.
+\bibitem[Wu et~al.(2026)] {wu2026dear}
+Hao Wu, Shoucheng Song, Chang Yao, Haoyu Wang, Huaiyu Wan, Youfang Lin, Kai Lv. 2026. Group Perspective Matters: Regulating Debate Relationships Can Mitigate Blind Conformity in Multi-Agent Debate. \emph{arXiv preprint arXiv:2608.03648}. \url{https://arxiv.org/abs/2608.03648}.
+\bibitem[Pan et~al.(2025)] {pan2025advevo}
+Zhenyu Pan, Yiting Zhang, Zhuo Liu, Yolo Yunlong Tang, Zeliang Zhang, Haozheng Luo, Yuwei Han, Jianshu Zhang, Dennis Wu, Hong-Yu Chen, Haoran Lu, Haoyang Fang, Manling Li, Chenliang Xu, Philip S. Yu, Han Liu. 2025. AdvEvo-MARL: Shaping Internalized Safety through Adversarial Co-Evolution in Multi-Agent Reinforcement Learning. \emph{arXiv preprint arXiv:2510.01586; cited version v1}. \url{https://arxiv.org/abs/2510.01586}.
+\bibitem[Lee et~al.(2026)] {lee2026sac}
+Haejoon Lee, Vincent-Daniel Yun, Dimitra Panagou, Sai Praneeth Karimireddy. 2026. Robust Multi-Agent LLMs under Byzantine Faults. \emph{arXiv:2605.09076v3; EMNLP 2026 acceptance reported on arXiv}. \url{https://arxiv.org/abs/2605.09076v3}.
+\bibitem[Liu et~al.(2026)] {liu2026consensus}
+Jiayuan Liu, Shiyi Du, Weihua Du, Mingyu Guo, Vincent Conitzer. 2026. The Consensus Trap: Rescuing Multi-Agent LLMs from Adversarial Majorities via Token-Level Collaboration. \emph{arXiv preprint arXiv:2604.17139}. \url{https://arxiv.org/abs/2604.17139}.
+\bibitem[Choi et~al.(2025)] {choi2025vote}
+Hyeong Kyu Choi, Xiaojin Zhu, Sharon Li. 2025. Debate or Vote: Which Yields Better Decisions in Multi-Agent Large Language Models?. \emph{Advances in Neural Information Processing Systems}. \url{https://arxiv.org/abs/2508.17536}.
+\bibitem[Foerster et~al.(2018)] {foerster2018coma}
+Jakob Foerster, Gregory Farquhar, Triantafyllos Afouras, Nantas Nardelli, Shimon Whiteson. 2018. Counterfactual Multi-Agent Policy Gradients. \emph{AAAI Conference on Artificial Intelligence; arXiv:1705.08926}. \url{https://arxiv.org/abs/1705.08926}.
+\bibitem[Rafailov et~al.(2023)] {rafailov2023dpo}
+Rafael Rafailov, Archit Sharma, Eric Mitchell, Stefano Ermon, Christopher D. Manning, Chelsea Finn. 2023. Direct Preference Optimization: Your Language Model is Secretly a Reward Model. \emph{Advances in Neural Information Processing Systems}. \url{https://arxiv.org/abs/2305.18290}.
+\bibitem[Hu et~al.(2022)] {hu2022lora}
+Edward J. Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean Wang, Lu Wang, Weizhu Chen. 2022. LoRA: Low-Rank Adaptation of Large Language Models. \emph{International Conference on Learning Representations}. \url{https://arxiv.org/abs/2106.09685}.
+\bibitem[Clark et~al.(2018)] {clark2018arc}
+Peter Clark, Isaac Cowhey, Oren Etzioni, Tushar Khot, Ashish Sabharwal, Carissa Schoenick, Oyvind Tafjord. 2018. Think you have Solved Question Answering? Try ARC, the AI2 Reasoning Challenge. \emph{arXiv preprint arXiv:1803.05457}. \url{https://arxiv.org/abs/1803.05457}.
+\bibitem[Liu et~al.(2020)] {liu2020logiqa}
+Jian Liu, Leyang Cui, Hanmeng Liu, Dandan Huang, Yile Wang, Yue Zhang. 2020. LogiQA: A Challenge Dataset for Machine Reading Comprehension with Logical Reasoning. \emph{arXiv preprint arXiv:2007.08124}. \url{https://arxiv.org/abs/2007.08124}.
+\bibitem[Mao et~al.(2024)] {mao2024bfcl}
+Huanzhi Mao, Fanjia Yan, Charlie Cheng-Jie Ji, Jason Huang, Vishnu Suresh, Yixin Huang, Xiaowen Yu, Joseph E. Gonzalez, Shishir G. Patil. 2024. BFCL V3: Multi-Turn and Multi-Step Function Calling Evaluation. \emph{Berkeley Function Calling Leaderboard technical documentation; release 19 September 2024}. \url{https://gorilla.cs.berkeley.edu/blogs/13_bfcl_v3_multi_turn.html}.
+\bibitem[Qwen Team(2025)] {qwen2025model}
+Qwen Team. 2025. Qwen3-8B Model Card. \emph{Hugging Face model documentation; accessed 16 September 2026}. \url{https://huggingface.co/Qwen/Qwen3-8B}.
+\bibitem[Google(2026)] {google2026colab}
+Google. 2026. Google Colaboratory: Frequently Asked Questions. \emph{Service documentation; accessed 16 September 2026}. \url{https://research.google.com/colaboratory/faq.html}.
+\end{thebibliography}
+\endgroup
+
+\clearpage
+\appendix
+\onecolumn
+\section{Analysis Details and Interpretation}
+\label{app:analysis}
+\subsection{Separating availability, erasure, and readout}
+The exact post-revision availability decomposition follows by conditioning on $O_0$:
+\begin{align}
+ \Prob(O_1=0)
+ &=\Prob(O_0=0)\Prob(O_1=0\mid O_0=0)
+   +\Prob(O_0=1)\Prob(O_1=0\mid O_0=1)\\
+ &=(1-c)(1-r)+cd.
+\end{align}
+No inference algorithm is assumed. Let $s=\Prob(Y=0,O_1=1)$ and $v=\Prob(Y=1,O_1=0)$. Then final failure satisfies the exact identity
+\begin{equation}
+ \Prob(Y=0)=(1-c)(1-r)+cd+s-v.
+ \label{eq:full-failure}
+\end{equation}
+The term $v$ allows the frozen synthesizer to construct a correct answer even when all revised agent answers are wrong. Dropping this possibility would artificially disadvantage synthesis relative to voting. The nonnegative bound
+\begin{equation}
+ \Prob(Y=0)\leq (1-c)+cd+s
+\end{equation}
+is sometimes useful for interpreting failure counts, but it is not used as an adversarial certificate or as the claimed theoretical novelty.
+
+\subsection{A coverage--utilization trade-off}
+For two systems with $(c,u,k)$ and $(c',u',k')$, their exact success difference is
+\begin{equation}
+ A'-A=(c'-c)(u-k)+c'(u'-u)+(1-c')(k'-k).
+\end{equation}
+This identity highlights why reporting only larger coverage is insufficient. When construction is unchanged and $c'>c$, a coverage gain is outweighed whenever $c'(u-u')>(c'-c)(u-k)$. The relevant quantities must be measured on the same task--attack distribution. Applying this comparison to separately optimized adaptive attacks is descriptive of different operating conditions, not a causal isolation of training components.
+
+\subsection{Marginal contribution derivation}
+For the fixed conditional-packet intervention model in Proposition~\ref{prop:marginal},
+\begin{equation}
+ F(p)=\sum_{S\subseteq[m]}H(S)\prod_{i\in S}p_i\prod_{j\notin S}(1-p_j).
+\end{equation}
+Grouping terms according to whether $i\in S$ gives
+\begin{equation}
+ F(p)=\sum_{S\subseteq[m]\setminus\{i\}}
+ \Big[p_iH(S\cup\{i\})+(1-p_i)H(S)\Big]
+ \prod_{j\in S}p_j\prod_{j\notin S,\,j\ne i}(1-p_j).
+\end{equation}
+Differentiation proves Eq.~\eqref{eq:marginal}. If the downstream response is monotone in adding a correct packet, every bracketed marginal is nonnegative. Language-model interaction is not assumed to satisfy this condition. A correct answer with an unconvincing explanation, or a packet that induces an unfavorable subsequent discussion, can have a nonpositive measured marginal effect. This motivates evaluating terminal contribution rather than inferring it from endpoint correctness alone.
+
+For coverage, $H(S)=\ind[S\ne\varnothing]$, so the marginal becomes $\prod_{j\ne i}(1-p_j)$. This expression holds only in the stylized conditional model. The empirical joint failure is always computed from complete observed team outcomes, never by multiplying aggregate error rates across tasks.
+
+\subsection{Limits of the replay interpretation}
+The quantity in Eq.~\eqref{eq:delta} is a controlled effect of replacing a packet, conditional on a fixed transcript prefix and attack. It is not a natural indirect effect, not an intervention on an internal belief, and not a gradient through the model's full distribution. Two packet alternatives can differ in wording as well as correctness. We therefore repeat a prespecified portion of the analysis with multiple length-matched packet pairs, mask sender names, and use answer-only packets as a diagnostic. Agreement across these controls would strengthen the interpretation; disagreement would limit it.
+
+\section{Training Data and Implementation Specification}
+\label{app:implementation}
+\subsection{Data separation}
+All task IDs are partitioned before trajectory generation. Training and validation use the official corresponding splits; the final 400-item QA slice is chosen from official test data. Semantically near-duplicate tasks and paraphrases are grouped before any additional local partition. Replays, attacker feedback, preference pairs, and checkpoint selection inherit the split of their source task. The tool-use evaluation slice is not used for training or hyperparameter selection. Any later tool-specific adaptation must introduce a separately declared, disjoint split and be reported as a new setting.
+
+\subsection{A proposed initial training configuration}
+Table~\ref{tab:config} specifies a concrete starting point so the proposal can be implemented, while distinguishing chosen settings from measurements. We begin with 1,200 labeled training tasks, balanced between the two QA families where available. A clean supervised warm-start is shared by all training baselines. Agent adapters begin from distinct optimization seeds or bootstrap orders, with their initialization conditions recorded. Three outer refreshes use 300 selected task--attack records each; the bank targets sparse-support cases but retains a uniform component. This sampling policy is identical in data-matched baselines.
+
+\begin{table}[h]
+\centering\small
+\caption{Proposed starting configuration. These numbers are design settings, not completed experimental outcomes. Final choices are made on validation data and frozen before test evaluation.}
+\label{tab:config}
+\begin{tabularx}{0.95\textwidth}{@{}p{0.29\textwidth}p{0.22\textwidth}X@{}}
+\toprule
+Item & Starting setting & Rationale / reporting requirement \\
+\midrule
+Primary team & 3 adapters; Qwen3-8B & One backbone loaded; independent contexts and adapter identities. \\
+LoRA & Rank 16; scaling 32 & Test a rank-32 sensitivity only after the core result is stable. \\
+Training precision & BF16 where supported & Log actual precision and kernels; do not assume identical performance on different GPUs. \\
+QA context cap & 4,096 tokens & Log truncation; lengthen for a fixed sensitivity slice. \\
+Private / revised packet & At most 256 tokens each & Same cap for matched methods; no silent truncation differences. \\
+Readout output & At most 64 tokens on QA & Constrained answer format; no ground-truth access. \\
+Warm-start tasks & 1,200 total & Proposed balanced subset; publish exact IDs. \\
+Outer refreshes & 3 & Recompute attacks, continuation credit, and preferences. \\
+Replay-bank records & 300 per refresh & Include uniform and sparse-support sampling. \\
+Packet alternative cap & 4 samples per agent/context & Missing correct/incorrect pairs remain missing. \\
+Paired suffix samples & $K=2$ & Reuse matched seeds within each packet pair. \\
+Microbatch / effective batch & 1 / 16 & Gradient accumulation; lower lengths first if memory profiling requires it. \\
+Initial learning rate & $10^{-5}$ & Tune only a small validation grid around this value. \\
+DPO temperature & $\beta=0.1$ & Frozen warm-start reference; cache reference scores. \\
+Loss weights & $\lambda_{\rm spec}=1$, $\lambda_{\rm rev}=1$ & Initial values; ablate each, not a large unrestricted search. \\
+Assignment settings & $\gamma=1$, $\tau=0.2$, $\lambda_{\rm bal}=0.1$ & Standardize answer losses on training bank; publish sensitivity. \\
+Main seeds & 3 for primary comparisons & Report both task uncertainty and training variation. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The backbone is frozen during adapter optimization. Only one adapter has active gradients at a time; other agents are represented by cached text for that update. Snapshot weights, tokenizer revision, chat template, random-number states, and bank provenance are versioned. Switching adapters invalidates generation caches unless their keys include the adapter and checkpoint identity. Reference-policy log probabilities are precomputed on the stored preference pairs, avoiding a second resident reference model.
+
+\subsection{Eligible packet and preference construction}
+For a QA item, a private packet is a structured record with an answer ID and a bounded explanation. Correctness is determined solely by the labeled answer. Invalid formatting is treated as failure, not discarded during test evaluation. For replay-credit estimation, both alternatives are sampled under the same actor context. We match lengths within a prespecified bin where possible and record unmatched cases. No correct rationale is fabricated by merely attaching the gold label to an unchecked explanation.
+
+Preference pairs are generated independently for each receiver prompt. A correct private answer plus hostile advice contributes a hold-context only when both a correct and incorrect continuation can be sampled. An incorrect private answer plus helpful advice contributes a repair-context under the same criterion. A stored packet from another training trajectory may be used as helpful advice only when it concerns the same task, its answer is correct, and its origin is recorded. Evaluation distinguishes naturally occurring helpful messages from curated diagnostic insertions. Scarcity of either preference stratum is reported and may require additional training-only collection.
+
+\subsection{Masked responsibility solver}
+For fixed recorded costs, Eq.~\eqref{eq:routing} is convex on its feasible set. Each eligible row has at least one available agent. A simple solver initializes a uniform distribution over the available cells and applies exponentiated-gradient updates followed by row normalization. The balance term uses the current column means; a small numerical floor is applied only inside logarithms and disclosed. Convergence tolerance, number of CPU iterations, and objective values are logged. The assignments are detached during adapter updates. This procedure is a pragmatic optimization step, not a proof that the subsequent neural training converges.
+
+\section{Evaluation Protocol and Anti-Confounding Controls}
+\label{app:eval}
+\subsection{A staged experiment schedule}
+The validation pilot first checks whether initially correct alternatives are lost under the intended message attack and whether correct/incorrect packet pairs can be obtained within the sampling cap. It compares ordinary debate, non-interacting synthesis, ignore-peers, and draft archiving before any expensive specialization. This pilot is diagnostic; it does not provide the final paper's performance estimate.
+
+The main study then trains independent adversarial adapters, local-complementarity adapters, and \method{} under matched budgets. The composition baseline and split-training control are run before broadening the attack suite. Adaptive attack-budget curves and tool transfer follow only after the fixed-pool mechanisms are measurable. This staging prioritizes the decisive comparisons rather than a large Cartesian product of models, topologies, rounds, datasets, and attacks.
+
+\subsection{Clean utility and strength matching}
+A checkpoint qualifies for primary comparison only under the prespecified validation utility rule; final test differences are still reported rather than hidden by selection. The provisional clean non-inferiority margin is two percentage points. With a small test slice, the interval may be too wide to establish non-inferiority, in which case the claim remains unresolved. The margin is not enlarged after inspecting results.
+
+To separate team complementarity from individual strength, report each member's initial clean and attacked accuracy, as well as the best and mean member. Compare team-performance frontiers across validation-selected checkpoints and explicitly identify any lack of overlap in individual strength. Do not force equality by selectively removing hard test items or injecting errors into a stronger model. As a secondary diagnostic, fit a task-clustered model of team success that includes initial correct-agent count, but do not interpret this adjustment as a complete causal proof.
+
+\subsection{Inference and training cost matching}
+All QA methods receive the same trusted question and options. Independent reasoning baselines may use the entire communication token budget for extra samples. A three-sample ensemble is reported both at its natural cost and at the team-matched budget. Prompted roles, sender aliases, model identity cues, and packet order are randomized consistently across methods. The frozen readout is reused unchanged unless the experiment explicitly studies a different readout.
+
+A separate data-matched study shares collected task--attack records and equalizes fresh environment/LLM queries. It compares uniform weighting, local-only specialization, shuffled continuation credits, split revision training, and full \method{}. An end-to-end cost study additionally counts the method's native replay collection. Both views are necessary: a method may be algorithmically useful at fixed data while still being too expensive to collect that data in practice.
+
+\subsection{Adaptive adversary details}
+Each search begins from a declared pool of candidate strategies. Candidate generation uses local open-weight models; the generator is loaded separately from training if necessary. Feedback is the attacked team's final correctness or task success. For late attacks, the adversary may read the saved private proposals before choosing a sender and payload. The final chosen attack is evaluated on fresh decoding randomness, with both search-time and evaluation-time success logged to expose overfitting to random seeds.
+
+The fixed common attack pool supports controlled comparison because every method receives the same payloads and sites. The adaptive evaluation instead searches separately against each method with the same query ceiling. Transfer attacks are an additional condition, not a replacement for adaptive search. Report best-of-budget success, invalid attack rates, search tokens, delivered tokens, recipient counts, and each method's defender-query cost. When a stronger test permits different messages to different recipients, every distinct payload and delivery is counted.
+
+\subsection{Controlled replay tests}
+On a prespecified subset, replace a correct packet with a length-matched incorrect alternative and rerun all affected downstream nodes using matched seeds. Separately remove or neutralize that packet. The first intervention changes content and correctness; the second changes available information and may change context length. Neither is treated as a perfect content-free causal manipulation. We report both, randomize packet order, and repeat with anonymous source labels. Any claim that a correct alternative was \emph{used} rather than merely present requires a positive controlled continuation effect under these qualifications.
+
+\subsection{Tool-use adaptation}
+At each user turn, the three adapters produce plans from the same legitimate task history and tool schema. After one review exchange, the frozen executor receives their revisions and runs the simulator's whitelisted API calls. It retains the original step limits and success evaluator. No generated text is passed to unrestricted \texttt{eval} or to a shell. Tool-state snapshots used for offline analysis are not revealed to the agents. Incorrect actions may terminate or alter the simulated workflow according to the benchmark's rules; no external service is affected.
+
+Report full-episode success, per-turn success, tool-call count, invalid-call count, and total tokens. The primary transfer run does not shorten episodes or silently replace the original terminal evaluator with next-action accuracy. Cases that fail dependency installation or serialization checks are reported as execution failures, with eligibility rules fixed before model comparisons. Real Colab installation and execution remain to be smoke-tested; platform compatibility is a design target, not an accomplished result.
+
+\section{Compute Accounting and Colab Execution}
+\label{app:compute}
+A logical team does not require simultaneous model residency. The notebook executes each agent turn sequentially, using separate serialized contexts. Training, attacker generation, and evaluation run as distinct stages. Intermediate data are written in small shards; completed task IDs make reruns idempotent. Checkpoints include optimizer state where needed for exact training resumption, and interrupted evaluations resume at task boundaries.
+
+For the planned QA caps, one standard trajectory uses at most
+\begin{equation}
+ 3\times256+3\times256+64=1{,}600
+\end{equation}
+generated defender tokens. As an illustration, 400 tasks, six methods, and three conditions would permit up to $11.52$ million such tokens for one seed. This is arithmetic from the proposed caps, \emph{not a measured workload}. It excludes attack generation, repeated seeds, suffix replay, input prefilling, tool trajectories, and retries. Counterfactual collection can be the dominant cost even when adapter training fits memory.
+
+\begin{table}[h]
+\centering\small
+\caption{Resource reporting template. All performance and consumption measurements are pending.}
+\label{tab:resources}
+\begin{tabularx}{0.95\textwidth}{@{}Xcccc@{}}
+\toprule
+Stage & Generated tokens & Peak VRAM & Accelerator-hours & Colab compute units \\
+\midrule
+Warm-start data and training & \TBD & \TBD & \TBD & \TBD \\
+Attack and replay-bank collection & \TBD & \TBD & \TBD & \TBD \\
+Responsibility / preference updates & \TBD & \TBD & \TBD & \TBD \\
+Core fixed-pool evaluation & \TBD & \TBD & \TBD & \TBD \\
+Adaptive attacks and fresh-seed tests & \TBD & \TBD & \TBD & \TBD \\
+Executable tool-use transfer & \TBD & \TBD & \TBD & \TBD \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Before full collection, profile 20 validation tasks and one training microbatch on the actually allocated GPU. Record model-loading memory, training peak, sequence-length sensitivity, generation throughput, and compute-unit use. A 4B-class pilot is permissible for engineering checks, but primary results may not silently mix model sizes. The hardware target is the user's available H100 or 96-GB Blackwell-class Colab runtime; no exact device availability, throughput, or subscription sufficiency is assumed.
+
+\section{Decision Rules for Interpreting the Completed Study}
+\label{app:claims}
+The proposal should lead to a narrower claim when the evidence demands it. The following rules make that explicit before results are observed.
+
+\begin{table}[h]
+\centering\small
+\begin{tabularx}{\textwidth}{@{}p{0.38\textwidth}X@{}}
+\toprule
+Observed outcome & Defensible interpretation \\
+\midrule
+Better individual accuracy, but no advantage at comparable individual strength & Improved adversarial post-training; complementary robustness is not established. \\
+Higher initial coverage, no final robustness improvement & Learned ensemble coverage without demonstrated preservation through communication. \\
+Lower harmful revision but lower helpful correction & Increased resistance to peer influence; useful robust collaboration is not established. \\
+Matches separate diversification plus SAC & The proposed coupling is not necessary under the tested setting. \\
+Matches ignore-peers or draft archiving at comparable utility and cost & A simpler inference strategy is sufficient; learning preservation lacks a practical advantage. \\
+Wins only on fixed or transferred attacks & Robustness to the tested distribution; no adaptive robustness claim. \\
+Wins only on QA, not tool transfer & A result about adversarial debate/ensembling, not broad tool-agent robustness. \\
+No stable effect across seeds or wide paired intervals & Inconclusive evidence; additional data or a revised hypothesis is needed. \\
+Beats composition baselines at matched utility/cost, with coverage and utilization gains under fresh adaptive attacks & Evidence supporting communication-aware complementary robustness within the stated threat model. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The intended publication contribution is the last case, not a guaranteed outcome. The exact decomposition, counterexample, transparent negative results, and reproducible diagnosis remain useful components, but they do not substitute for demonstrating that the learning method is necessary.
+
+\end{document}

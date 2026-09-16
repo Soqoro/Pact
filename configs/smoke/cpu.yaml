@@ -1,0 +1,22 @@
+{
+  "backend": "mock",
+  "stage": "smoke",
+  "items": 8,
+  "methods": [
+    "single",
+    "single_matched",
+    "vote",
+    "vote_matched",
+    "synthesis",
+    "synthesis_matched",
+    "debate",
+    "ignore_peers",
+    "archive",
+    "archive_matched"
+  ],
+  "probe": {
+    "tasks": 8
+  },
+  "bootstrap_samples": 200,
+  "sync_every": 10
+}

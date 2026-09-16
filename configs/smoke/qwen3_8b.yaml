@@ -1,0 +1,12 @@
+{
+  "backend": "transformers",
+  "stage": "smoke",
+  "items": 4,
+  "methods": [
+    "debate",
+    "synthesis"
+  ],
+  "probe": {
+    "tasks": 1
+  }
+}

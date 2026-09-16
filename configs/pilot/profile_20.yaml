@@ -1,0 +1,11 @@
+{
+  "backend": "transformers",
+  "stage": "profile",
+  "items": 20,
+  "methods": [
+    "debate"
+  ],
+  "probe": {
+    "tasks": 2
+  }
+}

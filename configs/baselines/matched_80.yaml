@@ -1,0 +1,16 @@
+{
+  "backend": "transformers",
+  "stage": "pilot",
+  "items": 80,
+  "methods": [
+    "single_matched",
+    "vote_matched",
+    "synthesis_matched",
+    "debate",
+    "ignore_peers",
+    "archive_matched"
+  ],
+  "probe": {
+    "tasks": 0
+  }
+}
