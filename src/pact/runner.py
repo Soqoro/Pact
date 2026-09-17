@@ -65,12 +65,14 @@ def run(config: Config, *, run_id: str, scratch: Path, persistent: Path | None =
              "mock_only" if config.backend == "mock" else "untrained_validation_diagnostic", ""))
     manifest["persistent_root"] = str(remote) if remote else None
     manifest["stage_status"]["persistence"] = "pending" if remote else "not_configured"
+    manifest.pop("verified_snapshot", None)
     manifest["budget"] = budget(config)
     next_command = ["python", "-m", "pact", config.stage, "--config", str(root / "resolved_config.yaml"),
                     "--run-id", run_id, "--scratch", str(scratch), "--resume"]
     if persistent:
         next_command += ["--persistent", str(persistent)]
     backend = None
+    checkpoint_error = None
     store = ShardStore(root)
     attempt_id = uuid.uuid4().hex
     started = time.perf_counter()
@@ -144,8 +146,12 @@ def run(config: Config, *, run_id: str, scratch: Path, persistent: Path | None =
                         manifest["completed_records"] = len(list((root / "shards").glob("*.sha256")))
                         write_json(root / "manifest.json", manifest)
                         print(f"[{run_id}] {manifest['completed_records']}/{expected} {method}/{condition}", flush=True)
-                        if remote and attempt["completed_new_records"] % config.sync_every == 0:
-                            sync_run(root, remote)
+                        if remote and manifest["completed_records"] < expected and attempt["completed_new_records"] % config.sync_every == 0:
+                            try:
+                                sync_run(root, remote)
+                            except (Exception, KeyboardInterrupt) as exc:
+                                checkpoint_error = exc
+                                raise
                         if stop_after and attempt["completed_new_records"] >= stop_after:
                             raise InterruptedError("Requested simulated interruption at completed-record boundary")
             manifest["stage_status"]["collection"] = "complete"
@@ -202,19 +208,31 @@ def run(config: Config, *, run_id: str, scratch: Path, persistent: Path | None =
             write_json(root / "resource_usage.json", usage)
             manifest["stage_status"]["report"] = "complete"
             if remote:
-                # Remote readers accept this claim only if the verified marker is written last.
-                manifest["stage_status"]["persistence"] = "complete"
+                manifest["stage_status"]["persistence"] = "pending"
             write_json(root / "manifest.json", manifest)
             report(root, validated_records=records)
             if remote:
+                # Make recovery possible before touching Drive, even if the mount stalls.
+                recovery = scratch / "bundles" / f"{run_id}-local-{attempt_id[:8]}.zip"
+                local_bundle = export_bundle(root, recovery)
+                print(f"Local recovery ZIP ready: {recovery} SHA256: {local_bundle['sha256']}", flush=True)
                 try:
+                    if checkpoint_error is not None:
+                        raise OSError(f"Earlier checkpoint failed; not retrying storage automatically: {checkpoint_error}")
                     snapshot = sync_run(root, remote)
+                    manifest["stage_status"]["persistence"] = "complete"
+                    manifest["verified_snapshot"] = str(snapshot)
+                    write_json(root / "manifest.json", manifest)
+                    report(root, validated_records=records)
                     print(f"Verified persistent snapshot: {snapshot}", flush=True)
-                except Exception as exc:
+                except (Exception, KeyboardInterrupt) as exc:
                     attempt["persistence_error"] = redact(str(exc))
-                    attempt["status"] = "failed"
+                    attempt["persistence_status"] = "failed"
                     manifest["stage_status"]["persistence"] = "failed"
                     write_json(root / "attempts" / f"{attempt_id}.json", attempt)
+                    write_json(root / "logs" / f"{attempt_id}.json", {k: attempt.get(k) for k in
+                               ("attempt_id", "status", "elapsed_seconds", "completed_new_records", "error",
+                                "backend_resources", "persistence_error", "persistence_status")})
                     write_json(root / "manifest.json", manifest)
                     report(root, validated_records=records)
                     bundle = scratch / "bundles" / f"{run_id}-diagnostic-{attempt_id[:8]}.zip"

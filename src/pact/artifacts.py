@@ -107,22 +107,33 @@ def artifact_files(root: Path) -> list[Path]:
     return files
 
 
-def sync_run(root: Path, destination: Path, *, interrupt_before_marker=False) -> Path:
+def sync_run(root: Path, destination: Path, *, interrupt_before_marker=False, timeout_seconds=120.0) -> Path:
+    from .storage import storage_operation
+    result = storage_operation("snapshot", root, destination, timeout_seconds=timeout_seconds,
+                               interrupt_before_marker=interrupt_before_marker)
+    return Path(result["snapshot"])
+
+
+def _sync_run(root: Path, destination: Path, *, interrupt_before_marker=False, progress=lambda message: None) -> Path:
     """Content-addressed immutable copies; never assume Drive rename is atomic."""
     destination.mkdir(parents=True, exist_ok=True)
     objects = destination / "objects"
     objects.mkdir(exist_ok=True)
     entries = {}
-    for path in artifact_files(root):
+    files = artifact_files(root)
+    for position, path in enumerate(files, 1):
+        if position == 1 or position % 25 == 0 or position == len(files):
+            progress(f"Verifying persistent files: {position}/{len(files)}")
         sha = file_hash(path)
         target = objects / sha
-        if not target.exists() or file_hash(target) != sha:
+        verified = target.exists() and file_hash(target) == sha
+        if not verified:
             # Incomplete object copies are never reachable from a completed snapshot.
             with path.open("rb") as src, target.open("wb") as dst:
                 shutil.copyfileobj(src, dst)
                 dst.flush()
                 os.fsync(dst.fileno())
-        if file_hash(target) != sha:
+        if not verified and file_hash(target) != sha:
             raise OSError("Persistent copy checksum verification failed")
         entries[path.relative_to(root).as_posix()] = sha
     index = {"schema_version": 1, "created_ns": time.time_ns(), "files": entries}

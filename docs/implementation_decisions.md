@@ -202,10 +202,54 @@ variables. Exceptions are redacted; raw model/attack text is always untrusted da
 
 ## Remaining engineering uncertainties
 
-The real model, PEFT runtime, Colab allocation, GPU memory fit and throughput require
-the notebook smoke. Twenty-item profiling measures inference; a disposable training
+Base-model inference and measured short-context memory/throughput are verified on
+the returned L4 smoke/profile environment. PEFT adapter isolation and eligible replay
+suffix execution remain GPU-unverified. Twenty-item profiling measures inference; a disposable training
 microbatch and explicit sequence-length sensitivity are deferred and marked as such
 in resource reports. There is no 8B training-memory claim. Colab's runtime/storage
 constraints are documented by [Google](https://research.google.com/colaboratory/faq.html);
 the target device is checked, never guaranteed. PEFT adapter operations follow
 [the official API](https://huggingface.co/docs/peft/en/package_reference/peft_model).
+
+## 2026-09-17: recovery after final Drive synchronization stalled
+
+The returned profile raw archive contains all 60 complete, checksummed records and
+finished reports, but no final snapshot receipt. The user observed a roughly 30-minute
+stall after the final counter and needed a runtime restart. At the recorded commit,
+the runner writes `persistence=complete` before calling the final sync. This makes a
+local manifest insufficient evidence for remote durability. The precise blocked
+filesystem call and underlying Drive cause were not captured; no network-performance
+claim is inferred from the archive.
+
+The repair leaves scientific configuration, prompts, sampling, tasks and scoring
+unchanged. Storage writes run in a separate Python process with a 120-second wall
+deadline per operation and visible progress/10-second waiting notices. On deadline
+or interruption, the parent kills the worker and waits at most one extra second;
+an OS-blocked child is explicitly reported rather than indefinitely awaited. No
+success is claimed after timeout. This protects the notebook process from synchronous
+mounted-filesystem writes; preflight/mount and restore reads are not covered by this
+write deadline. There is no automatic retry after a failed periodic checkpoint.
+
+The runner omits a redundant periodic sync at the last record, builds and prints a
+local recovery ZIP before the final snapshot, and only records local persistence
+success after receiving a verified snapshot path. The snapshot itself records the
+pending intent; its verified index/COMPLETE marker is the durability evidence.
+The local manifest then adds `verified_snapshot` and the local handoff records success.
+Earlier snapshots are retained and restore still validates every referenced object.
+The notebook copies/verifies its final handoff ZIP with the same deadline, and no
+longer performs another full raw-run sync. Existing immutable objects are hashed
+once per sync, removing the prior duplicate read without skipping verification.
+
+On storage failure, completed model work stays complete, persistence is failed, and
+the attempt logs record the storage error separately. Diagnostic bundles retain
+that distinction. Existing recovered profile bytes are never rewritten; the derived
+handoff explicitly marks old persistence unverified and explains the correction.
+
+A new `storage` preset runs 12 mock records and the normal persistence/handoff path,
+without model downloads or inference. Its purpose is to check actual Drive behavior
+cheaply before another GPU run. Local worker timeout, checkpoint recovery, honest
+status, bundle verification, and notebook failure-return tests pass. The repaired
+path still needs actual Colab verification; small local tests do not establish large
+pilot Drive throughput. The patch changes executable source identity and must be
+published/pinned as a new commit. It is not an exact continuation of the old profile,
+whose complete recovered records remain usable without regeneration.

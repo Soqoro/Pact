@@ -1,0 +1,8 @@
+{
+  "backend": "mock",
+  "stage": "smoke",
+  "items": 4,
+  "methods": ["debate"],
+  "probe": {"tasks": 0},
+  "bootstrap_samples": 30
+}

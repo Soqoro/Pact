@@ -92,7 +92,7 @@ def report(root: Path, *, validated_records: list[dict] | None = None) -> dict:
     failures = []
     for path in sorted((root / "attempts").glob("*.json")):
         attempt = read_json(path)
-        if attempt.get("status") != "complete":
+        if attempt.get("status") != "complete" or attempt.get("persistence_error") is not None:
             failures.append(attempt)
     if (root / "attempts").exists() or not (root / "failures.jsonl").exists():
         atomic_write(root / "failures.jsonl", "".join(canonical(f) + "\n" for f in failures))

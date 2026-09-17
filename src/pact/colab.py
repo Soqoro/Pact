@@ -3,19 +3,20 @@ from __future__ import annotations
 
 import importlib.metadata
 import os
-import shutil
 import subprocess
 import sys
 import tempfile
 from pathlib import Path
 
-from .artifacts import export_bundle, sync_run
+from .artifacts import export_bundle
 from .cli import main
 from .config import load_config
 from .reporting import report
-from .util import file_hash, safe_name
+from .storage import persist_bundle
+from .util import read_json, redact, safe_name
 
 PRESETS = {
+    "storage": "configs/smoke/storage.yaml",
     "smoke": "configs/smoke/qwen3_8b.yaml",
     "profile": "configs/pilot/profile_20.yaml",
     "pilot": "configs/pilot/validation_80.yaml",
@@ -72,15 +73,19 @@ def execute(*, checkout: str | Path, preset: str, run_id: str, scratch: str | Pa
     bundle_name = f"{run_id}-handoff-{time.time_ns()}.zip"
     local = scratch / "bundles" / bundle_name
     result = export_bundle(root, local)
+    print(f"Local handoff ZIP ready: {local} SHA256: {result['sha256']}", flush=True)
     target = persistent / "bundles" / bundle_name
-    target.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(local, target)
-    if file_hash(target) != result["sha256"]:
-        raise OSError(f"Bundle persistence checksum mismatch; retained local bundle at {local}")
-    target.with_suffix(".zip.sha256").write_text(result["sha256"] + "\n", encoding="ascii")
-    snapshot = sync_run(root, persistent / run_id)
-    result.update(persistent_bundle=str(target), persistent_snapshot=str(snapshot), exit_code=exit_code)
-    print(result)
-    if exit_code:
+    manifest = read_json(root / "manifest.json")
+    result.update(persistent_bundle=None, persistent_snapshot=manifest.get("verified_snapshot"), exit_code=exit_code)
+    if not exit_code:
+        try:
+            persist_bundle(local, target, result["sha256"])
+            result["persistent_bundle"] = str(target)
+        except (Exception, KeyboardInterrupt) as exc:
+            result.update(exit_code=2, persistence_error=redact(str(exc)))
+            print(f"ZIP persistence failed; download the local ZIP: {local}", flush=True)
+    # The runner already verified the raw-run snapshot. Do not sync it a third time.
+    print(result, flush=True)
+    if result["exit_code"]:
         print("The stage failed or was interrupted. The diagnostic bundle is preserved; use the recorded recovery command.")
     return result

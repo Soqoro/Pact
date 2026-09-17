@@ -1,5 +1,43 @@
 # Local → Colab → local
 
+## Current next run (reviewed 2026-09-17)
+
+Both the smoke and 20-item profile were reviewed. All 60 profile records are recovered;
+do not rerun them. Final Drive synchronization stalled, so the next step is a small
+CPU mock storage check, **after publishing the reviewed storage repair**. The old
+commit `c15ad0d` does not contain the repair or the new preset. See the
+[profile review](reviews/qwen3-profile-001.md).
+
+Set the complete parameter cell, filling the new reviewed commit SHA:
+
+```python
+REPO_URL = "https://github.com/Soqoro/Pact.git"
+GIT_REF = ""  # Required: full 40-character SHA of the published storage repair.
+RUN_ID = "drive-storage-check-001"
+PRESET = "storage"
+STAGE = "smoke"
+SCRATCH_ROOT = "/content/pact-scratch"
+PERSISTENT_ROOT = "/content/drive/MyDrive/PACT"
+RESUME = False
+MOUNT_DRIVE = True
+PRIVATE_REPOSITORY = False  # True if your repository requires authentication.
+```
+
+Run this complete parameter cell before the checkout cell, then continue downward.
+This starts a separate 12-record mock run, with no model-weight download or inference.
+Return its handoff before starting the pilot. Equivalent command from the patched checkout:
+
+```bash
+python -m pact smoke --config configs/smoke/storage.yaml --run-id drive-storage-check-001 --scratch /content/pact-scratch --persistent /content/drive/MyDrive/PACT
+```
+
+The notebook additionally exports/copies the handoff ZIP. Local persistence tests
+passed, but actual Colab/Drive repair verification is pending. After this check passes,
+the existing 80-item pilot uses `PRESET="pilot"`, `STAGE="pilot"`,
+`RUN_ID="qwen3-pilot-001"`, `RESUME=False` at the same new commit. Review its dry-run
+budget first: six methods × three conditions × 80 tasks = 1,440 scheduled cells
+(including 320 N/A cells). Its measured cost is not established by the 20-item profile.
+
 ## Local review and CPU validation
 
 From the repository root, Python 3.10+:
@@ -22,7 +60,7 @@ python -m pact smoke --config configs/smoke/cpu.yaml --run-id resume-demo --resu
 python -m pact inspect-run --run-dir scratch/runs/resume-demo
 ```
 
-Review/commit/push using your normal workflow. Codex has not committed or pushed.
+Review/commit/push future code changes using your normal workflow and explicit authorization.
 Record the full reviewed commit with `git rev-parse HEAD` after your commit.
 
 ## First Colab execution
@@ -123,9 +161,20 @@ The standard paths are:
 Copies occur every configured five completed records and at handled exit; prior complete
 versions remain. An interrupted unmarked local shard is quarantined. A completed
 checksum mismatch stops the run. Do not delete/rewrite a corrupted marker to force acceptance.
+With the storage repair, a local recovery ZIP is created before the final Drive sync.
+The last-record periodic sync and the notebook's redundant full sync are omitted.
+Snapshot writes and ZIP copies have separate 120-second worker deadlines, with progress
+and waiting notices. A timeout stops persistence and retains local artifacts; it does
+not launch another storage retry or regenerate model outputs. Mount/preflight and
+restore reads are outside this deadline. A raw snapshot's pending manifest is expected:
+its verified COMPLETE marker is authoritative; the local manifest gains
+`verified_snapshot` and marks persistence complete only after that verification.
 Runtime failure exports `scratch/bundles/RUN_ID-diagnostic-ATTEMPT.zip` and prints the
 exact next command. The notebook also copies a diagnostic handoff to persistent storage
-when available. Storage failure retains the local bundle and reports that persistence failed.
+after successful collection; if the stage fails, it returns the local diagnostic handoff
+without another Drive attempt. Storage failure retains the local bundle and reports
+that persistence failed. The notebook prints the local path when no verified remote
+ZIP is available. Download that ZIP using the Files sidebar.
 Inspect `failures.jsonl` and `resource_usage.json` before choosing a new engineering config.
 Compute units remain null unless measured separately; GPU-hours are not converted to units.
 
