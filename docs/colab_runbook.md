@@ -1,42 +1,30 @@
 # Local → Colab → local
 
-## Current next run (reviewed 2026-09-17)
+## Current next action (reviewed 2026-09-18)
 
-Both the smoke and 20-item profile were reviewed. All 60 profile records are recovered;
-do not rerun them. Final Drive synchronization stalled, so the next step is a small
-CPU mock storage check, **after publishing the reviewed storage repair**. The old
-commit `c15ad0d` does not contain the repair or the new preset. See the
-[profile review](reviews/qwen3-profile-001.md).
+The 80-item pilot and full raw recovery are reviewed; no completed run or export
+needs repeating. The next selected replay-feasibility diagnostic is now implemented
+and CPU-tested. Review/commit/push the local change first, then pin its new full SHA
+in Colab. The old `ede29d6` commit does not contain this preset.
 
-Set the complete parameter cell, filling the new reviewed commit SHA:
+Use `PRESET="replay-check"`, `STAGE="pilot"`, `RUN_ID="qwen3-replay-check-001"`,
+`RESUME=False`. It runs six debate trajectories on three explicitly selected
+validation tasks, preserving their original attack positions/bytes and main seeds.
+Ceilings: 474 model calls and 106,368 generated tokens per uninterrupted collection.
+No automatic training or extra sampling follows a zero-pair result.
 
-```python
-REPO_URL = "https://github.com/Soqoro/Pact.git"
-GIT_REF = ""  # Required: full 40-character SHA of the published storage repair.
-RUN_ID = "drive-storage-check-001"
-PRESET = "storage"
-STAGE = "smoke"
-SCRATCH_ROOT = "/content/pact-scratch"
-PERSISTENT_ROOT = "/content/drive/MyDrive/PACT"
-RESUME = False
-MOUNT_DRIVE = True
-PRIVATE_REPOSITORY = False  # True if your repository requires authentication.
-```
-
-Run this complete parameter cell before the checkout cell, then continue downward.
-This starts a separate 12-record mock run, with no model-weight download or inference.
-Return its handoff before starting the pilot. Equivalent command from the patched checkout:
+The complete parameter cell, setup/execution sequence, exact commands, expected
+output and review limits are in [the replay-check guide](replay_check.md).
+Dry-run from the newly published checkout:
 
 ```bash
-python -m pact smoke --config configs/smoke/storage.yaml --run-id drive-storage-check-001 --scratch /content/pact-scratch --persistent /content/drive/MyDrive/PACT
+python -m pact pilot --config configs/pilot/replay_check_3.yaml --run-id qwen3-replay-check-001 --scratch /content/pact-scratch --persistent /content/drive/MyDrive/PACT --dry-run
 ```
 
-The notebook additionally exports/copies the handoff ZIP. Local persistence tests
-passed, but actual Colab/Drive repair verification is pending. After this check passes,
-the existing 80-item pilot uses `PRESET="pilot"`, `STAGE="pilot"`,
-`RUN_ID="qwen3-pilot-001"`, `RESUME=False` at the same new commit. Review its dry-run
-budget first: six methods × three conditions × 80 tasks = 1,440 scheduled cells
-(including 320 N/A cells). Its measured cost is not established by the 20-item profile.
+Run the notebook's execution cell after setup/budget review. Return its standard
+handoff ZIP and printed checksum. All six raw records and their probe branches
+are included; a separate full raw export should not be needed. This selected
+engineering check is GPU-unverified and does not estimate representative accuracy.
 
 ## Local review and CPU validation
 

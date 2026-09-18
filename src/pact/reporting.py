@@ -41,6 +41,15 @@ def probe_summary(records: list[dict]) -> dict:
             "training": "not_implemented; these are diagnostic eligibility probes, not training preferences with reference scores"}
 
 
+def annotate_metrics(metrics: dict, manifest: dict) -> dict:
+    metrics["scientific_status"] = manifest["scientific_status"]
+    metrics["pipeline_stage_status"] = manifest["stage_status"]
+    if "selection" in manifest:
+        metrics["selection"] = manifest["selection"]
+        metrics["inference_scope"] = "post-hoc selected engineering feasibility; no representative performance or training claim"
+    return metrics
+
+
 def report(root: Path, *, validated_records: list[dict] | None = None) -> dict:
     manifest = read_json(root / "manifest.json")
     config = read_json(root / "resolved_config.yaml")
@@ -52,8 +61,7 @@ def report(root: Path, *, validated_records: list[dict] | None = None) -> dict:
                 raise ValueError(f"Imported artifact checksum mismatch: {name}")
         metrics = summarize(read_json(root / "evaluations.json"), manifest["expected_records"],
                             config["seed"], config["bootstrap_samples"])
-        metrics["scientific_status"] = manifest["scientific_status"]
-        metrics["pipeline_stage_status"] = manifest["stage_status"]
+        annotate_metrics(metrics, manifest)
         write_json(root / "analysis" / "metrics.json", metrics)
         return metrics
     records = validated_records if validated_records is not None else ShardStore(root).records() if (root / "shards").exists() else []
@@ -73,8 +81,7 @@ def report(root: Path, *, validated_records: list[dict] | None = None) -> dict:
         if not (root / "sample_traces.jsonl").exists():
             atomic_write(root / "sample_traces.jsonl", "")
     metrics = summarize(evaluations, manifest["expected_records"], config["seed"], config["bootstrap_samples"])
-    metrics["scientific_status"] = manifest["scientific_status"]
-    metrics["pipeline_stage_status"] = manifest["stage_status"]
+    annotate_metrics(metrics, manifest)
     write_json(root / "metrics.json", metrics)
     rows = []
     for key, values in metrics["by_condition"].items():
@@ -104,6 +111,8 @@ def report(root: Path, *, validated_records: list[dict] | None = None) -> dict:
                    "next_command": f"python -m pact inspect-run --run-dir {str(root)!r}"}
     if config["backend"] == "mock":
         diagnostics["warnings"].append("MOCK ONLY: synthetic scripted outcomes are not benchmark measurements.")
+    if "selection" in manifest:
+        diagnostics["warnings"].append(metrics["inference_scope"])
     if metrics["missing_records"]:
         diagnostics["warnings"].append("PARTIAL COLLECTION: observed-only rates are not a completed experiment.")
     write_json(root / "diagnostics.json", diagnostics)
@@ -120,6 +129,7 @@ def report(root: Path, *, validated_records: list[dict] | None = None) -> dict:
 
 Status: **{manifest["scientific_status"]}**. Collection: {metrics["status"]}.
 Purpose: validation-only diagnostic pilot; no training, final test, or empirical PACT improvement claim.
+Selection scope: {metrics.get("inference_scope", "declared validation pool; see data_manifest.json")}.
 Code commit: `{manifest["code"].get("git_commit")}`. Source hash: `{manifest["code"].get("source_hash")}`.
 Dirty checkout: `{manifest["code"].get("dirty")}`. Run ID: `{manifest["run_id"]}`.
 Configuration: `resolved_config.yaml`; identity `{manifest["config_hash"]}`.

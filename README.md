@@ -2,7 +2,9 @@
 
 Preservation-Aware Complementarity Training: a local-to-Colab **diagnostic pilot**.
 This implementation covers the Milestones 0–2 execution path. It does not train PACT
-or report a completed scientific experiment. Real-model GPU execution is unverified.
+or establish a trained PACT result. Unadapted Qwen3-8B inference is verified on the
+reported Colab L4 environment through the 80-item validation pilot and full raw audit.
+Eligible neural suffix replay, trained-adapter isolation and training remain unverified.
 
 ```bash
 python -m pip install -e .

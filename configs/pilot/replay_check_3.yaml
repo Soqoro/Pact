@@ -1,0 +1,50 @@
+{
+  "backend": "transformers",
+  "stage": "pilot",
+  "purpose": "selected_replay_feasibility",
+  "items": 3,
+  "methods": [
+    "debate"
+  ],
+  "conditions": [
+    "clean",
+    "exchange"
+  ],
+  "probe": {
+    "tasks": 3
+  },
+  "selection": {
+    "source_run_id": "qwen3-pilot-001",
+    "source_config_hash": "92d66df5ede5d68cefed7f347290872aa36cbfe0ce0414e0b0295888d531db5a",
+    "source_manifest_hash": "8a8a9515244b2ded3e2eba801b99adaa107547ee02470991946d5ff7b8216495",
+    "source_model_snapshot": "e65c43f2b6abd7dc95bb51ce8d72c0c9c278120b1d4fd41d5f75e56e9d0fdc81",
+    "source_generation_hash": "31c0694956770b87b79bcefb23b08ee86a587be663054136b0b65fd2698e8eb7",
+    "source_items": 80,
+    "tasks": [
+      {
+        "task_id": "arc_challenge:Mercury_180058",
+        "source_position": 41,
+        "input_hash": "5b2340084cf1bd8a062293cf1dfb17d0901af4bfd80c484d181b5ab173272abe",
+        "label_hash": "2b565ce0cb64f754355c15b73c34b2ab08cf5b3b681e04285a4405937a20d88a",
+        "clean_attack_id": "17465d9e067ad070e949389b5b571b1d386c39f88f76fbc895a6185a4a430529",
+        "exchange_attack_id": "0b07a253e83580ccff70f0f792ef1feb216fab03eede0bef11e4fe976b264bd8"
+      },
+      {
+        "task_id": "arc_challenge:LEAP_2012_8_10441",
+        "source_position": 61,
+        "input_hash": "e09af79dac640564ee7e6d0835a407fef8dbc8da2fa07fcb8664874e8de55db7",
+        "label_hash": "c9bea58cca32f4889d03e8672261ffeea9ed8a59a2256df35539b24afb9d4044",
+        "clean_attack_id": "6c721bdde6273eaec21ddb553416d2f833c18d716af76fb2e9c8ff0310c2a7bd",
+        "exchange_attack_id": "6532b52546ac6f9ead7b2a6f4636625e7e30335774d29de4411c2303dad62848"
+      },
+      {
+        "task_id": "logiqa:eval-0590",
+        "source_position": 70,
+        "input_hash": "7ec956351823fedd0c990a3710a7a3e96be5bd94947bacaf67206e65a62d5df5",
+        "label_hash": "0f2d7da4863c67d2224d14dc6699381344beb9657d016e1a019af8ab85fee596",
+        "clean_attack_id": "1ca149e6cdbf6f053e3cd16840783014ab695a5c4b4df47f15e68bd7cec8feb7",
+        "exchange_attack_id": "98f0e5f60075e9d479a8c3fee7fe070f90562adecad5e863e4bcec43bf4ea91d"
+      }
+    ]
+  }
+}

@@ -39,6 +39,9 @@ def run(config: Config, *, run_id: str, scratch: Path, persistent: Path | None =
         backend_factory=create_backend) -> Path:
     config.validate()
     safe_name(run_id)
+    selection = getattr(config, "selection", None)
+    if selection and run_id == selection.source_run_id:
+        raise ValueError("Selected feasibility requires a new run ID, distinct from its source run")
     scratch = scratch.resolve()
     persistent = persistent.resolve() if persistent else None
     if persistent and (scratch == persistent or scratch in persistent.parents or persistent in scratch.parents):
@@ -63,6 +66,10 @@ def run(config: Config, *, run_id: str, scratch: Path, persistent: Path | None =
              {"preflight": "pending", "data": "pending", "collection": "pending", "report": "pending",
               "training": "deferred", "final_test": "deferred"}, expected, 0, invocation,
              "mock_only" if config.backend == "mock" else "untrained_validation_diagnostic", ""))
+    if selection:
+        manifest["selection"] = dataclasses.asdict(selection)
+        if config.backend != "mock":
+            manifest["scientific_status"] = "selected_validation_feasibility"
     manifest["persistent_root"] = str(remote) if remote else None
     manifest["stage_status"]["persistence"] = "pending" if remote else "not_configured"
     manifest.pop("verified_snapshot", None)
@@ -107,6 +114,18 @@ def run(config: Config, *, run_id: str, scratch: Path, persistent: Path | None =
             manifest["stage_status"]["data"] = "complete"
             write_json(root / "manifest.json", manifest)
             backend = backend_factory(config, scratch / "cache" / "models")
+            if selection and backend.identity["snapshot"] != selection.source_model_snapshot:
+                raise ValueError("Selected source model snapshot mismatch; no generation permitted")
+            selected_attacks = {}
+            if selection:
+                # Validate every source attack before the first model generation.
+                for task, chosen in zip(tasks, selection.tasks):
+                    for condition in config.conditions:
+                        attack = fixed_attack(task, labels[task.task_id], condition, chosen.source_position,
+                                              config.seed, backend, config.limits.payload)
+                        if attack.attack_id != getattr(chosen, f"{condition}_attack_id"):
+                            raise ValueError("Selected source attack mismatch; no generation permitted")
+                        selected_attacks[task.task_id, condition] = attack
             if old and old["model_identity"] and old["model_identity"]["snapshot"] != backend.identity["snapshot"]:
                 raise ValueError("Model/adapter/checkpoint snapshot mismatch")
             manifest["model_identity"] = backend.identity
@@ -116,7 +135,9 @@ def run(config: Config, *, run_id: str, scratch: Path, persistent: Path | None =
             # One balanced reference attack assignment per task/channel, independent of compared method.
             for position, task in enumerate(tasks):
                 for condition in config.conditions:
-                    attack = fixed_attack(task, labels[task.task_id], condition, position, config.seed, backend, config.limits.payload)
+                    source_position = data_manifest["selected"][position].get("source_position", position)
+                    attack = (selected_attacks[task.task_id, condition] if selection else
+                              fixed_attack(task, labels[task.task_id], condition, source_position, config.seed, backend, config.limits.payload))
                     for method in config.methods:
                         key = digest([config.identity, task.task_id, attack.attack_id, method, backend.identity["snapshot"]])
                         existing = store.read(key)

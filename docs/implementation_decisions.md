@@ -253,3 +253,84 @@ path still needs actual Colab verification; small local tests do not establish l
 pilot Drive throughput. The patch changes executable source identity and must be
 published/pinned as a new commit. It is not an exact continuation of the old profile,
 whose complete recovered records remain usable without regeneration.
+
+Subsequent verification on 2026-09-17: the user returned `drive-storage-check-001`
+from published commit `ede29d6931aa1d4634c2a9bd47dcdcc2a54708ea`. The final ZIP and
+all member checksums match, all 12 mock records are complete, and its snapshot
+receipt/ZIP-copy log establish normal small-run storage success on the reported
+Colab environment. This closes the normal-path check above; timeout behavior on
+an actually stalled Colab mount and large pilot throughput remain unverified.
+See [the storage review](reviews/drive-storage-check-001.md). No code change followed.
+
+## 2026-09-18: pilot evidence before further sampling or training
+
+The completed 80-item unadapted pilot does not establish the scientific gate for
+expensive specialization. Simple controls match or exceed debate's point estimates;
+only three clean teams show mixed correctness; the four-task probe has no eligible
+packet or receiver pair. These are diagnostic findings, not bugs or a result for
+trained PACT. Missing credits stay null. A small probe cannot establish that pairs
+are impossible across the task pool, and no sampling/attack change is justified
+solely to force the desired mechanism.
+
+All exported metrics reproduce, but the current six-example handoff omits every
+probe trace and most paired mechanism cases. The next action is therefore a
+CPU-only export of the already persisted raw run, rather than more GPU collection.
+Keep the original configuration and artifacts. Inspect the candidate text, parser
+outcomes and fixed-context invariants before deciding whether a bounded follow-up
+is needed. Any future scientific configuration change requires a new run identity.
+No automatic Milestone-3 training, final-test use, or paper-placeholder update follows.
+
+The pilot reports a verified final snapshot at the repaired commit, so normal-path
+storage verification now includes this 1,440-record run. This does not establish
+that a genuinely blocked Colab filesystem has exercised the timeout fallback.
+Review details and exact export instructions are in
+[the pilot review](reviews/qwen3-pilot-001.md) and [the runbook](colab_runbook.md).
+
+## 2026-09-18: raw audit closes recovery; selected feasibility check proposed
+
+The requested raw ZIP is received and its checksum matches. All records and calls
+pass local audit, including candidate contexts/seeds/pair selection. No source fix
+is justified by the zero-pair result. The earlier export request is complete.
+The full context census reveals 97 hold and ten repair opportunities, but the four
+probe tasks sampled just two hold contexts. Missing sampled pairs therefore do not
+establish that usable pairs are absent across the 80-task pool.
+
+The next proposed local engineering increment is a fixed-budget, explicitly
+selected diagnostic on the three observed mixed-initial tasks, preserving model,
+decoding, original attack bytes/site and node seeds. Its purpose is to exercise
+eligible replay/receiver paths before any training decision, not estimate accuracy
+or claim a preservation benefit. Disclose selection and keep its results separate
+from the original pilot. No new configuration/command is implemented by this review;
+local tests, review/publication and a new pinned run identity must precede execution.
+Do not change caps/temperature until pairs appear. Keep training/final-test deferred.
+The concrete scope and upper bound are in the
+[raw review](reviews/qwen3-pilot-001-raw.md#decision-and-smallest-useful-follow-up).
+
+## 2026-09-18: implement the bounded selected feasibility check
+
+The user approved proceeding with the proposed local extension. Add a separate
+SelectedConfig serialization so existing ordinary config hashes remain unchanged;
+only this explicitly named purpose permits the three-task, unbalanced selection.
+The preset is fixed to debate, clean/exchange, three tasks and the original 4/4/K=2
+probe cap. A generation-settings digest rejects accidental seed/model/precision/
+length/sampling changes. The selected pool is rebuilt from official validation
+sources and checked against the original full manifest and task/label hashes.
+
+Retain original zero-based positions 41/61/70, not filtered positions 0/1/2, for
+exchange sender assignment. Pin both clean/exchange attack IDs per task and validate
+all six against generated payload/site identities before any inference; check the
+original model snapshot at the same boundary. Reject reuse of the source run ID.
+Regenerate these six main trajectories under the original node seeds; do not alter
+or pretend to resume the completed pilot. New config identity intentionally gives
+new probe seeds, while corresponding suffix branches remain paired by node.
+Different runtime fingerprints are disclosed for a new run; existing strict resume
+checks still prohibit silently continuing across changed runtime/code/configuration.
+
+Mark selected engineering scope in manifests, metrics, diagnostics and handoffs.
+The existing six-example export includes this entire six-record run, including its
+probe candidates/suffixes. No extra raw-export workflow is necessary. Tighten the
+reported probe-token upper bound to account for 64-token finals separately from
+256-token packets; this changes accounting only, not generation caps or protocol.
+No automatic sweep, retry-until-eligible, training or final-test command is added.
+The new path is CPU-tested but GPU-unverified. Publication requires a new commit;
+source-run evidence remains immutable. [Execution guide](replay_check.md).

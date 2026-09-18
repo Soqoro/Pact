@@ -20,6 +20,7 @@ PRESETS = {
     "smoke": "configs/smoke/qwen3_8b.yaml",
     "profile": "configs/pilot/profile_20.yaml",
     "pilot": "configs/pilot/validation_80.yaml",
+    "replay-check": "configs/pilot/replay_check_3.yaml",
     "matched": "configs/baselines/matched_80.yaml",
     "engineering": "configs/smoke/qwen3_06b_engineering.yaml",
 }

@@ -119,6 +119,8 @@ def fixtures(items: int) -> list[tuple[TaskInput, TaskLabel]]:
 
 
 def prepare(config: Config, cache_dir: Path) -> tuple[list[TaskInput], dict[str, TaskLabel], dict]:
+    if getattr(config, "selection", None):
+        return prepare_selection(config, cache_dir)
     records = fixtures(config.items) if config.backend == "mock" else []
     if config.backend != "mock":
         cache_dir.mkdir(parents=True, exist_ok=True)
@@ -172,3 +174,32 @@ def prepare(config: Config, cache_dir: Path) -> tuple[list[TaskInput], dict[str,
         "family_counts": {f: sum(t.family == f for t, _ in selected) for f in sorted({t.family for t, _ in selected})},
     }
     return [t for t, _ in selected], {l.task_id: l for _, l in selected}, manifest
+
+
+def prepare_selection(config: Config, cache_dir: Path) -> tuple[list[TaskInput], dict[str, TaskLabel], dict]:
+    """Reconstruct the original pool before selecting; never renumber attack sites."""
+    import dataclasses
+    from .config import config_from_dict
+    selection = config.selection
+    config.validate()
+    parent = dataclasses.asdict(config)
+    parent.pop("selection")
+    parent.update(purpose="diagnostic_pilot", items=selection.source_items)
+    tasks, labels, manifest = prepare(config_from_dict(parent), cache_dir)
+    if digest(manifest) != selection.source_manifest_hash:
+        raise ValueError("Source data manifest mismatch; do not silently reselect tasks")
+    selected_tasks, entries = [], []
+    for chosen in selection.tasks:
+        task = tasks[chosen.source_position]
+        entry = manifest["selected"][chosen.source_position]
+        if (task.task_id, digest(task), digest(labels[task.task_id])) != (chosen.task_id, chosen.input_hash, chosen.label_hash):
+            raise ValueError("Selected task position/input/label mismatch")
+        selected_tasks.append(task)
+        entries.append({**entry, "source_position": chosen.source_position})
+    return selected_tasks, {t.task_id: labels[t.task_id] for t in selected_tasks}, {
+        **manifest, "requested": config.items, "realized": len(selected_tasks), "selected": entries,
+        "selection": "post-hoc mixed-initial tasks; selected engineering feasibility only; not representative performance",
+        "selection_provenance": dataclasses.asdict(selection),
+        "family_counts": {family: sum(t.family == family for t in selected_tasks)
+                          for family in sorted({t.family for t in selected_tasks})},
+    }

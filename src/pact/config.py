@@ -79,9 +79,16 @@ class Config:
     def identity(self) -> str:
         return digest(self)
 
+    @property
+    def generation_identity(self) -> str:
+        return digest({"seed": self.seed, "model": self.model,
+                       "sampling": self.sampling, "limits": self.limits})
+
     def validate(self) -> Config:
-        if type(self.schema_version) is not int or self.schema_version != 1 or self.purpose != "diagnostic_pilot":
-            raise ValueError("Only schema 1 diagnostic_pilot is implemented")
+        selection = getattr(self, "selection", None)
+        purpose = "selected_replay_feasibility" if selection else "diagnostic_pilot"
+        if type(self.schema_version) is not int or self.schema_version != 1 or self.purpose != purpose:
+            raise ValueError("Purpose must match the declared diagnostic selection")
         if self.backend not in ("mock", "transformers") or self.stage not in ("smoke", "profile", "pilot"):
             raise ValueError("Unsupported backend or stage")
         if self.split != "validation":
@@ -92,10 +99,12 @@ class Config:
                             *dataclasses.asdict(self.probe).items()]:
             if type(value) is not int or value < (0 if name in ("tasks", "seed") else 1):
                 raise ValueError(f"Invalid integer {name}: {value}")
-        if self.items % 2 or self.items > {"smoke": 8, "profile": 20, "pilot": 80}[self.stage]:
+        if not selection and (self.items % 2 or self.items > {"smoke": 8, "profile": 20, "pilot": 80}[self.stage]):
             raise ValueError("Use balanced even item counts within smoke=8, profile=20, pilot=80 caps")
-        if self.items < 4 or self.probe.tasks > self.items or self.probe.candidates > 4 or self.probe.revision_candidates > 4:
+        if (not selection and self.items < 4) or self.probe.tasks > self.items or self.probe.candidates > 4 or self.probe.revision_candidates > 4:
             raise ValueError("Need at least 4 items; probe tasks <= items, candidates <= 4")
+        if selection:
+            selection.validate(self)
         if self.probe.suffix_seeds != 2:
             raise ValueError("This pilot prespecifies K=2 paired suffix seeds")
         if not self.methods or len(set(self.methods)) != len(self.methods) or set(self.methods) - set(METHODS):
@@ -126,6 +135,55 @@ class Config:
         return self
 
 
+@dataclasses.dataclass(frozen=True)
+class SelectedTask:
+    task_id: str
+    source_position: int
+    input_hash: str
+    label_hash: str
+    clean_attack_id: str
+    exchange_attack_id: str
+
+
+@dataclasses.dataclass(frozen=True)
+class SelectionConfig:
+    source_run_id: str
+    source_config_hash: str
+    source_manifest_hash: str
+    source_model_snapshot: str
+    source_generation_hash: str
+    source_items: int
+    tasks: tuple[SelectedTask, ...]
+
+    def validate(self, config: Config) -> None:
+        from .util import safe_name
+        safe_name(self.source_run_id)
+        if type(self.source_items) is not int or self.source_items % 2 or not 4 <= self.source_items <= 80:
+            raise ValueError("Selection source must be a balanced 4–80-item validation pool")
+        if (config.stage != "pilot" or config.items != 3 or len(self.tasks) != 3
+                or config.methods != ("debate",) or config.conditions != ("clean", "exchange")
+                or config.probe != ProbeConfig(tasks=3)):
+            raise ValueError("Selected feasibility check requires three tasks, debate, clean/exchange and fixed 4/4/K=2 probes")
+        if len({t.task_id for t in self.tasks}) != 3 or len({t.source_position for t in self.tasks}) != 3:
+            raise ValueError("Selected task IDs and source positions must be unique")
+        for task in self.tasks:
+            if not isinstance(task.task_id, str) or not task.task_id or type(task.source_position) is not int or not 0 <= task.source_position < self.source_items:
+                raise ValueError("Invalid selected task identity or source position")
+        hashes = [self.source_config_hash, self.source_manifest_hash, self.source_model_snapshot,
+                  self.source_generation_hash, *(h for t in self.tasks for h in
+                    (t.input_hash, t.label_hash, t.clean_attack_id, t.exchange_attack_id))]
+        if any(not isinstance(h, str) or not re.fullmatch(r"[0-9a-f]{64}", h) for h in hashes):
+            raise ValueError("Selection requires full provenance SHA256 hashes")
+        if config.generation_identity != self.source_generation_hash:
+            raise ValueError("Selected check must preserve source seed, model, precision, limits and sampling")
+
+
+@dataclasses.dataclass(frozen=True, kw_only=True)
+class SelectedConfig(Config):
+    # A separate dataclass preserves existing Config serialization and identities.
+    selection: SelectionConfig
+
+
 def _construct(cls, data: dict[str, Any]):
     if not isinstance(data, dict) or set(data) - {f.name for f in dataclasses.fields(cls)}:
         raise ValueError(f"Unknown fields in {cls.__name__}")
@@ -153,7 +211,13 @@ def config_from_dict(data: dict) -> Config:
             if not isinstance(data[key], (list, tuple)) or not all(type(x) is str for x in data[key]):
                 raise ValueError(f"{key} must be a sequence of strings")
             data[key] = tuple(data[key])
-    return _construct(Config, data).validate()
+    cls = Config
+    if "selection" in data:
+        selection = dict(data["selection"])
+        selection["tasks"] = tuple(_construct(SelectedTask, task) for task in selection.get("tasks", []))
+        data["selection"] = _construct(SelectionConfig, selection)
+        cls = SelectedConfig
+    return _construct(cls, data).validate()
 
 
 def budget(config: Config) -> dict:
@@ -180,6 +244,10 @@ def budget(config: Config) -> dict:
     tokens = config.items * sum(v["max_generated_tokens"] * v["applicable_conditions"] for v in caps.values())
     probe_calls = config.probe.tasks * len(config.conditions) * 3 * (
         config.probe.candidates + config.probe.revision_candidates + 2 * config.probe.suffix_seeds * 4)
+    probe_tokens = config.probe.tasks * len(config.conditions) * 3 * (
+        (config.probe.candidates + config.probe.revision_candidates) * p
+        + 2 * config.probe.suffix_seeds * (3 * p + f))
     return {"methods": caps, "trajectory_calls_upper_bound": calls, "trajectory_output_tokens_upper_bound": tokens,
-            "probe_calls_upper_bound": probe_calls, "probe_output_tokens_upper_bound": probe_calls * p,
+            "probe_calls_upper_bound": probe_calls, "probe_output_tokens_upper_bound": probe_tokens,
+            "total_calls_upper_bound": calls + probe_calls, "total_output_tokens_upper_bound": tokens + probe_tokens,
             "input_tokens_note": "Actual input tokens measured; equal output caps do not imply equal FLOPs or context cost"}
