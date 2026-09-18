@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "purpose": "clean_answer_warmstart_engineering",
+  "data_manifest_hash": "2cdbd6a37e89c5ceacaab08d2a43e53561a727c52458dc715b29dca0cf91eb0e",
+  "seeds": [1729, 1730, 1731],
+  "steps_per_agent": 3,
+  "effective_batch": 4,
+  "context_limit": 4096,
+  "rank": 16,
+  "alpha": 32,
+  "learning_rate": 0.00001,
+  "weight_decay": 0.0,
+  "max_grad_norm": 1.0,
+  "dropout": 0.0,
+  "target_modules": ["q_proj", "v_proj"]
+}

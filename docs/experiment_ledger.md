@@ -269,3 +269,183 @@ diagnostic action. Preserve negative or inconclusive findings. Never execute tra
   `real_selection_audit.json`. New executable source needs review/commit/push before
   the next Colab checkout. Current status: implemented, cpu_tested, gpu_unverified.
   [Exact next execution steps](replay_check.md).
+
+## Returned selected replay check — `qwen3-replay-check-001` (2026-09-18)
+
+- ZIP `results_import/qwen3-replay-check-001-handoff-1789714612508117841 (1).zip`,
+  179,664 bytes; SHA256 `21e5133daa634a894357f09658c2a78c5b6bef1bf3d701bcd8d454f7532899cb`
+  matches user output. All 17 member checksums and six raw inventory hashes pass.
+- Clean commit `e79a9ab0da7b3801ba1ff488ddd974302768da2a`; source hash
+  `c1284a3bcd899fd112f6e63ad856a8a0d64c0dcc0505be0926806864fc84cd8f` matches local code.
+  Config `415be5290ccccc58ad15672a0a33d7693519155d6482a878884fba423c57c611`;
+  data manifest `43da504ec1e407835be486b273dbd578be43e97ad76db38d71a809bde1a70cbb`.
+  Same unadapted Qwen3-8B snapshot, L4 runtime fingerprint, decoding and seed as pilot.
+- Six complete applicable records, no failures/missing data. Full metrics/probes and
+  386 calls independently audited. All main texts/prompts/attacks/seeds match the
+  original pilot, excluding new IDs/timing and dependent artifact hashes.
+- Private packet pairs: 13/18, four missing correct and one missing incorrect. Credits:
+  five +1, two +0.5, six zero; five missing remain null. Three pairs unmatched by the
+  32-token length-bin rule (two have positive credit). Post-hoc three-task selection
+  and K=2 preclude population/efficacy claims.
+- All 52 suffix branches / 208 calls verify paired node seeds, frozen other-agent
+  private packets, fixed attack bytes/site and revised-only base readout. Two eligible
+  corrupted-sender substitutions execute the same malicious delivery in both branches.
+  Neural suffix execution is now verified on the reported environment.
+- Receiver sampling: eight hold/eight repair contexts, 64 calls, zero same-context
+  correct/incorrect pairs. Hold sets: six all-correct/two all-wrong; repair sets:
+  one all-correct/seven all-wrong. Two further contexts ineligible, no calls.
+- Main success 1/3 clean, 0/3 exchange, reproducing the selected original cells.
+  All 386 calls end at EOS, 380 answer parses/six abstentions, no malformed or
+  length-limit completions. Maximum prompt plus reserved output: 830 tokens.
+- Cost: 42 main + 72 private candidates + 208 suffix + 64 receiver = 386 calls;
+  148,080 input / 18,046 output tokens. Recorded attempt 1,380.995 seconds,
+  0.38361 accelerator-hours; generation 1,266.26 seconds, 14.25 output tokens/sec.
+  Peak allocated/reserved 15.41/15.53 GiB. Final report/storage/setup excluded from
+  attempt timing; compute units unknown. Reported persistence receipt is complete.
+- Original imports preserved; derived audit in `results_import/qwen3-replay-check-001/analysis/`.
+  No source patch or regression-suite rerun; CPU artifact audit passes completely.
+- Next: no Colab rerun/export. Propose local Milestone-3 scope and training-split
+  data plan, keeping receiver pair feasibility open and validation data out of
+  training. No training, new sampling sweep, or final evaluation was launched.
+  [Full review](reviews/qwen3-replay-check-001.md).
+
+## Local learning foundations — CPU only (2026-09-18)
+
+- Implemented scored-bank validation, masked exponentiated-gradient assignment,
+  global loss coefficients, same-prompt hold/repair preference construction,
+  immutable reference-score caching, and causal completion/DPO numerical functions.
+  CLI: `training-check`, `assign`, `build-preferences`. No model training launched.
+- Final full suite: `PYTHONPATH=src python -m unittest discover -s tests -v`:
+  59 tests, 57 passed, two optional neural checks skipped, exit 0 (11.138 seconds).
+  The new 16 tests include an independent coordinate-bisection assignment reference,
+  same-prompt/split rejection, invalid/empty candidate accounting, masks/reductions,
+  cache corruption/invalidation and a complete synthetic CLI round trip.
+- The initial solver comparison exposed numerical oscillation near the optimum.
+  Capping the mirror step by `1/(tau + balance)` resolved it; final independent
+  solution comparison and convergence/feasibility checks pass. No tolerance relaxation.
+- Saved synthetic round trip: `results_import/training-foundations-001/cpu-roundtrip/`.
+  Assignment converges with two eligible rows and one all-missing base-only row;
+  synthetic preferences contain one hold and one repair pair. All scores/candidates
+  in this fixture are invented software-test values, never empirical results.
+- Evidence: `results_import/training-foundations-001/tests.log` and
+  `verification.json` record test outcome, dirty working-tree source identity, missing
+  torch dependency and fixture summary. No model/data download or GPU use.
+- Real training-source verification, neural warm-start/reference scoring, adapter
+  update isolation and optimizer resume remain outstanding. Existing validation
+  bundles remain evidence only. [Training contract and next gates](training_foundations.md).
+
+## Train-only loaders and frozen selections — CPU (2026-09-18)
+
+- Downloaded only pinned ARC-Challenge train/validation parquet and original English
+  LogiQA Train/Eval text. SHA256 and byte counts recorded in
+  `results_import/training-data-001/source_audit.json`; validation hashes match the
+  previous audit. Used PyArrow 22.0.0 installed under `/tmp/pact-training-data-deps`
+  for this explicit real-source check; no base-environment changes or model downloads.
+- Parsed all 1,119 ARC / 7,376 LogiQA train records and 299 ARC / 651 LogiQA validation
+  records. Fixed exact-content/source-ID and word-trigram Jaccard >=9/10 screening
+  removes 59 redundant train rows (1 ARC, 58 LogiQA), leaving 1,118 / 7,318 eligible.
+  Audit contains 58 train duplicate components, 15 exact-content links, 44 additional
+  lexical links, no label conflicts, and no train–validation matches under these rules.
+  Semantic paraphrases and final-test overlap remain unaudited.
+- Frozen 12-item engineering manifest (6/family), seed 20260918:
+  `2cdbd6a37e89c5ceacaab08d2a43e53561a727c52458dc715b29dca0cf91eb0e`.
+  Frozen 1,200-item proposal manifest (600/family), same seed:
+  `92771b288958e6a1c23b731936dedb4db6285803465fb468bb05e5e2f497c62a`.
+  Nested selection verified. The latter preparation/verification took 15.32 seconds
+  locally, excluding downloads/dependency setup. Neither launches training.
+- Refactored validation parsers reproduce the returned 80-item pilot manifest exactly:
+  `8a8a9515244b2ded3e2eba801b99adaa107547ee02470991946d5ff7b8216495`.
+  Stored comparison in `validation_compatibility.json`; original imports untouched.
+- `PYTHONPATH=src python -m unittest discover -s tests -v`: 68 tests, 66 passed,
+  two optional neural tests skipped, exit 0 (8.364 seconds). New tests cover split
+  discipline, reordered options/conflicting duplicates, transitive lexical matching,
+  deterministic balance, immutable/checksummed data, explicit downloads and marker order.
+  Evidence: `results_import/training-data-001/tests.log`, `verification.json`, and
+  both prepared directories with all tasks, separate labels, audits and checksums.
+- No final-test access or model training. Next local work is warm-start optimization,
+  frozen adapter/reference snapshots and checkpoint/resume.
+  [Preparation guide and limitations](training_data.md).
+
+## Bounded warm-start implementation — control-path CPU checks (2026-09-18)
+
+- Added clean-answer warm-start recipe, sequential adapter optimizer engine,
+  safetensors/typed JSON checkpoint-resume and separate frozen adapter exports.
+  Default CLI only plans; no model loading, parameter update or GPU call executed.
+- Real-manifest dry run uses the reviewed 12 tasks, three distinct agent seeds,
+  microbatch 1 / effective batch 4, three updates per adapter (nine total).
+  Recipe hash `631ab416524276da3798db7b2edecfe231d5f197d3fd54d886779acce4faf579`.
+  Plan hash `5a15cf4679764c446bd562ffa9ea9783e732b32ba3e5bdb82cd20a95fcdf420d`.
+  Full task orders are in `results_import/warmstart-implementation-001/plan.json`.
+- Final default suite: 76 tests, 73 passed, three optional neural tests skipped,
+  exit 0 (11.248 seconds). Seven new control tests validate bounded recipes, exact
+  manifest binding/orders, prompt/target separation and overflow rejection, typed
+  state round trips, checkpoint integrity/publication, early incompatible-resume
+  rejection and plan-only CLI behavior. No dependency/model downloads for these tests.
+- New opt-in tiny random Qwen test covers sequential adapter updates, actual base/
+  inactive parameter equality, nonzero-dropout interruption/resume, and frozen
+  export/reload. **Not executed:** explicit model-test opt-in is pending and torch/
+  PEFT are absent. Do not report neural checkpoint equivalence or Qwen training fit
+  as tested based on the control-path fixtures.
+- Evidence: `results_import/warmstart-implementation-001/tests.log`, `plan.json`,
+  `verification.json`; dirty executable source hash
+  `5762a58971732b16bb1729c7a70f8a5aaad3753ab0209627a2965068f8ed684b`.
+  `git diff --check` passes. No commit/push, final-test access, trained checkpoint,
+  frozen reference scores or scientific result produced.
+- Next gate: opt-in tiny neural tests, then a reviewed/published bounded Qwen memory
+  profile. Scored-bank collection and full PACT updates remain unimplemented.
+  [Warm-start guide](warmstart.md).
+
+## Authorized tiny CPU neural verification — `neural-cpu-check-001` (2026-09-18)
+
+- User explicitly approved the tiny CPU model tests. Created `/tmp/pact-neural-cpu`
+  without modifying the base environment. Installed torch 2.9.1+cpu from the official
+  CPU wheel index, Transformers 4.57.6, PEFT 0.18.1 and Accelerate 1.12.0; `pip check`
+  passes. Full dependency versions are preserved in `requirements-lock.txt`.
+- `PACT_TEST_NEURAL=1`, CUDA hidden, HF/Transformers/dataset hubs offline, OMP/MKL
+  threads one. Asserted no CUDA build/device availability. Models initialized locally;
+  no pretrained model weights, datasets, final tests or GPU training were accessed.
+- Full suite: **76 tests passed, zero skipped**, 12.707 seconds (12.797 with evidence
+  bookkeeping), zero errors/failures. The three previously skipped tests verify
+  adapter/base readout separation, differentiable masked completion/DPO scores, and
+  tiny warm-start update/isolation/resume/export behavior.
+- Warm-start fixture: one-layer Qwen3, hidden width 16, vocabulary 32, rank-2 q/v
+  adapters, LoRA dropout 0.2, attention dropout 0.1, four synthetic token sequences.
+  Six optimizer updates (two per agent). Interruption after update one and restoration
+  into fresh objects produces exactly equal final parameters and loss/progress logs.
+  Backbone and inactive adapters stay unchanged; all three agents update. All frozen
+  exports match their actors, agent0 reload matches, and actor mutation is rejected
+  on repeated reference verification.
+- Evidence: `results_import/neural-cpu-check-001/{tests.log,verification.json,requirements-lock.txt,pip-check.txt}`.
+  Log SHA256 `be34118f9ca10d5eaaf5b8aa5a78f0ea0b413e4b5e989e8ac3e2d8e42813ea7b`.
+  Tested executable source hash remains
+  `5762a58971732b16bb1729c7a70f8a5aaad3753ab0209627a2965068f8ed684b`;
+  no executable patch, commit or push was needed. Documentation now distinguishes
+  verified tiny CPU behavior from pending real Qwen3-8B GPU execution.
+- Next: review/publish a pinned revision and prepare the bounded Colab training
+  memory/persistence handoff. Activation checkpointing, BF16/GPU training and GPU
+  resume remain unverified; full PACT collection/training remain unimplemented.
+  [Detailed review](reviews/neural-cpu-check-001.md).
+
+
+## Warm-start Colab preparation — `warmstart-colab-check-001` (2026-09-18)
+
+- Added the explicit, one-update-default training notebook, redacted subprocess
+  logs, small review ZIPs, complete checkpoint persistence, exact-snapshot restore
+  and a persistence-only retry. No GPU training was launched.
+- Extended the authorized tiny neural test to use non-reentrant activation
+  checkpointing; uninterrupted and fresh-object resumed weights/logs still match
+  exactly with dropout, frozen backbone/inactive adapters and valid reference exports.
+- All **81 neural-enabled CPU tests pass**, zero skipped, 17.782 seconds. Default
+  dependency-free suite: **78 passed, three expected skips**, 11.685 seconds.
+- New fixture tests verify checksummed review archives, full checkpoint restore via
+  the deadline worker, corruption/traversal rejection without partial publication,
+  persistence timeout/retry, preserved training failure status and notebook execution
+  opt-in. Actual training on GPU, GPU resume and Drive checkpoint performance remain
+  unverified. No pretrained models, new datasets or final-test data were downloaded.
+- Source hash: `22b9dd8ed1662cd6ebd487a26445d46fa0b7ef90dace4eaae2ac3b1d94949eb1`.
+  Evidence: `results_import/warmstart-colab-check-001/{tests.log,default-tests.log,verification.json}`.
+  Neural log SHA256: `94f59d48f58c53e2db954c7adb8e572bc2cfb5f2a6f7089952b633f5d97ae977`.
+  Default log SHA256: `578fcc066255cc40cb3eb08a496d7dce2b57cdf0c1680458c00aae9a05592dae`.
+- Next execution: publish/pin this revision, run one Qwen3-8B optimizer update using
+  `02_warmstart_colab.ipynb`, return the small review ZIP, and preserve the complete
+  verified checkpoint object store in Drive before resetting the runtime.

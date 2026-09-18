@@ -2,29 +2,36 @@
 
 ## Current next action (reviewed 2026-09-18)
 
-The 80-item pilot and full raw recovery are reviewed; no completed run or export
-needs repeating. The next selected replay-feasibility diagnostic is now implemented
-and CPU-tested. Review/commit/push the local change first, then pin its new full SHA
-in Colab. The old `ede29d6` commit does not contain this preset.
+`qwen3-replay-check-001` completed and its entire handoff is reviewed. All six raw
+records, 386 model calls and 52 eligible suffix branches pass audit. Private-packet
+pair coverage is 13/18; receiver preference coverage is 0/16 eligible contexts.
+See the [review and next gate](reviews/qwen3-replay-check-001.md).
 
-Use `PRESET="replay-check"`, `STAGE="pilot"`, `RUN_ID="qwen3-replay-check-001"`,
-`RESUME=False`. It runs six debate trajectories on three explicitly selected
-validation tasks, preserving their original attack positions/bytes and main seeds.
-Ceilings: 474 model calls and 106,368 generated tokens per uninterrupted collection.
-No automatic training or extra sampling follows a zero-pair result.
+No further validation Colab invocation or raw export is needed. Preserve the completed
+pilot and replay-check artifacts; do not rerun them or increase sampling caps to
+force pairs. The first local Milestone-3 increment now provides CPU assignment,
+preference and reference-cache checks plus a [training-data plan](training_foundations.md).
+Real GPU training has not executed. Selected validation
+records must not become training data. A future GPU invocation requires its own
+implemented, tested and published configuration.
 
-The complete parameter cell, setup/execution sequence, exact commands, expected
-output and review limits are in [the replay-check guide](replay_check.md).
-Dry-run from the newly published checkout:
+The subsequent local data increment also verifies train-only loaders and frozen
+12/1,200-task selections with exact/lexical overlap checks. Follow
+[training-data preparation](training_data.md) locally; these commands do not launch
+warm-start training or change the completed Colab runs.
 
-```bash
-python -m pact pilot --config configs/pilot/replay_check_3.yaml --run-id qwen3-replay-check-001 --scratch /content/pact-scratch --persistent /content/drive/MyDrive/PACT --dry-run
-```
+The [bounded warm-start CLI](warmstart.md) is now implemented with a default local
+planning mode. [Tiny CPU neural isolation/resume checks now pass](reviews/neural-cpu-check-001.md).
+Qwen GPU training-memory profiling remains pending. Next, review/publish a pinned
+revision, then use [02_warmstart_colab.ipynb](../notebooks/02_warmstart_colab.ipynb)
+for one optimizer update and return its review ZIP. It has an explicit execution
+gate, verified checkpoint snapshots, timed restore and a persistence-only retry.
+See [warm-start execution and recovery](warmstart.md#colab-execution-and-recovery).
+The original notebook remains the validation launcher.
 
-Run the notebook's execution cell after setup/budget review. Return its standard
-handoff ZIP and printed checksum. All six raw records and their probe branches
-are included; a separate full raw export should not be needed. This selected
-engineering check is GPU-unverified and does not estimate representative accuracy.
+The [replay-check guide](replay_check.md) is retained as the completed run's execution
+record, not an instruction to launch another copy. Existing CPU validation and
+first-run instructions below remain available for development/new installations.
 
 ## Local review and CPU validation
 

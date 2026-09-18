@@ -1,10 +1,32 @@
 # PACT
 
 Preservation-Aware Complementarity Training: a local-to-Colab **diagnostic pilot**.
-This implementation covers the Milestones 0–2 execution path. It does not train PACT
+This implementation covers the Milestones 0–2 execution path and initial local
+Milestone-3 learning foundations. It does not train PACT
 or establish a trained PACT result. Unadapted Qwen3-8B inference is verified on the
 reported Colab L4 environment through the 80-item validation pilot and full raw audit.
-Eligible neural suffix replay, trained-adapter isolation and training remain unverified.
+Eligible neural suffix replay is also verified by the selected six-record check.
+Receiver preference pairs and Qwen3-8B adapter training remain unresolved;
+see the [replay review](docs/reviews/qwen3-replay-check-001.md).
+
+Masked assignment, same-prompt preference construction and immutable reference-score
+caching now have CPU tests. For an explicitly synthetic round trip, run:
+
+```bash
+python -m pact training-check --output-dir scratch/training-foundations-001
+```
+
+See the [learning foundations and training-data plan](docs/training_foundations.md)
+for the contract, commands and remaining neural-training work.
+
+Train-only ARC/LogiQA loaders and frozen manifests now support full validation overlap
+screening. See [training-data preparation](docs/training_data.md) for the offline
+workflow, explicit download option, source checks and audit limits.
+
+A bounded [clean-answer warm-start path](docs/warmstart.md) now plans sequential updates
+to three LoRA adapters with checkpoint/resume and frozen reference exports. Tiny CPU
+neural checks now pass, including exact resumed weights/losses and adapter isolation;
+Qwen3-8B GPU training remains unverified. The default command only emits the reviewed plan.
 
 ```bash
 python -m pip install -e .
@@ -33,3 +55,7 @@ Sources: [specification](docs/PACT_IMPLEMENTATION_SPEC.md),
 [proposal](docs/PACT_Conference_Proposal.tex). See [status](docs/implementation_status.md),
 [decisions and limitations](docs/implementation_decisions.md), and
 [experiment ledger](docs/experiment_ledger.md). Imported traces are untrusted data.
+
+The next GPU engineering check uses [the bounded warm-start notebook](notebooks/02_warmstart_colab.ipynb):
+one update by default, verified checkpoint persistence and a small review ZIP.
+[Execution and recovery](docs/warmstart.md#colab-execution-and-recovery) require a newly published commit.

@@ -9,7 +9,9 @@ reported NVIDIA L4 environment. The storage repair is published at
 `ede29d6931aa1d4634c2a9bd47dcdcc2a54708ea`; its normal small-run Colab/Drive path
 passed the returned `drive-storage-check-001` review. The complete 80-item pilot
 and all its raw traces are now reviewed; post-reset recovery retained all 1,440
-records. No PACT training,
+records. The selected replay check at `e79a9ab0da7b3801ba1ff488ddd974302768da2a`
+now verifies 13 eligible neural packet pairs and all 52 suffix branches; receiver
+preference pairs remain unavailable. No PACT training,
 final-test evaluation, or empirical PACT improvement claim has been made.
 
 | Component | Implementation | Evidence / remaining verification |
@@ -23,13 +25,18 @@ final-test evaluation, or empirical PACT improvement claim has been made.
 | M2 authoritative validation loaders | implemented, cpu_tested | Both real pinned validation files parsed: ARC 299, original English LogiQA 651; selected 40 + 40; separate evaluator labels |
 | M2 Qwen tokenizer/template boundary | implemented, cpu_tested | Actual pinned tokenizer only; 80 early-advisory private contexts fit; role-delimiter escaping checked |
 | M2 Transformers base inference | implemented, gpu_verified_on_reported_environment | Qwen3-8B BF16/SDPA, thinking disabled, NVIDIA L4; 152 smoke, 500 profile and 5,912 pilot calls; all 1,440 pilot records independently rescored |
-| M2 PEFT adapter/readout isolation | implemented, cpu_tested, gpu_unverified | Smoke used no adapters; control-flow test passed, tiny neural test remains skipped |
-| M2 packet and receiver eligibility collection | implemented, gpu_verified_on_reported_environment | Pilot: 144 private alternatives and eight hold candidates; no usable packet/preference pairs; every raw candidate inspected |
-| M2 eligible paired suffix replay | implemented, cpu_tested, gpu_unverified | Pilot has 0/36 eligible packet contexts; K=2 suffix execution still not exercised on GPU; hold candidate sampling exercised, repair candidate sampling unverified |
+| M2 PEFT adapter/readout isolation | implemented, tiny_cpu_neural_tested, gpu_unverified | Distinct adapter/base logits and restored inference state pass on locally initialized tiny Qwen; real Colab smoke used no adapters |
+| M2 packet and receiver eligibility collection | implemented, gpu_verified_on_reported_environment | Selected replay check: 13/18 packet pairs; 64 receiver candidates from eight hold/eight repair contexts, 0/16 preference pairs. All raw candidates inspected |
+| M2 eligible paired suffix replay | implemented, cpu_tested, gpu_verified_on_reported_environment | Selected L4 check: 13 eligible pairs, K=2, 52 audited branches / 208 calls; fixed attacks, corresponding node seeds, unchanged other-agent packets and all recomputed credits pass |
 | M2 4/20/80 configurations and preflight | implemented, cpu_tested; 4/20/80-item inference gpu_verified_on_reported_environment | Actual L4/BF16/SDPA checks passed; 80-item pilot completed and all raw traces audited |
 | M2 thin Colab notebook | implemented, gpu_verified_on_reported_environment | Pinned clean checkout, installation, GPU collection, Drive persistence and ZIP handoff reported; ZIP independently verified; full completed pilot restored after reset; resumed GPU inference unverified |
 | Training microbatch / length-sensitivity profile | deferred | Inference load/peak/throughput accounting implemented; no training-memory or sensitivity claim |
-| PACT training, assignment/NLL/DPO/reference caches, optimizer resume | deferred | Milestone 3; no placeholder training command emits results |
+| M3 scored-bank contract, masked assignment, same-prompt preferences, reference cache | implemented, cpu_tested | Independent numerical reference, missingness, global coefficients, immutable cache and CLI fixture round trip |
+| M3 completion NLL / DPO numerical functions | implemented, cpu_neural_tested; gpu_unverified | Numerical-reference agreement, masked gradients, one-step target improvement and detached DPO reference gradients pass |
+| M3 train loaders and frozen task manifests | implemented, cpu_tested; pinned real sources verified | Full 8,495 train / 950 validation audit, 59 redundant train rows excluded; 12/1,200 task balanced selections. Semantic paraphrases remain unaudited; no final-test access |
+| M3 bounded clean-answer warmstart, adapter exports, optimizer/RNG resume | implemented; tiny_cpu_neural_tested; gpu_unverified | Tiny Qwen with nonzero dropout: exact resumed weights/logs, unchanged backbone/inactive adapters, frozen exports and reload pass. Qwen3-8B GPU training unverified |
+| M3 warm-start Colab handoff and snapshot restore | implemented; cpu_tested; GPU/Drive training path unverified | Explicit execution gate, one-update default, local review ZIP before timed snapshot copy, exact-snapshot restore, persistence-only retry; full checkpoints excluded from small review ZIP |
+| M3 collector, neural reference scoring, joint specialization/revision updates | deferred | Full PACT train and collect-bank remain explicitly unimplemented |
 | SAC/composition/full study/adaptive search/BFCL | deferred | Milestones 4–5; no final-test path is enabled |
 
 GPU verification applies only to the reported environments and executed paths.
@@ -38,13 +45,55 @@ and it does not establish training-memory fit, adapter isolation, or replay effi
 
 ## Executed validation
 
-`python -m unittest discover -s tests -v`: **43 tests, 42 passed, 1 skipped**
-after the selected replay-feasibility extension. The storage repair previously
-passed 39 tests with one skip. The original M0–2 run had 34 tests, 33 passed, one skipped.
-The skipped test is the explicitly opt-in, locally initialized tiny Qwen/PEFT adapter
-test (`PACT_TEST_NEURAL=1`); torch/PEFT are absent locally. Default tests used no network
-or model weights. The test suite runs from both the base CPU environment via `PYTHONPATH`
-and an editable installation in a temporary virtual environment.
+With explicit user opt-in, the full suite now passes **81 tests, 81 passed, zero
+skipped** in `/tmp/pact-neural-cpu`, using CPU-only torch 2.9.1, Transformers 4.57.6
+and PEFT 0.18.1. No pretrained weights or datasets were downloaded for testing;
+model hubs were offline and the runner asserted a CPU-only torch build. All three
+previously skipped neural tests pass. Interrupted warm-start training with nonzero
+dropout reproduces uninterrupted final parameters and loss/progress logs exactly
+using fresh model/optimizer objects and non-reentrant activation checkpointing.
+Frozen exports and adapter0 reload also pass. The new notebook execution gate,
+full snapshot restore, corrupt/path-traversal rejection and persistence-only retry
+pass CPU fixture tests. [Current evidence](reviews/warmstart-colab-check-001.md);
+[initial neural verification](reviews/neural-cpu-check-001.md).
+
+The current default, dependency-free invocation passed **81 tests, 78 passed,
+3 skipped**. Seven new CPU control tests cover:
+recipe bounds, pinned data/order planning, prompt/target separation, no truncation,
+typed optimizer/RNG trees, immutable checkpoints/corruption, early resume mismatch
+rejection and a model-free CLI plan. The real Qwen3-8B GPU training path, BF16,
+GPU activation checkpointing and GPU resume remain unverified. The pinned
+12-task dry run plans nine
+optimizer updates and 36 forward/backward examples without launching any.
+[Warm-start contract and verification gate](warmstart.md).
+
+The preceding train-only data increment passed **68 tests, 66 passed, 2 skipped**.
+Its nine tests cover source/split
+boundaries, exact and transitive lexical overlaps, reordered-answer duplicates,
+conflicting labels, deterministic balance, immutable manifests, corruption and
+completion-marker ordering. Real pinned source parsing and a 1,200-item CPU
+selection also passed; the old 80-item validation manifest reproduces exactly.
+[Source counts, exclusions and limits](training_data.md).
+
+The preceding local learning-foundations increment passed 59 tests (two skips).
+Its 16 added tests cover
+independent assignment solutions, global coefficients, split/prompt rejection,
+missing/invalid candidates, causal scoring, reference cache integrity and CLI round
+trips. The synthetic `training-check` converges with two assignment rows, one
+base-only row and one preference pair per stratum; no model training is executed.
+
+The selected replay extension previously passed 43 tests (one skip); the storage
+repair passed 39 (one skip), and original M0–2 passed 34 (one skip). The three neural
+tests remain explicitly opt-in (`PACT_TEST_NEURAL=1`): tiny Qwen/PEFT adapter isolation,
+torch completion gradients/reference detachment, and the newly added warm-start
+update/isolation/resume test. They still skip in the default environment; their
+dependencies were installed only in the isolated `/tmp/pact-neural-cpu` environment.
+Default tests use no network or model weights. Earlier M0–2 checks also ran from an
+editable installation in a temporary virtual environment; this increment was checked
+in the base CPU environment using `PYTHONPATH=src`. The real training-data audit
+used only PyArrow 22.0.0 from an isolated `/tmp` install and four pinned source files;
+default tests remain network-free and require no data/model dependencies.
+[Current commands and remaining gates](training_foundations.md).
 
 Additional executed checks:
 
@@ -94,13 +143,48 @@ No source/configuration patch was justified. See the
 
 ## Next gate
 
-The 80-item pilot and full raw audit are complete. The bounded three-task
-replay-feasibility extension is implemented and CPU-tested, awaiting user
-review/publication and a new pinned Colab run. Use `PRESET="replay-check"`,
-`STAGE="pilot"`, new run ID `qwen3-replay-check-001`; see the
-[complete execution guide](replay_check.md). No source-run recovery or inference
-rerun is required. Training/final evaluation remain deferred, and eligible neural
-suffix replay remains unverified until an actual eligible Colab pair executes.
+The selected replay check has completed and passed local review. No additional
+Colab command, rerun or raw export is needed. Eligible neural suffix replay and
+hold/repair candidate sampling are verified on the reported L4 environment.
+Revision preference data remains unresolved: zero usable pairs in 16 sampled
+receiver contexts. Training, adapter/reference isolation and training-memory checks
+are not thereby verified.
+
+The next proposed scope is local Milestone-3 learning-component work plus an
+explicit training-split data plan that handles missing pairs honestly. Do not train
+on the selected validation artifacts, fabricate receiver counterparts, or report a
+full revision objective without usable pairs. No Milestone-3 implementation or GPU
+training was started during this review. See the
+[replay-check review](reviews/qwen3-replay-check-001.md).
+
+## Returned selected replay check — 2026-09-18
+
+ZIP checksum matches the user's
+`21e5133daa634a894357f09658c2a78c5b6bef1bf3d701bcd8d454f7532899cb`.
+All six raw records reconstruct their inventory hashes, all 386 calls are audited,
+and all metrics/probe summaries/credits reproduce. The 13/18 eligible private-packet
+pairs yield five +1, two +0.5 and six zero credits; five missing credits remain null.
+Three eligible pairs are not length-bin matched. These selected, K=2 observations
+verify execution, not representative effect sizes or training efficacy.
+
+All 52 suffix branches preserve attack bytes/site, other agents' private packets,
+corresponding node seeds and revised-only base readout. Corrupted-sender substitutions
+also execute correctly. All calls end at EOS: 380 answer parses, six abstentions,
+no malformed/length-limit completions. Maximum prompt plus reserved output is 830.
+The six main trajectories reproduce the original pilot's texts, prompts, attacks
+and seeds, excluding expected new IDs/timing and timing-dependent artifact hashes.
+
+Receiver candidate sampling now runs on both strata: eight hold and eight repair
+contexts, four candidates each. Each set contains one correctness class only;
+hold has six all-correct/two all-wrong sets, repair one all-correct/seven all-wrong.
+No valid same-context preference pair is available or lost by parsing/selection.
+
+Cost: 386 calls, 148,080 input / 18,046 output tokens, 23.02 recorded collection
+minutes (0.38361 accelerator-hours), 15.41/15.53 GiB peak allocated/reserved. Final
+reporting/persistence and notebook setup are outside that attempt timing. Reported
+persistence is complete with a verified snapshot receipt. Full evidence is under
+`results_import/qwen3-replay-check-001/analysis/`; originals are unchanged. No source
+patch or regression-suite rerun was justified; the full CPU artifact audit passed.
 
 ## Selected replay-feasibility extension — 2026-09-18
 

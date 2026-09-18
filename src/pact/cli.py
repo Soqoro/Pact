@@ -15,7 +15,7 @@ from .util import canonical, write_json
 
 
 def parser():
-    p = argparse.ArgumentParser(prog="pact", description="PACT validation diagnostic pipeline (Milestones 0–2)")
+    p = argparse.ArgumentParser(prog="pact", description="PACT validation diagnostics and local learning foundations")
     commands = p.add_subparsers(dest="command", required=True)
     d = commands.add_parser("doctor")
     d.add_argument("--scratch", type=Path, default=Path("scratch"))
@@ -26,6 +26,14 @@ def parser():
     data = commands.add_parser("prepare-data")
     data.add_argument("--config", required=True, type=Path)
     data.add_argument("--scratch", type=Path, default=Path("scratch"))
+    data = commands.add_parser("prepare-training-data", help="freeze train-only tasks after full validation overlap screening")
+    data.add_argument("--cache-dir", required=True, type=Path)
+    data.add_argument("--output-dir", required=True, type=Path)
+    data.add_argument("--items", required=True, type=int)
+    data.add_argument("--seed", required=True, type=int)
+    data.add_argument("--download", action="store_true", help="explicitly fetch missing pinned train/validation sources")
+    data = commands.add_parser("inspect-training-data")
+    data.add_argument("--data-dir", required=True, type=Path)
     for name in ("smoke", "profile", "pilot"):
         r = commands.add_parser(name)
         r.add_argument("--config", required=True, type=Path)
@@ -48,7 +56,27 @@ def parser():
     r = commands.add_parser("restore")
     r.add_argument("--source", required=True, type=Path)
     r.add_argument("--run-dir", required=True, type=Path)
-    for name in ("train", "warmstart", "adaptive-evaluate", "evaluate", "assign", "build-preferences", "collect-bank"):
+    r = commands.add_parser("training-check", help="synthetic CPU foundations check; no model training")
+    r.add_argument("--output-dir", required=True, type=Path)
+    r = commands.add_parser("warmstart", help="plan bounded clean-answer training; --execute opts into GPU/model use")
+    r.add_argument("--config", required=True, type=Path)
+    r.add_argument("--data-dir", required=True, type=Path)
+    r.add_argument("--run-dir", required=True, type=Path)
+    r.add_argument("--cache-dir", type=Path, default=Path("scratch/cache/models"))
+    r.add_argument("--execute", action="store_true")
+    r.add_argument("--resume", action="store_true")
+    r.add_argument("--stop-after", type=int, help="interrupt after N newly committed optimizer updates")
+    for name in ("assign", "build-preferences"):
+        r = commands.add_parser(name, help="process an explicit scored training bank")
+        r.add_argument("--bank", required=True, type=Path)
+        r.add_argument("--output", required=True, type=Path)
+        r.add_argument("--allow-synthetic", action="store_true")
+        if name == "assign":
+            r.add_argument("--nll-mode", choices=("raw", "standardized"), default="standardized")
+            r.add_argument("--gamma", type=float, default=1.0)
+            r.add_argument("--tau", type=float, default=0.2)
+            r.add_argument("--balance", type=float, default=0.1)
+    for name in ("train", "adaptive-evaluate", "evaluate", "collect-bank"):
         commands.add_parser(name, help="not_implemented: deferred milestone")
     return p
 
@@ -68,6 +96,16 @@ def main(argv=None) -> int:
             config = load_config(args.config)
             _, _, result = prepare(config, args.scratch / "cache" / "datasets")
             write_json(args.scratch / "prepared" / f"{config.identity}.json", result)
+        elif command == "prepare-training-data":
+            from .training.data import prepare_training_data
+            result = prepare_training_data(args.cache_dir, args.output_dir, items=args.items, seed=args.seed, download=args.download)
+        elif command == "inspect-training-data":
+            from .training.data import read_training_data
+            from .util import digest
+            tasks, labels, manifest, audit = read_training_data(args.data_dir)
+            result = {"status": "verified_training_data_no_model_training", "manifest_hash": digest(manifest),
+                      "realized": len(tasks), "family_counts": manifest["family_counts"],
+                      "excluded_rows": len(audit["exclusions"])}
         elif command in ("smoke", "profile", "pilot"):
             config = load_config(args.config)
             if config.stage != command:
@@ -97,6 +135,36 @@ def main(argv=None) -> int:
             result = {"verified_snapshot": str(sync_run(args.run_dir, args.destination))}
         elif command == "restore":
             result = restore_run(args.source, args.run_dir)
+        elif command == "training-check":
+            from .training.checks import training_check
+            result = training_check(args.output_dir)
+        elif command == "warmstart":
+            from .training.warmstart_config import load_warmstart_config, warmstart_plan
+            config = load_warmstart_config(args.config)
+            if args.stop_after is not None and args.stop_after < 1:
+                raise ValueError("--stop-after must be positive")
+            if args.execute:
+                from .training.warmstart import run_warmstart
+                result = run_warmstart(config, args.data_dir, args.run_dir, args.cache_dir,
+                                       resume=args.resume, stop_after=args.stop_after)
+            else:
+                if args.resume or args.stop_after is not None:
+                    raise ValueError("Resume/stop-after require explicit --execute")
+                result = warmstart_plan(config, args.data_dir)[3]
+        elif command in ("assign", "build-preferences"):
+            from .training.bank import read_bank, assign_bank
+            from .training.preferences import build_preferences
+            if args.output.exists():
+                raise ValueError("Output exists; choose a new path to preserve prior evidence")
+            bank = read_bank(args.bank, allow_synthetic=args.allow_synthetic)
+            if command == "assign":
+                result = assign_bank(bank, allow_synthetic=args.allow_synthetic, nll_mode=args.nll_mode,
+                                     gamma=args.gamma, tau=args.tau, balance=args.balance)
+            else:
+                result = build_preferences(bank, allow_synthetic=args.allow_synthetic)
+            write_json(args.output, result)
+            if command == "assign" and result["solver"]["status"] == "not_converged":
+                raise RuntimeError("Assignment did not converge; diagnostic saved, do not use for training")
         else:
             raise NotImplementedError(f"{command}: not_implemented; deferred to Milestones 3–5")
         print(canonical(result))

@@ -1,4 +1,4 @@
-"""Validation-only authoritative loaders. Labels never enter TaskInput."""
+"""Validation entry points and shared QA parsers. Labels never enter TaskInput."""
 from __future__ import annotations
 
 import hashlib
@@ -34,6 +34,14 @@ def normalize(*, family: str, source_id: str, revision: str, source_hash: str,
               context: str = "", split: str = "validation") -> tuple[TaskInput, TaskLabel]:
     if split != "validation":
         raise ValueError("This loader permits validation only")
+    return _normalize(family=family, source_id=source_id, revision=revision, source_hash=source_hash,
+                      question=question, choices=choices, answer=answer, context=context, split=split)
+
+
+def _normalize(*, family, source_id, revision, source_hash, question, choices, answer, context="", split):
+    """Shared implementation; public entry points independently enforce their split."""
+    if split not in ("train", "validation"):
+        raise ValueError("Only train/validation normalization is implemented")
     if not isinstance(question, str) or not question.strip() or not isinstance(context, str):
         raise ValueError("Question/context must be text and question nonempty")
     if not 2 <= len(choices) <= 26:
@@ -50,6 +58,10 @@ def normalize(*, family: str, source_id: str, revision: str, source_hash: str,
 
 
 def parse_arc(rows: list[dict], source_hash: str) -> list[tuple[TaskInput, TaskLabel]]:
+    return _parse_arc(rows, source_hash, split="validation")
+
+
+def _parse_arc(rows, source_hash, *, split):
     result = []
     for row in rows:
         if set(row) != {"id", "question", "choices", "answerKey"}:
@@ -57,7 +69,7 @@ def parse_arc(rows: list[dict], source_hash: str) -> list[tuple[TaskInput, TaskL
         choices = row["choices"]
         if set(choices) != {"label", "text"} or len(choices["label"]) != len(choices["text"]):
             raise ValueError("Invalid ARC choices")
-        result.append(normalize(family="arc_challenge", source_id=str(row["id"]),
+        result.append(_normalize(family="arc_challenge", source_id=str(row["id"]), split=split,
                                 revision=ARC_REVISION, source_hash=source_hash,
                                 question=row["question"], choices=list(zip(choices["label"], choices["text"])),
                                 answer=row["answerKey"]))
@@ -67,6 +79,12 @@ def parse_arc(rows: list[dict], source_hash: str) -> list[tuple[TaskInput, TaskL
 
 
 def parse_logiqa(text: str, source_hash: str) -> list[tuple[TaskInput, TaskLabel]]:
+    return _parse_logiqa(text, source_hash, split="validation")
+
+
+def _parse_logiqa(text, source_hash, *, split):
+    if split not in ("train", "validation"):
+        raise ValueError("Only train/validation LogiQA parsing is implemented")
     lines = text.splitlines()
     if not lines or len(lines) % 8:
         raise ValueError("Original English LogiQA requires exactly 8 lines per record")
@@ -84,7 +102,8 @@ def parse_logiqa(text: str, source_hash: str) -> list[tuple[TaskInput, TaskLabel
             # Strip only an unambiguous matching leading prefix; preserve all other text.
             match = re.fullmatch(rf"{letter}(?:\.\s*|\s+)(.+)", option, flags=re.IGNORECASE)
             choices.append((letter.lower(), match.group(1) if match else option))
-        result.append(normalize(family="logiqa", source_id=f"eval-{start // 8:04d}",
+        prefix = "train" if split == "train" else "eval"
+        result.append(_normalize(family="logiqa", source_id=f"{prefix}-{start // 8:04d}", split=split,
                                 revision=LOGIQA_REVISION, source_hash=source_hash,
                                 question=question, context=context, choices=choices, answer=answer))
     return result

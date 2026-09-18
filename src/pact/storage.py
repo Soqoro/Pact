@@ -16,12 +16,13 @@ DEFAULT_TIMEOUT_SECONDS = 120.0
 
 def storage_operation(operation: str, source: Path, destination: Path, *,
                       timeout_seconds=DEFAULT_TIMEOUT_SECONDS, **options) -> dict:
-    if operation not in ("snapshot", "bundle") or not 0 < timeout_seconds < float("inf"):
+    if operation not in ("snapshot", "bundle", "warmstart-restore") or not 0 < timeout_seconds < float("inf"):
         raise ValueError("Invalid storage operation or timeout")
     # This control directory must stay on scratch, never on the mounted destination.
-    with tempfile.TemporaryDirectory(prefix=".pact-storage-", dir=source.parent) as temp:
+    control_parent = destination.parent if operation == "warmstart-restore" else source.parent
+    with tempfile.TemporaryDirectory(prefix=".pact-storage-", dir=control_parent) as temp:
         control = Path(temp)
-        write_json(control / "request.json", {"operation": operation, "source": str(source.resolve()),
+        write_json(control / "request.json", {"operation": operation, "source": str(source.absolute()),
                    "destination": str(destination.absolute()), "options": options})
         env = dict(os.environ)
         env["PYTHONPATH"] = os.pathsep.join(filter(None, (str(Path(__file__).resolve().parents[1]), env.get("PYTHONPATH"))))
@@ -80,7 +81,10 @@ def _worker(control: Path) -> int:
     def progress(message):
         write_json(control / "progress.json", {"message": message})
     try:
-        if request["operation"] == "snapshot":
+        if request["operation"] == "warmstart-restore":
+            from .training.colab import _restore_snapshot
+            result = _restore_snapshot(source, destination, progress=progress)
+        elif request["operation"] == "snapshot":
             from .artifacts import _sync_run
             snapshot = _sync_run(source, destination, progress=progress, **request["options"])
             result = {"snapshot": str(snapshot)}

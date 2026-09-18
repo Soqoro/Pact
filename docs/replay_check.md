@@ -1,9 +1,10 @@
 # Selected replay-feasibility check
 
-Implemented and CPU-tested; **GPU-unverified**. This is the next bounded diagnostic
-after the [full pilot audit](reviews/qwen3-pilot-001-raw.md), not PACT training.
-The new code must be reviewed, committed and pushed before Colab can use it.
-The old `ede29d6931aa1d4634c2a9bd47dcdcc2a54708ea` commit does not contain this preset.
+Completed and reviewed at commit `e79a9ab0da7b3801ba1ff488ddd974302768da2a`.
+Eligible neural replay is **GPU-verified on the reported L4 environment**; receiver
+preference pairs remain unavailable. See the [returned-run review](reviews/qwen3-replay-check-001.md).
+No rerun is needed. The instructions below document the completed diagnostic, not
+a new training run. The earlier `ede29d6` commit does not contain this preset.
 
 ## Fixed scope
 
