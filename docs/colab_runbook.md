@@ -6,11 +6,15 @@
 three frozen exports pass the [returned metadata review](reviews/qwen3-warmstart-001-complete.md).
 The final snapshot receipt reports verified persistence. Keep the complete Drive
 object store; the review ZIP excludes weights. Do not rerun this completed stage.
-Frozen-reference reload/scoring and bounded train-only collection now pass local
-CPU tests. Review/publish this increment, then follow the [collection guide](collection.md)
-for a new pinned checkout and one completed training record before continuing all
-six. The guide includes exact cells and recovery instructions. No new GPU run has
-been executed by the local reviewer; receiver pair availability remains unknown.
+`qwen3-bank-001` is now complete: all six records, compatible resume and five
+eligible private pairs / 20 suffix branches pass the [final audit](reviews/qwen3-bank-001-complete.md).
+The final log reports verified snapshot and ZIP persistence. Receiver collection
+produces zero hold/repair preference pairs from 24 candidates, so the full revision
+objective is not ready and GPU reference scoring has not executed. Preserve the
+completed bank; it needs no rerun. Local analysis and the [bounded matched-base
+diagnostic](preference_feasibility.md) are now implemented and tested. Review and
+publish the new increment before following that guide: 54 base-only calls on saved
+prompts/seeds, no actor resampling or optimization. GPU execution remains unverified.
 
 ## Prior preparation and completed validation
 

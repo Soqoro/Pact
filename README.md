@@ -31,11 +31,17 @@ now pass [returned metadata review](docs/reviews/qwen3-warmstart-001-complete.md
 This is not a full PACT training or efficacy result. The default command only emits the reviewed plan.
 
 [Frozen-reference scoring and bounded train-only collection](docs/collection.md)
-are now implemented and tested locally: 90/90 tests pass with tiny CPU neural
+are now implemented and tested locally: 97/97 tests pass with tiny CPU neural
 checks enabled. The six-record collector preserves raw paired replays, actual
 sampled token IDs, missing preferences and verified recovery snapshots. Its
-default is plan-only; GPU execution with the completed exports is the next
-engineering check after review and publication.
+default is plan-only. The [complete GPU engineering bank](docs/reviews/qwen3-bank-001-complete.md)
+now passes returned audit: six records, preserved resume, five private pairs and
+20 suffix branches. All 24 receiver candidates lack a correct answer, so there
+are no hold/repair preferences and the full revision objective is not ready.
+GPU reference scoring remains unverified. A [bounded base-control diagnostic](docs/preference_feasibility.md)
+is now implemented and CPU tested: it compares the same saved prompts/seeds using
+54 fresh base calls, with no new actor samples or training-pair export. Its default
+is plan-only; review and publish before the new Colab check.
 
 ```bash
 python -m pip install -e .

@@ -592,3 +592,65 @@ an absent scratch destination. Keep scientific_status=synthetic_fixture on CPU
 fixture handoffs. Scoring and six-record storage recovery pass local tests; real
 six-adapter memory fit, reference-export loading and collection remain GPU unverified.
 [Evidence](reviews/collection-implementation-001.md); [commands](collection.md).
+
+
+## 2026-09-19: first training-bank record passes the engineering gate
+
+Accept the returned one-record handoff as evidence of real warm-start adapter reload,
+frozen generation and three actor answer-scoring forwards at the published recipe.
+Keep all 19 wrong but valid outputs as failures: no correct private alternatives,
+no eligible receiver context, null credits and no reference scores. Do not infer
+an efficacy improvement or a regression without a matched pre-training control.
+
+The requested boundary stop and nested pre-persistence receipt fields are expected.
+The enclosing receipt reports a verified raw snapshot; current Drive contents and
+final ZIP-copy completion are outside independent local verification. Continue
+only the remaining five prespecified records on the same commit with explicit
+resume, preserving the existing shard and caps. Leave GPU reference scoring,
+positive-packet scoring, attacked cells and collection resume unverified until
+returned evidence exercises them. No source repair, new sampling policy or training
+expansion is justified. [Audit and commands](reviews/qwen3-bank-001-first.md).
+
+
+## 2026-09-19: completed bank, empty receiver preferences remain a real limitation
+
+Accept the six-record handoff as evidence of compatible collection resume, frozen
+team execution across clean/early/exchange, five eligible packet pairs with 20
+paired suffix branches, and actor answer/positive-packet scoring. Preserve all
+13 missing private pairs as null. Keep the zero hold/repair pair counts and empty
+reference cache: 24 receiver samples have no correct completion, including ten
+abstentions. Do not fabricate pairs, launch an implicit sampling expansion or
+silently substitute a supervised-only update for full PACT revision training.
+
+Close the bounded collection stage. The next local task is a training-only
+preference-feasibility design that inspects the failed contexts and specifies a
+bounded test of correct-completion availability. No further GPU invocation is
+requested by this review. Keep reference scoring, full revision optimization,
+post-reset bank restore and efficacy outside the verified scope. All main
+trajectories fail, but no matched pre-training control supports a regression claim.
+[Full audit](reviews/qwen3-bank-001-complete.md).
+
+
+## 2026-09-19: fixed-context base control before expanding receiver collection
+
+The receiver shortage is observed entirely on one LogiQA item; sampled clean
+private correctness exists but no correct receiver continuation does. Retain the
+official labels, note the option-wording confound, and avoid attributing the result
+to a three-update answer-only warm start without an exact-context control.
+
+Pin the completed review ZIP and bank hash. Reuse all six original eligible
+receiver pools (24 calls) plus clean original/private-alternative outputs for both
+tasks (30 calls). Make at most 54 new unadapted-base calls, 13,824 output tokens,
+with exactly the stored prompts/token prefixes, corresponding node seeds, sampling,
+model and runtime. Keep actor outputs fixed. This is a retrospective diagnostic on
+actor-produced contexts, not an independently generated base team or representative
+performance comparison. Do not use suffix-branch outputs as original receiver pairs.
+
+Separate actor/base pools and report every outcome, including invalids and missing
+classes. Even base hold/repair pairs remain diagnostic and cannot make the actor
+bank ready. Never promote abstentions to negatives, pool across prompts, alter
+labels, introduce gold answer hints or expand queries until support appears. End
+the run at its cap regardless of pair availability. Use the prespecified outcome
+rules to review a later training-only design; do not automatically train or modify
+the proposal's objective. Default CLI is plan-only; new GPU execution remains
+unverified until returned evidence. [Analysis and full recipe](preference_feasibility.md).

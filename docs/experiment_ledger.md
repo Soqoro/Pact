@@ -527,3 +527,81 @@ logs, dependency/source identity and plan are in ignored
 paid API, final-test access or paper-result change occurred. Review/publish the
 increment before the first one-record Colab collection check.
 [Review](reviews/collection-implementation-001.md); [recipe and commands](collection.md).
+
+
+## First GPU training-bank record — `qwen3-bank-001` (2026-09-19)
+
+- ZIP: `qwen3-bank-001-handoff-1789803598490756574.zip`, 25,657 bytes;
+  SHA256 `ceba32531b82864d694020ac29dce8e612b887c031da198cc644e5982697a7c3`.
+  Ten safe members, nine payload checksums and recorded shard-marker hash pass.
+- Clean source `12861a1ca4dce794a1f4daaa27e02618fed2956e`; recipe, training data,
+  Qwen base, three warm-start hashes and runtime match the reviewed identities.
+- One clean `arc_challenge:MCAS_2004_5_13` record, intentional boundary stop,
+  exit zero. All 19 outputs parse correctly but answer C against gold B; three
+  private candidate pools lack correct samples, zero suffix branches, zero eligible
+  receiver contexts and zero reference forwards. Three actor answer scores execute.
+- 3,826 generation input / 892 output tokens; 522 teacher-forced input tokens.
+  Invocation 180.863 seconds; summed generation 64.664 seconds; bare model load
+  56.551 seconds; peak allocated/reserved 15.517/15.619 GiB. Final persistence/ZIP
+  time is outside the invocation timer; compute units unknown. Runtime fingerprint
+  matches prior L4 but this archive has no fresh hardware-name report.
+- Receipt reports verified snapshot `1789803598420081006-9645623d1b3e` under
+  `PACT/collection/qwen3-bank-001`. No independent current-Drive/ZIP-copy or
+  post-reset restore verification. Metadata ZIP is not a resume archive.
+- Original extraction: `results_import/qwen3-bank-001-first-review/`; reproducible
+  audit and derived accounting: `results_import/qwen3-bank-001-first-analysis/`.
+  No executable source change or test-suite rerun for this artifact-only review.
+  Next: same-commit resume for the remaining five fixed records, then return the ZIP.
+  [Full review](reviews/qwen3-bank-001-first.md).
+
+
+## Completed GPU training bank — `qwen3-bank-001` (2026-09-19)
+
+- Final ZIP `qwen3-bank-001-handoff-1789804954424856576.zip`, 149,828 bytes;
+  SHA256 `a77e11339b3991e3e0d5f0c1d42d0aed50b62c820619e555a60f9a4da956ac39`.
+  Nineteen safe members, 18 checksums, 23 inventory entries verified. First shard
+  and resource attempt preserved byte-for-byte; code/config/data/model pins unchanged.
+- Six records complete on clean `12861a1ca4dce794a1f4daaa27e02618fed2956e`.
+  Resume adds 199 calls to the prior 19. All 218 call contexts/seeds and raw parses
+  audited; five private pairs / 20 suffix branches pass paired continuation checks.
+  Credits: four zeros, one +1 (LogiQA exchange agent2); 13 missing-correct pairs stay null.
+- Two hold / four repair contexts generate 24 receiver candidates: 14 valid wrong
+  answers and ten abstentions, zero correct. Zero preference pairs and reference
+  forwards; `full_revision_ready=false`. Eighteen answer and five positive-packet
+  NLL forwards execute. All six main trajectories fail; two initial-correct LogiQA
+  records lose coverage during revision. No effectiveness estimate from this pool.
+- Total generation: 76,067 input / 10,588 output tokens, 767.484 seconds; 218 EOS
+  completions, 165 valid answer parses / 53 abstentions, zero other parse/length
+  failures. Max prompt plus reserved output 723 tokens. Teacher-forced inputs 5,814.
+  Continuation invocation 775.588 seconds; both invocations 956.451 seconds, excluding
+  final snapshots/ZIP operations. Continuation peak allocated/reserved 15.593/15.939
+  GiB. Compute units unknown. No new hardware-name report; prior L4 fingerprint matches.
+- Final snapshot receipt `1789804954384930583-a1a797f59f54`; supplied log reports
+  successful snapshot and ZIP persistence. Current Drive contents and post-reset
+  restore unverified. Bank hash `30586d9503f0cab543c24d9ec0259c88561fa8a7180172ad63a0edec98f36e4b`.
+- Original: `results_import/qwen3-bank-001-complete-review/`; derived audit/metrics:
+  `results_import/qwen3-bank-001-complete-analysis/`. CPU audit passes; no executable
+  source change or suite rerun. Stage complete. Next is local training-only
+  preference-feasibility design, not another invocation or full revision training.
+  [Review](reviews/qwen3-bank-001-complete.md).
+
+
+## Receiver feasibility / base-control implementation — 2026-09-19
+
+`preference-feasibility-001` is a local analysis and CPU implementation check.
+Actual bank selection is frozen at digest
+`31f2d542eb0d8cafb813d1cecb2b198ea605bc74f687b5d720d9f6b2cffe56b4`;
+config hash `1ae482c52879ac3a37f7e596b8d54eb142ce2c526a3b76c75def00dd04cb66da`.
+Source: completed bank ZIP SHA256 `a77e11339b3991e3e0d5f0c1d42d0aed50b62c820619e555a60f9a4da956ac39`,
+bank hash `30586d9503f0cab543c24d9ec0259c88561fa8a7180172ad63a0edec98f36e4b`.
+Selection reuses 54 actor outputs; zero new base outputs have been collected locally.
+The next explicit GPU recipe caps new base generation at 54 calls / 13,824 tokens.
+
+All 97 tests pass with tiny CPU neural opt-in; default passes 92 with five skips.
+New synthetic checks cover plan-only operation, source/prompt/runtime identity,
+independent diagnostic pairing, resume and verified source-copy/snapshot/ZIP/restore.
+Retained plan, source counts, test logs and environment/source verification are in
+`results_import/preference-feasibility-001/`. No GPU execution, model-weight download,
+optimizer step, training-pair export or paper result was produced. The diagnostic
+requires review/publication and a returned handoff before promoting its GPU status.
+[Review](reviews/preference-feasibility-001.md); [exact next Colab sequence](preference_feasibility.md).

@@ -1,9 +1,12 @@
 # Frozen-reference scoring and bounded training collection
 
 `collect-bank` and `cache-reference` are implemented and CPU tested. Their default
-invocations only produce plans. Qwen3-8B collection with the returned warm-start
-adapters remains **GPU unverified**. This stage collects engineering evidence;
-it does not update adapters, run full PACT training, or access final-test data.
+invocations only produce plans. The [complete returned GPU bank](reviews/qwen3-bank-001-complete.md)
+now verifies the six-record recipe, compatible resume, five private pairs and
+20 suffix branches. It produces zero receiver preference pairs; GPU frozen-reference
+scoring remains unverified and the full revision objective is not ready. This
+stage collects engineering evidence; it does not update adapters, run full PACT
+training, or access final-test data. No further invocation is requested now.
 
 ## Fixed recipe
 
@@ -28,7 +31,8 @@ readout. Exported adapter configs contain a Colab cache path; that path is never
 used to choose the backbone. Three actor adapters and three separate frozen
 reference copies share one backbone. Readout disables every adapter. The exact
 base snapshot and adapter config/tensor hashes must match the completed warm start.
-Six-adapter GPU memory fit has not been tested.
+The first returned record reports six-adapter execution at approximately
+15.517 GiB peak allocated memory; full-context fit is unverified.
 
 Gold-answer mean completion NLL is teacher-forced under the original private
 prompt using canonical answer-only JSON plus EOS. Sampled positive private-packet
@@ -58,7 +62,11 @@ python -m pact collect-bank \
 Planning verifies the frozen training data but does not require adapter files,
 load a model, create the run directory or contact a model hub.
 
-## Next Colab engineering run, after review and publication
+## Original first-record Colab setup (completed)
+
+All six records are now reviewed. The setup below and the earlier continuation
+cell are retained as execution records, not instructions to repeat this bank.
+See the [completed review](reviews/qwen3-bank-001-complete.md) for the next local task.
 
 Publish this increment and pin its full commit SHA before running it in Colab.
 `a277794d271720665d57308cc15f3122f1934e27` contains the completed warm start but
@@ -175,5 +183,6 @@ Standalone cache output is local; the integrated collector includes its cache in
 verified snapshots. Review archives contain metadata/raw JSON, not tensor weights
 or shard marker files; use snapshots for resume. A 90 MiB metadata limit fails
 explicitly rather than silently omitting raw traces. Post-reset Drive restoration,
-GPU collection/reference scoring and useful preference availability remain
-unverified until a returned Colab handoff is audited. [Local test evidence](reviews/collection-implementation-001.md).
+GPU frozen-reference scoring remains unverified; the completed bank has no usable
+receiver preferences. Full bank collection and compatible continuation now pass
+the returned audit. [Local test evidence](reviews/collection-implementation-001.md).

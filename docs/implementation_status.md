@@ -38,7 +38,8 @@ final-test evaluation, or empirical PACT improvement claim has been made.
 | M3 train loaders and frozen task manifests | implemented, cpu_tested; pinned real sources verified | Full 8,495 train / 950 validation audit, 59 redundant train rows excluded; 12/1,200 task balanced selections. Semantic paraphrases remain unaudited; no final-test access |
 | M3 bounded clean-answer warmstart, adapter exports, optimizer/RNG resume | tiny_cpu_neural_tested; completed GPU run metadata reviewed | Nine updates, fresh-process GPU continuation and three frozen exports reported successful. Initial checkpoints preserved; tensor bytes omitted locally. GPU uninterrupted-equivalence control unverified |
 | M3 warm-start Colab handoff and snapshot restore | cpu_tested; completed Colab handoff reviewed | Final archive SHA and 31 payload checksums verified; reported full snapshot/ZIP persistence successful. Actual post-reset Drive restore pending |
-| M3 bounded train-only collector and neural frozen-reference scoring | implemented, cpu_neural_tested; gpu_unverified | Six-record recipe; raw paired replays, actual token scoring, missingness, immutable cache and snapshot recovery pass; actual warm-start exports have not been loaded locally |
+| M3 bounded train-only collector and neural frozen-reference scoring | cpu_neural_tested; complete GPU engineering bank reviewed | Six records, compatible resume, 218 generations, five private pairs / 20 suffix branches, 18 answer and five positive-packet scores audited. Zero receiver pairs; GPU reference scoring unverified |
+| M3 receiver-feasibility base control | implemented, cpu_tested; gpu_unverified | Exact saved prompts/seeds, 54-call cap, source ZIP/bank pins, diagnostic-only results, immutable resume and verified persistence/restore; no training-pair export |
 | M3 joint specialization/revision updates, sparse-support bank sampling and refreshes | deferred | Full PACT train remains explicitly unimplemented |
 | SAC/composition/full study/adaptive search/BFCL | deferred | Milestones 4–5; no final-test path is enabled |
 
@@ -49,11 +50,16 @@ adapter isolation, or replay efficacy.
 
 ## Executed validation
 
-Latest collection increment: **90/90 pass** with tiny CPU neural checks enabled;
-default suite **85 pass, five skip**. No pretrained weights were downloaded.
+Latest preference-feasibility increment: **97/97 pass** with tiny CPU neural checks
+enabled; default suite **92 pass, five skip**.
+[New control-path evidence](reviews/preference-feasibility-001.md) covers the 54-call
+plan, archive/prompt/runtime checks, diagnostic pair separation and verified recovery.
+The prior collection increment passed 90/90 with opt-in, 85 with five skips by default. No pretrained weights were downloaded.
 [Current evidence](reviews/collection-implementation-001.md) includes reference/base
 isolation, exact sampled-token preservation, six-record resume, cached scores and
-verified snapshot restoration. GPU collection/scoring remains unverified.
+verified snapshot restoration. The completed returned-bank audit below additionally
+verifies GPU collection and compatible continuation; frozen-reference scoring
+remains unverified because no receiver preference pair qualified.
 
 ### Prior warm-start implementation check
 
@@ -155,11 +161,14 @@ No source/configuration patch was justified. See the
 
 ## Current next gate
 
-Review/publish the locally tested collection increment, then use a new pinned
-checkout to collect one training record with the completed warm-start exports.
-Return that handoff before completing the six-record recipe. See
-[collection commands and recovery](collection.md). Full PACT optimization and
-final-test evaluation remain deferred.
+The [complete training bank](reviews/qwen3-bank-001-complete.md) passes audit.
+This Colab stage is complete; no rerun or further export is needed. Zero correct
+receiver candidates among 24 samples leave both hold/repair preference strata
+empty. The [matched-base diagnostic](preference_feasibility.md) is now implemented
+and CPU tested. Review/publish it before the bounded 54-call Colab check; compare
+base outputs to saved actor outputs on identical prompts/seeds. No actor resampling
+or training pairs are added. GPU frozen-reference scoring, full revision optimization
+and final-test evaluation remain unverified or deferred.
 
 ### Earlier gate after the selected replay review
 
@@ -370,3 +379,48 @@ and retains missing preference strata. All 90 tests pass with CPU neural opt-in;
 default execution passes 85 with five expected skips. Synthetic persistence and
 restore pass with verified hashes; no GPU collection, Drive restore or new
 optimizer execution is claimed. [Evidence](reviews/collection-implementation-001.md).
+
+
+## First returned train-only bank record — 2026-09-19
+
+SHA256 `ceba32531b82864d694020ac29dce8e612b887c031da198cc644e5982697a7c3`
+and all nine payload checksums pass. Clean published source, config/data/model/
+reference identities, all 19 prompts/seeds/parses/token-array associations and
+three actor answer-score reductions pass the CPU audit. The intentional one-record
+stop reports exit zero and a verified snapshot. This exercises real export loading,
+frozen-team generation and answer scoring; it does not exercise GPU reference
+scoring, positive-packet scoring or paired suffix replay. All 19 outputs answer C
+against gold B, leaving three missing private pairs and no eligible receiver
+contexts. No efficacy inference or sampling expansion follows. Resume the same
+run for the five remaining records. [Full review and continuation cell](reviews/qwen3-bank-001-first.md).
+
+
+## Completed train-only bank — 2026-09-19
+
+The final ZIP SHA256 `a77e11339b3991e3e0d5f0c1d42d0aed50b62c820619e555a60f9a4da956ac39`
+and all 18 payload checksums pass. The first shard and attempt are unchanged;
+all six records, 218 calls, five private pairs and 20 suffix branches reproduce
+from trusted protocol logic using inert returned outputs. Full bank and preference
+accounting match exactly. Eighteen answer and five positive-packet NLL forwards
+are recorded; zero reference forwards occur because all 24 receiver candidates
+lack a correct answer. Full revision readiness remains false. All six main
+trajectories fail; this two-task training check cannot establish effectiveness.
+The final log reports verified snapshot/ZIP persistence. No source fix or suite
+rerun was needed; the CPU artifact audit passes. [Evidence and next local task](reviews/qwen3-bank-001-complete.md).
+
+
+## Receiver-feasibility analysis and matched base control — 2026-09-19
+
+Local analysis finds that all six eligible receiver contexts concern one LogiQA
+item. Its clean private pool has six correct answers in 15 samples, but the 24
+receiver candidates have no correct answer. ARC clean private samples are all
+wrong. Format/truncation failures do not explain the missing pairs; the absence of
+an exact-context base control prevents attribution to warm-start changes.
+
+`preference-diagnostic` now pins the completed source ZIP and bank, selects 54 saved
+actor calls, and plans at most 54 unadapted-base calls with the same prompts, seeds,
+sampling and model/runtime identities. Reports separate the two policies and never
+export training pairs. Default invocation loads no model. All 97 tests pass with
+CPU neural opt-in; default passes 92 with five expected skips. Actual-source plan
+and analysis are retained locally; no GPU calls or optimizer updates were executed.
+[Evidence](reviews/preference-feasibility-001.md); [decision rules and Colab sequence](preference_feasibility.md).

@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "purpose": "train_only_frozen_context_base_control",
+  "source_bundle_sha256": "a77e11339b3991e3e0d5f0c1d42d0aed50b62c820619e555a60f9a4da956ac39",
+  "source_bank_hash": "30586d9503f0cab543c24d9ec0259c88561fa8a7180172ad63a0edec98f36e4b"
+}

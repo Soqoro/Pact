@@ -92,6 +92,16 @@ def parser():
         else:
             r.add_argument("--bank", required=True, type=Path)
             r.add_argument("--output-dir", required=True, type=Path)
+    r = commands.add_parser("preference-diagnostic", help="matched base control on frozen training contexts; default plan only")
+    r.add_argument("--config", required=True, type=Path)
+    r.add_argument("--bundle", required=True, type=Path)
+    r.add_argument("--run-dir", required=True, type=Path)
+    r.add_argument("--cache-dir", type=Path, default=Path("scratch/cache/models"))
+    r.add_argument("--persistent", type=Path)
+    r.add_argument("--storage-timeout", type=float, default=120)
+    r.add_argument("--execute", action="store_true")
+    r.add_argument("--resume", action="store_true")
+    r.add_argument("--stop-after", type=int)
     for name in ("train", "adaptive-evaluate", "evaluate"):
         commands.add_parser(name, help="not_implemented: deferred milestone")
     return p
@@ -179,6 +189,18 @@ def main(argv=None) -> int:
                 result = run_collection(config, args.data_dir, args.references_dir, args.run_dir, args.cache_dir,
                             resume=args.resume, stop_after=args.stop_after, persistent=args.persistent,
                             timeout_seconds=args.storage_timeout)
+                print(canonical(result))
+                return result["exit_code"]
+        elif command == "preference-diagnostic":
+            from .training.feasibility import load_feasibility_config, prepare_feasibility, run_feasibility
+            config = load_feasibility_config(args.config)
+            if not args.execute:
+                if args.resume or args.stop_after is not None:
+                    raise ValueError("Resume/stop-after require explicit --execute")
+                result = prepare_feasibility(config,args.bundle)["summary"]
+            else:
+                result = run_feasibility(config,args.bundle,args.run_dir,args.cache_dir,resume=args.resume,
+                    stop_after=args.stop_after,persistent=args.persistent,timeout_seconds=args.storage_timeout)
                 print(canonical(result))
                 return result["exit_code"]
         elif command == "cache-reference":

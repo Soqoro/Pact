@@ -29,9 +29,11 @@ def _restore_snapshot(snapshot: Path, destination: Path, *, progress=lambda mess
     entries = index["files"]
     if index.get("schema_version") != 1 or not isinstance(entries, dict) or not 1 <= len(entries) <= 5000:
         raise ValueError("Invalid snapshot inventory")
-    if kind not in ("warmstart", "training_bank"):
+    if kind not in ("warmstart", "training_bank", "preference_feasibility_diagnostic"):
         raise ValueError("Unknown snapshot kind")
     required = {"run.json", "examples.json"} if kind == "warmstart" else {"manifest.json", "data_manifest.json", "model_identity.json"}
+    if kind == "preference_feasibility_diagnostic":
+        required = {"manifest.json", "plan.json", "model_identity.json"}
     if not required <= entries.keys():
         raise ValueError("Snapshot is not an initialized run of the requested kind")
     objects = snapshot.parent.parent / "objects"
@@ -62,7 +64,8 @@ def _restore_snapshot(snapshot: Path, destination: Path, *, progress=lambda mess
             from ..artifacts import ShardStore
             from ..util import digest
             manifest = read_json(staging / "manifest.json")
-            if (manifest.get("kind") != "training_bank_engineering"
+            expected_kind = "training_bank_engineering" if kind == "training_bank" else kind
+            if (manifest.get("kind") != expected_kind
                     or manifest["recipe_hash"] != digest(manifest["recipe"])
                     or manifest["identity"]["recipe_hash"] != manifest["recipe_hash"]
                     or len(ShardStore(staging).records()) != manifest["completed_records"]):
