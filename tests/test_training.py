@@ -269,7 +269,7 @@ class TrainingCLITests(unittest.TestCase):
             write_json(root / "invalid.json", data)
             self.assertEqual(main(["assign", "--bank", str(root / "invalid.json"), "--output", str(root / "bad.json"), "--allow-synthetic"]), 2)
             self.assertFalse((root / "bad.json").exists())
-            for command in ("train", "collect-bank"):
+            for command in ("train", "adaptive-evaluate"):
                 self.assertEqual(main([command]), 2)
 
     @unittest.skipUnless(os.environ.get("PACT_TEST_NEURAL") == "1", "explicit optional torch check; no downloads")

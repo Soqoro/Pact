@@ -1,4 +1,4 @@
-# Implementation status — 2026-09-18
+# Implementation status — 2026-09-19
 
 The scientific proposal and supplied specification are unchanged. The first implementation
 is published at `c15ad0db40f410cb6b173733912ace4de9c82bba`. The user returned the first
@@ -11,7 +11,9 @@ passed the returned `drive-storage-check-001` review. The complete 80-item pilot
 and all its raw traces are now reviewed; post-reset recovery retained all 1,440
 records. The selected replay check at `e79a9ab0da7b3801ba1ff488ddd974302768da2a`
 now verifies 13 eligible neural packet pairs and all 52 suffix branches; receiver
-preference pairs remain unavailable. No PACT training,
+preference pairs remain unavailable. The complete bounded clean-answer warm start
+now passes returned metadata review: nine updates, fresh-process GPU continuation,
+three frozen exports and reported verified persistence. No full PACT training,
 final-test evaluation, or empirical PACT improvement claim has been made.
 
 | Component | Implementation | Evidence / remaining verification |
@@ -30,20 +32,30 @@ final-test evaluation, or empirical PACT improvement claim has been made.
 | M2 eligible paired suffix replay | implemented, cpu_tested, gpu_verified_on_reported_environment | Selected L4 check: 13 eligible pairs, K=2, 52 audited branches / 208 calls; fixed attacks, corresponding node seeds, unchanged other-agent packets and all recomputed credits pass |
 | M2 4/20/80 configurations and preflight | implemented, cpu_tested; 4/20/80-item inference gpu_verified_on_reported_environment | Actual L4/BF16/SDPA checks passed; 80-item pilot completed and all raw traces audited |
 | M2 thin Colab notebook | implemented, gpu_verified_on_reported_environment | Pinned clean checkout, installation, GPU collection, Drive persistence and ZIP handoff reported; ZIP independently verified; full completed pilot restored after reset; resumed GPU inference unverified |
-| Training microbatch / length-sensitivity profile | deferred | Inference load/peak/throughput accounting implemented; no training-memory or sensitivity claim |
+| Training microbatch / length-sensitivity profile | bounded recipe observed; full length profile pending | 36 examples across three agents, 112–449 tokens; resume peak allocated/reserved 15.891/16.254 GiB. No full-cap fit or length-sensitivity claim |
 | M3 scored-bank contract, masked assignment, same-prompt preferences, reference cache | implemented, cpu_tested | Independent numerical reference, missingness, global coefficients, immutable cache and CLI fixture round trip |
 | M3 completion NLL / DPO numerical functions | implemented, cpu_neural_tested; gpu_unverified | Numerical-reference agreement, masked gradients, one-step target improvement and detached DPO reference gradients pass |
 | M3 train loaders and frozen task manifests | implemented, cpu_tested; pinned real sources verified | Full 8,495 train / 950 validation audit, 59 redundant train rows excluded; 12/1,200 task balanced selections. Semantic paraphrases remain unaudited; no final-test access |
-| M3 bounded clean-answer warmstart, adapter exports, optimizer/RNG resume | implemented; tiny_cpu_neural_tested; gpu_unverified | Tiny Qwen with nonzero dropout: exact resumed weights/logs, unchanged backbone/inactive adapters, frozen exports and reload pass. Qwen3-8B GPU training unverified |
-| M3 warm-start Colab handoff and snapshot restore | implemented; cpu_tested; GPU/Drive training path unverified | Explicit execution gate, one-update default, local review ZIP before timed snapshot copy, exact-snapshot restore, persistence-only retry; full checkpoints excluded from small review ZIP |
-| M3 collector, neural reference scoring, joint specialization/revision updates | deferred | Full PACT train and collect-bank remain explicitly unimplemented |
+| M3 bounded clean-answer warmstart, adapter exports, optimizer/RNG resume | tiny_cpu_neural_tested; completed GPU run metadata reviewed | Nine updates, fresh-process GPU continuation and three frozen exports reported successful. Initial checkpoints preserved; tensor bytes omitted locally. GPU uninterrupted-equivalence control unverified |
+| M3 warm-start Colab handoff and snapshot restore | cpu_tested; completed Colab handoff reviewed | Final archive SHA and 31 payload checksums verified; reported full snapshot/ZIP persistence successful. Actual post-reset Drive restore pending |
+| M3 bounded train-only collector and neural frozen-reference scoring | implemented, cpu_neural_tested; gpu_unverified | Six-record recipe; raw paired replays, actual token scoring, missingness, immutable cache and snapshot recovery pass; actual warm-start exports have not been loaded locally |
+| M3 joint specialization/revision updates, sparse-support bank sampling and refreshes | deferred | Full PACT train remains explicitly unimplemented |
 | SAC/composition/full study/adaptive search/BFCL | deferred | Milestones 4–5; no final-test path is enabled |
 
 GPU verification applies only to the reported environments and executed paths.
 The imported bundle cannot independently verify the current contents of the user's Drive,
-and it does not establish training-memory fit, adapter isolation, or replay efficacy.
+and it does not establish full-context training-memory fit, independent tensor-level
+adapter isolation, or replay efficacy.
 
 ## Executed validation
+
+Latest collection increment: **90/90 pass** with tiny CPU neural checks enabled;
+default suite **85 pass, five skip**. No pretrained weights were downloaded.
+[Current evidence](reviews/collection-implementation-001.md) includes reference/base
+isolation, exact sampled-token preservation, six-record resume, cached scores and
+verified snapshot restoration. GPU collection/scoring remains unverified.
+
+### Prior warm-start implementation check
 
 With explicit user opt-in, the full suite now passes **81 tests, 81 passed, zero
 skipped** in `/tmp/pact-neural-cpu`, using CPU-only torch 2.9.1, Transformers 4.57.6
@@ -61,9 +73,9 @@ The current default, dependency-free invocation passed **81 tests, 78 passed,
 3 skipped**. Seven new CPU control tests cover:
 recipe bounds, pinned data/order planning, prompt/target separation, no truncation,
 typed optimizer/RNG trees, immutable checkpoints/corruption, early resume mismatch
-rejection and a model-free CLI plan. The real Qwen3-8B GPU training path, BF16,
-GPU activation checkpointing and GPU resume remain unverified. The pinned
-12-task dry run plans nine
+rejection and a model-free CLI plan. The returned first real Qwen3-8B BF16
+update exercises the configured activation-checkpointing path; the completed
+follow-up also reports successful GPU continuation and final reference exports. The pinned 12-task dry run plans nine
 optimizer updates and 36 forward/backward examples without launching any.
 [Warm-start contract and verification gate](warmstart.md).
 
@@ -141,7 +153,15 @@ preserved; derived analysis is under `results_import/qwen3-smoke-001/analysis/`.
 No source/configuration patch was justified. See the
 [full review](reviews/qwen3-smoke-001.md) for provenance, task IDs and audit limits.
 
-## Next gate
+## Current next gate
+
+Review/publish the locally tested collection increment, then use a new pinned
+checkout to collect one training record with the completed warm-start exports.
+Return that handoff before completing the six-record recipe. See
+[collection commands and recovery](collection.md). Full PACT optimization and
+final-test evaluation remain deferred.
+
+### Earlier gate after the selected replay review
 
 The selected replay check has completed and passed local review. No additional
 Colab command, rerun or raw export is needed. Eligible neural suffix replay and
@@ -312,3 +332,41 @@ collection provenance. Full evidence, limitations, patch and next invocation:
 [profile review](reviews/qwen3-profile-001.md).
 
 See [the exact runbook](colab_runbook.md) and [choices/limits](implementation_decisions.md).
+
+
+## Returned first warm-start update — 2026-09-19
+
+The [qwen3-warmstart-001 handoff review](reviews/qwen3-warmstart-001.md) verifies
+all ten payload checksums, code/config/data identities, 12 prompt/target/mask records,
+all task orders, both checkpoint metadata inventories and the one-update log.
+Real training reports one optimizer update, finite loss/gradient norm, and verified
+Drive persistence. Nested local-only persistence flags predate that verification.
+Source code remains unchanged; no suite rerun was needed for this artifact review.
+Eight further updates, GPU optimizer resume and real frozen exports remain pending.
+Next: resume the same clean `a277794d271720665d57308cc15f3122f1934e27` checkout
+with `RESUME=True`, `STOP_AFTER=None`, then review the returned final handoff.
+
+
+## Completed warm-start continuation — 2026-09-19
+
+The [final handoff](reviews/qwen3-warmstart-001-complete.md) passes archive integrity,
+code/config/data identity, old checkpoint preservation, all ten checkpoint metadata
+records, fixed batch/task ordering, and three reference config/hash checks. Fresh
+GPU process continuation completes the eight remaining updates: nine total, 36
+examples, three agents. Final exported weights are reported verified against actors
+by the pinned runtime; omitted tensor bytes prevent independent local comparison.
+Final snapshot/ZIP persistence reports success. No source patch or new suite run was
+needed; the CPU artifact audit passes. Next is local reference reload/scoring and
+train-only bank collector work. Do not repeat the completed warm-start run.
+
+
+## Frozen-reference scorer and train-only bank — 2026-09-19
+
+The implemented `collect-bank` and `cache-reference` commands default to plans.
+The fixed two-task, three-condition recipe pins the completed warm-start exports
+and frozen training manifest. It preserves exact sampled token IDs and all paired
+raw evidence, scores the correct frozen reference, rejects incompatible resume,
+and retains missing preference strata. All 90 tests pass with CPU neural opt-in;
+default execution passes 85 with five expected skips. Synthetic persistence and
+restore pass with verified hashes; no GPU collection, Drive restore or new
+optimizer execution is claimed. [Evidence](reviews/collection-implementation-001.md).

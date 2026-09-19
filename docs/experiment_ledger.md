@@ -449,3 +449,81 @@ diagnostic action. Preserve negative or inconclusive findings. Never execute tra
 - Next execution: publish/pin this revision, run one Qwen3-8B optimizer update using
   `02_warmstart_colab.ipynb`, return the small review ZIP, and preserve the complete
   verified checkpoint object store in Drive before resetting the runtime.
+
+
+## Returned first GPU warm-start update — `qwen3-warmstart-001` (2026-09-19)
+
+- ZIP SHA256 `060d1a115631a785c85749cd53f4fa1ca0f190d919e6b95d9ceeb2e5a73034ab`,
+  34,280 bytes; all 11 archive members and ten payload checksums verified. Raw import
+  preserved under `results_import/qwen3-warmstart-001-review/`; CPU-only audit script
+  and report under `results_import/qwen3-warmstart-001-analysis/`.
+- Clean code `a277794d271720665d57308cc15f3122f1934e27`; source/config/data pins match.
+  All 12 training prompts/targets/masks and three sample orders reproduce. Recorded
+  tokenization checked structurally, not rerun. Same Qwen base/runtime fingerprint.
+- One agent0 AdamW update, effective batch four, 24 completion tokens; mean NLL
+  1.0178536289, pre-clipping gradient norm 11.9798793793. Checkpoint metadata for
+  steps zero/one is consistent, 432 adapter tensors each and 144 optimizer states
+  after the update. Full tensor bytes excluded from the review ZIP.
+- 124.263 seconds invocation including 55.798-second model load; final persistence
+  excluded. Peak allocated/reserved 15.777/16.010 GiB on executed lengths
+  320/449/127/139. Not a full-cap memory or length-sensitivity profile; units unknown.
+- Deliberate optimizer-boundary stop; exit zero. Enclosing receipt reports verified
+  Drive snapshot `1789795816767143719-d1a84cb6fab7` and the user reports ZIP copy
+  success. Drive objects not independently accessed locally. Nested false flags
+  are earlier local training status, not contradictory copy failures.
+- Gate passed for same-recipe resume of eight remaining updates and frozen exports.
+  GPU resume and final exports stay unverified until returned evidence. No full PACT
+  learning or efficacy claim, no final-test access, no executable patch or new GPU run
+  by the local reviewer. [Full review and next cell](reviews/qwen3-warmstart-001.md).
+
+## Completed GPU warm start — `qwen3-warmstart-001` (2026-09-19)
+
+- Final ZIP `qwen3-warmstart-001-handoff-1789796424401226566.zip`, 126,895 bytes;
+  SHA256 `417682b7868231c4103ae4a324d4213263b9308aaf97dfecc7c178191ad587be`
+  matches the supplied log. All 32 safe members and 31 payload checksums verified.
+  Raw import: `results_import/qwen3-warmstart-001-complete-review/`; reproducible
+  CPU audit and report: `results_import/qwen3-warmstart-001-complete-analysis/`.
+- Identical clean code `a277794d271720665d57308cc15f3122f1934e27`, source/config/
+  data/model/runtime pins, run metadata and 12 example records. Checkpoints zero
+  and one preserve metadata bytes and recorded tensor hashes/sizes. All ten
+  checkpoint records contain the expected identities, optimizer agents/settings,
+  tensor references and cumulative logs. No tensor payloads were imported.
+- Fresh-process GPU continuation logs exactly 32 new microbatches for updates 2–9,
+  in the fixed order. Final nine updates / 36 examples / 216 completion tokens;
+  three updates per agent. Status complete, exit zero; no numerical failure reported.
+- Three rank-16 q/v warm-start reference exports at step nine. Configs and combined
+  hashes reproduce from inventory; distinct weight hashes. Runtime exporter verifies
+  actual exported tensor equality; that comparison is not independently repeated
+  locally. Full adapter hashes and limits are in the linked review.
+- Resume invocation 103.988 seconds, including 10.036-second model load, excluding
+  final copy/ZIP generation. Both invocations total 228.251 seconds. Resume peak
+  allocated/reserved 15.891/16.254 GiB, executed sequences 112–449 tokens. Compute
+  units unknown. Different-batch loss values are not an improvement measurement.
+- Enclosing receipt reports verified final snapshot `1789796424349439412-7eeb6af87200`
+  and the user log reports verified handoff persistence. Inventory totals
+  1,565,774,671 bytes. Preserve the whole Drive object store; the review ZIP cannot
+  resume weights. Post-reset restore and uninterrupted GPU equivalence unverified.
+- Bounded warm-start engineering gate complete. Next is local frozen-reference
+  reload/scoring and train-only replay-bank collection implementation; no further
+  GPU invocation, raw export, sampling expansion or full-study launch is requested.
+  No PACT efficacy claim or final-test access. [Full review](reviews/qwen3-warmstart-001-complete.md).
+
+
+## Frozen reference / collection implementation — 2026-09-19
+
+`collection-implementation-001` is a local CPU implementation check, not a research
+experiment. The default suite passes 85 tests with five optional skips; the full
+neural opt-in suite passes 90/90 using CPU torch 2.9.1, Transformers 4.57.6,
+PEFT 0.18.1 and Accelerate 1.12.0. Random tiny-model scoring verifies frozen-policy
+separation and actual-token causal log probabilities. Synthetic collection checks
+exercise paired raw replays, interrupted resume, empty preferences, immutable
+cache, timed storage failure, verified snapshots/bundles and exact restore.
+
+The actual frozen training-data plan selects `arc_challenge:MCAS_2004_5_13` and
+`logiqa:train-7374`; it makes no model calls. The complete warm-start tensor exports
+remain on Drive and are not represented by synthetic fixture tensors. Retained
+logs, dependency/source identity and plan are in ignored
+`results_import/collection-implementation-001/`. No GPU run, optimizer update,
+paid API, final-test access or paper-result change occurred. Review/publish the
+increment before the first one-record Colab collection check.
+[Review](reviews/collection-implementation-001.md); [recipe and commands](collection.md).

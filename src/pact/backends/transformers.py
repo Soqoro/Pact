@@ -114,6 +114,7 @@ class TransformersBackend:
         if not request.deterministic:
             params.update(dataclasses.asdict(self.config.sampling), min_p=0.0)
         raw, output_tokens, stop = "", 0, "context_overflow"
+        output = []
         started = time.perf_counter()
         self.pending_call = {"request": dataclasses.asdict(request), "rendered_prompt": rendered,
                              "context_hash": digest(rendered), "input_tokens": input_tokens,
@@ -138,6 +139,11 @@ class TransformersBackend:
                           request.messages, rendered, digest(rendered), self.identity["template_hash"], canonical(params),
                           input_tokens, output_tokens, stop, time.perf_counter() - started)
         self.calls.append(call)
+        # Preserve actual sampled IDs for training derivatives; decoding and then
+        # re-encoding text is not guaranteed to reproduce the sampled sequence.
+        self.last_generation = {"prompt_ids": inputs["input_ids"][0].tolist(),
+                                "completion_ids": output, "raw": raw,
+                                "context_hash": call.context_hash}
         self.pending_call = None
         return raw, call
 

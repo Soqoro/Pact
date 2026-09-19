@@ -531,3 +531,64 @@ resume test. Full suite passes 81/81 with neural opt-in; default passes 78/81 wi
 three expected skips. Snapshot tests use local fixture bytes, not actual Drive or
 trained model weights. Real BF16 GPU memory fit/training/resume remain unverified.
 [Evidence and boundaries](reviews/warmstart-colab-check-001.md).
+
+
+## 2026-09-19: first GPU warm-start handoff passes bounded review
+
+Accept the returned one-update metadata audit as evidence that the actual Qwen3-8B
+BF16 warm-start path executed its first optimizer step and reported verified
+persistence. Do not mistake the intentional stop or earlier nested local persistence
+flag for failure. Keep tensor-value isolation, GPU resume, final exports and Drive
+restore outside the independently verified scope of this metadata-only ZIP.
+Proceed to the remaining eight updates using the identical commit, recipe and run ID
+with explicit resume. No sampling expansion, longer-context fit claim, change in
+methodology or effectiveness claim follows. [Evidence](reviews/qwen3-warmstart-001.md).
+
+## 2026-09-19: completed warm-start engineering gate, retain narrow scope
+
+Accept the completed handoff as evidence of nine GPU optimizer updates, successful
+fresh-process continuation from update one and three runtime-verified frozen exports.
+All metadata checks pass and the first checkpoint hashes remain unchanged. Promote
+only this executed path; do not claim independently audited tensor bytes, post-reset
+Drive restore, GPU bitwise equivalence, useful specialization or full PACT training.
+Different-batch training losses are not a before/after evaluation.
+
+Keep the final snapshot and all three reference hashes immutable. End this bounded
+Colab stage without a rerun or training expansion. The next local increment should
+load the pinned base explicitly (export configs contain a Colab cache path), verify
+adapter hashes, test frozen reference/readout separation and compute actual reference
+scores, then connect a bounded train-only collector. Existing validation replay
+records remain diagnostic, not training data. Full training and final-test work
+remain separate future gates. [Evidence](reviews/qwen3-warmstart-001-complete.md).
+
+
+## 2026-09-19: frozen-reference scoring and bounded train-only collector
+
+Load the pinned bare base explicitly and verify the completed step-nine reference
+manifest and all three config/tensor hashes before attachment. Attach three frozen
+actor copies and three separate reference copies to one backbone; disable all
+adapters for final readout. Keep reference/base parameters fixed and restore adapter
+selection, modes and gradient flags after scoring, including forward failures.
+Score actual sampled completion IDs plus EOS with completion-only causal masking;
+DPO caches store summed log probabilities, while gold-answer/private-packet costs
+use mean NLL. Canonical gold answers are scored under the original private prompts;
+no generated rationale becomes a gold target.
+
+Fix two training tasks by first occurrence per family in the already frozen
+12-task manifest, not observed outcomes. Collect clean/early/exchange debate cells
+with four candidates and K=2, for six records and at most 474 generations / 106,368
+output tokens / 72 teacher-forced forwards in one uninterrupted attempt. This is
+an engineering pool, not the proposal's 300-record sparse-support/refresh schedule.
+Keep every raw candidate and replay, evaluator labels outside prompts, invalid
+completions as failures, nullable missing credits and explicit missing hold/repair
+strata. Do not expand sampling, substitute validation data or enable full training.
+
+Default both new CLIs to plan-only. Execution requires --execute and explicit
+compatible resume; completed shards and cache entries are immutable. Record source,
+model, data, reference, runtime and resource-attempt identities. Verify snapshots
+at record boundaries with independent storage deadlines; export a local diagnostic
+ZIP before final Drive operations. Restore only an explicit complete snapshot into
+an absent scratch destination. Keep scientific_status=synthetic_fixture on CPU
+fixture handoffs. Scoring and six-record storage recovery pass local tests; real
+six-adapter memory fit, reference-export loading and collection remain GPU unverified.
+[Evidence](reviews/collection-implementation-001.md); [commands](collection.md).

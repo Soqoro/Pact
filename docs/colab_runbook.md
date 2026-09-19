@@ -1,6 +1,18 @@
 # Local → Colab → local
 
-## Current next action (reviewed 2026-09-18)
+## Current next action (reviewed 2026-09-19)
+
+`qwen3-warmstart-001` is complete: all nine updates, resumed GPU execution and
+three frozen exports pass the [returned metadata review](reviews/qwen3-warmstart-001-complete.md).
+The final snapshot receipt reports verified persistence. Keep the complete Drive
+object store; the review ZIP excludes weights. Do not rerun this completed stage.
+Frozen-reference reload/scoring and bounded train-only collection now pass local
+CPU tests. Review/publish this increment, then follow the [collection guide](collection.md)
+for a new pinned checkout and one completed training record before continuing all
+six. The guide includes exact cells and recovery instructions. No new GPU run has
+been executed by the local reviewer; receiver pair availability remains unknown.
+
+## Prior preparation and completed validation
 
 `qwen3-replay-check-001` completed and its entire handoff is reviewed. All six raw
 records, 386 model calls and 52 eligible suffix branches pass audit. Private-packet
@@ -11,7 +23,7 @@ No further validation Colab invocation or raw export is needed. Preserve the com
 pilot and replay-check artifacts; do not rerun them or increase sampling caps to
 force pairs. The first local Milestone-3 increment now provides CPU assignment,
 preference and reference-cache checks plus a [training-data plan](training_foundations.md).
-Real GPU training has not executed. Selected validation
+At that earlier gate, GPU training had not executed. Selected validation
 records must not become training data. A future GPU invocation requires its own
 implemented, tested and published configuration.
 
@@ -22,10 +34,11 @@ warm-start training or change the completed Colab runs.
 
 The [bounded warm-start CLI](warmstart.md) is now implemented with a default local
 planning mode. [Tiny CPU neural isolation/resume checks now pass](reviews/neural-cpu-check-001.md).
-Qwen GPU training-memory profiling remains pending. Next, review/publish a pinned
-revision, then use [02_warmstart_colab.ipynb](../notebooks/02_warmstart_colab.ipynb)
-for one optimizer update and return its review ZIP. It has an explicit execution
-gate, verified checkpoint snapshots, timed restore and a persistence-only retry.
+That warm-start engineering sequence is now complete. The retained
+[02_warmstart_colab.ipynb](../notebooks/02_warmstart_colab.ipynb) includes an explicit
+execution gate, verified checkpoint snapshots, timed restore and a persistence-only
+retry; it is not an instruction to repeat the completed run. Full-length GPU memory
+profiling remains pending.
 See [warm-start execution and recovery](warmstart.md#colab-execution-and-recovery).
 The original notebook remains the validation launcher.
 

@@ -4,9 +4,14 @@ The warm-start implementation includes sequential updates to three LoRA adapters
 optimizer-boundary checkpoint/resume and frozen reference exports. **Tiny CPU neural
 verification now passes**: all 81 tests pass with model tests enabled, including
 exact resumed weights/losses, adapter isolation and frozen export/reload.
-Qwen3-8B GPU training and memory fit remain unverified.
+The complete Qwen3-8B BF16 engineering run, GPU continuation and all three exports
+now pass [returned metadata review](reviews/qwen3-warmstart-001-complete.md)
+(2026-09-19). Full-length fit, independent tensor audit, post-reset restore and
+GPU equivalence to uninterrupted execution remain unverified. Do not rerun the
+completed `qwen3-warmstart-001`; execution steps below remain the workflow reference.
 [Execution evidence and limits](reviews/neural-cpu-check-001.md).
-Full PACT `train` and `collect-bank` remain unimplemented.
+Full PACT `train` remains unimplemented. A separate [bounded train-only collector](collection.md)
+now reloads these exports and scores frozen references; that new GPU path remains unverified.
 
 ## Review the plan locally
 
@@ -89,8 +94,9 @@ After all updates, export each adapter to `references/agent0`, `agent1`, `agent2
 `references.json` names their immutable content hashes and warm-start role. Exported
 tensor values are checked against the completed adapters; embeddings/base weights
 are not exported. These files are separate from the mutable actor model and will
-serve as frozen DPO references. This increment does not yet compute reference
-log probabilities or connect a scored-bank collector to these snapshots.
+serve as frozen DPO references. The subsequent [collection increment](collection.md) computes actual frozen-reference
+log probabilities and connects a bounded scored-bank collector to these snapshots;
+its tests use tiny CPU models and synthetic collection fixtures.
 
 ## Execution gate and remaining checks
 
@@ -118,9 +124,10 @@ weights or dataset downloads. The default suite skips it. Reference API behavior
 checked against the [pinned PEFT source](https://github.com/huggingface/peft/blob/v0.18.1/src/peft/peft_model.py),
 not inferred from the current development release.
 
-Remaining work: profile Qwen memory/throughput and verify GPU isolation/resume;
-implement actual frozen-reference scoring and scored-bank collection; then implement
-joint specialization/revision updates and their checkpoint lifecycle. No final-test
+Remaining work: expand the length-sensitivity profile and independently verify
+GPU tensor isolation/continuation equivalence;
+verify the implemented frozen-reference scorer and bounded collector on the GPU;
+then implement joint specialization/revision updates and their checkpoint lifecycle. No final-test
 data is involved in this path.
 
 ## Colab execution and recovery
@@ -169,4 +176,5 @@ CPU tests exercise local persistence/restore with fixture bytes, corruption and
 path traversal rejection, timeout recovery and the notebook execution gate.
 These are not evidence of Drive performance or real Qwen GPU training. The tiny
 CPU neural resume check additionally enables the production non-reentrant
-activation-checkpointing mode. Both real GPU training and GPU resume remain pending.
+activation-checkpointing mode. Real GPU warm-start execution and continuation
+have now completed; see the final handoff review for the narrower verified scope.

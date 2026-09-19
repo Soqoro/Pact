@@ -18,22 +18,25 @@ from .checkpoints import latest_checkpoint
 from .warmstart_config import load_warmstart_config, warmstart_plan
 
 
-def _restore_snapshot(snapshot: Path, destination: Path, *, progress=lambda message: None):
+def _restore_snapshot(snapshot: Path, destination: Path, *, progress=lambda message: None, kind="warmstart"):
     """Restore only the explicitly selected, complete snapshot; never fall back."""
     if destination.exists():
         raise ValueError("Restore requires a new scratch run directory")
     index_path = snapshot / "index.json"
     if snapshot.parent.name != "snapshots" or (snapshot / "COMPLETE").read_text() != file_hash(index_path):
-        raise ValueError("Invalid warm-start snapshot completion marker")
+        raise ValueError("Invalid snapshot completion marker")
     index = read_json(index_path)
     entries = index["files"]
     if index.get("schema_version") != 1 or not isinstance(entries, dict) or not 1 <= len(entries) <= 5000:
         raise ValueError("Invalid snapshot inventory")
-    if not {"run.json", "examples.json"} <= entries.keys():
-        raise ValueError("Snapshot is not an initialized warm-start run")
+    if kind not in ("warmstart", "training_bank"):
+        raise ValueError("Unknown snapshot kind")
+    required = {"run.json", "examples.json"} if kind == "warmstart" else {"manifest.json", "data_manifest.json", "model_identity.json"}
+    if not required <= entries.keys():
+        raise ValueError("Snapshot is not an initialized run of the requested kind")
     objects = snapshot.parent.parent / "objects"
     destination.parent.mkdir(parents=True, exist_ok=True)
-    staging = Path(tempfile.mkdtemp(prefix=".warmstart-restore-", dir=destination.parent))
+    staging = Path(tempfile.mkdtemp(prefix=".pact-restore-", dir=destination.parent))
     try:
         size = 0
         for position, (name, sha) in enumerate(entries.items(), 1):
@@ -45,15 +48,25 @@ def _restore_snapshot(snapshot: Path, destination: Path, *, progress=lambda mess
                 raise ValueError("Missing or symlinked snapshot object")
             size += obj.stat().st_size
             if size > 20 * 1024**3:
-                raise ValueError("Warm-start snapshot exceeds 20 GiB restore limit")
+                raise ValueError("Snapshot exceeds 20 GiB restore limit")
             target = staging / rel
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(obj, target)
             if file_hash(target) != sha:
-                raise ValueError("Corrupt warm-start snapshot object")
+                raise ValueError("Corrupt snapshot object")
             if position == 1 or position % 10 == 0 or position == len(entries):
-                progress(f"Restoring verified warm-start files: {position}/{len(entries)}")
-        latest_checkpoint(staging / "checkpoints", read_json(staging / "run.json")["identity"])
+                progress(f"Restoring verified {kind} files: {position}/{len(entries)}")
+        if kind == "warmstart":
+            latest_checkpoint(staging / "checkpoints", read_json(staging / "run.json")["identity"])
+        else:
+            from ..artifacts import ShardStore
+            from ..util import digest
+            manifest = read_json(staging / "manifest.json")
+            if (manifest.get("kind") != "training_bank_engineering"
+                    or manifest["recipe_hash"] != digest(manifest["recipe"])
+                    or manifest["identity"]["recipe_hash"] != manifest["recipe_hash"]
+                    or len(ShardStore(staging).records()) != manifest["completed_records"]):
+                raise ValueError("Collection snapshot provenance/count mismatch")
         staging.rename(destination)
         return {"restored_snapshot": str(snapshot), "run_dir": str(destination)}
     finally:
@@ -68,7 +81,8 @@ def restore_snapshot(snapshot, destination, *, timeout_seconds=120):
                              timeout_seconds=timeout_seconds)
 
 
-def review_bundle(root: Path, output: Path, outcome: dict):
+def review_bundle(root: Path, output: Path, outcome: dict, *, kind="warmstart_engineering_review",
+                  scientific_status="clean_answer_warmstart_engineering_only"):
     """Small diagnostic archive. Tensor checkpoints remain in the full snapshot."""
     if output.exists():
         raise FileExistsError("Never overwrite a prior handoff")
@@ -80,9 +94,9 @@ def review_bundle(root: Path, output: Path, outcome: dict):
     if sum(p.stat().st_size for p in metadata) > 90 * 1024**2:
         raise ValueError("Review metadata exceeds 90 MiB limit")
     payload = {p.relative_to(root).as_posix(): p.read_bytes() for p in metadata}
-    payload["HANDOFF.json"] = canonical({"kind": "warmstart_engineering_review", "schema_version": 1,
+    payload["HANDOFF.json"] = canonical({"kind": kind, "schema_version": 1,
         "resume_archive": False, "outcome": outcome, "inventory": inventory,
-        "scientific_status": "clean_answer_warmstart_engineering_only"}).encode()
+        "scientific_status": scientific_status}).encode()
     import hashlib
     payload["review_checksums.json"] = canonical({n: hashlib.sha256(v).hexdigest() for n, v in payload.items()}).encode()
     output.parent.mkdir(parents=True, exist_ok=True)
