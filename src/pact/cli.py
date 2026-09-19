@@ -92,6 +92,24 @@ def parser():
         else:
             r.add_argument("--bank", required=True, type=Path)
             r.add_argument("--output-dir", required=True, type=Path)
+    r = commands.add_parser("plan-receiver-feasibility", help="verify frozen broader training-only design; no execution")
+    r.add_argument("--config", required=True, type=Path)
+    r.add_argument("--data-dir", required=True, type=Path)
+    r.add_argument("--warmstart-data-dir", required=True, type=Path)
+    r.add_argument("--selection", required=True, type=Path)
+    r = commands.add_parser("receiver-feasibility", help="bounded frozen-actor receiver diagnostic; default plan only")
+    r.add_argument("--config", required=True, type=Path)
+    r.add_argument("--data-dir", required=True, type=Path)
+    r.add_argument("--warmstart-data-dir", required=True, type=Path)
+    r.add_argument("--selection", required=True, type=Path)
+    r.add_argument("--references-dir", required=True, type=Path)
+    r.add_argument("--run-dir", required=True, type=Path)
+    r.add_argument("--cache-dir", type=Path, default=Path("scratch/cache/models"))
+    r.add_argument("--persistent", type=Path)
+    r.add_argument("--storage-timeout", type=float, default=120)
+    r.add_argument("--execute", action="store_true")
+    r.add_argument("--resume", action="store_true")
+    r.add_argument("--stop-after", type=int, help="pause before more than N new committed calls")
     r = commands.add_parser("preference-diagnostic", help="matched base control on frozen training contexts; default plan only")
     r.add_argument("--config", required=True, type=Path)
     r.add_argument("--bundle", required=True, type=Path)
@@ -189,6 +207,24 @@ def main(argv=None) -> int:
                 result = run_collection(config, args.data_dir, args.references_dir, args.run_dir, args.cache_dir,
                             resume=args.resume, stop_after=args.stop_after, persistent=args.persistent,
                             timeout_seconds=args.storage_timeout)
+                print(canonical(result))
+                return result["exit_code"]
+        elif command == "plan-receiver-feasibility":
+            from .training.receiver_plan import load_receiver_config, receiver_feasibility_plan
+            result = receiver_feasibility_plan(load_receiver_config(args.config), args.data_dir,
+                                               args.warmstart_data_dir, args.selection)
+        elif command == "receiver-feasibility":
+            from .training.receiver_plan import load_receiver_config, receiver_feasibility_plan
+            config = load_receiver_config(args.config)
+            if not args.execute:
+                if args.resume or args.stop_after is not None:
+                    raise ValueError("Resume/stop-after require explicit --execute")
+                result = receiver_feasibility_plan(config,args.data_dir,args.warmstart_data_dir,args.selection)
+            else:
+                from .training.receiver import run_receiver
+                result = run_receiver(config,args.data_dir,args.warmstart_data_dir,args.selection,args.references_dir,
+                    args.run_dir,args.cache_dir,resume=args.resume,stop_after=args.stop_after,
+                    persistent=args.persistent,timeout_seconds=args.storage_timeout)
                 print(canonical(result))
                 return result["exit_code"]
         elif command == "preference-diagnostic":

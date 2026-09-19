@@ -1,4 +1,4 @@
-# Implementation status — 2026-09-19
+# Implementation status — 2026-09-20
 
 The scientific proposal and supplied specification are unchanged. The first implementation
 is published at `c15ad0db40f410cb6b173733912ace4de9c82bba`. The user returned the first
@@ -39,7 +39,8 @@ final-test evaluation, or empirical PACT improvement claim has been made.
 | M3 bounded clean-answer warmstart, adapter exports, optimizer/RNG resume | tiny_cpu_neural_tested; completed GPU run metadata reviewed | Nine updates, fresh-process GPU continuation and three frozen exports reported successful. Initial checkpoints preserved; tensor bytes omitted locally. GPU uninterrupted-equivalence control unverified |
 | M3 warm-start Colab handoff and snapshot restore | cpu_tested; completed Colab handoff reviewed | Final archive SHA and 31 payload checksums verified; reported full snapshot/ZIP persistence successful. Actual post-reset Drive restore pending |
 | M3 bounded train-only collector and neural frozen-reference scoring | cpu_neural_tested; complete GPU engineering bank reviewed | Six records, compatible resume, 218 generations, five private pairs / 20 suffix branches, 18 answer and five positive-packet scores audited. Zero receiver pairs; GPU reference scoring unverified |
-| M3 receiver-feasibility base control | implemented, cpu_tested; gpu_unverified | Exact saved prompts/seeds, 54-call cap, source ZIP/bank pins, diagnostic-only results, immutable resume and verified persistence/restore; no training-pair export |
+| M3 receiver-feasibility base control | implemented, cpu_tested, gpu_verified_on_reported_environment | Returned 54/54 calls match saved prompts/seeds/model/runtime; base receiver correctness 0/24, no pairs; reported verified persistence. Diagnostic resume/restore remains CPU-only verified |
+| M3 broader receiver feasibility | design_frozen, runner_cpu_neural_tested; gpu_unverified | 24 exact train-only IDs, 12 per family, warm-start exclusions; 48 clean/exchange records, 912-call / 224,256-output-token caps; immutable call resume, diagnostic reports and verified handoffs |
 | M3 joint specialization/revision updates, sparse-support bank sampling and refreshes | deferred | Full PACT train remains explicitly unimplemented |
 | SAC/composition/full study/adaptive search/BFCL | deferred | Milestones 4–5; no final-test path is enabled |
 
@@ -50,8 +51,21 @@ adapter isolation, or replay efficacy.
 
 ## Executed validation
 
-Latest preference-feasibility increment: **97/97 pass** with tiny CPU neural checks
-enabled; default suite **92 pass, five skip**.
+Latest receiver-runner increment: **113/113 pass** with tiny CPU neural checks
+enabled; default suite **107 pass, six skip**. Ten new checks cover the runner,
+partial-pool resume, unresolved-attempt rejection, persistence failures, safe
+snapshot restoration, missing-pair accounting and tiny CPU neural generation
+with unchanged actor/reference tensors and restored base-readout adapter state.
+No real GPU execution or pretrained download occurred.
+[Implementation evidence](reviews/receiver-feasibility-implementation-001.md).
+
+The prior broader receiver-design increment passed **103/103** with tiny CPU neural
+checks enabled; default suite **98 pass, five skip**. Six added planner tests
+cover frozen selection, exclusions, family/sender balance, source/selection
+tampering, split rejection, budget enforcement and the non-executing CLI.
+[Design and local command](receiver_feasibility_design.md).
+The preceding preference-feasibility increment passed **97/97** with opt-in,
+and **92 pass, five skip** by default.
 [New control-path evidence](reviews/preference-feasibility-001.md) covers the 54-call
 plan, archive/prompt/runtime checks, diagnostic pair separation and verified recovery.
 The prior collection increment passed 90/90 with opt-in, 85 with five skips by default. No pretrained weights were downloaded.
@@ -164,11 +178,16 @@ No source/configuration patch was justified. See the
 The [complete training bank](reviews/qwen3-bank-001-complete.md) passes audit.
 This Colab stage is complete; no rerun or further export is needed. Zero correct
 receiver candidates among 24 samples leave both hold/repair preference strata
-empty. The [matched-base diagnostic](preference_feasibility.md) is now implemented
-and CPU tested. Review/publish it before the bounded 54-call Colab check; compare
-base outputs to saved actor outputs on identical prompts/seeds. No actor resampling
-or training pairs are added. GPU frozen-reference scoring, full revision optimization
-and final-test evaluation remain unverified or deferred.
+empty. The [matched-base diagnostic](reviews/qwen3-base-control-001.md) also passes
+returned audit: 54/54 calls and zero correct base receiver samples. The bounded
+check is complete and does not support blaming the warm start. The
+[broader design](receiver_feasibility_design.md) and exact selection are now frozen
+and CPU-verified. The dedicated receiver-only runner now implements call-boundary
+resume and raw diagnostic accounting. Next is user review/commit/push, followed
+by the [bounded Colab run](receiver_feasibility_colab.md) pinned to that new SHA
+and review of its returned handoff. The new GPU execution path is unverified.
+GPU frozen-reference scoring, full revision
+optimization and final-test evaluation remain unverified or deferred.
 
 ### Earlier gate after the selected replay review
 
@@ -424,3 +443,61 @@ export training pairs. Default invocation loads no model. All 97 tests pass with
 CPU neural opt-in; default passes 92 with five expected skips. Actual-source plan
 and analysis are retained locally; no GPU calls or optimizer updates were executed.
 [Evidence](reviews/preference-feasibility-001.md); [decision rules and Colab sequence](preference_feasibility.md).
+
+
+## Returned matched base control — 2026-09-19
+
+The [qwen3-base-control-001 audit](reviews/qwen3-base-control-001.md) passes the
+user-supplied SHA256, 62 payload checksums, 115 inventory entries and all 54
+prompt/token-prefix/seed/sampling/model checks. The source plan and final report
+reconstruct exactly. Base private correctness is 0/15 ARC and 7/15 LogiQA versus
+actors' 0/15 and 6/15. Both have 0/24 correct receiver outputs and no preferences.
+All base calls end at EOS without format/length failures. One attempt records
+16,995 input / 3,275 output tokens and 343.519 seconds excluding final persistence.
+The receipt reports verified snapshot persistence; the supplied final Drive path
+and ZIP hash match. Current Drive and GPU diagnostic resume/restore are unverified.
+
+This completes the bounded diagnostic without supporting a warm-start regression
+explanation. The next local task is a broader, outcome-independent training-only
+feasibility design with fixed budgets, not a repeated run or full revision update.
+No executable source changes or suite rerun were needed; the CPU artifact audit
+passes. Frozen-reference GPU scoring and full PACT optimization remain unresolved.
+
+
+## Broader training-only receiver-feasibility design — 2026-09-19
+
+The new offline planner verifies the existing 1,200-task pool and 12-task warm-start
+manifests, excludes warm-start IDs/audited groups/content groups, and freezes 24
+tasks by outcome-independent hash ranking, 12 per family. Interleaving balances
+exchange senders within each family. All 48 planned records use the existing
+frozen actors and clean/exchange protocol; four fresh samples per eligible receiver
+give at most 912 generations / 224,256 output tokens. No private alternatives,
+suffix replays, scores or optimization are part of this diagnostic.
+
+Selection hash `e6842155a4080c0a39e3ad39a8b207539312ffb57b05da7675a7343136e33d96`;
+recipe hash `efa9d8cfb1450227b80286309505116d9a8e03fd1732d99d1ee6b5bcabf3d7e1`.
+Real local data reconstruction passes, all six new planner tests pass, and the full
+suite passes 103/103 with tiny CPU neural opt-in (98 pass/five skip by default).
+No weights, datasets or GPU calls were requested. Evidence is retained under
+`results_import/receiver-feasibility-design-001/`. The execution runner is explicitly
+not implemented; this increment finishes experiment design and local plan validation.
+
+
+## Receiver-only runner implementation — 2026-09-20
+
+The previously frozen broader design now has a dedicated execution path. Ten new
+CPU checks bring the suite to 113 tests: 107 pass/six skip by default, 113/113 pass
+with tiny CPU neural opt-in. Immutable per-call results reconstruct exact partial
+candidate pools; diagnostic reports preserve ineligible, incomplete and missing
+classes. Local ZIP, timed persistence and safe snapshot restoration pass fixture
+checks, including stale snapshot and unresolved-attempt rejection. The tiny neural
+check confirms unchanged actor/reference tensors and restored adapter state after
+base readout, with no scoring forwards.
+
+Production selection and budgets remain unchanged: 24 train tasks, 48 records,
+at most 912 calls and 224,256 output tokens. No real model collection occurred;
+there are no new receiver pair counts to report. New GPU execution and recovery
+remain unverified. Evidence and caveats are in the
+[implementation review](reviews/receiver-feasibility-implementation-001.md);
+[ordered Colab cells](receiver_feasibility_colab.md) require user publication and
+a new pinned commit before execution.

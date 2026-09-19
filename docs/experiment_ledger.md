@@ -605,3 +605,71 @@ Retained plan, source counts, test logs and environment/source verification are 
 optimizer step, training-pair export or paper result was produced. The diagnostic
 requires review/publication and a returned handoff before promoting its GPU status.
 [Review](reviews/preference-feasibility-001.md); [exact next Colab sequence](preference_feasibility.md).
+
+
+## Completed fixed-context base control — `qwen3-base-control-001` (2026-09-19)
+
+- ZIP `qwen3-base-control-001-handoff-1789830893982847246.zip`, 165,411 bytes;
+  SHA256 `49bf59ceaeabcd917a91db4fef0ab0ed92fb05a367bd5233c05bc1fe3e1dc954`.
+  All 63 safe members, 62 payload checksums and 115 inventory entries pass.
+- Clean commit `80992b48f9159c427d65e87cbd80849af295021b`; executable source hash
+  `8c36005865aec6f91af273e71e781f1a59dd816b88c16262c9def1901272c3b4`.
+  Original source ZIP/bank, all 54 requests and 12 groups reproduce. Prompts,
+  actual token prefixes, seeds, full sampling parameters and model/runtime match.
+- 54/54 base generations complete, one attempt, no training. ARC private: base
+  0/15 correct, actors 0/15. LogiQA private: base 7/15, actors 6/15. Hold: both
+  0/8 correct, eight abstentions. Repair: base 0/16 (16 wrong), actors 0/16
+  (14 wrong, two abstentions). Zero hold/repair pairs. All 54 EOS, no malformed
+  or length failures; 35 raw strings/completion arrays unchanged from actors.
+- 16,995 input / 3,275 output tokens, summed generation 226.624 seconds,
+  invocation 343.519 seconds, model load 57.588 seconds; final persistence outside
+  invocation timer. Peak allocated/reserved 16,515,663,872 / 16,607,346,688 bytes.
+  Zero cache hits; compute units unknown; prior L4 runtime fingerprint matches.
+- Receipt reports verified snapshot `1789830893946689797-d4fc812509bb` under
+  `PACT/diagnostics/qwen3-base-control-001`. User reports final Drive bundle.
+  Current Drive and post-reset diagnostic restore remain independently unverified.
+- Originals: `results_import/qwen3-base-control-001-review/`; audit and recomputed
+  report/metrics: `results_import/qwen3-base-control-001-analysis/`. Artifact audit
+  passes; no executable source change or suite rerun. Close the diagnostic; next
+  is local broader train-only feasibility design. No warm-start regression or
+  PACT efficacy claim follows. [Full review](reviews/qwen3-base-control-001.md).
+
+
+## Broader receiver-feasibility design — `receiver-feasibility-design-001` (2026-09-19)
+
+- Offline design/planner only. Proposed GPU run `qwen3-receiver-feasibility-001`
+  has not executed and its dedicated runner is not implemented.
+- Recipe hash `efa9d8cfb1450227b80286309505116d9a8e03fd1732d99d1ee6b5bcabf3d7e1`;
+  selection hash `e6842155a4080c0a39e3ad39a8b207539312ffb57b05da7675a7343136e33d96`.
+  Checked-in config and 24 exact task IDs/input/label/group hashes reconstruct from
+  the pinned proposal-1200 and engineering-12 artifacts. Warm-start exclusions,
+  12-per-family balance and four occurrences per sender/family pass.
+- Planned clean/exchange only, 48 records, at most 144 eligible receiver contexts
+  with four samples each: maximum 912 calls / 224,256 output tokens. Zero replay,
+  teacher-forced or optimizer calls; no training-pair export. Fixed existing
+  actors and runtime; all outcome rules recorded before collection.
+- Six new planner tests pass; full suite 103/103 with CPU neural opt-in and
+  98 passed/five skipped by default. No model/data download, GPU execution or
+  new scientific outcome. Evidence: `results_import/receiver-feasibility-design-001/`.
+- Next: implement the receiver-only runner and its required recovery/accounting
+  checks, then review/publish before Colab. [Design](receiver_feasibility_design.md).
+
+
+## Receiver-only runner implementation — `receiver-feasibility-implementation-001` (2026-09-20)
+
+- Implemented the frozen 24-task/48-record diagnostic with the same recipe and
+  selection hashes as the preceding design entry. Ceiling: 912 generation calls,
+  224,256 output tokens, zero teacher-forced forwards and optimizer steps.
+- Call intents, immutable raw results, partial-pool reconstruction, reports and
+  local/Drive handoffs are CPU tested. Restore rejects unresolved attempts and
+  older or unsafe snapshots to prevent unaccounted re-sampling after runtime loss.
+- Ten added tests pass. Full suite: 113/113 with tiny CPU neural opt-in; default
+  107 passed/six skipped. Tiny initialized Qwen/PEFT checks preserve actor/reference
+  tensors and restore adapter state after base readout. Six guide cells compile.
+- Evidence: `results_import/receiver-feasibility-implementation-001/`. The actual
+  offline production plan still executes zero model calls. Synthetic fixture
+  outcomes are not receiver-support evidence and do not fill paper placeholders.
+- No GPU experiment, pretrained download, new optimization or final-test access.
+  GPU collection/recovery is unverified. Next: review/commit/push, then the pinned
+  [Colab sequence](receiver_feasibility_colab.md) and returned ZIP audit.
+  [Implementation review](reviews/receiver-feasibility-implementation-001.md).

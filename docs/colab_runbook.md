@@ -1,6 +1,6 @@
 # Local → Colab → local
 
-## Current next action (reviewed 2026-09-19)
+## Current next action (reviewed 2026-09-20)
 
 `qwen3-warmstart-001` is complete: all nine updates, resumed GPU execution and
 three frozen exports pass the [returned metadata review](reviews/qwen3-warmstart-001-complete.md).
@@ -11,10 +11,16 @@ eligible private pairs / 20 suffix branches pass the [final audit](reviews/qwen3
 The final log reports verified snapshot and ZIP persistence. Receiver collection
 produces zero hold/repair preference pairs from 24 candidates, so the full revision
 objective is not ready and GPU reference scoring has not executed. Preserve the
-completed bank; it needs no rerun. Local analysis and the [bounded matched-base
-diagnostic](preference_feasibility.md) are now implemented and tested. Review and
-publish the new increment before following that guide: 54 base-only calls on saved
-prompts/seeds, no actor resampling or optimization. GPU execution remains unverified.
+completed bank; it needs no rerun. The [bounded matched-base diagnostic](reviews/qwen3-base-control-001.md)
+is now complete and audited: 54/54 calls, zero correct receiver outputs for either
+policy, zero hold/repair pairs. This does not support blaming the warm start for
+the shortage. The [broader receiver-feasibility design](receiver_feasibility_design.md)
+now freezes 24 training tasks, 48 clean/exchange records and at most 912 generation
+calls. Its planner and receiver-only runner now pass CPU checks, including partial
+candidate-pool resume, budget accounting and verified snapshot restoration.
+Review and publish the implementation, then follow the
+[ordered Colab cells](receiver_feasibility_colab.md) using the new full commit SHA.
+The new GPU experiment and its GPU recovery path remain unverified.
 
 ## Prior preparation and completed validation
 

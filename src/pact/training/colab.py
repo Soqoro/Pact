@@ -29,13 +29,17 @@ def _restore_snapshot(snapshot: Path, destination: Path, *, progress=lambda mess
     entries = index["files"]
     if index.get("schema_version") != 1 or not isinstance(entries, dict) or not 1 <= len(entries) <= 5000:
         raise ValueError("Invalid snapshot inventory")
-    if kind not in ("warmstart", "training_bank", "preference_feasibility_diagnostic"):
+    if kind not in ("warmstart", "training_bank", "preference_feasibility_diagnostic", "receiver_feasibility_diagnostic"):
         raise ValueError("Unknown snapshot kind")
     required = {"run.json", "examples.json"} if kind == "warmstart" else {"manifest.json", "data_manifest.json", "model_identity.json"}
     if kind == "preference_feasibility_diagnostic":
         required = {"manifest.json", "plan.json", "model_identity.json"}
     if not required <= entries.keys():
         raise ValueError("Snapshot is not an initialized run of the requested kind")
+    if kind == "receiver_feasibility_diagnostic":
+        latest = max(p.name for p in snapshot.parent.iterdir() if p.is_dir())
+        if snapshot.name != latest:
+            raise ValueError("Receiver restore must use latest snapshot; no rollback of attempted-call budget")
     objects = snapshot.parent.parent / "objects"
     destination.parent.mkdir(parents=True, exist_ok=True)
     staging = Path(tempfile.mkdtemp(prefix=".pact-restore-", dir=destination.parent))
@@ -70,6 +74,13 @@ def _restore_snapshot(snapshot: Path, destination: Path, *, progress=lambda mess
                     or manifest["identity"]["recipe_hash"] != manifest["recipe_hash"]
                     or len(ShardStore(staging).records()) != manifest["completed_records"]):
                 raise ValueError("Collection snapshot provenance/count mismatch")
+            if kind == "receiver_feasibility_diagnostic":
+                from .receiver import inspect_journal
+                if not manifest.get("recovery_safe"):
+                    raise ValueError("Snapshot precedes possible lost calls; explicit recovery-budget review required")
+                _, calls = inspect_journal(staging, read_json(staging/"plan.json")["budget"])
+                if len(calls) != manifest.get("committed_calls"):
+                    raise ValueError("Restored call journal count mismatch")
         staging.rename(destination)
         return {"restored_snapshot": str(snapshot), "run_dir": str(destination)}
     finally:

@@ -654,3 +654,83 @@ the run at its cap regardless of pair availability. Use the prespecified outcome
 rules to review a later training-only design; do not automatically train or modify
 the proposal's objective. Default CLI is plan-only; new GPU execution remains
 unverified until returned evidence. [Analysis and full recipe](preference_feasibility.md).
+
+
+## 2026-09-19: base-control receiver shortage closes the diagnostic
+
+Accept the audited 54-call control on clean published source as real fixed-context
+GPU evidence. Both base and actors have zero correct receiver outputs in 24 calls;
+base private LogiQA correctness is 7/15 versus 6/15, and both have 0/15 on ARC.
+Apply the prespecified no-correct-base-receiver decision: the result does not
+support blaming the warm start, but cannot establish that it had no effect.
+Receiver evidence still covers only one training task with actor-produced peers.
+
+End the fixed diagnostic with zero hold/repair pairs. Preserve official labels,
+abstention failures, missing preferences and all raw outcomes. No automatic
+resampling, label changes, curated positives, training-pair export or reduced
+objective is introduced. The next local increment should freeze a broader
+training-only feasibility selection and budget before new sampling, with task
+selection independent of observed success and explicit hold/repair accounting.
+Full revision readiness and GPU reference scoring remain unresolved.
+[Returned evidence](reviews/qwen3-base-control-001.md).
+
+
+## 2026-09-19: broader receiver feasibility with frozen selection and budget
+
+Select 24 official training tasks, 12 per family, by seed-20260919 hash ranking
+of audited groups in the existing 1,200-task manifest. Exclude all 12 warm-start
+IDs/groups/content groups, including the previously tested two bank tasks.
+Interleave family ranks and freeze sender positions; do not use outcomes, labels
+or difficulty to rank tasks. These are excluded from our tiny fine-tuning run,
+not claimed unseen in pretraining or representative held-out evaluation.
+
+Keep completed actors, prompts, labels, base readout and generation settings fixed.
+Choose clean and exchange conditions to measure post-private receiver support;
+omit early exposure, which changes initial coverage, from this explicitly narrower
+diagnostic. Keep ordinary main trajectories and four fresh samples per eligible
+original receiver prompt; exclude the main revision from its candidate pool.
+Do not perform private alternatives, suffix replay, NLL/reference scoring or
+optimization. This is not a complete scored training bank or PACT objective.
+
+Freeze 48 records and maximum 144 receiver contexts: 336 main plus at most 576
+receiver generations, 224,256 output tokens. Record all missing/invalid outcomes;
+no replacement tasks, retry-until-pairs or outcome-based early stop. Completed
+logical calls must survive resume; additional ambiguous crash-recovery work is
+not an unbounded budget exception. No fixed completion-time promise follows.
+
+Report conditional pair yield alongside selected-task support and all eligible,
+ineligible, incomplete and missing-class denominators. Require at least six
+pair-bearing contexts, three tasks and both families separately per stratum for
+the prespecified engineering coverage gate. This gate only motivates review of a
+separate reference-scoring check; it is not statistical power, all-agent support
+or full training readiness. A missing stratum remains missing. The complete
+[design](receiver_feasibility_design.md) records alternatives, constraints and
+the future runner contract. This increment implements only the read-only planner;
+actual collection is unimplemented/unrun.
+
+
+## 2026-09-20: receiver-only execution and strict recovery accounting
+
+Implement the frozen 24-task receiver design without changing its selection,
+actors, prompts, four-candidate pools, coverage gate or sampling caps. Keep
+`receiver-feasibility` plan-only by default. Reuse the protocol and frozen neural
+backend; do not enter private alternatives, suffix replay, reference scoring or
+optimization. Retain raw call tokens and separate evaluator labels, all invalid
+outcomes and missing classes. Partial pools and incomplete runs cannot pass the
+diagnostic gate; no outcome automatically enables full PACT training.
+
+Commit each logical call once on scratch, with an intent before generation and
+an immutable result after validation. Resume verifies exact requests and reuses
+results. An intent without a verified result is an ambiguous consumed attempt,
+not permission to sample again. Before each task's fresh calls, persist an unsafe
+recovery marker; publish a safe snapshot after task completion or a handled
+call-boundary pause. Only the latest safe durable snapshot may restore. A reset
+that loses calls inside this window requires a separately reviewed recovery
+budget; silently rolling back to an older safe snapshot would violate the cap.
+
+Create the local ZIP before final timed persistence and distinguish local results
+from verified durable copies. CPU fixtures and tiny locally initialized neural
+models validate the implementation; they add no scientific results. GPU execution
+remains unverified pending user publication, pinned Colab execution and a returned
+handoff. [Implementation evidence](reviews/receiver-feasibility-implementation-001.md)
+and [ordered Colab guide](receiver_feasibility_colab.md).

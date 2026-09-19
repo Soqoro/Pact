@@ -4,7 +4,10 @@ The completed engineering bank contains no receiver preference pairs. This
 increment analyzes that failure and implements one bounded diagnostic: run the
 unadapted base on the **same saved actor-produced prompts and seeds**. It does not
 train, refresh the bank, generate a new team, or export training preferences.
-The runner is CPU tested; the actual GPU comparison has not been run.
+The runner is CPU tested and the [returned GPU comparison](reviews/qwen3-base-control-001.md)
+now passes artifact review: 54/54 calls, zero correct base receiver outputs and
+zero receiver pairs. The bounded diagnostic is complete. The retained Colab
+sequence below documents that completed run; it is not the next invocation.
 
 ## Findings from the returned bank
 

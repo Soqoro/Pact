@@ -31,17 +31,22 @@ now pass [returned metadata review](docs/reviews/qwen3-warmstart-001-complete.md
 This is not a full PACT training or efficacy result. The default command only emits the reviewed plan.
 
 [Frozen-reference scoring and bounded train-only collection](docs/collection.md)
-are now implemented and tested locally: 97/97 tests pass with tiny CPU neural
+are now implemented and tested locally: 113/113 tests pass with tiny CPU neural
 checks enabled. The six-record collector preserves raw paired replays, actual
 sampled token IDs, missing preferences and verified recovery snapshots. Its
 default is plan-only. The [complete GPU engineering bank](docs/reviews/qwen3-bank-001-complete.md)
 now passes returned audit: six records, preserved resume, five private pairs and
 20 suffix branches. All 24 receiver candidates lack a correct answer, so there
 are no hold/repair preferences and the full revision objective is not ready.
-GPU reference scoring remains unverified. A [bounded base-control diagnostic](docs/preference_feasibility.md)
-is now implemented and CPU tested: it compares the same saved prompts/seeds using
-54 fresh base calls, with no new actor samples or training-pair export. Its default
-is plan-only; review and publish before the new Colab check.
+GPU reference scoring remains unverified. The [completed base-control diagnostic](docs/reviews/qwen3-base-control-001.md)
+passes audit for all 54 calls on saved prompts/seeds. The base also produces zero
+correct receiver outputs, so this check does not support attributing missing pairs
+to the warm start. The [broader receiver-feasibility design](docs/receiver_feasibility_design.md)
+now freezes 24 training tasks excluded from warm start, clean/exchange conditions,
+and a 912-call ceiling. Its planner and receiver-only runner are CPU tested,
+including call-boundary recovery and verified handoffs. The new GPU experiment
+has not executed. Follow the [fresh-runtime Colab guide](docs/receiver_feasibility_colab.md)
+after reviewing and publishing this implementation.
 
 ```bash
 python -m pip install -e .

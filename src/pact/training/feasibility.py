@@ -59,14 +59,14 @@ def copy_source_bundle(source,destination,config,*,timeout_seconds=120):
     return {**result,"path":str(destination)}
 
 
-def read_review(bundle, expected_sha):
+def read_review(bundle, expected_sha, *, max_members=1000):
     """Read checksummed JSON as data, with no extraction or imported execution."""
     bundle = Path(bundle)
     if bundle.is_symlink() or bundle.stat().st_size > 100*1024**2 or file_hash(bundle) != expected_sha:
         raise ValueError("Diagnostic source ZIP hash/size mismatch")
     with zipfile.ZipFile(bundle) as archive:
         infos = archive.infolist()
-        if len(infos) > 1000 or sum(i.file_size for i in infos) > 100*1024**2:
+        if len(infos) > max_members or sum(i.file_size for i in infos) > 100*1024**2:
             raise ValueError("Review archive exceeds bounds")
         names = set()
         for item in infos:

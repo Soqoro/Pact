@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "purpose": "broader_train_only_receiver_feasibility",
+  "data_manifest_hash": "92771b288958e6a1c23b731936dedb4db6285803465fb468bb05e5e2f497c62a",
+  "warmstart_data_manifest_hash": "2cdbd6a37e89c5ceacaab08d2a43e53561a727c52458dc715b29dca0cf91eb0e",
+  "reference_manifest_hash": "ea4a62c215324b721d259bc3b7f104fa30fd2786548055ebbfd8f0f95837e963",
+  "reference_hashes": [
+    "6ed4066c0116420e6e7b3fec9301ccda55b6d7a4eb43ff446db3fad6c52c7dc5",
+    "5ab0bf7fb4d27a4aeef0221002dde571e97851390efbb64ea310840efe30e3da",
+    "3b483c7d1b61f43f0fc2ad73f238ec6547cf05c2c33f3daaf599ee97e83c2c71"
+  ],
+  "base_snapshot": "e65c43f2b6abd7dc95bb51ce8d72c0c9c278120b1d4fd41d5f75e56e9d0fdc81",
+  "runtime_fingerprint": "4d1df1880142a2e4c51bdb9baf55288fec2625d36f5a484ffc79befaf7fe29d9",
+  "selection_seed": 20260919,
+  "generation_seed": 1729,
+  "items": 24,
+  "conditions": ["clean", "exchange"],
+  "receiver_candidates": 4
+}
