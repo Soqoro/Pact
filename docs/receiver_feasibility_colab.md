@@ -1,9 +1,10 @@
 # Broader receiver feasibility: Colab sequence
 
-The runner is implemented and CPU tested. Real GPU execution and recovery of this
-new path remain unverified. This guide implements the frozen
-[24-task design](receiver_feasibility_design.md): 48 clean/exchange records,
-at most 912 calls and 224,256 output tokens, with the completed frozen actors.
+**Completed run:** `qwen3-receiver-feasibility-001` now passes
+[returned artifact review](reviews/qwen3-receiver-feasibility-001.md): 48 records,
+472 calls and zero preference pairs. Do not repeat this completed run. The cells
+below document its execution and recovery procedure; GPU reset/resume remains
+unverified. The frozen [24-task design](receiver_feasibility_design.md) is unchanged.
 
 First review, commit and push the new implementation. Obtain the new full SHA with
 `git rev-parse HEAD`. The earlier `80992b4...` commit does not contain this runner.

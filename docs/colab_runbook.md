@@ -14,13 +14,15 @@ objective is not ready and GPU reference scoring has not executed. Preserve the
 completed bank; it needs no rerun. The [bounded matched-base diagnostic](reviews/qwen3-base-control-001.md)
 is now complete and audited: 54/54 calls, zero correct receiver outputs for either
 policy, zero hold/repair pairs. This does not support blaming the warm start for
-the shortage. The [broader receiver-feasibility design](receiver_feasibility_design.md)
-now freezes 24 training tasks, 48 clean/exchange records and at most 912 generation
-calls. Its planner and receiver-only runner now pass CPU checks, including partial
-candidate-pool resume, budget accounting and verified snapshot restoration.
-Review and publish the implementation, then follow the
-[ordered Colab cells](receiver_feasibility_colab.md) using the new full commit SHA.
-The new GPU experiment and its GPU recovery path remain unverified.
+the shortage. The [broader receiver check](reviews/qwen3-receiver-feasibility-001.md) is also
+complete and audited: 24 tasks, 48 records and 472 calls. All 136 candidates are
+correct, leaving zero preference pairs in 32 hold/two repair contexts. Its fixed
+coverage gate fails. The [local support review](reviews/receiver-support-review-001.md)
+is complete: 23/24 unanimous private teams explain scarce natural repair contexts.
+The 72-call private-only second-seed control on the same tasks is now implemented
+and CPU tested. Review/commit/push, then use the [fresh-runtime Colab cells](private_support_control_colab.md)
+with the new full commit SHA. New GPU execution and recovery remain unverified.
+Preserve the completed receiver run; this is a separate diagnostic.
 
 ## Prior preparation and completed validation
 

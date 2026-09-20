@@ -31,8 +31,8 @@ now pass [returned metadata review](docs/reviews/qwen3-warmstart-001-complete.md
 This is not a full PACT training or efficacy result. The default command only emits the reviewed plan.
 
 [Frozen-reference scoring and bounded train-only collection](docs/collection.md)
-are now implemented and tested locally: 113/113 tests pass with tiny CPU neural
-checks enabled. The six-record collector preserves raw paired replays, actual
+are implemented and tested locally. The current default suite passes 114 tests
+with six optional neural skips (120 total). The six-record collector preserves raw paired replays, actual
 sampled token IDs, missing preferences and verified recovery snapshots. Its
 default is plan-only. The [complete GPU engineering bank](docs/reviews/qwen3-bank-001-complete.md)
 now passes returned audit: six records, preserved resume, five private pairs and
@@ -44,9 +44,15 @@ correct receiver outputs, so this check does not support attributing missing pai
 to the warm start. The [broader receiver-feasibility design](docs/receiver_feasibility_design.md)
 now freezes 24 training tasks excluded from warm start, clean/exchange conditions,
 and a 912-call ceiling. Its planner and receiver-only runner are CPU tested,
-including call-boundary recovery and verified handoffs. The new GPU experiment
-has not executed. Follow the [fresh-runtime Colab guide](docs/receiver_feasibility_colab.md)
-after reviewing and publishing this implementation.
+including call-boundary recovery and verified handoffs. The [completed GPU check](docs/reviews/qwen3-receiver-feasibility-001.md)
+passes raw audit: 48 records, 472 calls, 32 hold and two repair contexts. All 136
+receiver candidates are correct, leaving zero valid-wrong counterparts and zero
+pairs. This bounded run is complete; full revision training remains unsupported.
+GPU reset/resume of this path remains unverified. The
+[local support review](docs/reviews/receiver-support-review-001.md) finds unanimous
+private answers on 23/24 tasks and proposes a separate 72-call private-seed control;
+its [runner and Colab guide](docs/private_support_control_colab.md) are now CPU
+tested. GPU execution remains unverified; publish the new implementation first.
 
 ```bash
 python -m pip install -e .

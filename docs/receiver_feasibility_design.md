@@ -1,9 +1,13 @@
 # Broader training-only receiver feasibility — design v1
 
-Design date: 2026-09-19. Proposed run ID: `qwen3-receiver-feasibility-001`.
+Design date: 2026-09-19. Run ID: `qwen3-receiver-feasibility-001`.
 **The design, planner and receiver-only runner are implemented and CPU tested.
-GPU execution remains unverified; no new real-model outputs have been collected.**
+The completed GPU collection is audited; GPU reset/resume remains unverified.**
 Implementation update: 2026-09-20. [Colab sequence](receiver_feasibility_colab.md).
+
+Result update: the [completed check](reviews/qwen3-receiver-feasibility-001.md)
+passes audit with 472 calls and zero pairs: all 136 receiver candidates are
+correct. The original design and decision rules below remain frozen.
 
 **Question and scope**
 

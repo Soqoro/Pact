@@ -673,3 +673,69 @@ requires review/publication and a returned handoff before promoting its GPU stat
   GPU collection/recovery is unverified. Next: review/commit/push, then the pinned
   [Colab sequence](receiver_feasibility_colab.md) and returned ZIP audit.
   [Implementation review](reviews/receiver-feasibility-implementation-001.md).
+
+## Completed broader receiver screen — `qwen3-receiver-feasibility-001` (2026-09-20)
+
+- ZIP `qwen3-receiver-feasibility-001-handoff-1789837104959632692.zip`,
+  2,068,798 bytes; SHA256
+  `d61cb9bb82895f09f146a83ac52a26d4fdad18238585fb0bcf4bd13034996a9f`.
+  All 1,004 members, 1,003 payload checksums and 1,522 inventory entries pass.
+- Clean published source `b3951fde181bb216130cb206fdf87e39fca87632`, executable
+  hash `57e1b6bf2a469e15bb7dcafde8f22126fb454c660b661ae9107eda8f2602a964`.
+  Frozen plan reconstructs; all 48 records and 472 logical calls replay offline
+  from saved results with exact protocol/request/seed/label accounting.
+- Hold: 32 contexts/16 tasks, 128 correct candidates, zero wrong, zero pairs.
+  Repair: two contexts/one ARC task, eight correct, zero wrong, zero pairs.
+  Remaining 110 contexts ineligible. All candidate pools complete; every missing
+  pair is missing-incorrect. Main clean final 15/24, exchange 16/24.
+- One invocation, 472 fresh generations, no cache hits/unresolved attempts;
+  168,842 input and 22,390 output tokens. All EOS. Invocation 1,812.534 seconds,
+  generation sum 1,620.704 seconds, model load 56.691 seconds. Peak allocated /
+  reserved 16,739,545,600 / 16,890,462,208 bytes; compute units unknown.
+- Handoff reports verified snapshot `1789837104902108384-c21c9fca326b` under
+  `PACT/receiver-feasibility/qwen3-receiver-feasibility-001`. User reports Drive
+  ZIP. Current Drive, independent tensor checks and GPU reset/resume unverified.
+- Close with prespecified `no_pairs`; neither gate passes. No scoring, training,
+  final-test access or efficacy claim. No extension/retry to obtain negatives.
+  Originals and reproducible audit retained in corresponding `-review` and
+  `-analysis` directories under `results_import`. Documentation-only review;
+  no executable change or suite rerun. [Full review](reviews/qwen3-receiver-feasibility-001.md).
+
+## Offline support diagnosis — `receiver-support-review-001` (2026-09-20)
+
+- Re-read the checksum-verified broader receiver ZIP and prior training bank.
+  No new data/model download, generation, optimization or final-test access.
+- Count each paired private draw once: 15/24 tasks all-correct, eight all-wrong,
+  one mixed; 23/24 unanimous answer IDs. All 72 clean/exchange private outputs,
+  token arrays and seeds match, as expected for paired branches.
+- Only two of 26 initially wrong receivers have a correct clean peer. Both lose
+  it when the frozen exchange assignment corrupts the mixed task's sole correct
+  sender. Thirty of 32 hold contexts also retain another correct peer. The 34
+  scheduled pools represent 33 distinct task/agent/prompt combinations.
+- Four distinct candidate seeds per pool, sampling enabled; 20/34 pools vary in
+  raw text/tokens, yet all candidates remain correct. No cause attributable to
+  adapter weights or sampling settings is identified from these observations.
+- Recorded proposed second-seed private-control inventory: same 24 tasks, seed
+  1730, 72 requests, at most 18,432 output tokens. Unimplemented/unrun; no training
+  gate on private-only outcomes. This does not extend the completed receiver run.
+- Reproducible script, task/pool tables, summary and evidence hashes are in
+  `results_import/receiver-support-review-001/`. Actual-artifact assertions pass;
+  documentation-only change, no application test-suite rerun.
+  [Review and next design](reviews/receiver-support-review-001.md).
+
+## Private-support control implementation — `private-support-implementation-001` (2026-09-20)
+
+- Implemented plan-only-by-default `private-support-control`, frozen config,
+  72-call actor collection, separate-draw report, call-boundary resume and timed
+  local/Drive handoffs. Proposed run: `qwen3-private-support-control-001`.
+- Actual parent ZIP reconstructs the exact 72 previously recorded requests.
+  Config hash `da15b8979e5142e82b55e74f49e453773bb2c9bcb72f8011de47190d606dbab8`;
+  full request hash `98e749e8b4d2c3fe20f8a3643af7fc8e362febff4a4ae7dae1450cbbf5333571`.
+  One new seed (1730), max 18,432 output tokens, no additional receiver or training calls.
+- Seven new tests; full default suite 114 passed/six optional skips, 120 total.
+  Prior temporary CPU neural environment absent; optional rerun unavailable.
+  Five Colab cells compile; actual offline plan makes zero model calls.
+- No pretrained/model/data download, GPU inference, optimization or final-test
+  access. GPU execution/recovery unverified. Evidence retained in
+  `results_import/private-support-implementation-001/`.
+  [Review](reviews/private-support-implementation-001.md); [Colab guide](private_support_control_colab.md).

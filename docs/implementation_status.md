@@ -40,7 +40,8 @@ final-test evaluation, or empirical PACT improvement claim has been made.
 | M3 warm-start Colab handoff and snapshot restore | cpu_tested; completed Colab handoff reviewed | Final archive SHA and 31 payload checksums verified; reported full snapshot/ZIP persistence successful. Actual post-reset Drive restore pending |
 | M3 bounded train-only collector and neural frozen-reference scoring | cpu_neural_tested; complete GPU engineering bank reviewed | Six records, compatible resume, 218 generations, five private pairs / 20 suffix branches, 18 answer and five positive-packet scores audited. Zero receiver pairs; GPU reference scoring unverified |
 | M3 receiver-feasibility base control | implemented, cpu_tested, gpu_verified_on_reported_environment | Returned 54/54 calls match saved prompts/seeds/model/runtime; base receiver correctness 0/24, no pairs; reported verified persistence. Diagnostic resume/restore remains CPU-only verified |
-| M3 broader receiver feasibility | design_frozen, runner_cpu_neural_tested; gpu_unverified | 24 exact train-only IDs, 12 per family, warm-start exclusions; 48 clean/exchange records, 912-call / 224,256-output-token caps; immutable call resume, diagnostic reports and verified handoffs |
+| M3 broader receiver feasibility | cpu_neural_tested; completed GPU run audited | 24 train tasks, 48 records, 472 calls; all 136 candidates correct across 32 hold/two repair contexts, zero pairs; GPU reset/resume unverified |
+| M3 private-support second-seed control | implemented, cpu_tested; gpu_unverified | 72 pinned private requests at seed 1730, exact parent prompts/actors; task-level support report, call journal and verified recovery |
 | M3 joint specialization/revision updates, sparse-support bank sampling and refreshes | deferred | Full PACT train remains explicitly unimplemented |
 | SAC/composition/full study/adaptive search/BFCL | deferred | Milestones 4–5; no final-test path is enabled |
 
@@ -51,7 +52,14 @@ adapter isolation, or replay efficacy.
 
 ## Executed validation
 
-Latest receiver-runner increment: **113/113 pass** with tiny CPU neural checks
+Latest private-control increment: **114 pass, six optional neural skips (120 tests)**.
+Seven new checks cover the source planner, exact seed-only collection, partial
+triples, immutable resume, failed attempts, preflight and verified restoration.
+The prior temporary neural environment is unavailable; its optional suite was not
+rerun. [Implementation evidence](reviews/private-support-implementation-001.md).
+
+
+Prior receiver-runner increment: **113/113 pass** with tiny CPU neural checks
 enabled; default suite **107 pass, six skip**. Ten new checks cover the runner,
 partial-pool resume, unresolved-attempt rejection, persistence failures, safe
 snapshot restoration, missing-pair accounting and tiny CPU neural generation
@@ -175,18 +183,25 @@ No source/configuration patch was justified. See the
 
 ## Current next gate
 
-The [complete training bank](reviews/qwen3-bank-001-complete.md) passes audit.
-This Colab stage is complete; no rerun or further export is needed. Zero correct
-receiver candidates among 24 samples leave both hold/repair preference strata
-empty. The [matched-base diagnostic](reviews/qwen3-base-control-001.md) also passes
-returned audit: 54/54 calls and zero correct base receiver samples. The bounded
-check is complete and does not support blaming the warm start. The
-[broader design](receiver_feasibility_design.md) and exact selection are now frozen
-and CPU-verified. The dedicated receiver-only runner now implements call-boundary
-resume and raw diagnostic accounting. Next is user review/commit/push, followed
-by the [bounded Colab run](receiver_feasibility_colab.md) pinned to that new SHA
-and review of its returned handoff. The new GPU execution path is unverified.
-GPU frozen-reference scoring, full revision
+The [broader receiver check](reviews/qwen3-receiver-feasibility-001.md) is complete
+and passes raw audit: 48 records, 472/912 allowed calls, no missing attempts.
+All 136 candidates are correct across 32 hold and two repair contexts, so every
+pool lacks a valid-wrong counterpart and both strata have zero preference pairs.
+Repair contexts cover only one ARC task. The fixed coverage gate fails; there is
+no follow-on reference-scoring or full revision-training run to launch.
+
+Preserve the completed artifacts; no rerun or further export is needed. The
+[local support review](reviews/receiver-support-review-001.md) is now complete:
+23/24 private teams give unanimous answers; the one mixed team's correct sender
+is corrupted under exchange. Twenty of 34 sampled pools vary in wording but
+none varies in answer correctness. No defect or warm-start cause is established.
+
+The separately bounded private-only second-seed control is now implemented and
+CPU tested: same 24 tasks, seed 1730, 72 calls, at most 18,432 output tokens. All
+72 requests match the recorded proposal. Next is user review/commit/push and the
+[pinned Colab control](private_support_control_colab.md), followed by returned
+artifact review. This tests private-support sensitivity only, not receiver pair
+readiness. New GPU execution/recovery, frozen-reference scoring, full revision
 optimization and final-test evaluation remain unverified or deferred.
 
 ### Earlier gate after the selected replay review
@@ -501,3 +516,43 @@ remain unverified. Evidence and caveats are in the
 [implementation review](reviews/receiver-feasibility-implementation-001.md);
 [ordered Colab cells](receiver_feasibility_colab.md) require user publication and
 a new pinned commit before execution.
+
+## Completed broader receiver feasibility — 2026-09-20
+
+The returned run at `b3951fde181bb216130cb206fdf87e39fca87632` verifies this GPU
+collection path on the reported pinned environment: 24 tasks, 48 records and
+472 calls. Archive checksums, frozen selection, exact saved-call reconstruction,
+protocol/evaluator outcomes and recomputed report all pass. All 136 fresh
+candidates are correct, yielding zero pairs in 32 hold and two repair contexts.
+The two repair contexts cover one ARC task. Both coverage gates fail.
+
+No scoring or optimization executed; full revision training remains unsupported.
+The receipt reports verified persistence. Independent current Drive contents,
+GPU reset/resume and tensor-level verification remain outside this audit. Keep
+this completed run; next is local context-support review, not further sampling.
+[Full evidence and limitations](reviews/qwen3-receiver-feasibility-001.md).
+
+## Offline receiver-support diagnosis — 2026-09-20
+
+The local analysis reproduces private-team support and candidate diversity from
+both verified training bundles. The broader draw has 23/24 unanimous private
+answers, and exchange removes the sole correct outgoing peer on its only mixed
+task. Sampling varies wording in 20/34 eligible pools but never produces a wrong
+candidate. This separates structural context scarcity from missing counterparts;
+it does not identify a defective sampler or a causal adapter effect.
+
+The next proposed target is a 72-call, seed-1730 private-only control with unchanged
+24 tasks and actors. Its exact requests are recorded locally, but execution is
+unimplemented and GPU-unverified. No new model calls or training pairs were made.
+[Analysis, limitations and bounded recommendation](reviews/receiver-support-review-001.md).
+
+## Private-support control implementation — 2026-09-20
+
+The proposed 72-call control is implemented. Actual-source plan reconstruction
+matches all recorded requests; call journaling, two-call pause/resume, zero-call
+repeated completion, verified restore, stale/ambiguous recovery rejection and
+separate-draw reports pass CPU checks. Full default suite: 114 pass/six optional
+neural skips, 120 total. The temporary optional-neural environment is unavailable;
+no new neural suite or real GPU run is claimed. No scientific outputs were added.
+[Evidence](reviews/private-support-implementation-001.md) and
+[pinned Colab procedure](private_support_control_colab.md).

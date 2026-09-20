@@ -29,14 +29,14 @@ def _restore_snapshot(snapshot: Path, destination: Path, *, progress=lambda mess
     entries = index["files"]
     if index.get("schema_version") != 1 or not isinstance(entries, dict) or not 1 <= len(entries) <= 5000:
         raise ValueError("Invalid snapshot inventory")
-    if kind not in ("warmstart", "training_bank", "preference_feasibility_diagnostic", "receiver_feasibility_diagnostic"):
+    if kind not in ("warmstart", "training_bank", "preference_feasibility_diagnostic", "receiver_feasibility_diagnostic", "private_support_control"):
         raise ValueError("Unknown snapshot kind")
     required = {"run.json", "examples.json"} if kind == "warmstart" else {"manifest.json", "data_manifest.json", "model_identity.json"}
-    if kind == "preference_feasibility_diagnostic":
+    if kind in ("preference_feasibility_diagnostic", "private_support_control"):
         required = {"manifest.json", "plan.json", "model_identity.json"}
     if not required <= entries.keys():
         raise ValueError("Snapshot is not an initialized run of the requested kind")
-    if kind == "receiver_feasibility_diagnostic":
+    if kind in ("receiver_feasibility_diagnostic", "private_support_control"):
         latest = max(p.name for p in snapshot.parent.iterdir() if p.is_dir())
         if snapshot.name != latest:
             raise ValueError("Receiver restore must use latest snapshot; no rollback of attempted-call budget")
@@ -74,7 +74,7 @@ def _restore_snapshot(snapshot: Path, destination: Path, *, progress=lambda mess
                     or manifest["identity"]["recipe_hash"] != manifest["recipe_hash"]
                     or len(ShardStore(staging).records()) != manifest["completed_records"]):
                 raise ValueError("Collection snapshot provenance/count mismatch")
-            if kind == "receiver_feasibility_diagnostic":
+            if kind in ("receiver_feasibility_diagnostic", "private_support_control"):
                 from .receiver import inspect_journal
                 if not manifest.get("recovery_safe"):
                     raise ValueError("Snapshot precedes possible lost calls; explicit recovery-budget review required")

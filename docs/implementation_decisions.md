@@ -734,3 +734,48 @@ models validate the implementation; they add no scientific results. GPU executio
 remains unverified pending user publication, pinned Colab execution and a returned
 handoff. [Implementation evidence](reviews/receiver-feasibility-implementation-001.md)
 and [ordered Colab guide](receiver_feasibility_colab.md).
+
+## 2026-09-20: broader receiver screen closes with all-correct pools
+
+Accept the completed 48-record/472-call artifact audit and apply the prespecified
+`no_pairs` branch. All 136 sampled candidates are correct; the missing class is
+valid-wrong, unlike the previous bank's missing-correct pools. Keep the 32 hold
+and two repair denominators separate; repair support spans one ARC task only.
+Neither stratum passes the frozen coverage gate. Do not reference-score empty
+preferences, export fabricated negatives, change the objective or extend the
+sampling cap. This conditional outcome is not a general accuracy or efficacy claim.
+
+Close this run. Review context support and outcome concentration locally before
+proposing any separately bounded change. No new GPU run is scheduled by this
+review. [Returned evidence](reviews/qwen3-receiver-feasibility-001.md).
+
+## 2026-09-20: separate private-support scarcity from continuation scarcity
+
+Post hoc analysis of the verified training bundles finds 23/24 unanimous private
+answers in the broader run: 15 all-correct, eight all-wrong, one mixed. Corruption
+of the sole correct sender in that mixed team removes both clean repair contexts.
+All 136 eligible candidates are correct even though 20/34 pools vary in wording.
+Retain separate missing-context and missing-answer-class diagnoses; neither
+establishes adapter collapse, a sampler bug or an effective training remedy.
+
+Recommend a separately named private-draw control with global seed 1730, keeping
+the same 24 tasks, actors, prompts, runtime and sampling settings. Bound it to
+72 private generations / 18,432 output tokens, no receiver or optimizer calls.
+Keep the two seed triples separate; no best-seed selection or repeated search for
+mixed teams. This is a proposed implementation target with a recorded request
+inventory, not executed evidence or an available Colab command. It does not relax
+the full revision-training gate. [Review](reviews/receiver-support-review-001.md).
+
+## 2026-09-20: implement the fixed second-seed private control
+
+Implement the recorded 72-request inventory without changing the recommended
+selection, private prompts, actors, sampling parameters or seed 1730. Reuse the
+frozen backend and strict immutable call journal; no receiver, readout, scoring or
+training path is enabled. Preserve the two private triples separately and exclude
+partial triples from new-draw team summaries. Potential clean repair is not a
+receiver preference gate. Restore only the latest safe snapshot; unresolved calls
+cannot be repeated outside the original cap. Default CLI stays plan-only.
+
+CPU verification passes 114 tests/six optional skips. The earlier temporary neural
+environment is unavailable; do not call its historical pass a rerun. GPU execution
+is pending publication and returned evidence. [Implementation review](reviews/private-support-implementation-001.md).
