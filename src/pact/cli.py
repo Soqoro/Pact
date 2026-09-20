@@ -97,6 +97,19 @@ def parser():
     r.add_argument("--data-dir", required=True, type=Path)
     r.add_argument("--warmstart-data-dir", required=True, type=Path)
     r.add_argument("--selection", required=True, type=Path)
+    r = commands.add_parser("plan-curated-repair", help="verify fixed curated helpful-peer design; no execution")
+    r.add_argument("--config", required=True, type=Path)
+    r.add_argument("--receiver-bundle", required=True, type=Path)
+    r.add_argument("--private-bundle", required=True, type=Path)
+    r = commands.add_parser("curated-repair", help="fixed 32-call helpful-peer diagnostic; default plan only")
+    for name in ("config", "receiver-bundle", "private-bundle", "references-dir", "run-dir"):
+        r.add_argument("--"+name, required=True, type=Path)
+    r.add_argument("--cache-dir", type=Path, default=Path("scratch/cache/models"))
+    r.add_argument("--persistent", type=Path)
+    r.add_argument("--storage-timeout", type=float, default=120)
+    r.add_argument("--execute", action="store_true")
+    r.add_argument("--resume", action="store_true")
+    r.add_argument("--stop-after", type=int)
     r = commands.add_parser("private-support-control", help="one additional private draw; default plan only")
     for name in ("config", "bundle", "references-dir", "run-dir"):
         r.add_argument("--"+name, required=True, type=Path)
@@ -222,6 +235,23 @@ def main(argv=None) -> int:
             from .training.receiver_plan import load_receiver_config, receiver_feasibility_plan
             result = receiver_feasibility_plan(load_receiver_config(args.config), args.data_dir,
                                                args.warmstart_data_dir, args.selection)
+        elif command == "plan-curated-repair":
+            from .training.curated_repair import load_curated_config, curated_repair_plan
+            result = curated_repair_plan(load_curated_config(args.config),args.receiver_bundle,args.private_bundle)
+        elif command == "curated-repair":
+            from .training.curated_repair import load_curated_config, curated_repair_plan
+            config = load_curated_config(args.config)
+            if not args.execute:
+                if args.resume or args.stop_after is not None:
+                    raise ValueError("Resume/stop-after require explicit --execute")
+                result = curated_repair_plan(config,args.receiver_bundle,args.private_bundle)
+            else:
+                from .training.curated_runner import run_curated_repair
+                result = run_curated_repair(config,args.receiver_bundle,args.private_bundle,
+                    args.references_dir,args.run_dir,args.cache_dir,resume=args.resume,
+                    stop_after=args.stop_after,persistent=args.persistent,timeout_seconds=args.storage_timeout)
+                print(canonical(result))
+                return result["exit_code"]
         elif command == "private-support-control":
             from .training.private_control import load_private_config, private_control_plan, run_private_control
             config = load_private_config(args.config)

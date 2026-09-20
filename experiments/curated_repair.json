@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "purpose": "same_task_curated_helpful_peer_diagnostic",
+  "receiver_bundle_sha256": "d61cb9bb82895f09f146a83ac52a26d4fdad18238585fb0bcf4bd13034996a9f",
+  "private_bundle_sha256": "f67045fc3f2bc102e7345ba3337c5406796360e76f437355dd849302cb33bc06",
+  "generation_seed": 20260920,
+  "peer_order_seed": 1729,
+  "samples_per_arm": 4
+}

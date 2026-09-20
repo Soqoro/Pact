@@ -739,3 +739,59 @@ requires review/publication and a returned handoff before promoting its GPU stat
   access. GPU execution/recovery unverified. Evidence retained in
   `results_import/private-support-implementation-001/`.
   [Review](reviews/private-support-implementation-001.md); [Colab guide](private_support_control_colab.md).
+
+## Completed private-seed control — `qwen3-private-support-control-001` (2026-09-20)
+
+- ZIP SHA256 `f67045fc3f2bc102e7345ba3337c5406796360e76f437355dd849302cb33bc06`,
+  434,491 bytes. All 225 members, 224 payload checksums and 367 inventory entries
+  pass; exact plan and 72 saved requests reconstruct, and report recomputation agrees.
+- Clean commit `91655a83503a466c4f773a49053d86b54fb71cab`; source hash
+  `8b5eb9a5af5c2b9dfb4f6d3e42b4ccb30193bf75cfef03bf49607f9f0fba3d44`.
+  Same 24 tasks, prompts, actors and runtime; one new seed, 1730.
+- Original → control: mixed tasks 1 → 0; all-correct 15 → 15; all-wrong 8 → 9;
+  unanimous answers 23 → 24; potential clean-repair contexts 2 → 0. Only agent 2
+  on `arc_challenge:Mercury_406916` changes answer, A/correct → B/wrong.
+- 72 new calls, all EOS and valid, zero cache hits/unresolved attempts/scoring.
+  16,755 input / 3,863 output tokens; invocation 411.096 seconds, generation sum
+  274.984 seconds, model load 55.511 seconds. Peak allocated/reserved bytes
+  16,666,484,224 / 16,733,175,808; compute units unknown.
+- Receipt reports verified snapshot `1789909726482309183-c1ebb2f50100` under
+  `PACT/private-support/qwen3-private-support-control-001`; user reports final
+  Drive bundle. Current Drive, independent tensor checks and GPU resume unverified.
+- Close this fixed control. No receiver calls or new preference evidence. No
+  further seed sampling scheduled; next requires a separate design review.
+  Original bytes and audit retained under corresponding `-review` / `-analysis`
+  directories in `results_import`. [Full review](reviews/qwen3-private-support-control-001.md).
+
+## Curated repair design — `curated-repair-design-001` (2026-09-20)
+
+- Offline design/planner only, proposed run `qwen3-curated-repair-001`.
+  Inputs are the checksum-pinned broader receiver and private-control ZIPs.
+- Inventory all nine all-wrong tasks: two ARC tasks have a stored correct main
+  packet; seven lack donors, including all five LogiQA tasks. Selected donors:
+  `Mercury_406916`, agent 2 clean private; `Mercury_7210613`, agent 0 exchange
+  revision. The original actor, raw text and phase remain recorded.
+- Freeze the saved private states. Two recipients per task, original/curated
+  arms, four matched samples per arm: eight pools, 32 calls max, 8,192 output
+  tokens. No new private packets, readout, reference score or optimization.
+- Config hash `ac29ebf94ee954729923ed7d72c8e474cf165e48a289a545fe0e8b6a002587d4`;
+  contexts hash `66ff6a758fdc8226fde3fcb2e78aced0dfec059041c50bac883efaa102da65ab`.
+- Four added tests; full default suite 118 passed/six optional skips, 124 total.
+  Actual source reconstruction and context invariants verified locally, zero
+  model calls. Evidence: `results_import/curated-repair-design-001/`.
+- No GPU execution or available execution command. Next is runner/recovery/report
+  implementation, local checks, user publication and pinned Colab execution.
+  [Scope, limitations and fixed decisions](curated_repair_design.md).
+
+## Curated runner — `curated-repair-implementation-001` (2026-09-20)
+
+- Implements the existing 32-call / 8,192-output-token recipe; config and context
+  inventory hashes match the preceding design exactly. No new real model calls.
+- Adds all-context tokenized preflight, fixed revision requests, per-arm reports,
+  paired-seed comparisons, durable call budgets and latest-safe-snapshot restore.
+- Eight new runner tests; full default suite 126 passed/six optional skips,
+  132 total. Actual source plan reconstruction, Colab syntax/import and doc links
+  checked. Evidence: `results_import/curated-repair-implementation-001/`.
+- User review/publication precedes the [pinned Colab run](curated_repair_colab.md).
+  GPU execution, actual context fit and GPU reset/resume remain unverified.
+  No hold/LogiQA coverage or training-readiness claim. [Review](reviews/curated-repair-implementation-001.md).

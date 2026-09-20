@@ -779,3 +779,55 @@ cannot be repeated outside the original cap. Default CLI stays plan-only.
 CPU verification passes 114 tests/six optional skips. The earlier temporary neural
 environment is unavailable; do not call its historical pass a rerun. GPU execution
 is pending publication and returned evidence. [Implementation review](reviews/private-support-implementation-001.md).
+
+## 2026-09-20: close the fixed private-seed control
+
+The complete 72-call artifact audit shows 24 unanimous teams, zero mixed teams
+and zero potential clean-repair contexts at seed 1730. Only one answer changes
+from seed 1729: the sole correct agent on the mixed ARC task becomes wrong.
+Record that this additional draw does not resolve the support shortage; do not
+infer adapter collapse or a universal statement about seeds from two draws.
+
+Close the declared control without searching more seeds or mixing packets across
+draws. Any context-construction or actor-preparation intervention is a separately
+bounded design; curated helpful messages must preserve genuine same-task packet
+provenance and be labeled separately from natural communication. Full revision
+training remains unsupported. [Audit](reviews/qwen3-private-support-control-001.md).
+
+## 2026-09-20: bound a curated helpful-peer intervention using existing packets
+
+Inventory the nine all-wrong seed-1730 tasks before new sampling. Only two ARC
+tasks have a valid-correct same-task packet in the broader run's original private
+or revised outputs. Choose by phase (private first), condition (clean first),
+agent index and call hash; preserve source actor identity. Exclude final readout
+and candidate pools from donor selection. Seven tasks have no donor, including
+all five all-wrong LogiQA tasks; retain that absence instead of inventing text.
+
+Freeze each full seed-1730 private state and compare original peers against one
+correct outgoing-message substitution shared by both other recipients. Keep the
+sender state unchanged; use its own recorded earlier packet, including explicit
+revision-stage provenance for the moon task. No task/stratum/gold metadata enters
+prompts. Pair four receiver seeds across arms, but form preference diagnostics
+only within an exact prompt. Never pair across arms or export training pairs.
+
+Budget 32 revisions / 8,192 output tokens on two post-selected ARC tasks. No
+private/donor generation, readout, scores or training. This probes particular
+message interventions, not natural repair prevalence, correctness-only causality,
+terminal team benefit or full PACT readiness. The proposal explicitly permits
+provenance-preserving same-task helpful insertions; this choice is recorded as a
+curated diagnostic. [Frozen design](curated_repair_design.md). Runner unimplemented.
+
+## 2026-09-20: execute the frozen curated diagnostic with bounded recovery
+
+Keep the frozen two-task/eight-context inventory and config hashes unchanged.
+Add separate task/label metadata and actor recipe to the executable plan. Render
+and tokenize all eight contexts before sampling; reject any oversized prompt.
+Use the shared immutable call journal with a verified unsafe marker before each
+recipient's new calls and safe checkpoints after its eight calls or handled stop.
+Reject unresolved attempts, stale snapshots and incompatible source/model resumes.
+
+Report four-output pools by arm; only fully sampled same-prompt pools can supply
+diagnostic pairs, with the existing 32-token bin rule. Compare matching seeds
+separately by recipient/task and retain incomplete denominators. Export no pairs,
+perform no scores/updates/readout, and never set full PACT readiness. CPU tests
+verify implementation behavior; GPU evidence is still pending. [Review](reviews/curated-repair-implementation-001.md).

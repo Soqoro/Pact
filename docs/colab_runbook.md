@@ -19,10 +19,14 @@ complete and audited: 24 tasks, 48 records and 472 calls. All 136 candidates are
 correct, leaving zero preference pairs in 32 hold/two repair contexts. Its fixed
 coverage gate fails. The [local support review](reviews/receiver-support-review-001.md)
 is complete: 23/24 unanimous private teams explain scarce natural repair contexts.
-The 72-call private-only second-seed control on the same tasks is now implemented
-and CPU tested. Review/commit/push, then use the [fresh-runtime Colab cells](private_support_control_colab.md)
-with the new full commit SHA. New GPU execution and recovery remain unverified.
-Preserve the completed receiver run; this is a separate diagnostic.
+The [private-only seed control](reviews/qwen3-private-support-control-001.md) is
+also complete and audited: 72 calls, all 24 private teams unanimous, zero potential
+clean repair contexts. The [next curated helpful-peer design](curated_repair_design.md)
+is now frozen: two ARC tasks, 32 calls maximum, same-task recorded donors and
+matched receiver seeds. Its planner and runner are CPU tested. Review and publish
+the new code, then follow the [five Colab cells](curated_repair_colab.md) using
+that full SHA. Preserve completed runs. Actual GPU execution and reset/resume
+of this new diagnostic remain unverified.
 
 ## Prior preparation and completed validation
 

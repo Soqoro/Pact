@@ -136,7 +136,10 @@ than searching seeds until mixed teams appear.
 Implementation update: the [dedicated control runner](private-support-implementation-001.md)
 now implements this proposal and passes CPU checks. The original 72-request
 inventory is unchanged. Its [Colab guide](../private_support_control_colab.md)
-requires a newly published commit; GPU execution remains unverified.
+documents the now [completed control](qwen3-private-support-control-001.md).
+The additional draw found no mixed teams. The next
+[curated helpful-peer design](../curated_repair_design.md) is a separately labeled
+intervention, not another private-seed search.
 
 Other changes are currently less diagnostic: more receiver draws cannot repair
 zero helpful-context support; stronger wrong exchange messages cannot create a

@@ -41,7 +41,8 @@ final-test evaluation, or empirical PACT improvement claim has been made.
 | M3 bounded train-only collector and neural frozen-reference scoring | cpu_neural_tested; complete GPU engineering bank reviewed | Six records, compatible resume, 218 generations, five private pairs / 20 suffix branches, 18 answer and five positive-packet scores audited. Zero receiver pairs; GPU reference scoring unverified |
 | M3 receiver-feasibility base control | implemented, cpu_tested, gpu_verified_on_reported_environment | Returned 54/54 calls match saved prompts/seeds/model/runtime; base receiver correctness 0/24, no pairs; reported verified persistence. Diagnostic resume/restore remains CPU-only verified |
 | M3 broader receiver feasibility | cpu_neural_tested; completed GPU run audited | 24 train tasks, 48 records, 472 calls; all 136 candidates correct across 32 hold/two repair contexts, zero pairs; GPU reset/resume unverified |
-| M3 private-support second-seed control | implemented, cpu_tested; gpu_unverified | 72 pinned private requests at seed 1730, exact parent prompts/actors; task-level support report, call journal and verified recovery |
+| M3 private-support second-seed control | cpu_tested; completed GPU run audited | 72/72 calls, exact parent prompts/actors; 24 unanimous teams, zero potential clean repair; GPU reset/resume unverified |
+| M3 curated helpful-peer diagnostic | design_frozen, runner_cpu_tested; gpu_unverified | Two post-selected ARC tasks, four recipients, eight fixed pools; 32-call / 8,192-output-token ceiling; no GPU execution |
 | M3 joint specialization/revision updates, sparse-support bank sampling and refreshes | deferred | Full PACT train remains explicitly unimplemented |
 | SAC/composition/full study/adaptive search/BFCL | deferred | Milestones 4–5; no final-test path is enabled |
 
@@ -52,7 +53,14 @@ adapter isolation, or replay efficacy.
 
 ## Executed validation
 
-Latest private-control increment: **114 pass, six optional neural skips (120 tests)**.
+Latest curated-runner increment: **126 pass, six optional neural skips
+(132 tests)**. Eight new runner checks cover fixed-call pause/resume, preflight,
+ambiguous recovery, storage/restore, exact within-arm pairing and plan-only CLI.
+The prior four planner checks remain. Actual archived inputs reproduce both donor
+choices and all eight frozen prompts with zero real model calls. [Implementation
+review](reviews/curated-repair-implementation-001.md).
+
+Prior private-control increment: **114 pass, six optional neural skips (120 tests)**.
 Seven new checks cover the source planner, exact seed-only collection, partial
 triples, immutable resume, failed attempts, preflight and verified restoration.
 The prior temporary neural environment is unavailable; its optional suite was not
@@ -196,13 +204,21 @@ Preserve the completed artifacts; no rerun or further export is needed. The
 is corrupted under exchange. Twenty of 34 sampled pools vary in wording but
 none varies in answer correctness. No defect or warm-start cause is established.
 
-The separately bounded private-only second-seed control is now implemented and
-CPU tested: same 24 tasks, seed 1730, 72 calls, at most 18,432 output tokens. All
-72 requests match the recorded proposal. Next is user review/commit/push and the
-[pinned Colab control](private_support_control_colab.md), followed by returned
-artifact review. This tests private-support sensitivity only, not receiver pair
-readiness. New GPU execution/recovery, frozen-reference scoring, full revision
-optimization and final-test evaluation remain unverified or deferred.
+The [completed private-only second-seed control](reviews/qwen3-private-support-control-001.md)
+now passes raw audit: 72/72 calls, 24/24 unanimous teams, zero potential clean
+repair contexts. Only the previously correct agent on the sole mixed task changed
+its answer, becoming wrong. This fixed additional draw did not resolve support
+scarcity. Preserve both completed runs; no rerun or export is needed.
+
+The [next context-construction design](curated_repair_design.md) is frozen:
+compare original peers with one same-task recorded correct outgoing message on
+two post-selected ARC tasks. Four recipients, two arms and four samples imply
+32 calls / 8,192 output tokens. The offline planner reconstructs both source ZIPs
+and the exact contexts. Its dedicated runner and CPU recovery/reporting checks
+now pass. Next is user review/publication and the [pinned Colab run](curated_repair_colab.md). This is a curated repair-only
+diagnostic, with no LogiQA/hold coverage or full training-readiness claim.
+GPU reset/resume, frozen-reference scoring, full revision optimization and
+final-test evaluation remain unverified or deferred.
 
 ### Earlier gate after the selected replay review
 
@@ -556,3 +572,39 @@ neural skips, 120 total. The temporary optional-neural environment is unavailabl
 no new neural suite or real GPU run is claimed. No scientific outputs were added.
 [Evidence](reviews/private-support-implementation-001.md) and
 [pinned Colab procedure](private_support_control_colab.md).
+
+## Completed private-support control — 2026-09-20
+
+The returned seed-1730 run passes archive, provenance, exact-request reconstruction
+and report audit for 72/72 calls on the pinned GPU environment. All 24 teams are
+unanimous; 15 all-correct and nine all-wrong, yielding zero potential clean-repair
+contexts. The sole mixed baseline team becomes all-wrong. No receiver outputs,
+scoring or training occur; full revision readiness remains unsupported.
+
+The fixed control is complete. No new GPU run is scheduled without a separate
+context-construction or actor-preparation design. GPU reset/resume and current
+Drive contents remain independently unverified. [Evidence](reviews/qwen3-private-support-control-001.md).
+
+## Curated helpful-peer design — 2026-09-20
+
+The source inventory and eight exact receiver contexts are frozen for a separately
+labeled 32-call curated diagnostic on two ARC tasks. Saved private states remain
+unchanged; only one outgoing message changes, with identical bytes for both
+recipients. Sender identity/provenance and matched arm seeds are retained.
+Seven all-wrong tasks have no same-task donor, including all five LogiQA tasks.
+This does not supply broad repair coverage or any hold-preference evidence.
+
+Full default suite: 118 pass/six optional neural skips, 124 tests. Four new checks
+and the actual offline planner pass. No model calls or downloads occurred. The
+runner and GPU execution remain unimplemented/unverified; next is local execution
+and recovery implementation against the [frozen design](curated_repair_design.md).
+
+## Curated helpful-peer runner — 2026-09-20
+
+The frozen 32-call diagnostic is implemented without changing config/context
+hashes. All prompts preflight before sampling; the durable journal preserves
+attempt budgets and matched seeds across compatible resume. Reports distinguish
+within-arm diagnostic pairs from between-arm outcome comparisons. Full default
+suite: 126 pass/six optional skips, 132 total. No new scientific outcomes, model
+downloads or GPU calls. [Evidence](reviews/curated-repair-implementation-001.md)
+and [Colab procedure](curated_repair_colab.md). GPU verification remains pending.

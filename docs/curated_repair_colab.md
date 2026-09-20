@@ -1,17 +1,18 @@
-# Private-support second-seed control: fresh Colab runtime
+# Curated helpful-peer diagnostic: fresh Colab runtime
 
-This new control keeps the same 24 training tasks and frozen actors and changes
-only private-generation seed 1729 to 1730. Maximum **72 calls / 18,432 output
-tokens**. It generates no receiver revisions, final answers or training pairs.
-The [completed run](reviews/qwen3-private-support-control-001.md) now passes raw
-GPU artifact audit: 72/72 calls, 24 unanimous teams and zero potential clean repair.
-Do not repeat this completed control. The cells below document its procedure;
-GPU reset/resume remains unverified.
-[Reason for the control](reviews/receiver-support-review-001.md).
+Review, commit and push the new implementation first, then use its full SHA in
+cell 1. Commit `91655a83503a466c4f773a49053d86b54fb71cab` does not include this
+command. Select the same L4 runtime as the completed controls.
 
-Review, commit and push the new implementation first. Use that new full SHA below;
-`b3951fde...` contains the completed receiver run, not this new command. Select the
-same L4 runtime. Run these cells in order after a reset.
+The [frozen design](curated_repair_design.md) uses two post-selected ARC tasks,
+eight fixed prompts and **32 revision calls maximum / 8,192 output tokens**.
+All three saved private states remain fixed. Only the outgoing text from the
+selected sender changes. There is no training, new private sampling or readout.
+The implementation is CPU tested; actual GPU execution, tokenized prompt fit and
+GPU reset/resume remain unverified until a returned run is audited.
+
+Run these five cells in order. Cell 4 defaults to planning; set `EXECUTE=True`
+when ready to run the declared diagnostic. Keep the same code SHA on resume.
 
 **1. Mount Drive and pin the new code**
 
@@ -49,32 +50,44 @@ print("Pinned commit:", GIT_REF)
 
 **2. Install, verify the parent ZIP and check the runtime**
 
-This reuses the returned receiver ZIP to recover the frozen task selection and
-baseline prompts. It does not prepare new training data or rerun the receiver screen.
+This verifies both completed source archives on scratch. It does not prepare new
+training data or rerun either completed control.
 
 ```python
 from pact.colab import install_dependencies, cpu_checks
 install_dependencies(CHECKOUT)
 cpu_checks(CHECKOUT)
 
-from pact.training.private_control import (
-    load_private_config, copy_private_source, private_control_plan, actor_recipe,
-)
+from pact.training.curated_repair import load_curated_config, curated_repair_plan
+from pact.training.private_control import actor_recipe
+from pact.storage import storage_operation
+from pact.util import file_hash
 from pact.environment import runtime_fingerprint
 import torch
 
-CONFIG = CHECKOUT / "experiments/private_support_control.json"
-config = load_private_config(CONFIG)
+CONFIG = CHECKOUT / "experiments/curated_repair.json"
+config = load_curated_config(CONFIG)
 TIMEOUT = 120
-BUNDLE = SCRATCH / "sources/qwen3-receiver-feasibility-001.zip"
-SOURCE = Path(
-    "/content/drive/MyDrive/PACT/receiver-feasibility/qwen3-receiver-feasibility-001/"
-    "bundles/qwen3-receiver-feasibility-001-handoff-1789837104959632692.zip"
-)
-print(copy_private_source(SOURCE, BUNDLE, config, timeout_seconds=TIMEOUT))
-PLAN = private_control_plan(config, BUNDLE)
+RECEIVER_BUNDLE = SCRATCH / "sources/qwen3-receiver-feasibility-001.zip"
+PRIVATE_BUNDLE = SCRATCH / "sources/qwen3-private-support-control-001.zip"
+sources = [
+    ("/content/drive/MyDrive/PACT/receiver-feasibility/qwen3-receiver-feasibility-001/"
+     "bundles/qwen3-receiver-feasibility-001-handoff-1789837104959632692.zip",
+     RECEIVER_BUNDLE, config.receiver_bundle_sha256),
+    ("/content/drive/MyDrive/PACT/private-support/qwen3-private-support-control-001/"
+     "bundles/qwen3-private-support-control-001-handoff-1789909726537323854.zip",
+     PRIVATE_BUNDLE, config.private_bundle_sha256),
+]
+for source, target, expected in sources:
+    target.parent.mkdir(parents=True, exist_ok=True)
+    if not target.exists():
+        print(storage_operation("bundle-restore", Path(source), target,
+                                timeout_seconds=TIMEOUT, sha256=expected))
+    assert file_hash(target) == expected, "Source ZIP checksum mismatch."
+PLAN = curated_repair_plan(config, RECEIVER_BUNDLE, PRIVATE_BUNDLE)
 recipe = actor_recipe(PLAN)
-print("Requests hash:", PLAN["requests_hash"])
+assert PLAN["contexts_hash"] == "66ff6a758fdc8226fde3fcb2e78aced0dfec059041c50bac883efaa102da65ab"
+print("Contexts hash:", PLAN["contexts_hash"])
 print("Budget:", PLAN["budget"])
 assert torch.cuda.is_available() and torch.cuda.device_count() == 1
 assert torch.cuda.is_bf16_supported()
@@ -96,8 +109,8 @@ from pact.training.scoring import verify_references
 
 WARMSTART = SCRATCH / "warmstart/qwen3-warmstart-001"
 REFERENCES = WARMSTART / "references"
-RUN = SCRATCH / "private-support/qwen3-private-support-control-001"
-DURABLE = Path("/content/drive/MyDrive/PACT/private-support/qwen3-private-support-control-001")
+RUN = SCRATCH / "curated-repair/qwen3-curated-repair-001"
+DURABLE = Path("/content/drive/MyDrive/PACT/curated-repair/qwen3-curated-repair-001")
 
 if not WARMSTART.exists():
     print(restore_snapshot(
@@ -109,16 +122,16 @@ verify_references(REFERENCES, recipe)
 print("Frozen actors verified.")
 ```
 
-**4. Execute or resume the private-only control**
+**4. Execute or resume the curated diagnostic**
 
-Set `EXECUTE=True` to collect the declared 72 calls. Leave `STOP_AFTER=None` for
+Set `EXECUTE=True` to collect the declared 32 calls. Leave `STOP_AFTER=None` for
 the full run; a positive integer requests a pause after that many new calls.
 If scratch was reset, the cell attempts to restore the latest snapshot of this
-new control. It never restores or extends the completed receiver run.
+new diagnostic. It never restores or extends the completed receiver run.
 
 ```python
 import json
-from pact.training.private_control import restore_private_control
+from pact.training.curated_runner import restore_curated_repair
 
 EXECUTE = False
 STOP_AFTER = None
@@ -126,11 +139,12 @@ if EXECUTE and not RUN.exists():
     snapshot_dir = DURABLE / "snapshots"
     snapshots = sorted(p for p in snapshot_dir.iterdir() if p.is_dir()) if snapshot_dir.exists() else []
     if snapshots:
-        print(restore_private_control(snapshots[-1], RUN, timeout_seconds=TIMEOUT))
+        print(restore_curated_repair(snapshots[-1], RUN, timeout_seconds=TIMEOUT))
 
 args = [
-    sys.executable, "-u", "-m", "pact", "private-support-control",
-    "--config", str(CONFIG), "--bundle", str(BUNDLE),
+    sys.executable, "-u", "-m", "pact", "curated-repair",
+    "--config", str(CONFIG), "--receiver-bundle", str(RECEIVER_BUNDLE),
+    "--private-bundle", str(PRIVATE_BUNDLE),
     "--references-dir", str(REFERENCES), "--run-dir", str(RUN),
     "--cache-dir", str(SCRATCH / "cache/models"),
     "--persistent", str(DURABLE), "--storage-timeout", str(TIMEOUT),
@@ -142,7 +156,7 @@ if EXECUTE:
     if STOP_AFTER is not None:
         args += ["--stop-after", str(STOP_AFTER)]
 
-CONTROL_RESULT = None
+CURATED_RESULT = None
 with subprocess.Popen(args, cwd=CHECKOUT, stdout=subprocess.PIPE,
                       stderr=subprocess.STDOUT, text=True, bufsize=1) as process:
     for line in process.stdout:
@@ -152,32 +166,33 @@ with subprocess.Popen(args, cwd=CHECKOUT, stdout=subprocess.PIPE,
         except json.JSONDecodeError:
             continue
         if isinstance(value, dict) and "exit_code" in value and "path" in value:
-            CONTROL_RESULT = value
+            CURATED_RESULT = value
     exit_code = process.wait()
-if CONTROL_RESULT:
-    print("Local ZIP:", CONTROL_RESULT["path"])
-    print("Drive ZIP:", CONTROL_RESULT.get("persistent_bundle"))
-    print("SHA256:", CONTROL_RESULT["sha256"])
-    print("Verified snapshot:", CONTROL_RESULT.get("persistent_snapshot"))
+if CURATED_RESULT:
+    print("Local ZIP:", CURATED_RESULT["path"])
+    print("Drive ZIP:", CURATED_RESULT.get("persistent_bundle"))
+    print("SHA256:", CURATED_RESULT["sha256"])
+    print("Verified snapshot:", CURATED_RESULT.get("persistent_snapshot"))
 if exit_code:
     raise RuntimeError("Keep scratch and return the error and available ZIP before retrying.")
 if EXECUTE:
-    assert CONTROL_RESULT is not None, "Missing control receipt."
+    assert CURATED_RESULT is not None, "Missing diagnostic receipt."
 ```
 
-Expected full completion: `private_support_complete_local`, `completed_records=72`,
-`committed_calls=72`, `exit_code=0`, `persistent_copy_verified=true`, and
-`training_executed=false`. The report compares the two private draws separately.
-It cannot establish receiver preference availability because it samples no revisions.
+Expected full completion: `curated_repair_complete_local`, `completed_records=32`,
+`committed_calls=32`, `exit_code=0`, `persistent_copy_verified=true`, and
+`training_executed=false`. The report has eight within-arm pools, four recipient
+comparisons and 16 matched seed comparisons. A completed diagnostic still has
+`full_pact_ready=false`, regardless of pair availability.
 
 **5. Download and return the ZIP**
 
 ```python
 from google.colab import files
-assert CONTROL_RESULT is not None, "Execute the control first."
-print("SHA256:", CONTROL_RESULT["sha256"])
-print("Drive copy:", CONTROL_RESULT.get("persistent_bundle"))
-files.download(CONTROL_RESULT["path"])
+assert CURATED_RESULT is not None, "Execute the diagnostic first."
+print("SHA256:", CURATED_RESULT["sha256"])
+print("Drive copy:", CURATED_RESULT.get("persistent_bundle"))
+files.download(CURATED_RESULT["path"])
 ```
 
 Upload to `results_import` and return the checksum and final receipt. Preserve
@@ -185,8 +200,8 @@ Drive snapshots and objects. A paused run can resume through cell 4; completed
 calls are reused and retain the original cap. A completed run repeats with no
 fresh generation if final persistence needs retrying.
 
-Before a task's new calls the runner verifies a durable unsafe marker; after its
-three calls or a handled pause it publishes a safe snapshot. An abrupt reset can
+Before a recipient's new calls the runner verifies a durable unsafe marker; after its
+eight calls (both arms) or a handled pause it publishes a safe snapshot. An abrupt reset can
 lose calls already charged to the budget, so restore rejects unsafe or older
 snapshots. Local resume rejects any intent without a verified result. Return that
 error for recovery review instead of deleting attempts or changing run IDs.
