@@ -1,7 +1,8 @@
 # Curated helpful-peer diagnostic — design v1, 2026-09-20
 
-Planned run: `qwen3-curated-repair-001`. **Runner implemented and CPU tested; GPU
-execution has not run.** This is a 32-call, two-task diagnostic of
+Completed run: `qwen3-curated-repair-001`. **[Returned GPU audit](reviews/qwen3-curated-repair-001.md)
+passes for 32/32 calls; zero within-prompt preference pairs.** The frozen design
+below records the decisions made before sampling. This is a 32-call, two-task diagnostic of
 receiver response to a recorded correct peer message. It cannot establish broad
 preference availability, natural-team accuracy or full PACT readiness.
 
@@ -158,6 +159,6 @@ Context inventory hash:
 The dedicated runner now preserves this inventory, preflights all actual tokenized
 contexts, reports within-arm outcomes and paired seed comparisons, and supports
 bounded recovery and verified handoff. See the [CPU implementation review](reviews/curated-repair-implementation-001.md)
-and [Colab cells](curated_repair_colab.md). User review and publication precede a
-pinned GPU run. Actual context fit, GPU execution and GPU reset/resume remain
-unverified. The design and stop rules above are unchanged.
+and [Colab cells](curated_repair_colab.md). The pinned GPU run is now complete and audited, including actual context fit.
+GPU reset/resume remains unverified. The design and stop rules above are unchanged;
+do not extend this completed diagnostic.

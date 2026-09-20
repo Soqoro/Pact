@@ -42,7 +42,8 @@ final-test evaluation, or empirical PACT improvement claim has been made.
 | M3 receiver-feasibility base control | implemented, cpu_tested, gpu_verified_on_reported_environment | Returned 54/54 calls match saved prompts/seeds/model/runtime; base receiver correctness 0/24, no pairs; reported verified persistence. Diagnostic resume/restore remains CPU-only verified |
 | M3 broader receiver feasibility | cpu_neural_tested; completed GPU run audited | 24 train tasks, 48 records, 472 calls; all 136 candidates correct across 32 hold/two repair contexts, zero pairs; GPU reset/resume unverified |
 | M3 private-support second-seed control | cpu_tested; completed GPU run audited | 72/72 calls, exact parent prompts/actors; 24 unanimous teams, zero potential clean repair; GPU reset/resume unverified |
-| M3 curated helpful-peer diagnostic | design_frozen, runner_cpu_tested; gpu_unverified | Two post-selected ARC tasks, four recipients, eight fixed pools; 32-call / 8,192-output-token ceiling; no GPU execution |
+| M3 curated helpful-peer diagnostic | implemented, cpu_tested, gpu_verified_on_reported_environment | Audited 32/32 calls; 0/16 → 8/16 correct, one of two ARC tasks improves; zero within-prompt pairs; GPU reset/resume unverified |
+| M3 bounded 120-task actor preparation | implemented, cpu_tested; gpu_unverified | Fixed 60/60 selection; separate 90-update training and 104-call probe; CPU recovery/final-export gates tested |
 | M3 joint specialization/revision updates, sparse-support bank sampling and refreshes | deferred | Full PACT train remains explicitly unimplemented |
 | SAC/composition/full study/adaptive search/BFCL | deferred | Milestones 4–5; no final-test path is enabled |
 
@@ -53,7 +54,19 @@ adapter isolation, or replay efficacy.
 
 ## Executed validation
 
-Latest curated-runner increment: **126 pass, six optional neural skips
+Latest actor-preparation execution increment: **135 pass, six optional neural
+skips (141 tests)**. Six new CPU orchestration tests verify strict training bounds,
+90-step synthetic recovery/export gates, 104-call probe accounting, saved-prefix
+compatibility, failed/stale recovery and plan-only CLI. Larger neural/GPU execution
+remains unverified. [Implementation evidence](reviews/actor-preparation-implementation-001.md).
+
+Prior actor-preparation design increment: **129 pass, six optional neural skips
+(135 tests)**. Three new tests verify deterministic nested selection, family
+balance, probe-group exclusion, invalid input rejection and nonexecuting CLI.
+Actual source manifests and three archives reconstruct the frozen selection and
+unchanged probe requests with no model calls. [Design](actor_preparation_design.md).
+
+Prior curated-runner increment: **126 pass, six optional neural skips
 (132 tests)**. Eight new runner checks cover fixed-call pause/resume, preflight,
 ambiguous recovery, storage/restore, exact within-arm pairing and plan-only CLI.
 The prior four planner checks remain. Actual archived inputs reproduce both donor
@@ -210,13 +223,16 @@ repair contexts. Only the previously correct agent on the sole mixed task change
 its answer, becoming wrong. This fixed additional draw did not resolve support
 scarcity. Preserve both completed runs; no rerun or export is needed.
 
-The [next context-construction design](curated_repair_design.md) is frozen:
-compare original peers with one same-task recorded correct outgoing message on
-two post-selected ARC tasks. Four recipients, two arms and four samples imply
-32 calls / 8,192 output tokens. The offline planner reconstructs both source ZIPs
-and the exact contexts. Its dedicated runner and CPU recovery/reporting checks
-now pass. Next is user review/publication and the [pinned Colab run](curated_repair_colab.md). This is a curated repair-only
-diagnostic, with no LogiQA/hold coverage or full training-readiness claim.
+The [completed curated helpful-peer diagnostic](reviews/qwen3-curated-repair-001.md)
+passes audit for 32/32 calls. Correct receiver responses rise from 0/16 to 8/16,
+entirely on the moon task; the thermal task changes from abstentions to wrong
+answers. All eight pools remain single-class, with zero within-prompt pairs.
+Close the fixed diagnostic; no further sampling or training is scheduled.
+The [next actor-preparation design](actor_preparation_design.md) fixes 120 training
+tasks, 90 updates and 104 generation calls on unchanged probes. The source-verified
+offline planner, tracked selection and separate training/probe stages are
+implemented and CPU tested. Next is user review/publication followed by the
+[pinned Colab procedure](actor_preparation_colab.md). Larger GPU training is unverified.
 GPU reset/resume, frozen-reference scoring, full revision optimization and
 final-test evaluation remain unverified or deferred.
 
@@ -608,3 +624,39 @@ within-arm diagnostic pairs from between-arm outcome comparisons. Full default
 suite: 126 pass/six optional skips, 132 total. No new scientific outcomes, model
 downloads or GPU calls. [Evidence](reviews/curated-repair-implementation-001.md)
 and [Colab procedure](curated_repair_colab.md). GPU verification remains pending.
+
+## Completed curated helpful-peer diagnostic — 2026-09-20
+
+The uploaded 32-call run passes archive/provenance, frozen-plan, journal and report
+reconstruction. All tokenized prompts fit (353–430 input tokens). Original peers:
+zero correct, eight wrong and eight abstentions; curated help: eight correct and
+eight wrong. Improvement is confined to the moon task. Zero within-arm pairs;
+full revision training remains unsupported. No new GPU run is scheduled.
+[Evidence and limitations](reviews/qwen3-curated-repair-001.md).
+
+## Bounded actor preparation design — 2026-09-20
+
+Freeze 120 tasks (60/family), retaining all original twelve warm-start tasks and
+excluding all 24 probe tasks/components. One pass per agent yields 90 optimizer
+steps; 72 private and 32 fixed-history receiver calls follow only the final
+verified checkpoint. The comparison changes preparation volume/content/steps,
+not only one factor. No new model call or optimization occurred locally.
+
+The source-verified planner and tracked selection are implemented. Three added
+CPU tests cover balanced deterministic selection, retention/group exclusions,
+invalid inputs and the nonexecuting CLI. Full suite: 129 pass/six optional neural
+skips, 135 total. The larger trainer/probe runner remains unimplemented and GPU
+unverified; old engineering bounds stay unchanged. [Design and decisions](actor_preparation_design.md).
+
+## Bounded actor preparation execution — 2026-09-21
+
+The fixed 120-task recipe now has a separate training stage reusing the neural
+warm-start engine, with per-step checkpoints, ten-update durable snapshots and
+local-first handoff. The fixed probe requires verified final 90-step exports and
+runs 72 private plus 32 old-history receiver calls with a durable journal.
+Default CLI stays plan-only; old engineering limits remain unchanged.
+
+Full suite: 135 passed/six optional skips, 141 total. New evidence is synthetic
+CPU orchestration and actual offline source reconstruction, not a new neural run.
+Selection/config/training-recipe hashes are unchanged. Seven Colab cells are
+provided for the newly published commit. [Review](reviews/actor-preparation-implementation-001.md).

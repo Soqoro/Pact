@@ -1,0 +1,10 @@
+{
+  "data_manifest_hash": "92771b288958e6a1c23b731936dedb4db6285803465fb468bb05e5e2f497c62a",
+  "warmstart_data_manifest_hash": "2cdbd6a37e89c5ceacaab08d2a43e53561a727c52458dc715b29dca0cf91eb0e",
+  "receiver_bundle_sha256": "d61cb9bb82895f09f146a83ac52a26d4fdad18238585fb0bcf4bd13034996a9f",
+  "private_bundle_sha256": "f67045fc3f2bc102e7345ba3337c5406796360e76f437355dd849302cb33bc06",
+  "curated_bundle_sha256": "c06a1cff473841c7271f2c07e61f6e0a61b31c76b982361f4ddeb029917ea3b4",
+  "schema_version": 1,
+  "purpose": "bounded_actor_preparation_120_design",
+  "selection_seed": 20260920
+}

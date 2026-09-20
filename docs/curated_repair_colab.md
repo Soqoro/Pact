@@ -1,5 +1,9 @@
 # Curated helpful-peer diagnostic: fresh Colab runtime
 
+**Completed:** [returned run audit](reviews/qwen3-curated-repair-001.md) verifies
+32/32 calls and zero within-prompt pairs. Preserve the completed run; do not rerun
+it. These cells document its procedure. GPU reset/resume remains unverified.
+
 Review, commit and push the new implementation first, then use its full SHA in
 cell 1. Commit `91655a83503a466c4f773a49053d86b54fb71cab` does not include this
 command. Select the same L4 runtime as the completed controls.
@@ -8,8 +12,8 @@ The [frozen design](curated_repair_design.md) uses two post-selected ARC tasks,
 eight fixed prompts and **32 revision calls maximum / 8,192 output tokens**.
 All three saved private states remain fixed. Only the outgoing text from the
 selected sender changes. There is no training, new private sampling or readout.
-The implementation is CPU tested; actual GPU execution, tokenized prompt fit and
-GPU reset/resume remain unverified until a returned run is audited.
+Actual GPU execution and tokenized prompt fit now pass returned artifact audit.
+GPU reset/resume remains unverified.
 
 Run these five cells in order. Cell 4 defaults to planning; set `EXECUTE=True`
 when ready to run the declared diagnostic. Keep the same code SHA on resume.

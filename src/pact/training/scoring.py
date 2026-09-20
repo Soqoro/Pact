@@ -21,7 +21,7 @@ def verify_references(root, config):
         raise ValueError("Reference symlinks are not allowed")
     manifest = read_json(root / "references.json")
     if (digest(manifest) != config.reference_manifest_hash or manifest.get("schema_version") != 1
-            or manifest.get("final_step") != 9 or len(manifest.get("references", [])) != 3):
+            or manifest.get("final_step") != getattr(config, "reference_final_step", 9) or len(manifest.get("references", [])) != 3):
         raise ValueError("Frozen reference manifest mismatch")
     for i, ref in enumerate(manifest["references"]):
         path = root / ACTORS[i]

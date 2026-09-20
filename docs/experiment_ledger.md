@@ -795,3 +795,56 @@ requires review/publication and a returned handoff before promoting its GPU stat
 - User review/publication precedes the [pinned Colab run](curated_repair_colab.md).
   GPU execution, actual context fit and GPU reset/resume remain unverified.
   No hold/LogiQA coverage or training-readiness claim. [Review](reviews/curated-repair-implementation-001.md).
+
+## Completed curated diagnostic — `qwen3-curated-repair-001` (2026-09-20)
+
+- ZIP SHA256 `c06a1cff473841c7271f2c07e61f6e0a61b31c76b982361f4ddeb029917ea3b4`,
+  217,060 bytes; 106 members, 105 payload checksums and 168 inventory entries pass.
+- Clean source `43151280b2b4c01a1461445878c3a544dad397db`, executable hash
+  `5070895320fa98c4bb44ffbf673ba525aadc4f0bb414406f641983ae9c9399bb`.
+  Exact plan, all 32 requests and full report reconstruct; all eight prefixes fit.
+- Original peers: 0 correct / 8 wrong / 8 abstentions. Curated help: 8 correct /
+  8 wrong. Moon task 0/8 → 8/8; thermal task 0/8 → 0/8. All 32 outputs end at EOS.
+- Zero within-arm pairs, including zero curated repair pairs. No missing calls,
+  cache hits, scoring, training or readout. Fixed diagnostic closed.
+- 12,392 input / 1,787 output tokens; invocation 249.594 seconds, generation sum
+  129.298 seconds, model load 55.911 seconds. Peak allocated/reserved bytes
+  16,685,571,072 / 16,770,924,544. Compute units unknown.
+- Receipt reports verified snapshot `1789919214806955396-1edfd59d13d4` under
+  `PACT/curated-repair/qwen3-curated-repair-001`; final Drive path supplied by user.
+  Current Drive and GPU reset/resume independently unverified.
+- Original bytes/audit retained under corresponding `-review` / `-analysis`
+  directories in `results_import`. [Review](reviews/qwen3-curated-repair-001.md).
+  No new GPU run or training stage is scheduled.
+
+## Actor preparation design — `actor-preparation-design-001` (2026-09-20)
+
+- Proposed training `qwen3-preparation-120-001`, probe `qwen3-preparation-probe-001`.
+  No execution. Select 120 tasks, 60/family; retain twelve old warm-start tasks,
+  exclude 24 probe task/component/content IDs. No outcome-dependent task ranking.
+- Selection hash `57fb394c7aee9be6569fd12c48819bec9f06086d5cc022ee65510c7fa30a15fe`;
+  config hash `ec1ba60de4b4a904e278282b5e34dd79803110fa0ee4079bf6757e74aec15dc5`.
+- Fresh adapters, same seeds/settings, one pass/agent: 360 example presentations,
+  90 optimizer steps. Final checkpoint only; no checkpoint selection on probes.
+- Private probe 72 calls plus fixed old-context receiver probe 32 calls; maximum
+  104 generations / 26,624 output tokens. No new natural rollout or final readout.
+- Actual source reconstruction and selection/order/budget checks pass offline.
+  Three new tests; default suite 129 pass/six optional skips, 135 total.
+  Evidence: `results_import/actor-preparation-design-001/`.
+- Larger training/probe runner unimplemented; no new Colab command. Next is its
+  bounded implementation and CPU recovery validation. [Design](actor_preparation_design.md).
+
+## Actor preparation execution — `actor-preparation-implementation-001` (2026-09-21)
+
+- Implements the frozen 120-task / 90-update training stage and separate 104-call
+  probe without changing config, selection, training recipe or request/context hashes.
+- Adds final-reference gating, ten-update durable training snapshots, attempted-example
+  accounting, old-prefix probe validation, matched checkpoint comparisons and latest
+  safe probe restore. No model downloads, GPU updates/calls or new research outcomes.
+- Six new CPU tests; full default suite 135 passed/six optional skips, 141 total.
+  Optional neural tests were not rerun. Local source reconstruction, frozen hashes,
+  Colab cell syntax/imports and documentation links checked.
+- Evidence: `results_import/actor-preparation-implementation-001/`. Larger training
+  context fit, full checkpoint storage, GPU execution and GPU reset/resume unverified.
+- Next: user review/commit/push, then [seven Colab cells](actor_preparation_colab.md)
+  pinned to the new SHA; return both stage bundles. [Review](reviews/actor-preparation-implementation-001.md).

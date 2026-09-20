@@ -8,6 +8,7 @@ from pathlib import Path
 import random
 import shutil
 import tempfile
+import time
 
 from ..artifacts import run_lock
 from ..backends.transformers import adapter_hash
@@ -145,7 +146,7 @@ def _load_step(root, identity, model):
     return metadata["step"], state
 
 
-def train_adapters(model, examples, orders, config, root: Path, identity, *, resume=False, stop_after=None):
+def train_adapters(model, examples, orders, config, root: Path, identity, *, resume=False, stop_after=None, checkpoint_callback=None, audit_training=False):
     """Neural engine shared by real execution and opt-in tiny tests; save every step."""
     import torch
     if stop_after is not None and (type(stop_after) is not int or stop_after < 1):
@@ -193,12 +194,20 @@ def train_adapters(model, examples, orders, config, root: Path, identity, *, res
                     ids = torch.tensor([ex["input_ids"]], dtype=torch.long, device=model.device)
                     attention = torch.tensor([ex["attention_mask"]], dtype=torch.long, device=model.device)
                     mask = torch.tensor([ex["completion_mask"]], dtype=torch.long, device=model.device)
+                    attempt = None
+                    if audit_training:
+                        attempt = root / 'training-attempts' / f'{time.time_ns()}.json'
+                        accounting = {'step':step+1,'agent':agent,'task_id':ex['task_id'],
+                            'sequence_tokens':len(ex['input_ids']),'forward_backward_complete':False}
+                        write_json(attempt,accounting)
                     output = model(input_ids=ids, attention_mask=attention, use_cache=False)
                     sums, counts = torch_completion_logps(output.logits, ids, attention, mask)
                     loss = -(sums / counts).sum() / config.effective_batch
                     if not torch.isfinite(loss):
                         raise ValueError("Nonfinite warm-start loss")
                     loss.backward()
+                    if attempt is not None:
+                        write_json(attempt,{**accounting,'forward_backward_complete':True})
                     loss_sum += loss.detach().item()
                     completion_tokens += counts.sum().item()
                     del output, loss, sums, counts
@@ -219,6 +228,7 @@ def train_adapters(model, examples, orders, config, root: Path, identity, *, res
                              "mean_completion_nll": loss_sum, "gradient_norm": norm.item(),
                              "completion_tokens": completion_tokens})
                 _save_step(checkpoints, identity, step, model, optimizer, agent, logs)
+                if checkpoint_callback is not None: checkpoint_callback(step)
                 print(f"Warm-start {step}/{total}: {agent} loss={loss_sum:.6f}; checkpoint verified", flush=True)
                 if stop_after is not None and step - start_step >= stop_after and step < total:
                     return {"status": "interrupted_at_optimizer_boundary", "completed_steps": step, "logs": logs}
@@ -266,13 +276,23 @@ def export_references(model, root: Path, identity, final_step):
 
 
 def run_warmstart(config, data_dir, root, cache_dir, *, resume=False, stop_after=None):
+    return _run_prepared_warmstart(config, warmstart_plan(config,data_dir), root, cache_dir,
+                                   resume=resume,stop_after=stop_after)
+
+
+def _run_prepared_warmstart(config, prepared, root, cache_dir, *, resume=False, stop_after=None,
+                            expected_base=None, checkpoint_callback=None,
+                            scientific_status="clean_answer_warmstart_engineering_only", allow_prepared_directory=False):
     from ..backends.transformers import TransformersBackend
     from ..config import Config
-    from ..environment import code_identity
-    tasks, labels, orders, plan = warmstart_plan(config, data_dir)
+    from ..environment import code_identity, runtime_fingerprint
+    tasks, labels, orders, plan = prepared
+    if expected_base is not None and runtime_fingerprint()!=expected_base['runtime_fingerprint']:
+        raise ValueError('Preparation runtime differs before model loading')
     if stop_after is not None and (type(stop_after) is not int or stop_after < 1):
         raise ValueError("stop_after must be a positive number of newly committed updates")
-    if root.exists() and not resume:
+    if root.exists() and not resume and not (allow_prepared_directory and
+            {p.name for p in root.iterdir()}=={'preparation_plan.json'}):
         raise ValueError("Warm-start run exists; use explicit compatible resume or a new path")
     if resume and not (root / "run.json").is_file():
         raise ValueError("Warm-start run metadata is missing")
@@ -284,6 +304,9 @@ def run_warmstart(config, data_dir, root, cache_dir, *, resume=False, stop_after
     with run_lock(root):
         print("Loading pinned Qwen base for warm-start preflight...", flush=True)
         backend = TransformersBackend(Config(backend="transformers"), cache_dir)
+        if expected_base is not None:
+            for key in ('snapshot','runtime_fingerprint','template_hash'):
+                if backend.identity[key]!=expected_base[key]:raise ValueError('Preparation base identity differs')
         examples = prepare_examples(backend.tokenizer, tasks, labels, config)
         torch = backend.torch
         identity = {"recipe_hash": digest(recipe), "model_snapshot": backend.identity["snapshot"],
@@ -305,10 +328,10 @@ def run_warmstart(config, data_dir, root, cache_dir, *, resume=False, stop_after
         model = create_adapters(backend.model, config)
         model.config.use_cache = False
         model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
-        result = train_adapters(model, examples, orders, config, root, identity, resume=resume, stop_after=stop_after)
+        result = train_adapters(model, examples, orders, config, root, identity, resume=resume, stop_after=stop_after, checkpoint_callback=checkpoint_callback,audit_training=expected_base is not None)
         if result["status"] == "warmstart_updates_complete":
             result["references"] = export_references(model, root, identity, result["completed_steps"])
-        result.update(scientific_status="clean_answer_warmstart_engineering_only", training_executed=True,
+        result.update(scientific_status=scientific_status, training_executed=True,
                       resources=backend.resource_usage(), persistent_copy_verified=False)
         write_json(root / "status.json", result)
         return result

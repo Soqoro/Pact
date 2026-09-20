@@ -16,7 +16,7 @@ DEFAULT_TIMEOUT_SECONDS = 120.0
 
 def storage_operation(operation: str, source: Path, destination: Path, *,
                       timeout_seconds=DEFAULT_TIMEOUT_SECONDS, **options) -> dict:
-    if operation not in ("snapshot", "bundle", "bundle-restore", "warmstart-restore", "collection-restore", "feasibility-restore", "receiver-restore", "private-control-restore", "curated-repair-restore") or not 0 < timeout_seconds < float("inf"):
+    if operation not in ("snapshot", "bundle", "bundle-restore", "warmstart-restore", "collection-restore", "feasibility-restore", "receiver-restore", "private-control-restore", "curated-repair-restore", "preparation-probe-restore") or not 0 < timeout_seconds < float("inf"):
         raise ValueError("Invalid storage operation or timeout")
     # This control directory must stay on scratch, never on the mounted destination.
     control_parent = destination.parent if operation.endswith("-restore") else source.parent
@@ -81,13 +81,14 @@ def _worker(control: Path) -> int:
     def progress(message):
         write_json(control / "progress.json", {"message": message})
     try:
-        if request["operation"] in ("warmstart-restore", "collection-restore", "feasibility-restore", "receiver-restore", "private-control-restore", "curated-repair-restore"):
+        if request["operation"] in ("warmstart-restore", "collection-restore", "feasibility-restore", "receiver-restore", "private-control-restore", "curated-repair-restore", "preparation-probe-restore"):
             from .training.colab import _restore_snapshot
             kind = {"warmstart-restore":"warmstart", "collection-restore":"training_bank",
                     "feasibility-restore":"preference_feasibility_diagnostic",
                     "receiver-restore":"receiver_feasibility_diagnostic",
                     "private-control-restore":"private_support_control",
-                    "curated-repair-restore":"curated_repair_diagnostic"}[request["operation"]]
+                    "curated-repair-restore":"curated_repair_diagnostic",
+                    "preparation-probe-restore":"actor_preparation_probe"}[request["operation"]]
             result = _restore_snapshot(source, destination, progress=progress, kind=kind)
         elif request["operation"] == "snapshot":
             from .artifacts import _sync_run

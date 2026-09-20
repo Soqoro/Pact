@@ -831,3 +831,53 @@ diagnostic pairs, with the existing 32-token bin rule. Compare matching seeds
 separately by recipient/task and retain incomplete denominators. Export no pairs,
 perform no scores/updates/readout, and never set full PACT readiness. CPU tests
 verify implementation behavior; GPU evidence is still pending. [Review](reviews/curated-repair-implementation-001.md).
+
+## 2026-09-20: close the curated helpful-peer diagnostic without pairs
+
+The completed 32-call intervention improves the moon task from 0/8 to 8/8 correct;
+the thermal task changes from eight abstentions to eight wrong answers. All eight
+four-sample pools remain single-class. Retain abstentions as failures and exclude
+them as valid-wrong counterparts; never form cross-arm preference pairs.
+
+Record the predeclared `curated_help_without_pairs` outcome. Close the fixed run,
+with no automatic cap/seed expansion or training promotion. Further preference
+supply or actor preparation needs a separate bounded design. Do not extrapolate
+a 16-sample difference across two post-selected ARC tasks to natural-team or
+held-out efficacy. [Audit](reviews/qwen3-curated-repair-001.md).
+
+## 2026-09-20: one larger preparation recipe, then unchanged probes
+
+Choose a single 120-task clean-answer warm start as a bounded actor-preparation
+check after the completed curated diagnostic. Retain the old twelve tasks;
+select 54 additional tasks/family by fixed component hash, excluding all 24
+probe task/content/component IDs. No model outcomes rank training data.
+
+Fresh adapters use original initialization/ordering seeds and unchanged answer-only
+objective, precision, LoRA modules and optimizer. One pass/agent gives 90 updates.
+Compare 72 private requests and 32 saved receiver requests to old runs at identical
+messages/seeds. The receiver contexts keep old private states/donors; no new private
+sample rewrites them. Never pool candidates across checkpoints or arms.
+
+This changes data volume/content and steps together. It is not a pure data-size
+ablation, natural-team evaluation, full PACT or a promise of more useful pairs.
+No best-checkpoint selection, extra epoch or automatic continuation. Design and
+offline planner only; add a separate bounded execution path rather than weakening
+the old 32-task engineering limits. [Frozen design](actor_preparation_design.md).
+
+## 2026-09-21: separate bounded preparation execution from engineering defaults
+
+Implement an explicit 120-task config and reuse the existing optimizer/checkpoint
+engine; do not relax the old 32-task/16-step engineering bounds. Require the same
+base/runtime, preflight all training examples, and preserve every committed update.
+Verify durable state every ten updates and at handled handoff. Record attempted
+forward/backward examples, including interrupted work separately from the fixed
+90 committed updates. Compatible recovery may recompute uncommitted work; those
+attempts are not hidden as free compute.
+
+Only complete, source/design-matched 90-step exports may enter probing. Verify a
+full durable training snapshot first, then journal exactly 72 private and 32 saved
+receiver requests. Compare prefixes before generation and preserve old receiver
+states/donors. New private outputs never alter the receiver histories. Restore only
+the latest safe probe snapshot; unresolved calls cannot be regenerated. CPU tests
+verify orchestration; larger neural/GPU execution remains unverified.
+[Implementation review](reviews/actor-preparation-implementation-001.md).

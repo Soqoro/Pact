@@ -31,8 +31,8 @@ now pass [returned metadata review](docs/reviews/qwen3-warmstart-001-complete.md
 This is not a full PACT training or efficacy result. The default command only emits the reviewed plan.
 
 [Frozen-reference scoring and bounded train-only collection](docs/collection.md)
-are implemented and tested locally. The current default suite passes 126 tests
-with six optional neural skips (132 total). The six-record collector preserves raw paired replays, actual
+are implemented and tested locally. The current default suite passes 135 tests
+with six optional neural skips (141 total). The six-record collector preserves raw paired replays, actual
 sampled token IDs, missing preferences and verified recovery snapshots. Its
 default is plan-only. The [complete GPU engineering bank](docs/reviews/qwen3-bank-001-complete.md)
 now passes returned audit: six records, preserved resume, five private pairs and
@@ -54,10 +54,17 @@ private answers on 23/24 tasks and proposes a separate 72-call private-seed cont
 the [completed control](docs/reviews/qwen3-private-support-control-001.md) passes
 raw audit: 24/24 unanimous teams and zero potential clean-repair contexts. The
 second draw did not resolve the shortage. Both bounded checks are complete;
-the [next frozen design](docs/curated_repair_design.md) tests a recorded helpful-peer
-intervention on two ARC tasks with at most 32 calls. Its planner and runner are CPU tested, including exact-call recovery and
-within-arm reporting. See the [implementation review](docs/reviews/curated-repair-implementation-001.md)
-and [Colab cells](docs/curated_repair_colab.md); GPU execution remains unverified.
+the [curated helpful-peer diagnostic](docs/reviews/qwen3-curated-repair-001.md)
+is now complete and audited: 32/32 calls. Original peers yield 0/16 correct
+receiver responses; curated help yields 8/16, entirely on the moon task. The
+thermal task changes from abstentions to wrong answers. All eight pools remain
+single-class, leaving zero within-prompt preference pairs. This closes the fixed
+diagnostic; full revision training remains unsupported. GPU reset/resume remains
+unverified. The [next actor-preparation design](docs/actor_preparation_design.md)
+freezes 120 training tasks, 90 optimizer steps and 104 fixed probe calls. Its
+planner, separate training stage and fixed probe runner are CPU tested. See the
+[implementation review](docs/reviews/actor-preparation-implementation-001.md) and
+[Colab cells](docs/actor_preparation_colab.md). Larger GPU training remains unverified.
 
 ```bash
 python -m pip install -e .

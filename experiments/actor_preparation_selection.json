@@ -1,0 +1,967 @@
+{
+  "schema_version": 1,
+  "config_hash": "ec1ba60de4b4a904e278282b5e34dd79803110fa0ee4079bf6757e74aec15dc5",
+  "selection_hash": "57fb394c7aee9be6569fd12c48819bec9f06086d5cc022ee65510c7fa30a15fe",
+  "selected": [
+    {
+      "content_group": "55686a47876a6305ef0239a89558294d612ba3ee4ede44b390b85572402ff8b9",
+      "group_id": "7eac49c91e5d2fb1e16625b16e8e9cc710735f358487eeb293007bfb277424ef",
+      "input_hash": "36884915087e1ce58904d3bc55128db5bc587793bba550754e5e74595cdf0ccd",
+      "label_hash": "2ff627707fbb9a204272353d5b1b78d77dec7922c3a44e3eddcf5403cab91423",
+      "source_id": "AKDE&ED_2012_8_42",
+      "task_id": "arc_challenge:AKDE&ED_2012_8_42"
+    },
+    {
+      "content_group": "d0f7e0e388929cfc97b31dcd9ae8210d5fd2019de2ed7b08992d4b3db7e91c56",
+      "group_id": "f82b92138cbb85c4e39142acd7dfe4f5ca1da67344982759bcb534c6ffe4d713",
+      "input_hash": "ab54a033c977e62f1c15ebd84d5f1644b9599b33f4472050059dfeaed14724af",
+      "label_hash": "11fa7d89f5e7d0b5471276a4fba1a2cdb172de6ab51b090f971d4202dcf15ea8",
+      "source_id": "MCAS_2004_5_13",
+      "task_id": "arc_challenge:MCAS_2004_5_13"
+    },
+    {
+      "content_group": "a25317abfeffafa26c4b6d8e6ea8164b8317e63d6bde8e3edafc09a547a1adbd",
+      "group_id": "35586797bc4c10cd302cf6c73bf8cf6d08b27a530c331256aa7a0ffda8c2a2e4",
+      "input_hash": "c46953a3309b2f47f18ec652ef3977c0c1557b504b6870d2ea0983e68a13fcc3",
+      "label_hash": "74ead5f3ab7011b8418c86c9cc16e32715603948244b4a7706065574e01de8f9",
+      "source_id": "MCAS_2005_9_20",
+      "task_id": "arc_challenge:MCAS_2005_9_20"
+    },
+    {
+      "content_group": "ddcb3e3c7b9f999ef80e1330db369101d63a61d10b3d7d23e73cdb788f8dda09",
+      "group_id": "0710d365ae45fd39d3fe1acd2de7983d9ebb0d57c7f85bfc7d71cd40c7f35306",
+      "input_hash": "c3384b07ef0c72b5d58aef32895b446630546138245ef9619c1ebb7296826cc9",
+      "label_hash": "c80104f9535ab270623fbada5ccf8373dff340a712d4491d048e06d4a92a238f",
+      "source_id": "MCAS_2006_9_38-v1",
+      "task_id": "arc_challenge:MCAS_2006_9_38-v1"
+    },
+    {
+      "content_group": "7a8259da7725b9544be7eb670a1c5605b2f707f11194cf95459336919a890e9e",
+      "group_id": "bf4f24ca27ef4b458473db65be64a0e59ed72757642dfeb2ebcce9f818489b6e",
+      "input_hash": "8659e5c5403ec440540235cce02b2119ef25837c94abd68bbe903a17356c9285",
+      "label_hash": "ee4c7afefbe384a1ff9df8247e595d6081df376dfdd3a4aea92331d45a291870",
+      "source_id": "MCAS_2006_9_8",
+      "task_id": "arc_challenge:MCAS_2006_9_8"
+    },
+    {
+      "content_group": "2b6bd2bcd7d2ec1c6e0c8bb97fbe9afe7ecfb967bbee43b658d8c10bd314e687",
+      "group_id": "4601a2a500b6733f23b475da237a575064487109d679b63fdec8a43bdbd73dbb",
+      "input_hash": "0033ea2236466eee2f6a5ac38eb307422c6e9859f0456fe16cabbe6a10c6fd2a",
+      "label_hash": "a818a3a36d0a3664a13ddc919cd592738196b5c8fd73ed073482e393eb4ead4c",
+      "source_id": "MCAS_2008_5_5634",
+      "task_id": "arc_challenge:MCAS_2008_5_5634"
+    },
+    {
+      "content_group": "f518c2cbd901b61c03183e186223c1c80580815b05b1d0dffdbc203dd6c85f10",
+      "group_id": "606f13781635fe9819b2a93a0d8218fbe13eb700a0ae9b75d00da230b3602e9f",
+      "input_hash": "4e2a93d0642b7a554d780d6c4a135a06e583f6301e9856d957bd220e5b1d78ba",
+      "label_hash": "5d21de677cdf47ba370689d595b6b9a8c9fc8490c03c2a9ef57214b6db618785",
+      "source_id": "MCAS_2008_8_5694",
+      "task_id": "arc_challenge:MCAS_2008_8_5694"
+    },
+    {
+      "content_group": "c8f67bc6e5582b560246cf9660c7d1f767a648adb21ddca84d901a2c1cd6fd74",
+      "group_id": "b2fba2ad7e7835bd572ea2308293f1544418e386caf1aab0ca1ddfefc0a6f78d",
+      "input_hash": "126f7cd0ff37f8b85d62de7a6ed030ce0f979c225fa74f6a922c3df801231157",
+      "label_hash": "3eace65e1a562448c6cbb55117aa73be3ff8b84d7c3149bb2dc5f54111d098fb",
+      "source_id": "MCAS_2011_5_17663",
+      "task_id": "arc_challenge:MCAS_2011_5_17663"
+    },
+    {
+      "content_group": "6821831497d9411c37df23a878572c7e03bd2e2be2dcec025da634fd48152f79",
+      "group_id": "17339cab692e36f3808def05e63cebcbdfec4e88540da8a71caf04045750282c",
+      "input_hash": "d9eb74ed4f9cc8ddd386bd7569c83a64e301f7f729aff439ee2e671704189153",
+      "label_hash": "5b66d8df06d04e051486dfb61df96cf179ef53f700c570ae50e9fd3285fd49aa",
+      "source_id": "Mercury_401402",
+      "task_id": "arc_challenge:Mercury_401402"
+    },
+    {
+      "content_group": "6a4b4abd0b752ad55a94ff875afe12e74d18462e8c8d19999eef9a8faad2fe8d",
+      "group_id": "bdcc55f275539778ed3c43740f615787dfbcdbf2a84d0696cda316f3d32f2685",
+      "input_hash": "70d5821c8e9db671993f32ab7a8712f0f1f47d5017af1aaec3fd36fe15423371",
+      "label_hash": "b3cca5a4dc8277ab1cfbd683e58b5f57616313f3999d18daebcf1a41607b1f7d",
+      "source_id": "Mercury_404134",
+      "task_id": "arc_challenge:Mercury_404134"
+    },
+    {
+      "content_group": "58837323f2381206310585ca44bfb456a9ba5d5d036c6e3da63681b6bd65efb0",
+      "group_id": "785e129c8f33c1e0b7341542281a0250d9429ab87d408a0ef6dc62b8082da60e",
+      "input_hash": "a56f5bd6f0aab110d4f52b58d730f6c952ce87dd67aca005d0f94a31e70d03b3",
+      "label_hash": "d5e7648bd34a71ecb4379791d00a4b6ad866c582e676b9266bbbf81ba0d90633",
+      "source_id": "Mercury_416144",
+      "task_id": "arc_challenge:Mercury_416144"
+    },
+    {
+      "content_group": "e513eeb0baf826330b788404c183f2a8f08070cc9cf4393cad57fb1b259df228",
+      "group_id": "694624c2c7fda1e2873bb1f6bd02f28e5b159bd5fb39cd89a75199e905279bc7",
+      "input_hash": "c775beae9dda6e7b3e16d4e2e7cfa525aaded47bc2059cc14da26b6357b1cdc3",
+      "label_hash": "1bc4f33d2874038ac85f6fb7a220d1e28943e152e5b8fc7422f6421d0e2c2e24",
+      "source_id": "Mercury_7001418",
+      "task_id": "arc_challenge:Mercury_7001418"
+    },
+    {
+      "content_group": "b46d86ccb06cc15495d3b0a5efbec5b2a180df75a41116db32780cd069a0ef7a",
+      "group_id": "259ae1f1ab7623a8886d737cbcc3365d6bfa73e660796f384877af3e7a60bf3b",
+      "input_hash": "0502ee16f622dbd8de3d7905bad6b58edb0dfc7456da011fc4cd3d30617bbf7b",
+      "label_hash": "46e480296df71fe0ddb71668b0f0d78d86a6eeee47f7d826b53d364cdb3db999",
+      "source_id": "Mercury_7001523",
+      "task_id": "arc_challenge:Mercury_7001523"
+    },
+    {
+      "content_group": "7c071be4f39bbd688ef6db49332d527d735030d547b33e6816badd612fa59d68",
+      "group_id": "2c02d42f783ae104e4d6909cd1510b8f18000f1e5b2e223bb20eb51a29643893",
+      "input_hash": "a4225ef8c0d18fc65c74582202a8099a2077fdd153230436916bfe171c026f5e",
+      "label_hash": "e3cdc16dd8e1e4f1a6cfd498f9deeb31c678c537e7f1f0ed5e00f643f71b43c1",
+      "source_id": "Mercury_7009923",
+      "task_id": "arc_challenge:Mercury_7009923"
+    },
+    {
+      "content_group": "01d152c3f3a7f78956bd38fde500e09c3a8de27dd494379c961e5f265635c559",
+      "group_id": "24e6888c35a574ebb856fad836ed93ca3049e894ebdebac11f399b4cd2f9c43c",
+      "input_hash": "3cda1c2643e7f252f7f6c9ab33cc69b2906dbdc714522ba2bcd9c08ac314b601",
+      "label_hash": "484e25eceec97fa836706d849c4c7a0fda2c89d37e001ada8d96a2fdd8a3a58d",
+      "source_id": "Mercury_7016730",
+      "task_id": "arc_challenge:Mercury_7016730"
+    },
+    {
+      "content_group": "20758457bf4a3c7cbe7f5a283f76bcaa7a7e021c89e2c8b3dbe2156a8c474327",
+      "group_id": "e88ec2e7c61d9abfaa57358259c0bac5575fac4d39efa268bb053a61499a0006",
+      "input_hash": "caf8da354daf078040fe0c2a8c68fa2583f3afae218673d4118f5cd08ee908e1",
+      "label_hash": "0116a37b14ab69524086a58045e04788fc811d19dc3486a877c58ad1245594b7",
+      "source_id": "Mercury_7040740",
+      "task_id": "arc_challenge:Mercury_7040740"
+    },
+    {
+      "content_group": "8df0080a411fbc0b5bbd221f7948121e494d2d77228b21ac887b726cf367258c",
+      "group_id": "61c0780c98156b9bd147eb081ad21261a958f1be4dcb5d48a46c233d5651b66c",
+      "input_hash": "7256c789731c5e0e5aaa27be8c0be83e7b0e2f9b2d3839091d7b1fab9ea4eec7",
+      "label_hash": "7ee38688f3254a7d1f9d07a6ae2ae4d4ea253e3d2fcadb7f0a4fc4b79204e416",
+      "source_id": "Mercury_7041160",
+      "task_id": "arc_challenge:Mercury_7041160"
+    },
+    {
+      "content_group": "3a62997e3a09f65e0f333c10feb756954c3d14f2995755dbbf218d3062bd83dd",
+      "group_id": "0efbe8f99948ada69b3884f8b6b51409c152815349b77b4cfed4d6f3d55b2d9a",
+      "input_hash": "74ef08b1d095baddbc8f5462f474852e4ddba37d85f050581b43d7028aae088e",
+      "label_hash": "55686af1d0853676b90c49e18f15b659705761ae627882804b4004f0d48f9549",
+      "source_id": "Mercury_7044818",
+      "task_id": "arc_challenge:Mercury_7044818"
+    },
+    {
+      "content_group": "1aac0a661ffc1733f778f8f0a6072cdbdd46d31f20f2398427d31da835b07287",
+      "group_id": "7211443789fe1bb3ce5f908c880fd29de1abf6d3bb05d11560a861f2a3a1dbf3",
+      "input_hash": "e132cb773202f66c237c1d4d12a60a36c9911c8f460c3799e6eb45779c5a518b",
+      "label_hash": "bfc14d967393395c434bea774d41636f584ec966049d5cd46192b19d03c66914",
+      "source_id": "Mercury_7071838",
+      "task_id": "arc_challenge:Mercury_7071838"
+    },
+    {
+      "content_group": "0739953d00036b3653893753f53fcf40d6667570b1f15afa4dcda1b673d492e1",
+      "group_id": "d013f052e618a89fe4737b79b92ee3bfc7cf3d40bcc16c0903621be3f79d796f",
+      "input_hash": "1932374b530e184a6bf723d4c31ce4a6070682c706ca20c32e563730f5d9d9e3",
+      "label_hash": "a0579d214a1cb050434a62396a09832759d5a063d8f2c83bb9a826f6e6e65877",
+      "source_id": "Mercury_7084420",
+      "task_id": "arc_challenge:Mercury_7084420"
+    },
+    {
+      "content_group": "6f4f5087cfb8ae24e771abe0393f8c31aca9b0f29b55b414f7a27eebd4f3bffa",
+      "group_id": "be16c0fd19ea9ff6a676a17e3aa98740b06838dc18fb6eba058028e9cd97d85f",
+      "input_hash": "01e4c5a83054928112e818535bdceba8d73e55df43de080000e41b90d24eede8",
+      "label_hash": "ef8525fb03ed96ec9b3596e65b56c0a9edb3515dc2703b62c02297db065d9842",
+      "source_id": "Mercury_7085243",
+      "task_id": "arc_challenge:Mercury_7085243"
+    },
+    {
+      "content_group": "6e6491addd645f7a0ecb24119c682a0f28b02c80a763a7279bddaaacfaa0355a",
+      "group_id": "1e7da4c8e8fe707001ad08c042ce3f3444448a237340289efbc3b0f02a25f8ac",
+      "input_hash": "bb8a2c1e48e8e8f7a8010dc1919c4838c24c6dea94f309e9af0fbf5f2f515710",
+      "label_hash": "0b38db9f4b517494dd5d0e646196c13ae2d4706d39529eca26c5a977c6103051",
+      "source_id": "Mercury_7093993",
+      "task_id": "arc_challenge:Mercury_7093993"
+    },
+    {
+      "content_group": "397016391b15039a5d63e389caf224fa69e1588a89bfb132d7baab21d0c966cb",
+      "group_id": "59bf5c1c033ddae2b3c1af16adf1d6c1b79d24389f2c6b39bb65d678a3d43d9a",
+      "input_hash": "caf3cc6d34b0469d98f0a78dd401c2ef780d9f097caa8f1a38fdceb61aa68cd9",
+      "label_hash": "b20d6c179d5fa1491f67eb82e997554583efdd34af794ed1dfb8ad349178d44b",
+      "source_id": "Mercury_7106733",
+      "task_id": "arc_challenge:Mercury_7106733"
+    },
+    {
+      "content_group": "d0f75206a83a30a39219288e4d1843e431b9d508051e63849f2f2c0ee948763d",
+      "group_id": "81bfab4e710192b04296ce597a6e887514e28f1cd110b344a2e15fe62c71a03a",
+      "input_hash": "937582b2e97d3e179477bc948cfb795ee9118fe45b366804cd06b25b10d806fc",
+      "label_hash": "f676f0f105d748997d7d2a3a840ad2bf50ad1c5624f61add81e243f931ccab05",
+      "source_id": "Mercury_7114415",
+      "task_id": "arc_challenge:Mercury_7114415"
+    },
+    {
+      "content_group": "b17a261a13995178d005d4e92faba25c147b52f6e9481df81497257aea70d4f2",
+      "group_id": "474d163945a58284420e6af78364d05de5c6962a784738e3f48241cbf0378fe9",
+      "input_hash": "5b5b17a2495456da84f99767d7b25942134bfb173af15170df908b842328abb7",
+      "label_hash": "1cf7131db8c0b3a105d382bba08680a090cd5400958cd83bd1b70d8b815afcfb",
+      "source_id": "Mercury_7116130",
+      "task_id": "arc_challenge:Mercury_7116130"
+    },
+    {
+      "content_group": "4c62cdc0a00d572090d7ade0d324a5a85efb2b39a9f598bc2a742c94d28c7907",
+      "group_id": "516ded949aa3a93b93088893ac19c0a783c4f284e249c85341d42ddde99d35aa",
+      "input_hash": "21094d2b64229e6a8fd3bed37bbc0bc2d20294b39077178224045e8f3d10bc85",
+      "label_hash": "d5ab9e6fcc08a837dd0a20445772bdf76c7f8992babac6a5b942c0b884c5b50a",
+      "source_id": "Mercury_7127173",
+      "task_id": "arc_challenge:Mercury_7127173"
+    },
+    {
+      "content_group": "98a7500b5906949cd9c0b4c244cfdda83794976cb8a87814c218a4831de1ac75",
+      "group_id": "70f9b7dbacdd20d53c3a53b0dbb0e03bcbc44438e65c9ee35672d1cb5a598001",
+      "input_hash": "8582510141ec4fbcc6cf8bd66ab51357f3355f72486d8bf31d168141c0c49c16",
+      "label_hash": "623e300a249ad987d3a9c4c4e6d158e0b93f3225bbed911a4eabd3558efe1509",
+      "source_id": "Mercury_7128713",
+      "task_id": "arc_challenge:Mercury_7128713"
+    },
+    {
+      "content_group": "347faff5dbb455ba92abcfd3ae5c79f5c2c4328aaf45b2e02e606f5f31e802c0",
+      "group_id": "9a2e78945674af637adacc5bc86ec4e09280d045e3eaf4f94fae9e42fb63c1af",
+      "input_hash": "d810afc0eb2af8294998ecea9169090bc498a3a34414cf25c07fcf69f2c679c3",
+      "label_hash": "9d8e5f6a013c884b94637368eb48a0857a5ba67c0e8042a010921ce94092932c",
+      "source_id": "Mercury_7141995",
+      "task_id": "arc_challenge:Mercury_7141995"
+    },
+    {
+      "content_group": "57e30ea61febc77b2d20f78e6c2086d9a4703f9a1d77634c6bec072cd7a35baf",
+      "group_id": "d0a79de414e815c53adb881fbe507f91ba24ba8d1708992d0eee5db0ffe675ec",
+      "input_hash": "0aafe1297982ac35270d5c49660a15a4e492d8979a266b415b377f57a3ebed55",
+      "label_hash": "3edfc1c9d91072b6da1d505bda596d315fd5d682b1f72957223566ccb2573973",
+      "source_id": "Mercury_7142730",
+      "task_id": "arc_challenge:Mercury_7142730"
+    },
+    {
+      "content_group": "34e61a1602eb8cdf48c1a902008a09846204e2c1147891e26f7fc8c0a3e516e9",
+      "group_id": "ee8362caa30b3acdca9f38a1d4ca4a6d563d9d99debb1bccec2979dfff39e230",
+      "input_hash": "94cc923f3c148ff412afe97c95fbcbe97c33650306f6cdedcd8f17da4e3a1403",
+      "label_hash": "fcc9a879b17f3ad520c5a854d7f34e81cb57b0af5eeddbd4e0cbc751b5340a70",
+      "source_id": "Mercury_7143780",
+      "task_id": "arc_challenge:Mercury_7143780"
+    },
+    {
+      "content_group": "a2577c1900b7292750309999d0f14ffaf660f1acc54d053a731fac8810c20eeb",
+      "group_id": "53424405a10645c5a77dd94ad629f1ac6effc0300e1f8b518249d6176e3bb715",
+      "input_hash": "5e35fe6026199553a252e87e443a6395e63b69e79397aa9bbfef9c5587be3309",
+      "label_hash": "62be13b4cfee32483160b574464c88d40599a8f3c979757a302c501fe58d6ab8",
+      "source_id": "Mercury_7216843",
+      "task_id": "arc_challenge:Mercury_7216843"
+    },
+    {
+      "content_group": "4fb421f1af28a12d422d44d872ee104f100eff98ec3181df24ac2da3ec1d5852",
+      "group_id": "376ebbad1a6fb5473cf9c56905ccba5e3aac9b2fb927a08c42f117009713b6aa",
+      "input_hash": "e2e7d6b9178cd3a426e8c12d883e8d31a2de77219a19e6ce924bb4060ef0875c",
+      "label_hash": "e8265a627bf3ae4b4166f592da61f087da51ebb0770c35291533b7ca15b7e226",
+      "source_id": "Mercury_7221673",
+      "task_id": "arc_challenge:Mercury_7221673"
+    },
+    {
+      "content_group": "1a7ff4c4ce4bc2ee26c02ec32b07409b1083e10333204f7a0fffa5413dd66273",
+      "group_id": "6e9b47323856908c66a85df48e415567c920e080dfa8ef591c9a591f23d9b005",
+      "input_hash": "b8b802b98db70906fa06716f0c968c88ad01bf6d0c5ad8500d61dde1bcbb9c23",
+      "label_hash": "6ad3cdc1ee2d2df7dd0d281c0d927828f75a61594766a4fd192464fd1c27e4a2",
+      "source_id": "Mercury_7222355",
+      "task_id": "arc_challenge:Mercury_7222355"
+    },
+    {
+      "content_group": "feb6e3dbf9e0ede6980d7b4bbf405d01b72bb1a9274699b9660d6604de47d12b",
+      "group_id": "35ce079d2ab930290dedb96d0c1bea67cf79deda1b4c53ffa96b3277c468a0f6",
+      "input_hash": "2fc78b9993c132e20a2eb4bb2168abac3aa65b7adc3185ae1f7325dba2fae88a",
+      "label_hash": "b79aedb151f8f65deea19ec421e55d806102658d1be31ccd99e15e5a831efe86",
+      "source_id": "Mercury_7228095",
+      "task_id": "arc_challenge:Mercury_7228095"
+    },
+    {
+      "content_group": "63e9d3850f1110bb16087d8d320ecf4231bba06de19009f72683c2c6bf275f14",
+      "group_id": "9984cda0567b0f5892de5ce7cf09ef85871fa7b3b3d8e5cecfe44c9fbdf51fdc",
+      "input_hash": "5902a5e8a7fd5bf8fd15e8a901160606eb9a0104214b938705379469e996ef90",
+      "label_hash": "92ef7b5cdbf52862d03260b376ac44db64585790f6cd5d2a04020f67b8af00be",
+      "source_id": "Mercury_7228165",
+      "task_id": "arc_challenge:Mercury_7228165"
+    },
+    {
+      "content_group": "01c5ec709dd9909fc2f3c55c0116b6d32af4c83a7bb5fe8733b58b60f288426f",
+      "group_id": "f3fb2ee209fc402e072663007064daac663c80bc89c981e1de678519c8b617ee",
+      "input_hash": "fb625f6c12722a2c466c3a56dd50fb90be7f821d75b18d0085d148b76d1cb4e3",
+      "label_hash": "db2fda1202bae996ea07dfd944ecb3624f6808e834bad247922b3ff3c0a548c2",
+      "source_id": "Mercury_7252735",
+      "task_id": "arc_challenge:Mercury_7252735"
+    },
+    {
+      "content_group": "abfde956b7f89d1a6af804a20d469a9a64118b9ef57d982017040ac9fba9acb7",
+      "group_id": "5b4756d4502a3097935e55bf711d23a12a0c5b3e157f8db9edb1ab37c3edecaf",
+      "input_hash": "31215d40c1b81c448f70a8b0f03db509fc058f3b53f2e97e68b1db153dd67317",
+      "label_hash": "8e9b4877e787533c556d87e49121ad4d0db330552d4dc77acf3b0567e0fb9793",
+      "source_id": "Mercury_7269168",
+      "task_id": "arc_challenge:Mercury_7269168"
+    },
+    {
+      "content_group": "757bd7fd5a8e4ce9fe54192fb6381c4223948eea75043f502f7c29c6267238de",
+      "group_id": "6812eb3641dd4502618f8a203f7110dc8c00fc2852542c4f672af51986625e1e",
+      "input_hash": "47e7ea46baca83d55eb83b550bb5ab30d496e7c4fab1a7f629bb3fe894466229",
+      "label_hash": "61411601a07df8d6fb85aba0e4921290f2dc16ed66876dc57a3e5e8db68ef93d",
+      "source_id": "Mercury_7270305",
+      "task_id": "arc_challenge:Mercury_7270305"
+    },
+    {
+      "content_group": "82044053a813826ac1b88c6f44465e528b72fb029cdb881227f4f3fe4df4c79c",
+      "group_id": "860cd0563fc587eee16fb59c18c8422465256ac0dc0d44c7fe792086fae61246",
+      "input_hash": "335ad1970b3492232bf90557684239e34a547b9dc5dd286be341736ba08318d6",
+      "label_hash": "26d4b9bf57c12cceb54aed9d9a00099bfaaeeeb0af87d71c0a4dd39c3d784a82",
+      "source_id": "Mercury_7274348",
+      "task_id": "arc_challenge:Mercury_7274348"
+    },
+    {
+      "content_group": "426aaaef2d7fd60e00dfb0ab2b9362b38d1f23c19b4b0ca058426d111e8ffec1",
+      "group_id": "f809dc82b2dca1d3ec32bc1639cc11a91ff7373f924610a9cdedb487de24d6e0",
+      "input_hash": "6a3b7d2868641602c6a32a3187bfb8a73814d9049f32a3f4df3fccdda15ebba2",
+      "label_hash": "ba801a768aa7c655b18801a115fd5308e3dd477b64020bbe84b37165a2243110",
+      "source_id": "Mercury_7283413",
+      "task_id": "arc_challenge:Mercury_7283413"
+    },
+    {
+      "content_group": "2b3da04ca89418cf6895f204111753f988805d4b849d66e18f0d6c962446de67",
+      "group_id": "4fa44aa0bb7adc3ace6744d09ee9991afc04a05f4bb2bce7a40ff9b6f60a61b7",
+      "input_hash": "db38f7394a4295fa0be1e0703d4f3df5874cebbe44cb31291be503cecd889973",
+      "label_hash": "eb0aa23f85f73ccb87ca8cf0fe474e49e1403d5302fd8e9e205b5e0b97534b75",
+      "source_id": "Mercury_SC_400156",
+      "task_id": "arc_challenge:Mercury_SC_400156"
+    },
+    {
+      "content_group": "f0e2e51764d47ce8d1d658faaa57746e55af49e3677213b44e411efbccacfd6b",
+      "group_id": "93089b1dd1ae0711f070e5ef867b42ab18760686159cea857cbdc639f3ae357a",
+      "input_hash": "3d7259fad88ce10399f669f1bfd134e9e6fd60e8fc22560eae5df348c1071cba",
+      "label_hash": "320f596fac5bc076238a3ee3f729e9a0abb72158b459b1c9a78063d512b3d435",
+      "source_id": "Mercury_SC_400200",
+      "task_id": "arc_challenge:Mercury_SC_400200"
+    },
+    {
+      "content_group": "80d5d250eb8c0711b942c1f8e4573f608b4c01b29a6c1408f93fe1d18ef78fc0",
+      "group_id": "99090567d42d0d552906cc2c2f6c7f24b595e0e3aa0443a97a5806ab31b2acc6",
+      "input_hash": "bfff3fc794428adc26ab1cd28568679a9ef5481cd3c9c992f2a4746bab9c793c",
+      "label_hash": "d7bd754a6ae5441c9ae13dd2777f2c67bcb5f69b0aa9f29676150450e94961f9",
+      "source_id": "Mercury_SC_401002",
+      "task_id": "arc_challenge:Mercury_SC_401002"
+    },
+    {
+      "content_group": "64792043e21c90a01e0ac4db8e2378de09b998475cc5b217ae6a2af1251c0f1f",
+      "group_id": "9b3900b606cd6b121c39230380c4e1ff61c9cdfd9c76991a5afd0b43699f0b73",
+      "input_hash": "0bf5cb499d7e1dbcd364a0cfe13206f3c791017f928601aa92a5d3c0b7645ade",
+      "label_hash": "ae8b2ca8251e68321b2368f1f36132aac4a0943bf36700e1e23f9c7547f9f0d0",
+      "source_id": "Mercury_SC_401157",
+      "task_id": "arc_challenge:Mercury_SC_401157"
+    },
+    {
+      "content_group": "4c03af29003f352321db9236e18d4a0e28b122143b3fb8b0fbdf23b43d1e5468",
+      "group_id": "80447e4e177cc8f3ac4ecaa91540c169bd40c96a4857821da9e955cf1fe3a027",
+      "input_hash": "c474ee95e88418b54a0f38e56336f342e67dcfdb44fe10e9076eab9bc5326a87",
+      "label_hash": "e72cd97a30af59e0fd749e13b21cd50570613b540f948675ee78de5d677148bd",
+      "source_id": "Mercury_SC_401207",
+      "task_id": "arc_challenge:Mercury_SC_401207"
+    },
+    {
+      "content_group": "737ed541b123b3d580d4c7b2079c2af4ae1587bdf919fa688ea08ef1a1e9edd3",
+      "group_id": "005fe7aa18533f141d30c88571d71510153ace5f41a303918c35cdfcba394214",
+      "input_hash": "1b9ac058a220941abbfe733d1272d407df49fa391a6bd1acc42f1e94323e8a3d",
+      "label_hash": "edaa1bb1b36e4e9837423b5d8dd4b7cc2ce4d8733a55ba4573a496e96303a8bb",
+      "source_id": "Mercury_SC_401371",
+      "task_id": "arc_challenge:Mercury_SC_401371"
+    },
+    {
+      "content_group": "13f8f9673dd0937e13a30779b6c73c68a03a76d2a7c44b127bb401f95250ecbd",
+      "group_id": "2347903ed7345ae63580369687662a470f68535f1ae15bf26e2b952b3351bba6",
+      "input_hash": "cf510c837c9fcd1d72dcc6c9958db00578fff8c680bb57bbaec90817c079391e",
+      "label_hash": "334ecb012f6294355433add9867290c617297d750f6ae692822cbc90a81109e2",
+      "source_id": "Mercury_SC_401836",
+      "task_id": "arc_challenge:Mercury_SC_401836"
+    },
+    {
+      "content_group": "56874c32cf6abb1fa73d180fd962c960fb10e0e71435f4f510c1106dc6c5d874",
+      "group_id": "1ddbdcff67aa4f4695b40b1088acf854a03f823878891e2e23422c2233e806e5",
+      "input_hash": "c4d6280bb8fae1008208d0d84100a267c028666d96031ba499d8685f45c2243f",
+      "label_hash": "7d76ccebba5d9111304fdaded9b865f1b017ba2289abd3fa4bca741bed2c8b9f",
+      "source_id": "Mercury_SC_407194",
+      "task_id": "arc_challenge:Mercury_SC_407194"
+    },
+    {
+      "content_group": "a7ed2f27f3ed458b752236f22ac0d04c0fc273a700fcbe47c7c549cc86385f37",
+      "group_id": "12d70396e48a51c48c98c4d7c55acba7fe4ef9a785f4f741a0c0eeac412c7c46",
+      "input_hash": "bbf54c5eef058324224b0f7a075116487b1353cb3108f57fe34f01b9bccbc84a",
+      "label_hash": "24ef26032baa9237bc99ecd65134d42c0d006096568c067a37bf6f57351f478a",
+      "source_id": "Mercury_SC_407674",
+      "task_id": "arc_challenge:Mercury_SC_407674"
+    },
+    {
+      "content_group": "44f620ff4801281bf7988e76afc8deb3b5f2df143a6dbe8c1267ccf8de4ab25a",
+      "group_id": "bbda2f02d8db7e2387f1bae9e61881030244261964a4f1342357f194cf94db5c",
+      "input_hash": "4d2f49c02bfbd9114cfd8e6db11b3c314f02264a6312f739b32b9a7547aba9c5",
+      "label_hash": "8c97812e48f135be499db43fbf8361aa822152ea84bd248961970f452c1451ae",
+      "source_id": "Mercury_SC_414080",
+      "task_id": "arc_challenge:Mercury_SC_414080"
+    },
+    {
+      "content_group": "5650df408999614e5f1aadc9426fb74ad9bda3493ca16788c182270a8ba21a9e",
+      "group_id": "835a68fbdda56e4841d9801f3b2346ffe22c136b68279182d9a3ab9bdc7f1280",
+      "input_hash": "80da66234b8135821266b3eb650f8d2bc77c7e5bde788f87540a0c469c3167ea",
+      "label_hash": "60339f7853bac1a045c3996ba15c6abfcbe38e1d4ee302b60407b17527a0489b",
+      "source_id": "Mercury_SC_416424",
+      "task_id": "arc_challenge:Mercury_SC_416424"
+    },
+    {
+      "content_group": "c5884bf49c3db5cfadf84098f6a19792fc74c9f06378223490454fa1a5948f05",
+      "group_id": "874c65a67c71d6b30e75cb21b6ee61a2b2af253e4181630cfa4fc78bf98c1da5",
+      "input_hash": "064a1b9e0a48afea1d08e8ebff29627616d39fefeeb2ad52a9aaea2d3f593154",
+      "label_hash": "da4a072e9dd7543630ad8324e3cfcf9f5a6441cab549c51a8a7335993176feaa",
+      "source_id": "NCEOGA_2013_5_42",
+      "task_id": "arc_challenge:NCEOGA_2013_5_42"
+    },
+    {
+      "content_group": "a5aa017259c30de529e1188ba55ef6abf1ac4d9ea9930cbbefa78bb0187d7b59",
+      "group_id": "dd014f03e4af1db77dc4fc02a0599bde1501d47a55c09212822613a5b5758f43",
+      "input_hash": "c0d19d4428923a2aee47e39351597630749a5771dbf60c1f8fe068c5cb1bafdd",
+      "label_hash": "ccc349b79485d6e967302810b73d4ce2fcd31c4289fab5266a10cde5e4dddcaf",
+      "source_id": "NYSEDREGENTS_2004_4_3",
+      "task_id": "arc_challenge:NYSEDREGENTS_2004_4_3"
+    },
+    {
+      "content_group": "7c138b2546f6cb3f62739b244b21c1ea5c8cadb4ca6bf0c1532dc13eb91af63b",
+      "group_id": "7671fb275977142a1c41e68c31d47c72b0f85dfaf092bca67276e8a8ef6c6362",
+      "input_hash": "dfe0633ac34b8ef635276cea0ba150a21855432d0355a027088647b544a7ce5e",
+      "label_hash": "c1ecacc757840d835f9e00400bd588eb27f1b74c9fd465b2f065cd84747e20c8",
+      "source_id": "NYSEDREGENTS_2005_8_28",
+      "task_id": "arc_challenge:NYSEDREGENTS_2005_8_28"
+    },
+    {
+      "content_group": "6bdd73dd23ba4894a8c3fa10c9bf33f4404c42b7f2bbef790c160300045805d4",
+      "group_id": "d2315eba444a526b05663ac7cdb43155e182acf4eadaa2af58710656a2f8a667",
+      "input_hash": "97d2a3975e76979247147382a493c210124d0165f4506347fbe28dd99578a5fb",
+      "label_hash": "e07f5d008e1d271e79f10885ff895bd893e993b6e8132796f2bd0e766c555c66",
+      "source_id": "NYSEDREGENTS_2009_8_7",
+      "task_id": "arc_challenge:NYSEDREGENTS_2009_8_7"
+    },
+    {
+      "content_group": "00eb8e034ab5dc12089bb073bf07443c8715184fc5759a5cdc97810a453706b5",
+      "group_id": "21c7611b8b4747f7a04e710137f290e7bc0fb9ba779969937e1de4334e3f22fa",
+      "input_hash": "2a04fbeefd280085d9b487bf178de36a52643724b9f702d4c035dd7a6f4a532a",
+      "label_hash": "55fd562d8827333866a80fab73381a60023f52f4522e6b1fb7dd2335ec110bc6",
+      "source_id": "OHAT_2010_5_20",
+      "task_id": "arc_challenge:OHAT_2010_5_20"
+    },
+    {
+      "content_group": "4292a9a9e40656f180d577f38984c1c9676f02a10843b2fd9dd4d69b99d0bb18",
+      "group_id": "85c2fa79120c7fe4891eeca16af5c5047bb704ed5bd4bbfa7af53402fd11334d",
+      "input_hash": "7279f5725493cfd2041bd0f9247dd82c3eafab70bd168dc7385d37b528dd3e3b",
+      "label_hash": "6c9f0ba1b3f110db270ac28caba2c50b1ab2a4654778ef236bd889891f278f7b",
+      "source_id": "TAKS_2009_8_49",
+      "task_id": "arc_challenge:TAKS_2009_8_49"
+    },
+    {
+      "content_group": "0a73d8b04a8336ba50da8f91c4553b9e7b59c222f3ebf006f879dcf57e43e4b8",
+      "group_id": "e80947865b132cdc589894bcd7846411c2f1398760c9881b1ba40b3996a3c554",
+      "input_hash": "cdf3ff2d3b2595695a4403019512c9dda5e003c29583977b989b46806c34ec39",
+      "label_hash": "24c24436810aa3e70401f9b298f53dfa42cd1612a6893be952fb9d0366b5dbd9",
+      "source_id": "VASoL_2007_5_28",
+      "task_id": "arc_challenge:VASoL_2007_5_28"
+    },
+    {
+      "content_group": "28ea76f43c9860183549bb38593fd38b6180a81dee7d1357e573bca503c00a87",
+      "group_id": "dd6f4ec6d7eee8cb997e8083be236849540f14fb8192bc4048c39ea743108686",
+      "input_hash": "e3cfb14eb9433d9728b87a438fbf1b6921377823b6ad3fa479aad4014c95297e",
+      "label_hash": "324e70964aa853ab3b19f4fea501b4f01f7f2090ffa11177dd7f304c38802ea9",
+      "source_id": "VASoL_2007_5_39",
+      "task_id": "arc_challenge:VASoL_2007_5_39"
+    },
+    {
+      "content_group": "54bec4525c449dab16c973e1ba1a137d04048e09e880d0ef3053e76213959eb0",
+      "group_id": "e48b27458be8fe381d3555ff55ea07e682b63b17cc028478d224280f2997ba05",
+      "input_hash": "38e52cc511fccee8a387869e075e43e929db9f3dbba9503c822c85758fce5b1c",
+      "label_hash": "a3054fafec89ae30098ecddf9c7cb4920647f01d8b2f6f37c59fe020dbd301ac",
+      "source_id": "VASoL_2008_5_9",
+      "task_id": "arc_challenge:VASoL_2008_5_9"
+    },
+    {
+      "content_group": "fb78d4f9f918562c5e74b3a7ccc6058523bf46ff92e6830f5f46d2857e0524ce",
+      "group_id": "4f1c51400d95d4d21b0790b8aa5941c8a5a1f489b52e1966eed6cfa75fe29d04",
+      "input_hash": "822912485a733986583d54866df5e608ffd736dcd14461108764ee3d9676260d",
+      "label_hash": "013b3390a17ef77b006fa81b58972cb9164352bb7339e55cae257573205de2e4",
+      "source_id": "train-0112",
+      "task_id": "logiqa:train-0112"
+    },
+    {
+      "content_group": "05d43bb09cee28f4a3a3383823b32ccfdb6301e863d178e0703c0807590e72c4",
+      "group_id": "372ad6e5449ced9c4fe8ae414ac0b4a0b21db723d660992a8f01d0203e048d00",
+      "input_hash": "fd383d77b566e30ea90220e5a08054acc88bcaba7889f3ff46b4f94fc33e1317",
+      "label_hash": "5747283d857f4954fd4274b7a30b7a7e936b1e0b3d3c05848d8a490be102c71c",
+      "source_id": "train-0120",
+      "task_id": "logiqa:train-0120"
+    },
+    {
+      "content_group": "25986f8108978223af7598254097384b864ba9ad4ed2b846e3a7d9834a26a69e",
+      "group_id": "c4774bcb50688d7f4dcec7386b1e5d3d94dccb66f73215c6fa540620c8c7ef5a",
+      "input_hash": "c57591ac5f2fda22fc927a63b7c0b3130446cf6bb10f9f574864b56a6421b0af",
+      "label_hash": "1ed1cd8acec56919b09e10c78887eb2218a0a1c16c311de09b53b2584ea48a70",
+      "source_id": "train-0252",
+      "task_id": "logiqa:train-0252"
+    },
+    {
+      "content_group": "9afe3a817167afd3117030bc90e58ded0e7016c92038134aa485b267e0dacc98",
+      "group_id": "2d1b05a358ae74a554c97fdb89e47d4f95f112169438bdaaac447c1ce361ee07",
+      "input_hash": "0f05b588f902de6e104104dd16b839c2b482ca8d3f00dd7b09a543df5a871ce4",
+      "label_hash": "208490d58ed6d3e1c13e7c977566a45bd1965f0025e05472193cb525d15d4dbc",
+      "source_id": "train-0416",
+      "task_id": "logiqa:train-0416"
+    },
+    {
+      "content_group": "18ca0d9e97dea63134f0bb2b1378dfa83fcaf5e894310c2ce8fb547ea87c0755",
+      "group_id": "338ec76f0a343e754069221bfffcb5368e9b073d3bd9dd18b1392009cbbe32b9",
+      "input_hash": "8f3507117ae8aede22a018cba1df5a8ca1081d4439ccd536743585a69a3cdbf6",
+      "label_hash": "5f41c82cad26e41e7d52c60171aef90edf8307802262d7e536337873355c2781",
+      "source_id": "train-0526",
+      "task_id": "logiqa:train-0526"
+    },
+    {
+      "content_group": "c8393a1e53c4edc7513dba19b155a6cab31dc99461179dec523176e8dedd65a1",
+      "group_id": "59705dfd3c7f72f7903a9671640e231130fd444287db5ff46b76dc0d289d8dd9",
+      "input_hash": "3aca4b7b7c1761cfc21b791088a24ef08b948f2f8ddede4380354eefab02456a",
+      "label_hash": "f07c0c6d52cb1c0cd7502019218f3a5506d7ba238eccff21ed52a06f5e4d5bae",
+      "source_id": "train-0586",
+      "task_id": "logiqa:train-0586"
+    },
+    {
+      "content_group": "2382faf596e0f19eb44b76b770134ad48397de4c2d36739aae5f70f6a2ea503e",
+      "group_id": "b73c7602caf94ab6224bd00e89c7f31f3227710207c4f8f6085405f97372c2d5",
+      "input_hash": "05ed580dfb8efb8e2d49e25f6f01acbafbcde9368c60247682a0950031968692",
+      "label_hash": "0498ecc59a225b8a0a36a85feb147e9951a8bfe1d599a74dde1ed5ea9b17fe96",
+      "source_id": "train-0745",
+      "task_id": "logiqa:train-0745"
+    },
+    {
+      "content_group": "3943327fef7cca2b1de7e4d703433a605e8251090a12cbb3012f74a11033c5a3",
+      "group_id": "0643d6aa20752ed6a66fcbe6ab15166aefe63a53eb500715210bdb785a8d41cf",
+      "input_hash": "21908529448418263c783d519a4c090ba03fe5588a40b7c7e6515e343508daae",
+      "label_hash": "b08c66d61def41464fb0a7bdb2ac8fecf768628e3a1756bfa92488de6fc5387d",
+      "source_id": "train-0936",
+      "task_id": "logiqa:train-0936"
+    },
+    {
+      "content_group": "1c31a5fe57b97e9447fa49b8c8306a127e529aa16d4622bfe9e751801aeeb0de",
+      "group_id": "9cf005d995e2acd712e2bc4c87621f40d15f08a4a4153df9e09777db499c27e6",
+      "input_hash": "9d5873aea3b2ac2aaa54ae822ffce679ae9fc257bd227b94e8342f7e5c45530f",
+      "label_hash": "96b821697149f63e4590ab6395e02ae42989f08a01da3a941e62d9d87e26c10a",
+      "source_id": "train-0999",
+      "task_id": "logiqa:train-0999"
+    },
+    {
+      "content_group": "c304d7f482aaac03222867208ea52b52405a6b50a4f4e8ea2b3cf268d72cacdc",
+      "group_id": "67f6f737ad99285f8f4570061134c5f2c5dba4580ac5e02487f45ad33dabcd0a",
+      "input_hash": "8198c6fb86192190ca1d831dfcb977e4a62aec96d3757ef3da66dce68899c7c8",
+      "label_hash": "90e46b9fcba4f900e3d894de5fd4dbf452fa780369863161b1177aa4e8e10eec",
+      "source_id": "train-1056",
+      "task_id": "logiqa:train-1056"
+    },
+    {
+      "content_group": "ee776e59bb100dd61da631484b2e881c41abc0a7656e67561e07ff400ff7ec7e",
+      "group_id": "ebe025bdf99b9f1aec8d945f3898fdcb1b171723190d5e8d63f5fc668f45da90",
+      "input_hash": "460ad98d14be66adffe9537983e1553db0556a6d2243bd46050ab2a762a1c893",
+      "label_hash": "5d3d19f251e89e33add07e7684c0b8c035ba3fb083c788504292ff90ed249640",
+      "source_id": "train-1155",
+      "task_id": "logiqa:train-1155"
+    },
+    {
+      "content_group": "321cb6a9327f1227b8b5a0d2f32762f458487611416a711971f8850404fc4412",
+      "group_id": "8336743800636c6e2205893ab24b7609304665bd649d45ea5a3053455d92d9a0",
+      "input_hash": "c66b2e7cf8d1a3e933ac2eadd7c51305a940196046c49719908bb76135f4a5fe",
+      "label_hash": "4b45bb948f38952219a0a44529439e87279a71f7502cb826cf2aff705a0c2bab",
+      "source_id": "train-1599",
+      "task_id": "logiqa:train-1599"
+    },
+    {
+      "content_group": "08f6b161389a12f7726ac2fb4c462704bbca60824e92c0ca95b2910e069f7776",
+      "group_id": "fc7bd0f3f7f07b9bc95667347205ab6b65cebdc43c754976d1fba40ec79d5c0f",
+      "input_hash": "901bd3c7238f4f2ac7becff88722667c34aa7315a9902bc3f6bbed69554b2abc",
+      "label_hash": "53691fb8c0d2aac76e026d3e12cc421b5980713fb7c4a6338bf64ffef66836aa",
+      "source_id": "train-1672",
+      "task_id": "logiqa:train-1672"
+    },
+    {
+      "content_group": "4439492d6d907acbeb166c19286f301449471760fa01d15617f90bc7d03279ae",
+      "group_id": "08214ed0229320f1e40df103af87790d74bc0c50715452b2a80293de4e0fdfff",
+      "input_hash": "ad68f24a334c0a6fc442f1054a077d602255f72d9096205c4c53fe8876586c50",
+      "label_hash": "7ac892b50bceda3f08907443a773b66203ba8bbe17ad5790d88fb310264c4293",
+      "source_id": "train-1705",
+      "task_id": "logiqa:train-1705"
+    },
+    {
+      "content_group": "62725a13046bc218026cba2366434ad038005d4564d53beadc20381207d15973",
+      "group_id": "d936a9c68a8faf03a3cf32cc2b9408d87666ab1bb63ebf1ae8839631a4854f6f",
+      "input_hash": "d0dec81765542d23cfa46a8c86adc0d6b00efa152573c3bfe1bceffdfac400c1",
+      "label_hash": "06adb58a93eaa5122bd87ae424f79507dfab72a44252526774e490eb452baaf6",
+      "source_id": "train-1732",
+      "task_id": "logiqa:train-1732"
+    },
+    {
+      "content_group": "fd18e7c92a63e5db2c5ad6e5ca1fc7c2ad27ecc8755f07065826ce1ec28efc92",
+      "group_id": "5e2e9ed8b665a83b174fa13a4bcaf5b4ad930d6bf1760b0307adfba59f70936c",
+      "input_hash": "67ec3e28b262b00dec0c82fdf08e20a2393ebcbc1f8b16abb0483b15d11eeea4",
+      "label_hash": "1068de079cd23ebdc2f8a323f98999e3a4567e169d6b2354b53fac3930fc09d6",
+      "source_id": "train-1791",
+      "task_id": "logiqa:train-1791"
+    },
+    {
+      "content_group": "42def633bc3be3ea5576562dbcffc71b9e1adf125547f50d3dc2a2b029437d52",
+      "group_id": "ec64653b18b25ee409335a36635d2d35715981dbeacfed8c6676526ddbd973f8",
+      "input_hash": "843180918f8e0f4ad36edce27dc25db80da7cda426785dc8d7ca1dc98b18bbbe",
+      "label_hash": "fe0b19c6b7afb38ed8da4af6900bf4144a8d7cfdfc11f9faec54cba6a19dde42",
+      "source_id": "train-1854",
+      "task_id": "logiqa:train-1854"
+    },
+    {
+      "content_group": "46081e754e93efe77aded9f87077bd49f560ed84032c527cbec233cee072ca43",
+      "group_id": "2767add9b7b907c7731a44a074cb0ea4b39964f2e06fbd13618e50b1ee875943",
+      "input_hash": "5649283c6476c94c249f37f09b8d5549a14beda289c71347d749a48e15b64a33",
+      "label_hash": "da3484e51f997f7e3781fe65becdfe861649c7c5d61f0be405cf9b2d5d477f7e",
+      "source_id": "train-1871",
+      "task_id": "logiqa:train-1871"
+    },
+    {
+      "content_group": "a3a90569d69e21efc48279406543a396436a896c9cc0eae2139ad54b43058f95",
+      "group_id": "1d226871f4e36a2e2ed199357525ef736c093055d1ed51206acde17a132b8f52",
+      "input_hash": "a732f813940320af95be20aed0358b2caa3ac87c3dcbb92446ac9f0651c0a099",
+      "label_hash": "b3733cbb644f0a41f1d6419919276a313f861a1073820c6efbf839c97194143d",
+      "source_id": "train-2054",
+      "task_id": "logiqa:train-2054"
+    },
+    {
+      "content_group": "39be52a8ed179170377d5b5133d8ba278edfe3b24d942b9586562c17b9870a62",
+      "group_id": "04201fabbc60a3bba3c36b2631856187d609e9e3fa64e2da4a0b9b0b9674dbe2",
+      "input_hash": "d1f424bf6dd297f9d19d51a92ab10f08aeed180f0e2a91e00f3afa792f457add",
+      "label_hash": "cd44fafe2c3d3e316099ffc15bf7a9d8fefb9e5a51bf4cc48446575f9996aec4",
+      "source_id": "train-2101",
+      "task_id": "logiqa:train-2101"
+    },
+    {
+      "content_group": "fc561dd409f174f3de86d1df1556e14b407bfc52330d49f049f973b2a6af1644",
+      "group_id": "6089f9c5ca45db89b7c570b776e7f0c3f9001c837e5d192b0c6e043af26840ad",
+      "input_hash": "705eb57c57ffaada7c891e3b5ebf8995f5e7c0f347d7d0befeee5361d61fe142",
+      "label_hash": "3044e1b02138f46cafddf64688e9da1ba68167fd3692ce2f5d7af338f576ab29",
+      "source_id": "train-2203",
+      "task_id": "logiqa:train-2203"
+    },
+    {
+      "content_group": "e541c4b383aa9d8b8037bcfb7375ae541400c68cbd97c0f21922b58b2812210c",
+      "group_id": "c8da6dbb52cb605ea5a144175e55c4174a1b2c5ae50e84d3bc590ce75aeb6af7",
+      "input_hash": "b3392ff9c80b744bf3e3ab8918674f8b09063ed4aa52e8acd721be100aa1de86",
+      "label_hash": "28d73d3ec2f7992e6831eda17a92655f1faca100a4442ff5a23c5e2982dd9a9a",
+      "source_id": "train-2473",
+      "task_id": "logiqa:train-2473"
+    },
+    {
+      "content_group": "97615f7c8646759cb9bb67afb887c6833cee3199dddef58822b8cabc6d9a231b",
+      "group_id": "2c8c5a2e39c3c897a475a51787f29a42602faf9b2211b9a9b22bf144c983e45f",
+      "input_hash": "5b993a4a510dc175cd9949b48906f73c23164bd789d964bc3322457f330c1efe",
+      "label_hash": "84ee37cd0fe3f2359015c12930c09199755783d19f9c2f02111e7fa9b5ff182a",
+      "source_id": "train-2584",
+      "task_id": "logiqa:train-2584"
+    },
+    {
+      "content_group": "d57aabe5cde1d77d8fa12ffe76d3234a177862108eb2c515aef0d1dc971cf169",
+      "group_id": "68bbc876dde0422bc34e131b22f6aea08082ac76aa30ef3da5b4fd57957bc5e7",
+      "input_hash": "c51f3384921d60a503a77905989f025aa6f8802ddaed993847f5d061fdb40a0a",
+      "label_hash": "8e571e5992e30df0c28eeb935533e37d7752fa12bea0bef70f999611afb67844",
+      "source_id": "train-2646",
+      "task_id": "logiqa:train-2646"
+    },
+    {
+      "content_group": "bad34b67d64da8ef78cccafb42a3a5f7d7644b108e56c838be3ac9197600774b",
+      "group_id": "cc16eca8440ab27c6f001db5e276bc43e2525724c2b9894f34e78cdc66a1d4c4",
+      "input_hash": "9f3f3c720d5cb749e53fd83500993e84e219f4e9c808c4489541940e90871269",
+      "label_hash": "57a7b29fbfc47fb86a05a9a7340201a1c61a91ec15a2a8f8e7d20def7f8a54e4",
+      "source_id": "train-3094",
+      "task_id": "logiqa:train-3094"
+    },
+    {
+      "content_group": "e7fef6c01ba404397d16081d737b9798551360108c141b26675dd1bd41f4472b",
+      "group_id": "26940ce3e158e0529c263d4d12945efb42d05db253245aebb4b870b040176d48",
+      "input_hash": "aa76e31388d010edae9923a7150fba81b39d78885f09f1b236e77d83e0641146",
+      "label_hash": "6c1ec1ce9953ad437975cf0f3ba92c444866adbb56979be55985b0e585d77e77",
+      "source_id": "train-3163",
+      "task_id": "logiqa:train-3163"
+    },
+    {
+      "content_group": "b1339ed761539b615e55cd01c27ceac95ef67e3c5fb6c3eae8550faff05f8b16",
+      "group_id": "8bfaeb8a5e2c7766345b90d53341fefeaf774dd3771eb2f3335a93f35f836a8b",
+      "input_hash": "d72d39ace2c44798404c17facb5336f2862c021142d92943378a1fa479f75569",
+      "label_hash": "51a801fbf0eeb7a2ed252ac7ad192c3094747b39372617f011c968d611a07f11",
+      "source_id": "train-3338",
+      "task_id": "logiqa:train-3338"
+    },
+    {
+      "content_group": "e2b04edda7842138a57d077896775c0ce2a19b1b5c5325dabfc1eb63574452ff",
+      "group_id": "e5f6b4ba11db6ea594d47c56b9b445f9ce8213705d18be044d08a9579febf7d2",
+      "input_hash": "5d3c2296b3c86c4a9bcb364059aa821b5242a70c9b82564bfbdcc49eeecdd0b1",
+      "label_hash": "072022a8fe1ef3d31c84573361ff9cfc9f83cfd415fd37871c9e2a0e154974c5",
+      "source_id": "train-3371",
+      "task_id": "logiqa:train-3371"
+    },
+    {
+      "content_group": "3d198849bbc5ccf3c55645bba21191fe9b49f761eec98e223a72aab389dc2345",
+      "group_id": "e2405cad000ce860d6560f3f9f119cf54af0434c8f1acebd49d0d7ea2d194afb",
+      "input_hash": "8ceaa478f45e05c86b57ad70dc05512fb07a97b4527df1186933bdb9051956bc",
+      "label_hash": "67db2c4fcac525b49d49de2f01bec74a0b09f168e0efeaa4a4163148abdc49dc",
+      "source_id": "train-3372",
+      "task_id": "logiqa:train-3372"
+    },
+    {
+      "content_group": "64c5528a09f5d6727eafbd53de950290339fc289627f8bbbce4b4d457fca35b8",
+      "group_id": "9f05ae8bfafe73c0ea89270fc5fbbec40f78a77547211564b2f08bbc5755c7d8",
+      "input_hash": "032eb1aa1175836f3c468b3ae13a04707f067de8798c46a3f8cfe17e088618b1",
+      "label_hash": "8cee7d651ba767125e2861cadd49dd3b2cb29f7c22c7a74abc5db442f520ac2f",
+      "source_id": "train-3427",
+      "task_id": "logiqa:train-3427"
+    },
+    {
+      "content_group": "edb5072889e2509e395bce4e1f920a128be2471a801d414f4fec23d4724eedce",
+      "group_id": "671a8537ea8f989c990279a51808ff172899c51d8da7d9967d15c658cb86c34e",
+      "input_hash": "6380498ef0d5e45b27efa74fea7d16d143aa616ec94f48dde5ad30fc2a7f4473",
+      "label_hash": "cb3592aadfe0e731c043b3b056e146f33560e2ed99038866f9709ccc70ff11b3",
+      "source_id": "train-3542",
+      "task_id": "logiqa:train-3542"
+    },
+    {
+      "content_group": "ca8c61ced1ec4d184050e2a4bf21bb87cd6a340e7c1abf5f7c0ba7da97fe1759",
+      "group_id": "317bdb2bf94103bd689f2ceb61613209033b3f79e4464bf8119248bdc7d2cfaf",
+      "input_hash": "6aa299c2b6cee2f2f3db9ec5686227f7013267d36466d424953d6c75ed1137bf",
+      "label_hash": "ba4b2a8677d89c8f0f780ac22f25b8ac623b88271cd45335249a80af3870bca8",
+      "source_id": "train-3608",
+      "task_id": "logiqa:train-3608"
+    },
+    {
+      "content_group": "4546237f2da5331710722e5579ba66daaa58cdf9bc2348b38f473edacfe47f70",
+      "group_id": "d7a30e8f2795d4b1fc0c14b8a4c6f7a4b99c7142e1042d5c2c832ce09fbd43cd",
+      "input_hash": "3c53ce43fed6875b55b31fe02aef8e115fd63b31b2fd686fadcdd3e40dc84a61",
+      "label_hash": "dcfdfb022537806a4bd793681e9b0a95b08d898062e94f986c6a5f19036a2649",
+      "source_id": "train-4046",
+      "task_id": "logiqa:train-4046"
+    },
+    {
+      "content_group": "c3aa60b2626fc9fcbf2133398546f010e179c7398b9ce379f5c68cfdc58beadc",
+      "group_id": "cd1d02aec791e2167b6a74dfd82c142b0e1e508d8cf0e4ed73d6497cf5189af8",
+      "input_hash": "ed3f3bc0845c9ff3fb6b5dceb55721ca8c96be6a385688bdba936f2c810b94ee",
+      "label_hash": "478c6ee5dd09c0df214ddd5be864100298f6ae1c1370926325a869cbad17cd60",
+      "source_id": "train-4052",
+      "task_id": "logiqa:train-4052"
+    },
+    {
+      "content_group": "cc475ce4a28305e52c59441d60a97c60d10e9b3afc537ac0642e74c289cbd129",
+      "group_id": "d35ccc27f4354607d09cd10186eea47acb86353ced83a1e61d9f62d80462e4ee",
+      "input_hash": "3039f996b3f7173f9a8c9c4c1225750e99b3bfa83ea2ac16c2554a759fef23aa",
+      "label_hash": "fb77b341c849c882ce31a8d19f2966c79edc250ae7bbee652bb1a0b641a00e40",
+      "source_id": "train-4187",
+      "task_id": "logiqa:train-4187"
+    },
+    {
+      "content_group": "0466cad76561ecb11c998b83701b6b8ac4cd35d69f68c91c5a522bec45e5be5b",
+      "group_id": "449171c29fc1a618ae8801a3952329a8950bb4e236c8891ecd7d4da94610269e",
+      "input_hash": "1c0d1cb538ba31caeaf80a0d918f137299a0f6542e3e7db80534bb341ff787a7",
+      "label_hash": "fb4a30f476eb0ca077db17341e88531607ac6c1023ed1cedeba910a959a47dd8",
+      "source_id": "train-4270",
+      "task_id": "logiqa:train-4270"
+    },
+    {
+      "content_group": "f4a0f3c80df434467eb5594901dfd0d2d10db3e7bfb6e9bf0584d8f3ccc09cce",
+      "group_id": "7684f106e437175a4f49afe51aa01bb99f3f6434114574e39d8d59b2ec3c205e",
+      "input_hash": "bcf6b55c6b4054b7af15470bc5a4536b8012e18bf5dcd6610258d5f0ce2c4911",
+      "label_hash": "082764402d9e57fbd8c47cb4b469bda6dada4cef5595325936b6e6cba04b63ca",
+      "source_id": "train-4524",
+      "task_id": "logiqa:train-4524"
+    },
+    {
+      "content_group": "bd09cfd0d3681e32ab05356f81ded33502035b0895dd3ca791fba200cc82a029",
+      "group_id": "3ece9e222cb9d6de30c623100203e27bdede70633c271229b0a70a1a68b06682",
+      "input_hash": "0678afbd94d210417776505d9eb85bb800f06feb2b5a7bab512be1d6e1877e76",
+      "label_hash": "b4ae06c43c40fa867d7d0f711f283099545bf5701371658e243aa2dc1ea0a022",
+      "source_id": "train-4530",
+      "task_id": "logiqa:train-4530"
+    },
+    {
+      "content_group": "abbaedec238c6bfb0932aeea68968b85048082261dd23a701c3ac7b63bcda5b6",
+      "group_id": "8ccd545594a29f5f742936391b61e23806b9a0f907585cbc1c1fbcd8b0b19515",
+      "input_hash": "049734cc90a1cdee9b66737450321439eb31cfdf781f2bb306f8f558a6091420",
+      "label_hash": "0d14a198addee6d626a56c455dc20461d8c5d356e30d0fd11db585c0208f3459",
+      "source_id": "train-4547",
+      "task_id": "logiqa:train-4547"
+    },
+    {
+      "content_group": "498cb30b929b3c11d6025837d5af2f1dce229d2e34e8507e4f712b5367b2ed08",
+      "group_id": "a2b943f8805f208d53a8971e869fe6bd73d39887e9bff756ed8cb1e5bffb2a77",
+      "input_hash": "2f19af2f44c105f83779fa93808f3e14b6ecb01d070b3409d527a1af6c9a4870",
+      "label_hash": "61334dc62060b416a00f42210a3c6cde77c9c1e3fc41f276778e7773baf951fe",
+      "source_id": "train-4581",
+      "task_id": "logiqa:train-4581"
+    },
+    {
+      "content_group": "7f7f0ecf792c1a1fe6545dacee3096622a07a7f8ca8337f959fd849025ebb7f9",
+      "group_id": "548e1fff6751009c37b0e0500763ad1d214a96fb318bb7ff5b3dcd51e91b9541",
+      "input_hash": "182b7591349a24591f21ad81acb53aca91bc4e393e6a408c86cf656bd4b22e6b",
+      "label_hash": "fe123a79fefc43270dd5dcd36c192dae2508416038231246afea7f61ce67289e",
+      "source_id": "train-4641",
+      "task_id": "logiqa:train-4641"
+    },
+    {
+      "content_group": "d1dea0e2bdcaa830367c3150f3321d53a9156c66cb556c3f44aa09aafdad3763",
+      "group_id": "277e6413ea07ddbb6add9c96eedfae3ebc5866fbc9f3212bb2bc73f9511c4327",
+      "input_hash": "50709c81a331176527862c0bd40e92ae26949a6502d4aff2063c31feff9d1518",
+      "label_hash": "ff76c71d520a9a00136b4d2ef6e52ec70bbe3a9921057e0aca9c9a5d94fddb11",
+      "source_id": "train-4689",
+      "task_id": "logiqa:train-4689"
+    },
+    {
+      "content_group": "0b8a127490fad481cde10481e3d87a3b9f9d55dfe418f59781a591e0b798a4af",
+      "group_id": "52e10be0b8b463992c2880a5bd11fa390742fd528d31466c9c4da873089f4b9b",
+      "input_hash": "983b4407c49f265e8b11f985d7578ae698a798d4dd472382ffa5ef6236df42e7",
+      "label_hash": "90ef4afa8144c5d9a99dfd10b79ab7a32ab4da129c5d80a5b2000e548a2de8f5",
+      "source_id": "train-4788",
+      "task_id": "logiqa:train-4788"
+    },
+    {
+      "content_group": "a5afdf788b2cba1e64ac76c828980395ea1df5d6b00c2d12f613fe223518fc5b",
+      "group_id": "14d24bdaa5acc4fbec93f786d269ed7f57b80f8a20b32fc654e5fbe7a1971ddf",
+      "input_hash": "81b25a53f4c1951f7390637140fc8a6af5c1744dab3d024cdfc95d81e8c65ed9",
+      "label_hash": "2481a87f078098384b79d410fed6d13e91fa023cf209be9544dc068992bd3a96",
+      "source_id": "train-4795",
+      "task_id": "logiqa:train-4795"
+    },
+    {
+      "content_group": "4674afd523b5c5b028a3ae801cf1eb40b57a240a04410a8ca10a51ba23db9159",
+      "group_id": "64021212c97bdeb4a69fca62fc3e9bd0c2fab8ec5c1b0be14e6db238874d7376",
+      "input_hash": "8aff1f4397848c582e9da2cc6196838997977175ebbefdcec7aa66d81b20e05e",
+      "label_hash": "52861a0e572b3e28c3caa6a3df3adc75deeb7cfec732adf1b24bf9dec76ec7b0",
+      "source_id": "train-4860",
+      "task_id": "logiqa:train-4860"
+    },
+    {
+      "content_group": "91c30c8c24faa2db69c1e0ae150f0a48d65f49eb507fb19fb0dc50a2990f074b",
+      "group_id": "c207adacc4e2d8ebbb84c65839c1c0c853cb37f0292c525d3bdd7d4419df9bcd",
+      "input_hash": "7edfc75f95088958c4e9fcfcd3ef3168890ace8600b67cda142a1415a0f974f7",
+      "label_hash": "254d0eb61de6c84baf14e9f0ddf6f11e173c07ec6d500b700c273bbc01e88577",
+      "source_id": "train-5037",
+      "task_id": "logiqa:train-5037"
+    },
+    {
+      "content_group": "3b587f582336bb8c753f37775c2791640029d2adb1d3e549ee9b0aed43d8a4f6",
+      "group_id": "3683e02f59966010be0c62eaf5f727f6c3a6e1b1f481a56e1342d5d3d4fea293",
+      "input_hash": "c0ecb4541f1ba8295ea507de3ff151fb7d78597e96f7d689d2e5f896ad493774",
+      "label_hash": "d9005820b2cd4985bb2d5d72730852cf921f92938d8237bbd3270055ca1c53de",
+      "source_id": "train-5080",
+      "task_id": "logiqa:train-5080"
+    },
+    {
+      "content_group": "736f367ddd3af1102a65b5543406343593f6fdb7077f3f1cef7c2e397a57ad2a",
+      "group_id": "b62fefbbae9c0ed8bcb3f8d09c0bf2faa722becbeebd496f104d5e5b18acd8ca",
+      "input_hash": "7a8346d0bbbc8aa28d072488e9dc15eea0095aeac5166daeae4cab427671acb4",
+      "label_hash": "dac3801a8b200c1ae2bf905280e9a635381aaeeeb7a1785050d342b8633a62be",
+      "source_id": "train-5101",
+      "task_id": "logiqa:train-5101"
+    },
+    {
+      "content_group": "99a55a512b25e2fc6b48996c5d49ad028acd4bf7cd8eb8d98c9f53d7b095abc8",
+      "group_id": "be1a281efa949dd37f2822e4b97f7bce777f72bfd168573c896a68d3bb540c7b",
+      "input_hash": "2127d5ea4cc4640c2c14f13dedba685db3ec5ac82750bf722d700efa30fbbad2",
+      "label_hash": "bfe5e359c571e3d694bff00ccc5a286b86a5cee4069ded6ab1de29a99663a330",
+      "source_id": "train-5748",
+      "task_id": "logiqa:train-5748"
+    },
+    {
+      "content_group": "674f3a337f2aaffac13b67298c015471e19f1a06e2267c8b41bcd7bb56b5ed65",
+      "group_id": "9d42d07eeabce9a73449d6a247a4d3d5dd8d7695d68962db5da559d34e24cbff",
+      "input_hash": "4586625737d01ac5cf400d684e7c18ac02a03744dbbc36fe28e80d6f90849dcb",
+      "label_hash": "cae22fab3dc2c614dd6d2511513838e2ee58cecdb96213aa776aeb6d2083f237",
+      "source_id": "train-5920",
+      "task_id": "logiqa:train-5920"
+    },
+    {
+      "content_group": "e1dc8651ec0436f826351bb1f132da30cf4b677d968ef35eb85b346db417fa5d",
+      "group_id": "a138d3fac2ca69810f247ac57486c43e3174b060df4478546650019a68774066",
+      "input_hash": "0bfa90bdf919d024bbb7d79b2424dcb9389cdbc5ea82f1918815af67eb9cb988",
+      "label_hash": "ace5218e7b3534b5adf8c60c8891cb883b3c7e663ef6aaa587acc7f8cd154ae5",
+      "source_id": "train-5991",
+      "task_id": "logiqa:train-5991"
+    },
+    {
+      "content_group": "e14f97b7d5a8f370f5f6044439c6344789970f559279d2b76187634b2356ed7b",
+      "group_id": "a0e6e4f17c549fb78ab9202f85102844d86eca8af6ab1729f58eec8303cbe63e",
+      "input_hash": "f831a016f89e54ea912e13a497b8a5ee241aeaf023145a146058cf21e97a9f45",
+      "label_hash": "31ad4b4336ad37b837acd2833ac4d90b90dde0e4392d7f43896a7429ed904359",
+      "source_id": "train-6091",
+      "task_id": "logiqa:train-6091"
+    },
+    {
+      "content_group": "0b9e30e545e7f8154898e15b10753e71dd58115ab89451c4112388355953c58e",
+      "group_id": "177dd3f169d43f103eea04162fbb5439d08a3abdcea6e5b2f79714422dc9a1c6",
+      "input_hash": "81177619ed9f4cf27a67b44ffde8261b2120976a74b2de077c9029862a2ec05d",
+      "label_hash": "ee0c9516cdae46d742a565b6bc5feca8442fcf4490a57525ea3cead31168de76",
+      "source_id": "train-6200",
+      "task_id": "logiqa:train-6200"
+    },
+    {
+      "content_group": "add8fefb4a0e107e877e3bd22348934a7b7aa699cb71d903bac4cf855a5f0a37",
+      "group_id": "61e24eb3b082ef034ddf3e506f5698d0eb268b9d656f15a78fa723172d090107",
+      "input_hash": "93ccbd2ccb18ebaca9f8ce13de962252bebc421d57916f76302d7a249aab8dab",
+      "label_hash": "df2729bb0cbe18d83fc9114d82f77102fd20bffbbd2d2469d686466350e551bb",
+      "source_id": "train-6523",
+      "task_id": "logiqa:train-6523"
+    },
+    {
+      "content_group": "5e7365a6dface4a33d9420a29ac9064db629afe3ceed90919785d2e4075cd9fb",
+      "group_id": "cc07ca5d1b49821d8af12e6e76e41322d655624cc5610f391dac1130eac3b059",
+      "input_hash": "072bbc49b71d0cc0e9c95f545da052bc97d881305aee43a0c43eb5fd6b7833b3",
+      "label_hash": "8cce9b3afa2ef4a160fb053707e1aef96ea6b83ac504a9c2b4ff93c055ac363b",
+      "source_id": "train-6771",
+      "task_id": "logiqa:train-6771"
+    },
+    {
+      "content_group": "1f0d9d6303fa05c341eee1995cf92eb7bc6f8c1f0cdb94f7c2b13b8cf90e5332",
+      "group_id": "9b5dbff8fdb67afeb057a729b01e0ba862a728d34345dbccfae800e974130d0e",
+      "input_hash": "559fb910575eeadca883e7f30dfff603eb545901574f79aa41df49ceef199dd8",
+      "label_hash": "c37257a0505a3610148c4a21b0120661be5ee3a4ec1917d81c2a1fbcfa530daa",
+      "source_id": "train-6993",
+      "task_id": "logiqa:train-6993"
+    },
+    {
+      "content_group": "19c991c3accb4b7b77e97109712bd6bed2a2a304870eac59a92e13fab202effa",
+      "group_id": "dd1580809d4e44cd2c10c88e7ac4aa062cf4e58e3aaec4b5d0ad1ef14fabadcb",
+      "input_hash": "60f64424d8292429e1cc8c8ca1943d2b0385b65f9655b44c6c6d029bb4d938e2",
+      "label_hash": "3cd00822253c52dd1fedeacadc3f48e63754bc4aa1ddd582b5e2fc02a7f78fd8",
+      "source_id": "train-7167",
+      "task_id": "logiqa:train-7167"
+    },
+    {
+      "content_group": "772141ce58c4a397c08ea6e92d6f8f55d473c2ac26ed500e95dd8a7c645c1a7e",
+      "group_id": "3e68ee428fde55f7c8b678c8ae09ea8ea1b99b1ad22bcbb1906d653f33f6a108",
+      "input_hash": "f02e3e8fa4ea847c65c126dc58d64807724c52e9b7c343e70ce2707ac7b7f406",
+      "label_hash": "a2861f2073a962100423e2f0f546a97058e5c1e0217f860d64ca3e5d8f23fd52",
+      "source_id": "train-7174",
+      "task_id": "logiqa:train-7174"
+    },
+    {
+      "content_group": "6cbbad3823aaaf06f4daa682d3b3e6e209059505c538b8d94fb0ba04173ca8ab",
+      "group_id": "429228be1812f4dc3eab40af7a42e593fcc2be393500e05022162195841dd5e5",
+      "input_hash": "d11b49322d148e1259fe13cd19dd2ea9c4105573393d2c4d9180319dc8f72c17",
+      "label_hash": "42129f2976254a9ad65f2213ccfa74192b1adb3a8a6aaa4ef530fec1e2017987",
+      "source_id": "train-7321",
+      "task_id": "logiqa:train-7321"
+    },
+    {
+      "content_group": "0c7c5102094ef8c9d3b67d04fe33de2c11a32577b4fb5eacec7943f48e49f22f",
+      "group_id": "dba4c1554b92cfd8d4491a40ee42f2877cdfd00a4258d1ae0b322939b507b935",
+      "input_hash": "22aeb806224c85ea55ec332366e5586f39cd21df4ae1fe5fd7fb2d473e9eb050",
+      "label_hash": "721108427dddcb3a065ef5fa0bf83c1e7a4cffbfc5cb14f3e7ab735e9bc090c3",
+      "source_id": "train-7374",
+      "task_id": "logiqa:train-7374"
+    }
+  ]
+}

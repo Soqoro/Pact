@@ -21,12 +21,16 @@ coverage gate fails. The [local support review](reviews/receiver-support-review-
 is complete: 23/24 unanimous private teams explain scarce natural repair contexts.
 The [private-only seed control](reviews/qwen3-private-support-control-001.md) is
 also complete and audited: 72 calls, all 24 private teams unanimous, zero potential
-clean repair contexts. The [next curated helpful-peer design](curated_repair_design.md)
-is now frozen: two ARC tasks, 32 calls maximum, same-task recorded donors and
-matched receiver seeds. Its planner and runner are CPU tested. Review and publish
-the new code, then follow the [five Colab cells](curated_repair_colab.md) using
-that full SHA. Preserve completed runs. Actual GPU execution and reset/resume
-of this new diagnostic remain unverified.
+clean repair contexts. The [curated helpful-peer diagnostic](reviews/qwen3-curated-repair-001.md) is
+also complete and audited: 32 calls, 0/16 → 8/16 correct receiver responses,
+with all improvement on one of two ARC tasks. Zero within-prompt pairs remain.
+Preserve this completed run; do not repeat or extend it. No new Colab command is
+scheduled. The [next actor-preparation design](actor_preparation_design.md) now
+fixes 120 training tasks, 90 optimizer steps and 104 probe calls. Its offline
+planner and separate training/probe stages are CPU tested. Review and publish the
+new implementation, then use the [seven Colab cells](actor_preparation_colab.md)
+with its new full commit SHA. Do not enlarge the old engineering JSON or rerun a
+completed diagnostic. GPU reset/resume of the curated path remains unverified.
 
 ## Prior preparation and completed validation
 

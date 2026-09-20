@@ -97,6 +97,19 @@ def parser():
     r.add_argument("--data-dir", required=True, type=Path)
     r.add_argument("--warmstart-data-dir", required=True, type=Path)
     r.add_argument("--selection", required=True, type=Path)
+    r = commands.add_parser("actor-preparation", help="bounded 120-task preparation/probe; default plan only")
+    for name in ("config", "data-dir", "warmstart-data-dir", "receiver-bundle", "private-bundle", "curated-bundle", "run-dir", "persistent"):
+        r.add_argument("--"+name, required=True, type=Path)
+    r.add_argument("--stage", choices=("training", "probe"), required=True)
+    r.add_argument("--training-root", type=Path)
+    r.add_argument("--cache-dir", type=Path, default=Path("scratch/cache/models"))
+    r.add_argument("--storage-timeout", type=float, default=120)
+    r.add_argument("--execute", action="store_true")
+    r.add_argument("--resume", action="store_true")
+    r.add_argument("--stop-after", type=int)
+    r = commands.add_parser("plan-actor-preparation", help="freeze 120-task preparation design; no execution")
+    for name in ("config", "data-dir", "warmstart-data-dir", "receiver-bundle", "private-bundle", "curated-bundle"):
+        r.add_argument("--"+name, required=True, type=Path)
     r = commands.add_parser("plan-curated-repair", help="verify fixed curated helpful-peer design; no execution")
     r.add_argument("--config", required=True, type=Path)
     r.add_argument("--receiver-bundle", required=True, type=Path)
@@ -235,6 +248,30 @@ def main(argv=None) -> int:
             from .training.receiver_plan import load_receiver_config, receiver_feasibility_plan
             result = receiver_feasibility_plan(load_receiver_config(args.config), args.data_dir,
                                                args.warmstart_data_dir, args.selection)
+        elif command == "actor-preparation":
+            from .training.actor_preparation import load_actor_preparation_config, actor_preparation_plan
+            config = load_actor_preparation_config(args.config)
+            result = actor_preparation_plan(config,args.data_dir,args.warmstart_data_dir,
+                args.receiver_bundle,args.private_bundle,args.curated_bundle)
+            if not args.execute:
+                if args.resume or args.stop_after is not None:raise ValueError("Resume/stop-after require --execute")
+            else:
+                if args.stage == "training":
+                    from .training.preparation_runner import run_preparation_training
+                    result = run_preparation_training(result,args.run_dir,args.cache_dir,persistent=args.persistent,
+                        resume=args.resume,stop_after=args.stop_after,timeout_seconds=args.storage_timeout)
+                else:
+                    if args.training_root is None:raise ValueError("Probe requires --training-root")
+                    from .training.preparation_probe import run_preparation_probe
+                    result = run_preparation_probe(config,result,args.training_root,args.run_dir,args.cache_dir,
+                        persistent=args.persistent,resume=args.resume,stop_after=args.stop_after,
+                        timeout_seconds=args.storage_timeout)
+                print(canonical(result))
+                return result["exit_code"]
+        elif command == "plan-actor-preparation":
+            from .training.actor_preparation import load_actor_preparation_config, actor_preparation_plan
+            result = actor_preparation_plan(load_actor_preparation_config(args.config),
+                args.data_dir,args.warmstart_data_dir,args.receiver_bundle,args.private_bundle,args.curated_bundle)
         elif command == "plan-curated-repair":
             from .training.curated_repair import load_curated_config, curated_repair_plan
             result = curated_repair_plan(load_curated_config(args.config),args.receiver_bundle,args.private_bundle)
