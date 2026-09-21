@@ -1,5 +1,10 @@
 # PACT
 
+Next bounded diagnostic: [72-call prompt-control Colab cells](docs/preparation_prompt_control_colab.md).
+The runner is implemented; actual GPU results remain pending.
+
+[Project audit: complete experiment history, corrected results and evidence gaps](docs/audits/PACT_PROJECT_AUDIT_2026-09-21.md).
+
 Preservation-Aware Complementarity Training: a local-to-Colab **diagnostic pilot**.
 This implementation covers the Milestones 0–2 execution path and initial local
 Milestone-3 learning foundations. It does not train PACT

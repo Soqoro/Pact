@@ -862,3 +862,57 @@ requires review/publication and a returned handoff before promoting its GPU stat
 - Evidence: `results_import/preparation-restore-repair-001/`. Next user publication
   and [inference-only recovery](preparation_probe_recovery.md); actual Drive/GPU
   path remains unverified. [Review](reviews/preparation-restore-repair-001.md).
+
+## Imported preparation and probe — `qwen3-preparation-120-001` (2026-09-21)
+
+- Training SHA256 `a1f5a23a14bb5420b963bbe02294345f98c17acd030b41e0686ce2085ff6d388`;
+  probe SHA256 `ae6a0268d66af76319f5206f04fbb070f34e5283bdde4efe5c344ec70256528f`.
+- CPU audit reconstructs design, verifies included checksums, 90 updates/360 examples,
+  recorded final adapter identities, and exactly recomputes the 104-call probe report.
+- Original probe completed 104 calls; recovery had 104 cache hits, zero new calls.
+  No unresolved attempts. Review ZIPs omit tensors; local byte verification unavailable.
+- Private correctness 46/72 to 45/72; potential clean-repair contexts 2 to 0.
+  Receiver original peers 0/16, curated help 8/16, unchanged from old actors.
+  Within-arm and curated-repair pairs both zero. Full PACT not ready.
+- Evidence: `results_import/qwen3-preparation-120-001-analysis/`.
+  [Review and next decision](reviews/qwen3-preparation-120-001.md). No new model run,
+  tensor download, final-test use or scientific-method change.
+
+## Objective review — `preparation-objective-review-001` (2026-09-21)
+
+- Corrected primary private comparison: seed-1730 old/new actors 45/72 versus 45/72;
+  45 correct-to-correct, 27 wrong-to-wrong, 71 identical answers. The earlier 46/72
+  comparator is seed 1729 and is not a matched preparation contrast.
+- Offline checks join 72 records with equal seeds, prompt bytes and token prefixes.
+  Evidence: `results_import/preparation-objective-review-001/`.
+- Next design: `qwen3-preparation-prompt-control-001`, 72 answer-only generations,
+  same prepared adapters/tasks/seeds, zero training, no receiver generation or pairs.
+  Request hash `69059c28cc3f9ab6558124c65c250814cc1e864c392ae816b67fef5857c9ad63`.
+- Runner unimplemented, GPU unverified; no additional run executed.
+  [Objective review](preparation_objective_review.md).
+
+## Consolidated project audit — `project-audit-20260921`
+
+- Consolidated all completed stages and current unimplemented proposals in
+  [the audit report](audits/PACT_PROJECT_AUDIT_2026-09-21.md), including the seed-baseline
+  correction, missing receiver-pair support, metadata-only tensor limits and recovery history.
+- Reread/hash/CRC-check all 19 top-level retained ZIPs; archive inventory under
+  `results_import/project-audit-20260921/`. This does not replace historical semantic audits.
+- Fresh default suite: 145 tests in 84.606 seconds; 139 passed, six optional neural skips.
+- No additional GPU calls, optimization, final-test access, commit or push.
+
+## Prompt-control implementation — `prompt-control-implementation-001` (2026-09-21)
+
+- User authorized the frozen 72-call diagnostic. Added its own command and restore
+  kind; no historical run or scientific budget changed.
+- Actual training/probe ZIPs reconstruct all 72 requests with unchanged hash
+  `69059c28cc3f9ab6558124c65c250814cc1e864c392ae816b67fef5857c9ad63`.
+- Six new CPU tests cover accounting/recovery, invalid schema, overflow, ambiguous
+  attempts, persistence failure, plan-only CLI and Colab cells. Evidence:
+  `results_import/prompt-control-implementation-001/`.
+- No GPU calls or optimizer updates executed locally. Next: user publication and
+  [six Colab cells](preparation_prompt_control_colab.md), return the new review ZIP.
+
+Prompt-control validation: full default suite **151 tests: 145 passed, six optional
+neural skips**, 92.010 seconds. Actual archived requests reconstruct byte-for-byte
+under canonical serialization; six notebook cells compile. GPU run remains pending.

@@ -894,3 +894,34 @@ keep optimizer resume source-strict. Permit probe migration only from that sourc
 with identical scientific recipe/model and verified journal; record the transition
 and preserve every attempted/committed call. No fresh budget or arbitrary-code
 compatibility is inferred. [Repair review](reviews/preparation-restore-repair-001.md).
+
+## 2026-09-21: close the bounded preparation run without expanding it
+
+Imported training/probe records establish completed execution and completed-run cache
+recovery, but no receiver-correctness improvement or eligible within-context pairs.
+Keep the fixed run closed; do not treat curated-vs-original arm differences as a
+preparation gain or export cross-arm preference pairs. Review the objective and
+within-context variation before designing a next bounded experiment. No methodology,
+GPU budget or final-test scope changes in this audit.
+[Evidence and limits](reviews/qwen3-preparation-120-001.md).
+
+## 2026-09-21: matched-seed review before changing the objective
+
+Correct the interpretation of private results using the completed seed-1730 control,
+not the older seed-1729 baseline inherited by the report helper. Matched accuracy is
+unchanged at 45/72; preserve the original archived report and publish the corrected join.
+Before changing training targets, freeze a 72-call trained-prompt control on existing
+prepared actors and the same tasks/seeds. It tests prompt/response-contract sensitivity,
+not receiver learning or generalization. Design only; no hidden extension of completed
+runs, new training, wrong-answer rewards or fabricated packet targets.
+[Design](preparation_objective_review.md).
+
+## 2026-09-21: implement the frozen prompt diagnostic as an independent run
+
+User authorized the 72-call diagnostic. Preserve its frozen design JSON and request
+hash; the runtime planner reports current implementation status separately. Use only
+the completed prepared-actor probe as comparator and the corresponding final adapters.
+Strict answer-only and packet parsers apply to their respective arms. Reuse the journal
+and compact-export machinery with a distinct command/storage kind, without changing
+the old 104-call run. No optimization, scoring or new receiver contexts are included.
+[Implementation review](reviews/prompt-control-implementation-001.md).

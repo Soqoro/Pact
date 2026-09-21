@@ -97,6 +97,14 @@ def parser():
     r.add_argument("--data-dir", required=True, type=Path)
     r.add_argument("--warmstart-data-dir", required=True, type=Path)
     r.add_argument("--selection", required=True, type=Path)
+    r = commands.add_parser("preparation-prompt-control", help="fixed 72-call prompt intervention; default plan only")
+    for name in ("config", "training-bundle", "probe-bundle", "training-root", "run-dir", "persistent"):
+        r.add_argument("--"+name, required=True, type=Path)
+    r.add_argument("--cache-dir", type=Path, default=Path("scratch/cache/models"))
+    r.add_argument("--storage-timeout", type=float, default=600)
+    r.add_argument("--execute", action="store_true")
+    r.add_argument("--resume", action="store_true")
+    r.add_argument("--stop-after", type=int)
     r = commands.add_parser("actor-preparation", help="bounded 120-task preparation/probe; default plan only")
     for name in ("config", "data-dir", "warmstart-data-dir", "receiver-bundle", "private-bundle", "curated-bundle", "run-dir", "persistent"):
         r.add_argument("--"+name, required=True, type=Path)
@@ -248,6 +256,19 @@ def main(argv=None) -> int:
             from .training.receiver_plan import load_receiver_config, receiver_feasibility_plan
             result = receiver_feasibility_plan(load_receiver_config(args.config), args.data_dir,
                                                args.warmstart_data_dir, args.selection)
+        elif command == "preparation-prompt-control":
+            from .training.prompt_control import load_prompt_config,prompt_plan
+            config=load_prompt_config(args.config)
+            plan=prompt_plan(config,args.training_bundle,args.probe_bundle)
+            if not args.execute:
+                if args.resume or args.stop_after is not None:raise ValueError("Resume/stop-after require --execute")
+                result={k:plan[k] for k in ("kind","execution_implemented","gpu_verified","requests_hash","budget","training_executed","full_pact_ready")}
+            else:
+                from .training.prompt_control_runner import run_prompt_control
+                result=run_prompt_control(config,plan,args.training_root,args.run_dir,args.cache_dir,
+                    persistent=args.persistent,resume=args.resume,stop_after=args.stop_after,timeout_seconds=args.storage_timeout)
+                print(canonical(result))
+                return result["exit_code"]
         elif command == "actor-preparation":
             from .training.actor_preparation import load_actor_preparation_config, actor_preparation_plan
             config = load_actor_preparation_config(args.config)

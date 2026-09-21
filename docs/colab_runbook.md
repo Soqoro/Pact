@@ -1,3 +1,16 @@
+# Current next run: fixed 72-call prompt control
+
+Use [these six Colab cells](preparation_prompt_control_colab.md) after publishing the
+new implementation and pinning its full SHA. Existing final adapters, no training.
+The previous preparation and 104-call probe remain closed.
+
+# Earlier objective-review decision
+
+The 120-task training and 104-call probe are complete. Do not rerun them.
+See [corrected matched-seed results and the next 72-call design](preparation_objective_review.md).
+The proposed prompt-control runner is not implemented; there is no new Colab run yet.
+Earlier recovery instructions below are retained for provenance.
+
 # Local → Colab → local
 
 ## Current next action (reviewed 2026-09-21)

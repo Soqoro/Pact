@@ -1,5 +1,8 @@
 # Bounded actor preparation — design v1, 2026-09-20
 
+**Completed:** see the [imported results and matched-seed correction](reviews/qwen3-preparation-120-001.md).
+The frozen historical design below is retained; its pending-execution labels are historical.
+
 The next increment is one **120-task clean-answer warm start**, followed by two
 fixed training-only probes. This changes actor preparation rather than extending
 completed sampling runs. The offline planner and bounded training/probe runner are **implemented and CPU

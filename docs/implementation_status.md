@@ -1,3 +1,7 @@
+> Consolidated current evidence: [project audit, 21 September 2026](audits/PACT_PROJECT_AUDIT_2026-09-21.md).
+> Fresh default suite: 139 passed, six skipped; completed preparation and matched-seed
+> correction supersede historical pending labels below.
+
 # Implementation status — 2026-09-20
 
 The scientific proposal and supplied specification are unchanged. The first implementation
@@ -674,3 +678,38 @@ training reads and journal-preserving probe migration. No optimizer resume rule,
 scientific recipe or generation budget is relaxed. Full suite: 139 pass/six optional
 skips, 145 total. Actual Drive recovery/GPU probe remain unverified. Next: publish
 repair and use [recovery cells](preparation_probe_recovery.md). [Review](reviews/preparation-restore-repair-001.md).
+
+## Imported 120-task training and probe — 2026-09-21
+
+Both review ZIPs now pass metadata/checksum and cached-call audit. Frozen design
+reconstruction matches; 90 training updates, 360 completed example presentations,
+and final-reference/probe identities agree. All 104 probe calls were already completed
+in the original invocation; recovery reused 104 calls with zero new generations.
+Private correctness: 46/72 to 45/72. Receiver correctness unchanged at 8/32;
+within-arm and curated-repair pairs remain zero. Full PACT readiness remains false.
+Actual adapter/optimizer tensors are omitted from review ZIPs and were not locally
+rehashed; full snapshots remain on Drive. [Results review](reviews/qwen3-preparation-120-001.md).
+
+## Objective review and matched-seed correction — 2026-09-21
+
+Offline comparison now verifies the intended seed-1730 control: private correctness
+is 45/72 to 45/72, with 71 identical answers. The earlier 46/72 to 45/72 figure compares
+across seeds because the archived report inherits the seed-1729 trajectory baseline.
+Imported files are unchanged; the results review now distinguishes those comparisons.
+A fixed 72-call answer-only prompt control is designed, with frozen request/config
+artifacts and no training, but its runner is not implemented or GPU verified.
+[Objective review and design](preparation_objective_review.md).
+
+## Fixed prompt-control runner — 2026-09-21
+
+Implemented the separate plan-by-default `preparation-prompt-control` command, frozen
+archive/request validation, compact final-reference loading, 72-call journal and latest
+safe snapshot restore. Reports compare strict answer-only outputs to the matched
+prepared-actor packet responses and retain partial/invalid outcomes. Six new CPU tests
+and production offline reconstruction cover the new path. GPU execution pending.
+[Review](reviews/prompt-control-implementation-001.md),
+[Colab cells](preparation_prompt_control_colab.md).
+
+Prompt-control validation: full default suite **151 tests: 145 passed, six optional
+neural skips**, 92.010 seconds. Actual archived requests reconstruct byte-for-byte
+under canonical serialization; six notebook cells compile. GPU run remains pending.
