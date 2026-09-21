@@ -1,6 +1,15 @@
 # Local → Colab → local
 
-## Current next action (reviewed 2026-09-20)
+## Current next action (reviewed 2026-09-21)
+
+The 120-task training receipt reports successful completion of 90 updates. Full
+training restore timed out at 600 seconds before probe completion was established.
+Review/publish the [storage repair](reviews/preparation-restore-repair-001.md), then
+use the [inference-only recovery cells](preparation_probe_recovery.md). Do not rerun
+training. Preserve the original snapshot and any existing probe calls. Compact
+Drive recovery and probe outcomes still need returned verification.
+
+## Earlier preparation sequence
 
 `qwen3-warmstart-001` is complete: all nine updates, resumed GPU execution and
 three frozen exports pass the [returned metadata review](reviews/qwen3-warmstart-001-complete.md).

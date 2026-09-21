@@ -161,9 +161,19 @@ class PreparationExecutionTests(unittest.TestCase):
             root=Path(tmp)/'run';partial=read_json(root/'partial_report.json')
             self.assertTrue(partial['private']['complete']);self.assertFalse(partial['receiver']['complete'])
             self.assertEqual(len(partial['receiver_checkpoint_comparisons']),2)
+            # Simulate an existing probe produced by the reviewed pre-repair source.
+            from pact.training.preparation_restore import PRIOR_SOURCE
+            manifest=read_json(root/'manifest.json')
+            manifest['recipe']['source']=PRIOR_SOURCE
+            manifest['recipe_hash']=digest(manifest['recipe'])
+            manifest['identity']['recipe_hash']=manifest['recipe_hash']
+            write_json(root/'manifest.json',manifest)
             old={p.name:file_hash(p) for p in (root/'calls/shards').iterdir()}
             final=run(cfg,design,tmp,resume=True)
             self.assertEqual(final['status'],'preparation_probe_complete_local',final)
+            migration=read_json(next((root/'source-migrations').glob('*.json')))
+            self.assertEqual(migration['committed_calls'],74)
+            self.assertTrue(migration['no_call_budget_reset'])
             report=read_json(root/'report.json');self.assertEqual(report['completed_records'],104)
             self.assertEqual(sum(len(b.calls) for b in backends),104)
             self.assertEqual(len(report['receiver_checkpoint_comparisons']),32)

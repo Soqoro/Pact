@@ -55,6 +55,7 @@ def training_inputs(plan):
 
 def run_preparation_training(plan,root,cache_dir,*,persistent,resume=False,stop_after=None,timeout_seconds=120):
     root=Path(root);persistent=Path(persistent)
+    if (root/'INFERENCE_ONLY.json').exists():raise ValueError('Inference-only export cannot resume training')
     if not 0<timeout_seconds<float('inf'):raise ValueError('Invalid storage timeout')
     if root.resolve()==persistent.resolve() or root.resolve() in persistent.resolve().parents or persistent.resolve() in root.resolve().parents:
         raise ValueError('Persistent destination must be outside scratch')
@@ -105,11 +106,12 @@ def run_preparation_training(plan,root,cache_dir,*,persistent,resume=False,stop_
 
 def preparation_references(plan,root):
     """Only final, same-design exports may supply a probe checkpoint."""
+    from .preparation_restore import compatible_training_source,verify_inference_export,MARKER
     root=Path(root);config,prepared=training_inputs(plan)
     meta=read_json(root/'run.json');status=read_json(root/'status.json')
     if (canonical(read_json(root/'preparation_plan.json'))!=canonical(plan)
             or canonical(meta['recipe']['config'])!=canonical(config)
-            or meta['recipe']['source']!=code_identity(Path(__file__).resolve().parents[3])
+            or not compatible_training_source(meta['recipe']['source'],code_identity(Path(__file__).resolve().parents[3]))
             or meta['plan']['design_hash']!=digest(plan)
             or meta['recipe_hash']!=digest(meta['recipe']) or meta['identity']['recipe_hash']!=meta['recipe_hash']
             or meta['identity']['model_snapshot']!=plan['baseline_models']['base']['snapshot']
@@ -117,7 +119,8 @@ def preparation_references(plan,root):
             or status['status']!='warmstart_updates_complete' or status['completed_steps']!=90
             or status['scientific_status']!=STATUS):
         raise ValueError('Require completed matching 90-step preparation')
-    _,last=latest_checkpoint(root/'checkpoints',meta['identity'])
+    if (root/MARKER).exists():last=verify_inference_export(root)
+    else:_,last=latest_checkpoint(root/'checkpoints',meta['identity'])
     refs=read_json(root/'references/references.json')
     if last['step']!=90 or refs['identity']!=meta['identity'] or refs['final_step']!=90:
         raise ValueError('Preparation checkpoint/reference mismatch')

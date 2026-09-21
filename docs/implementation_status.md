@@ -660,3 +660,17 @@ Full suite: 135 passed/six optional skips, 141 total. New evidence is synthetic
 CPU orchestration and actual offline source reconstruction, not a new neural run.
 Selection/config/training-recipe hashes are unchanged. Seven Colab cells are
 provided for the newly published commit. [Review](reviews/actor-preparation-implementation-001.md).
+
+## Preparation inference-only restore repair — 2026-09-21
+
+Training completion is reported in the supplied receipt (90 updates, 360 completed
+forward/backward examples, verified persistence); the training ZIP is not yet
+locally audited. Full restore exceeded 600 seconds. The repair restores 12 final
+inference payload files and snapshot proofs without optimizer tensors, verifies
+export/step/source identities, and persists that smaller export before probing.
+
+Explicit compatibility with the exact reviewed pre-repair source permits completed
+training reads and journal-preserving probe migration. No optimizer resume rule,
+scientific recipe or generation budget is relaxed. Full suite: 139 pass/six optional
+skips, 145 total. Actual Drive recovery/GPU probe remain unverified. Next: publish
+repair and use [recovery cells](preparation_probe_recovery.md). [Review](reviews/preparation-restore-repair-001.md).

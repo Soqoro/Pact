@@ -31,8 +31,8 @@ now pass [returned metadata review](docs/reviews/qwen3-warmstart-001-complete.md
 This is not a full PACT training or efficacy result. The default command only emits the reviewed plan.
 
 [Frozen-reference scoring and bounded train-only collection](docs/collection.md)
-are implemented and tested locally. The current default suite passes 135 tests
-with six optional neural skips (141 total). The six-record collector preserves raw paired replays, actual
+are implemented and tested locally. The current default suite passes 139 tests
+with six optional neural skips (145 total). The six-record collector preserves raw paired replays, actual
 sampled token IDs, missing preferences and verified recovery snapshots. Its
 default is plan-only. The [complete GPU engineering bank](docs/reviews/qwen3-bank-001-complete.md)
 now passes returned audit: six records, preserved resume, five private pairs and
@@ -97,3 +97,9 @@ Sources: [specification](docs/PACT_IMPLEMENTATION_SPEC.md),
 The completed GPU engineering check used [the bounded warm-start notebook](notebooks/02_warmstart_colab.ipynb):
 one update by default, verified checkpoint persistence and a small review ZIP.
 [Execution and recovery](docs/warmstart.md#colab-execution-and-recovery) require a newly published commit.
+
+The 120-task training log now reports all 90 updates complete. After a full
+checkpoint restore exceeded 600 seconds, the [probe recovery repair](docs/reviews/preparation-restore-repair-001.md)
+adds a verified inference-only restore. Use the [recovery cells](docs/preparation_probe_recovery.md)
+after publishing the repair; preserve completed training. Actual compact Drive
+recovery and the probe outcomes remain unverified.

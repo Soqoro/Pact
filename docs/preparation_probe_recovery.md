@@ -1,28 +1,22 @@
-# Bounded actor preparation: fresh Colab runtime
+# Recover the preparation probe after the full-restore timeout
 
-**Current recovery:** training has reported successful completion. After the
-full-snapshot restore timeout, use the [inference-only recovery cells](preparation_probe_recovery.md)
-to restore final adapters and run the probe. Do not rerun completed training.
-The original procedure below is retained for reference.
+The supplied receipt reports successful 90-update training with verified final
+snapshot `1789930640656395583-479df47c14d9`. The full restore later exceeded 600
+seconds. This procedure restores only the final inference adapters and metadata,
+then runs/resumes the same 104-call probe. **It never retrains.**
 
-Review, commit and push the implementation, then pin that new full SHA below.
-Use the same L4 runtime. The old `43151280...` commit lacks these commands.
-The [frozen design](actor_preparation_design.md) permits exactly 90 training
-updates and 104 probe generations. This path is CPU tested; larger GPU training,
-actual new-example lengths and GPU reset/resume remain unverified.
+First review, commit and push the storage repair. Use that new full SHA in cell 1,
+not `ff349969...`, which lacks the compact restore. Restart the Colab session to
+clear cached Python imports, select the same L4, and run these seven cells.
+Actual Drive recovery on this new path remains unverified until returned evidence.
 
-Run cells in order. Training and probing execute in separate child processes,
-so the training model is released before probe loading. The two execution flags
-default to false; set each to true when ready for its stage. Keep the same SHA,
-run paths and configuration on resume.
-
-The full training snapshot contains optimizer/RNG checkpoints and weights; the
-small ZIP does not. Ninety updates retain more checkpoint data than the previous
-nine-update warm start. The restore limit is 20 GiB; actual storage/time is not yet
-measured. Snapshots are verified every ten updates and after handled completion
-or pause. Every storage operation has a 120-second deadline. On failure, preserve
-scratch and return the error/local ZIP; do not discard checkpoints or enlarge the
-recipe. A reset may require restoring the last verified training checkpoint.
+The new code explicitly accepts the exact reviewed training source
+`ff349969996b2066979529b2f43d773f5a1b88e6` with executable hash
+`6e0b6512f014c6f5cbda44de04b198a65c0e67b7a5f5254f69620c4812c4815a`.
+If a probe journal exists from that source, its plan/model/config must be identical;
+verified calls and attempts are retained, with a source-migration record. There is
+no budget reset. Unsafe snapshots or unresolved calls still stop recovery. Do not
+fall back to an older probe snapshot or a replacement run ID.
 
 **1. Mount Drive and pin the new code**
 
@@ -80,7 +74,7 @@ import torch
 
 CONFIG = CHECKOUT / "experiments/actor_preparation_120.json"
 config = load_actor_preparation_config(CONFIG)
-TIMEOUT = 120
+TIMEOUT = 600
 DATA = SCRATCH / "training-data/proposal-1200"
 OLD_DATA = SCRATCH / "training-data/engineering-12"
 for target, count in ((DATA, 1200), (OLD_DATA, 12)):
@@ -173,57 +167,51 @@ def run_stage(args):
     return result
 ```
 
-**5. Train or resume the fixed 90-update preparation**
+**5. Restore only the completed inference exports**
 
-This starts fresh adapters; it does not restore the old nine-step warm start.
-`STOP_AFTER_UPDATES` can request a handled pause after that many new updates;
-it does not increase the total 90-update budget. Leave it `None` for completion.
+Training already completed. Restore the final adapters and verified metadata to
+a new scratch directory. Do not retry the full optimizer-history restore or
+delete its partial staging directories while a storage worker may still be alive.
+This compact directory is explicitly inference-only and cannot resume training.
 
 ```python
-from pact.training.colab import restore_snapshot
+from pact.training.preparation_restore import restore_preparation_references
+from pact.training.preparation_runner import preparation_references
 
-EXECUTE_TRAIN = False  # Set True to train the declared recipe.
-STOP_AFTER_UPDATES = None
-if EXECUTE_TRAIN and not TRAIN.exists():
-    saved = latest_snapshot(DURABLE / "training")
-    if saved is not None:
-        print(restore_snapshot(saved, TRAIN, timeout_seconds=TIMEOUT))
-
-args = BASE_ARGS + ["--stage", "training", "--run-dir", str(TRAIN),
-                    "--persistent", str(DURABLE / "training")]
-if EXECUTE_TRAIN:
-    args.append("--execute")
-    if TRAIN.exists():
-        args.append("--resume")
-    if STOP_AFTER_UPDATES is not None:
-        args += ["--stop-after", str(STOP_AFTER_UPDATES)]
-TRAIN_RESULT = run_stage(args)
-if EXECUTE_TRAIN:
-    assert TRAIN_RESULT is not None
-    print("Training status:", TRAIN_RESULT.get("status"))
+TRAIN = SCRATCH / "actor-preparation/qwen3-preparation-120-001-inference"
+TRAIN_SNAPSHOT = DURABLE / "training/snapshots/1789930640656395583-479df47c14d9"
+if not TRAIN.exists():
+    print(restore_preparation_references(
+        TRAIN_SNAPSHOT, TRAIN, timeout_seconds=TIMEOUT,
+    ))
+recipe = preparation_references(PLAN, TRAIN)
+print("Final 90-step adapters verified:", recipe.reference_hashes)
 ```
 
-Full training completion requires `status.status=warmstart_updates_complete`,
-`status.completed_steps=90`, `exit_code=0`, verified durable copying, and three
-final reference exports. A handled pause is not completion. Finish cell 5 before
-executing cell 6. Return any failure for review without moving to probing.
+This copies 12 selected files plus snapshot proof files, without reading the
+optimizer tensor objects. It validates all selected file hashes, final-step
+metadata, training order/log, source provenance and adapter architecture/hashes.
+It does not re-verify omitted historical optimizer tensors. The three adapter
+hashes should be:
+
+- `30838afc94ae2c3367ed7b4ef2477c2bc3e25944f9992ed70f3708a49780ec19`
+- `ceb8d513127bd526d7be4621384aa25de6ccff6247c6f00ae2312d898dcf9e37`
+- `be5e6b7b46e608ad6cecfd80b42f607b855307993f001586daed69763c72e28e`
 
 **6. Run or resume the fixed 104-call probe**
 
-The runner verifies and durably copies final training checkpoints/references
-before loading the probe model. It then generates 72 private responses and 32
+The runner verifies and durably copies the compact inference export to its own
+`inference` folder before loading the probe model. It preserves the original
+full training snapshot and does not copy its optimizer history again. It then generates 72 private responses and 32
 receiver responses with the new frozen actors. Receiver histories remain the
 old saved states and donors; new private outputs do not enter those prompts.
 
 ```python
 from pact.training.preparation_probe import restore_preparation_probe
 
-EXECUTE_PROBE = False  # Set True only after training completes.
+EXECUTE_PROBE = True  # Training already completed; run/resume inference only.
 STOP_AFTER_CALLS = None
-if EXECUTE_PROBE and not TRAIN.exists():
-    saved = latest_snapshot(DURABLE / "training")
-    assert saved is not None, "No saved preparation training snapshot."
-    print(restore_snapshot(saved, TRAIN, timeout_seconds=TIMEOUT))
+assert TRAIN.exists(), "Run cell 5 to restore the inference exports first."
 if EXECUTE_PROBE and not PROBE.exists():
     saved = latest_snapshot(DURABLE / "probe")
     if saved is not None:
@@ -249,19 +237,27 @@ for this inference stage. `full_pact_ready` stays false. An unsafe snapshot or
 ambiguous attempted call requires review; do not delete it or start a replacement
 run to reset the budget. Completed reruns reuse cached calls.
 
-**7. Download both review ZIPs**
+**7. Download the existing training ZIP and new probe ZIP**
 
 ```python
 from google.colab import files
 
-for name, result in (("training", TRAIN_RESULT), ("probe", PROBE_RESULT)):
-    assert result is not None, f"Execute {name} first."
-    print(name, "SHA256:", result["sha256"])
-    print("Drive copy:", result.get("persistent_bundle"))
-    files.download(result["path"])
+TRAIN_ZIP = SCRATCH / "bundles/completed-preparation-training.zip"
+TRAIN_SHA = "a1f5a23a14bb5420b963bbe02294345f98c17acd030b41e0686ce2085ff6d388"
+TRAIN_DRIVE_ZIP = DURABLE / "training/bundles/qwen3-preparation-120-001-handoff-1789930640697369191.zip"
+TRAIN_ZIP.parent.mkdir(parents=True, exist_ok=True)
+if not TRAIN_ZIP.exists():
+    print(storage_operation("bundle-restore", TRAIN_DRIVE_ZIP, TRAIN_ZIP,
+                            sha256=TRAIN_SHA, timeout_seconds=TIMEOUT))
+assert file_hash(TRAIN_ZIP) == TRAIN_SHA
+print("Training SHA256:", TRAIN_SHA)
+files.download(str(TRAIN_ZIP))
+assert PROBE_RESULT is not None, "Complete cell 6 first."
+print("Probe SHA256:", PROBE_RESULT["sha256"])
+print("Probe Drive copy:", PROBE_RESULT.get("persistent_bundle"))
+files.download(PROBE_RESULT["path"])
 ```
 
-Return both ZIPs, checksums and final receipts. If a kernel reset clears these
-variables, the verified ZIPs remain in the corresponding Drive `bundles` folders;
-download those files directly. Preserve the full training snapshots/object store.
-Review ZIPs are metadata only and cannot replace the weights needed for recovery.
+Return both ZIPs, checksums and the final probe receipt. No training command is
+included in this recovery procedure. Preserve the original full Drive training
+snapshot and all probe journals/snapshots.

@@ -881,3 +881,16 @@ states/donors. New private outputs never alter the receiver histories. Restore o
 the latest safe probe snapshot; unresolved calls cannot be regenerated. CPU tests
 verify orchestration; larger neural/GPU execution remains unverified.
 [Implementation review](reviews/actor-preparation-implementation-001.md).
+
+## 2026-09-21: restore final inference exports instead of optimizer history
+
+After a reported 600-second full-restore timeout, add a separately marked compact
+restore for completed 90-step training. Verify the completed snapshot index and
+all selected metadata/adapter bytes, but explicitly omit historical optimizer
+tensors. Forbid training from the compact export. Keep the full Drive snapshot.
+
+Permit completed-training reads from the exact clean reviewed ff349969 source;
+keep optimizer resume source-strict. Permit probe migration only from that source,
+with identical scientific recipe/model and verified journal; record the transition
+and preserve every attempted/committed call. No fresh budget or arbitrary-code
+compatibility is inferred. [Repair review](reviews/preparation-restore-repair-001.md).

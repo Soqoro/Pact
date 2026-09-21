@@ -848,3 +848,17 @@ requires review/publication and a returned handoff before promoting its GPU stat
   context fit, full checkpoint storage, GPU execution and GPU reset/resume unverified.
 - Next: user review/commit/push, then [seven Colab cells](actor_preparation_colab.md)
   pinned to the new SHA; return both stage bundles. [Review](reviews/actor-preparation-implementation-001.md).
+
+## Preparation storage recovery — `preparation-restore-repair-001` (2026-09-21)
+
+- User receipt reports 90 updates / 360 examples complete, verified training ZIP
+  SHA256 `a1f5a23a14bb5420b963bbe02294345f98c17acd030b41e0686ce2085ff6d388`,
+  final snapshot `1789930640656395583-479df47c14d9`. ZIP audit pending.
+- Full training restore exceeded 600 seconds. Probe completion is not established;
+  do not infer 104 calls from training-file progress counters or rerun training.
+- Implement compact final-export restore, selected-object checksums, training
+  prohibition and exact-source, journal-preserving probe migration. Four new tests;
+  full suite 139 pass/six optional skips, 145 total. No new GPU work.
+- Evidence: `results_import/preparation-restore-repair-001/`. Next user publication
+  and [inference-only recovery](preparation_probe_recovery.md); actual Drive/GPU
+  path remains unverified. [Review](reviews/preparation-restore-repair-001.md).

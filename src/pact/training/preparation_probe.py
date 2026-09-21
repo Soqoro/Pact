@@ -87,7 +87,9 @@ def run_preparation_probe(config,design,training_root,root,cache_dir,*,resume=Fa
     parent=preparation_references(design,training_root)
     if persistent is None:raise ValueError('Preparation probe requires durable storage')
     # Verify a durable final-training copy before any inference can start.
-    training_snapshot=sync_run(training_root,Path(persistent).parent/'training',timeout_seconds=timeout_seconds)
+    inference_only=(training_root/'INFERENCE_ONLY.json').exists()
+    target=Path(persistent).parent/('inference' if inference_only else 'training')
+    training_snapshot=sync_run(training_root,target,timeout_seconds=timeout_seconds)
     plan=probe_plan(design,parent)
     references_dir=training_root/'references'
     if stop_after is not None and (type(stop_after) is not int or stop_after<1):
@@ -101,10 +103,15 @@ def run_preparation_probe(config,design,training_root,root,cache_dir,*,resume=Fa
               'source':code_identity(Path(__file__).resolve().parents[3])}
     old = read_json(root/'manifest.json') if resume else None
     if root.exists() and not resume: raise ValueError('Preparation probe run exists; use compatible resume')
-    if old and (old['recipe_hash']!=digest(recipe) or 'identity' not in old):
-        raise ValueError('Preparation probe resume source/recipe mismatch or uninitialized model')
-    if old: inspect_journal(root,plan['budget'])
+    migration=None
+    if old:
+        inspect_journal(root,plan['budget'])
+        from .preparation_restore import compatible_probe_resume
+        old,migration=compatible_probe_resume(old,recipe)
     with run_lock(root):
+        if migration is not None:
+            write_json(root/f'source-migrations/{time.time_ns()}.json',migration)
+            print('Verified storage-only source migration; existing calls and budget retained.',flush=True)
         manifest = {'schema_version':1,'kind':KIND,'recipe':recipe,'recipe_hash':digest(recipe),
             'expected_records':104,'completed_records':0,'status':'loading','recovery_safe':True,
             'persistent_copy_verified':False}
