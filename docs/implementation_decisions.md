@@ -974,3 +974,21 @@ existing trainer, journal, storage and natural protocol; link acquisition ID und
 new consumer's donors directory for a single guarded recovery budget. Preserve all
 closed experiments and prior audit conclusions as historical evidence.
 [Contract, exact selection rules and loss routing](controlled_peer_donors_methodology.md).
+
+## 2026-09-23 — explicit controlled-001 effective-initialization recovery
+
+The returned controlled study completed 24 updates in each arm, then failed the
+nonfocal export hash guard. User tensor diagnostics and a tiny CPU reproduction
+identify FP32→BF16→FP32 rounding of agents1/2 during legacy loading. Preserve the
+actual effective initialization across the three comparison arms; do not rewrite
+trained exports or silently claim original FP32 preservation. Keep the legacy
+loader for this study. General precision redesign requires a separately versioned
+future study.
+
+The new `receiver_recovery.py` transition is opt-in, archive/study/source scoped,
+and evaluation/report/export only. It compares real step-zero/final checkpoints,
+exports, original tensors and actual loaded actors, and preserves the old recipe
+with a separate immutable source-transition receipt and effective snapshot IDs.
+Ordinary nonfocal hash checks remain strict. No new training or donor budget.
+[Audit](reviews/qwen3-receiver-supervision-controlled-001-training.md),
+[Colab cells](controlled_peer_donors_recovery.md). No scientific efficacy claim.

@@ -854,3 +854,20 @@ the complete token/mask JSON. Scientific efficacy remains unestablished.
 Final focused report/export/restore/import and exact-fixture/notebook checks after
 that wording change: two passed, no skips/failures (41.630 seconds). CLI help,
 Python compilation and `git diff --check` also pass.
+
+## 2026-09-23 — controlled study training audited; evaluation recovery implemented
+
+[Returned training audit](reviews/qwen3-receiver-supervision-controlled-001-training.md):
+217 donor calls; 45 fit/19 held-out contexts; both training arms complete24 updates.
+Evaluation remains unexecuted, blocked by nonfocal adapter precision identity.
+Explicit CPU tensor certification and resident-model verification now support a
+narrow evaluation-only source transition; GPU recovery remains unverified. No
+retraining, tensor correction, new acquisition, commit/push or final-test access.
+See [recovery cells](controlled_peer_donors_recovery.md).
+
+Validation executed for this patch: default CPU/mock suite 176 tests, 165 passed
+and 11 opt-in skips. The three new recovery tests also passed with the optional
+tiny CPU neural environment enabled (random model, no pretrained download),
+including the real BF16 reload, effective actor identity and corruption guards.
+Additional receiver-supervision/controlled-donor regressions with tiny neural
+opt-in: all 22 passed, including actual training-arm initialization and resume.

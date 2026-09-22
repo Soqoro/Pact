@@ -990,3 +990,16 @@ source. Actual donor yield, receiver learning and evaluation remain unmeasured.
 Ceiling 384 acquisition / 1,104 total calls, 273,408 reserved output tokens; 32 updates
 per trained arm. Missing primary support stops before updates. Historical results
 remain unchanged. [Runbook](controlled_peer_donors_colab.md).
+
+## 2026-09-23 — controlled-001 training returned; evaluation blocked
+
+Bundle SHA256 `ce9f97aca8a24e7a15b890d5e557c3da7af8331f944847b8d4036feb152ae993`
+verifies. Acquisition: 217 committed calls, zero unresolved; 154 accepted donors,
+63 target mismatches. Contexts: fit45 (hold17/repair28), held-out19 (hold13/repair6),
+all opposite controls available. Task and receiver SFT each completed24 updates;
+returned metadata audited, tensor payloads omitted from review archive.
+Evaluation made zero calls: nonfocal export hashes differ from preparation.
+User diagnostics identify exact BF16 rounding, reproduced with a tiny CPU model.
+Explicit evaluation-only recovery implemented; real GPU recovery and all efficacy
+comparisons pending. No completed diagnostics rerun, final-test access, or full
+PACT updates. [Detailed audit](reviews/qwen3-receiver-supervision-controlled-001-training.md).

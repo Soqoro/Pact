@@ -127,3 +127,14 @@ Local parent preflight identifies 92 eligible original source states: fitting
 correct/wrong 31/31, development-held-out 20/10. Four unsupported original states
 remain in the frozen manifest. These counts establish only potential support before
 donor acquisition, not accepted donor yield or a successful learning study.
+
+## Audited execution deviation: controlled-001, 2026-09-23
+
+The first returned training run used a loader that preserved focal FP32 values but
+rounded nonfocal FP32 adapters through BF16. Thus the intended original-export
+identity was not realized numerically for agents1/2. The explicitly scoped
+[evaluation recovery](controlled_peer_donors_recovery.md) instead certifies identical
+**effective** initialization and unchanged effective nonfocal tensors across arms.
+It preserves all saved weights and original records, records the deviation, and
+checks actual resident tensors. This does not retroactively establish preservation
+of original FP32 nonfocal values, or any learning benefit.

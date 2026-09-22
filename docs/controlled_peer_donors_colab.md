@@ -1,5 +1,9 @@
 # Controlled peer donors v1: fresh or restarted Colab
 
+For the returned controlled-001 run with both training arms complete and the
+nonfocal hash error, use [evaluation recovery](controlled_peer_donors_recovery.md).
+Do not rerun this acquisition/training sequence.
+
 This NEW child study imports the completed parent collection read-only. It does not
 repeat preparation, the 672 parent calls, or the closed prompt control. The source
 is `controlled_peer_donors_v1`; the objective remains `receiver_supervision_v1`.

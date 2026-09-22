@@ -71,7 +71,7 @@ def initial_recipe(plan, initialization_root):
     return recipe
 
 
-def arm_recipe(root, plan, arm, initial):
+def arm_recipe(root, plan, arm, initial, effective_recovery=None):
     if arm == 'frozen': return initial
     status = read_json(root/'training'/arm/'status.json')
     if not status.get('complete'): raise ValueError('Both trained arms must finish before held-out evaluation')
@@ -84,7 +84,9 @@ def arm_recipe(root, plan, arm, initial):
     verify_references(root/'training'/arm/'references', recipe)
     for i in range(3):
         if i != plan['config']['focal_agent'] and recipe.reference_hashes[i] != initial.reference_hashes[i]:
-            raise ValueError('Nonfocal checkpoint differs between arms')
+            from .receiver_recovery import permits_nonfocal
+            if not permits_nonfocal(effective_recovery,arm,i,initial.reference_hashes[i],recipe.reference_hashes[i]):
+                raise ValueError('Nonfocal checkpoint differs between arms')
     return recipe
 
 
@@ -429,6 +431,8 @@ def report(root):
     if plan.get('source_variant'):
         from .controlled_donors import augment_report
         augment_report(plan,contexts,result)
+    if (root/'evaluation_recovery.json').exists():
+        result['effective_initialization_recovery']=read_json(root/'evaluation_recovery.json')
     write_json(root/'report.json', result); return result
 
 
@@ -490,7 +494,11 @@ def main(argv=None, *, controlled=False):
     if controlled:
         parser.add_argument('--parent-bundle',type=Path,required=True)
         parser.add_argument('--acquisition-id',required=True)
+        parser.add_argument('--effective-init-recovery',type=Path,help='Explicit audited controlled-001 review ZIP; evaluation/report/export only')
     args=parser.parse_args(argv); root=args.run_dir
+    recovery_review=getattr(args,'effective_init_recovery',None)
+    if recovery_review and args.stage not in ('evaluate','report','export'):
+        parser.error('--effective-init-recovery permits evaluate/report/export only')
     if args.stop_after is not None and args.stop_after<1: parser.error('--stop-after must be positive')
     if args.stage=='restore':
         if args.snapshot is None: parser.error('--snapshot is required')
@@ -518,9 +526,14 @@ def main(argv=None, *, controlled=False):
         parser.error('GPU stages require --execute; plan first')
     root.mkdir(parents=True, exist_ok=True)
     with run_lock(root):
+        effective_recovery=None
         if (root/'state.json').exists():
             state=read_json(root/'state.json')
-            if state['study_hash']!=identity or read_json(root/'plan.json')!=plan:
+            if recovery_review:
+                from .receiver_recovery import prepare
+                effective_recovery=prepare(root,plan,recipe['source'],args.stage,recovery_review,args.initialization_root)
+                identity=state['study_hash']  # original recipe remains immutable; transition has its own receipt
+            elif state['study_hash']!=identity or read_json(root/'plan.json')!=plan:
                 raise ValueError('Source/config/data/split/initialization changed; resume rejected')
             if not state['recovery_safe']:
                 # Local journals/checkpoints can establish a boundary; runtime restore cannot.
@@ -547,8 +560,8 @@ def main(argv=None, *, controlled=False):
                 if args.stage=='train' and args.arm not in ('task_sft','receiver_sft'):parser.error('train requires --arm task_sft or receiver_sft')
                 if args.stage=='evaluate':
                     if args.arm not in ARMS:parser.error('evaluate requires --arm')
-                    for arm in ('task_sft','receiver_sft'):arm_recipe(root,plan,arm,initial)
-                recipe_arm=arm_recipe(root,plan,args.arm,initial) if args.stage=='evaluate' else initial
+                    for arm in ('task_sft','receiver_sft'):arm_recipe(root,plan,arm,initial,effective_recovery)
+                recipe_arm=arm_recipe(root,plan,args.arm,initial,effective_recovery) if args.stage=='evaluate' else initial
                 references=(root/'training'/args.arm/'references') if args.stage=='evaluate' and args.arm!='frozen' else args.initialization_root/'references'
                 write_json(root/'environment.json',{'packages':versions(),'runtime_fingerprint':runtime_fingerprint(),'compute_units':None})
                 if controlled and args.stage in ('acquire','contexts'):
@@ -561,7 +574,11 @@ def main(argv=None, *, controlled=False):
                         if args.stage=='acquire':outcome=acquire(plan,backend,runtime,root,recovery,args.stop_after)
                         else:outcome={'status':freeze_contexts(plan,root,backend.tokenizer)['status']}
                     elif args.stage=='contexts': outcome=collect(plan,backend,runtime,root,recovery,args.stop_after)
-                    elif args.stage=='evaluate': outcome=evaluate(plan,contexts,backend,runtime,root,args.arm,recovery,args.stop_after)
+                    elif args.stage=='evaluate':
+                        if effective_recovery:
+                            from .receiver_recovery import verify_loaded
+                            verify_loaded(backend,args.arm,effective_recovery)
+                        outcome=evaluate(plan,contexts,backend,runtime,root,args.arm,recovery,args.stop_after)
                     else:
                         examples=training_examples(plan,contexts,backend.tokenizer,args.arm)
                         if controlled:
