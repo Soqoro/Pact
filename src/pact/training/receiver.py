@@ -85,13 +85,15 @@ class JournalBackend:
     def truncate(self, text, tokens):
         return self.backend.truncate(text, tokens)
 
-    def generate(self, request):
+    def validate_request(self, request):
         if (request.task.split != "train" or request.phase not in ("private", "revision", "final")
                 or request.actor not in ("base", "agent-0", "agent-1", "agent-2")
                 or request.max_tokens != (64 if request.phase == "final" else 256)
                 or request.deterministic != (request.phase == "final")
                 or (request.actor == "base") != (request.phase == "final")):
             raise ValueError("Receiver diagnostic request outside fixed design")
+    def generate(self, request):
+        self.validate_request(request)
         key = digest([self.record_key, self.slot])
         self.slot += 1
         intent = {"schema_version":1, "work_id":key, "record_id":self.record_key,

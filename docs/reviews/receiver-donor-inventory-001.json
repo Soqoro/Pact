@@ -1,0 +1,252 @@
+{
+  "kind": "offline_donor_availability_audit",
+  "matching_calls": 0,
+  "new_generation_calls": 0,
+  "positive_matches_are_candidates_not_approved_donors": true,
+  "scanned_reviews": [
+    {
+      "bundle": "qwen3-bank-001-handoff-1789803598490756574.zip",
+      "new_call_identities_across_archives": 18,
+      "phases": {
+        "private": 15,
+        "revision": 3
+      },
+      "selected_content_group_overlap": [],
+      "selected_group_overlap": [],
+      "selected_task_matches": [],
+      "sha256": "ceba32531b82864d694020ac29dce8e612b887c031da198cc644e5982697a7c3",
+      "source_task_ids": [
+        "arc_challenge:MCAS_2004_5_13"
+      ],
+      "source_tasks": 1,
+      "unique_packet_calls": 18,
+      "unmapped_calls": 0
+    },
+    {
+      "bundle": "qwen3-bank-001-handoff-1789804954424856576.zip",
+      "new_call_identities_across_archives": 174,
+      "phases": {
+        "private": 90,
+        "revision": 102
+      },
+      "selected_content_group_overlap": [],
+      "selected_group_overlap": [],
+      "selected_task_matches": [],
+      "sha256": "a77e11339b3991e3e0d5f0c1d42d0aed50b62c820619e555a60f9a4da956ac39",
+      "source_task_ids": [
+        "arc_challenge:MCAS_2004_5_13",
+        "logiqa:train-7374"
+      ],
+      "source_tasks": 2,
+      "unique_packet_calls": 192,
+      "unmapped_calls": 0
+    },
+    {
+      "bundle": "qwen3-base-control-001-handoff-1789830893982847246.zip",
+      "new_call_identities_across_archives": 54,
+      "phases": {
+        "private": 30,
+        "revision": 24
+      },
+      "selected_content_group_overlap": [],
+      "selected_group_overlap": [],
+      "selected_task_matches": [],
+      "sha256": "49bf59ceaeabcd917a91db4fef0ab0ed92fb05a367bd5233c05bc1fe3e1dc954",
+      "source_task_ids": [
+        "arc_challenge:MCAS_2004_5_13",
+        "logiqa:train-7374"
+      ],
+      "source_tasks": 2,
+      "unique_packet_calls": 54,
+      "unmapped_calls": 0
+    },
+    {
+      "bundle": "qwen3-receiver-feasibility-001-handoff-1789837104959632692.zip",
+      "new_call_identities_across_archives": 424,
+      "phases": {
+        "private": 144,
+        "revision": 280
+      },
+      "selected_content_group_overlap": [],
+      "selected_group_overlap": [],
+      "selected_task_matches": [],
+      "sha256": "d61cb9bb82895f09f146a83ac52a26d4fdad18238585fb0bcf4bd13034996a9f",
+      "source_task_ids": [
+        "arc_challenge:CSZ30494",
+        "arc_challenge:CSZ_2005_5_CSZ10383",
+        "arc_challenge:MCAS_2002_8_9",
+        "arc_challenge:Mercury_400749",
+        "arc_challenge:Mercury_406916",
+        "arc_challenge:Mercury_415092",
+        "arc_challenge:Mercury_7007910",
+        "arc_challenge:Mercury_7210613",
+        "arc_challenge:Mercury_7217105",
+        "arc_challenge:Mercury_7223283",
+        "arc_challenge:Mercury_7268013",
+        "arc_challenge:Mercury_SC_407397",
+        "logiqa:train-0549",
+        "logiqa:train-0655",
+        "logiqa:train-0894",
+        "logiqa:train-2099",
+        "logiqa:train-2868",
+        "logiqa:train-3933",
+        "logiqa:train-4526",
+        "logiqa:train-4570",
+        "logiqa:train-5654",
+        "logiqa:train-5656",
+        "logiqa:train-7183",
+        "logiqa:train-7219"
+      ],
+      "source_tasks": 24,
+      "unique_packet_calls": 424,
+      "unmapped_calls": 0
+    },
+    {
+      "bundle": "qwen3-private-support-control-001-handoff-1789909726537323854.zip",
+      "new_call_identities_across_archives": 72,
+      "phases": {
+        "private": 72
+      },
+      "selected_content_group_overlap": [],
+      "selected_group_overlap": [],
+      "selected_task_matches": [],
+      "sha256": "f67045fc3f2bc102e7345ba3337c5406796360e76f437355dd849302cb33bc06",
+      "source_task_ids": [
+        "arc_challenge:CSZ30494",
+        "arc_challenge:CSZ_2005_5_CSZ10383",
+        "arc_challenge:MCAS_2002_8_9",
+        "arc_challenge:Mercury_400749",
+        "arc_challenge:Mercury_406916",
+        "arc_challenge:Mercury_415092",
+        "arc_challenge:Mercury_7007910",
+        "arc_challenge:Mercury_7210613",
+        "arc_challenge:Mercury_7217105",
+        "arc_challenge:Mercury_7223283",
+        "arc_challenge:Mercury_7268013",
+        "arc_challenge:Mercury_SC_407397",
+        "logiqa:train-0549",
+        "logiqa:train-0655",
+        "logiqa:train-0894",
+        "logiqa:train-2099",
+        "logiqa:train-2868",
+        "logiqa:train-3933",
+        "logiqa:train-4526",
+        "logiqa:train-4570",
+        "logiqa:train-5654",
+        "logiqa:train-5656",
+        "logiqa:train-7183",
+        "logiqa:train-7219"
+      ],
+      "source_tasks": 24,
+      "unique_packet_calls": 72,
+      "unmapped_calls": 0
+    },
+    {
+      "bundle": "qwen3-curated-repair-001-handoff-1789919214853319498.zip",
+      "new_call_identities_across_archives": 32,
+      "phases": {
+        "revision": 32
+      },
+      "selected_content_group_overlap": [],
+      "selected_group_overlap": [],
+      "selected_task_matches": [],
+      "sha256": "c06a1cff473841c7271f2c07e61f6e0a61b31c76b982361f4ddeb029917ea3b4",
+      "source_task_ids": [
+        "arc_challenge:Mercury_406916",
+        "arc_challenge:Mercury_7210613"
+      ],
+      "source_tasks": 2,
+      "unique_packet_calls": 32,
+      "unmapped_calls": 0
+    },
+    {
+      "bundle": "qwen3-preparation-probe-001-handoff-1789972354005267043.zip",
+      "new_call_identities_across_archives": 104,
+      "phases": {
+        "private": 72,
+        "revision": 32
+      },
+      "selected_content_group_overlap": [],
+      "selected_group_overlap": [],
+      "selected_task_matches": [],
+      "sha256": "ae6a0268d66af76319f5206f04fbb070f34e5283bdde4efe5c344ec70256528f",
+      "source_task_ids": [
+        "arc_challenge:CSZ30494",
+        "arc_challenge:CSZ_2005_5_CSZ10383",
+        "arc_challenge:MCAS_2002_8_9",
+        "arc_challenge:Mercury_400749",
+        "arc_challenge:Mercury_406916",
+        "arc_challenge:Mercury_415092",
+        "arc_challenge:Mercury_7007910",
+        "arc_challenge:Mercury_7210613",
+        "arc_challenge:Mercury_7217105",
+        "arc_challenge:Mercury_7223283",
+        "arc_challenge:Mercury_7268013",
+        "arc_challenge:Mercury_SC_407397",
+        "logiqa:train-0549",
+        "logiqa:train-0655",
+        "logiqa:train-0894",
+        "logiqa:train-2099",
+        "logiqa:train-2868",
+        "logiqa:train-3933",
+        "logiqa:train-4526",
+        "logiqa:train-4570",
+        "logiqa:train-5654",
+        "logiqa:train-5656",
+        "logiqa:train-7183",
+        "logiqa:train-7219"
+      ],
+      "source_tasks": 24,
+      "unique_packet_calls": 104,
+      "unmapped_calls": 0
+    },
+    {
+      "bundle": "qwen3-preparation-prompt-control-001-handoff-1790038795500928454.zip",
+      "new_call_identities_across_archives": 72,
+      "phases": {
+        "private": 144
+      },
+      "selected_content_group_overlap": [],
+      "selected_group_overlap": [],
+      "selected_task_matches": [],
+      "sha256": "a48bfe31276a58479d80780db48226ef55d3d1d85526f530e435bc497535db34",
+      "source_task_ids": [
+        "arc_challenge:CSZ30494",
+        "arc_challenge:CSZ_2005_5_CSZ10383",
+        "arc_challenge:MCAS_2002_8_9",
+        "arc_challenge:Mercury_400749",
+        "arc_challenge:Mercury_406916",
+        "arc_challenge:Mercury_415092",
+        "arc_challenge:Mercury_7007910",
+        "arc_challenge:Mercury_7210613",
+        "arc_challenge:Mercury_7217105",
+        "arc_challenge:Mercury_7223283",
+        "arc_challenge:Mercury_7268013",
+        "arc_challenge:Mercury_SC_407397",
+        "logiqa:train-0549",
+        "logiqa:train-0655",
+        "logiqa:train-0894",
+        "logiqa:train-2099",
+        "logiqa:train-2868",
+        "logiqa:train-3933",
+        "logiqa:train-4526",
+        "logiqa:train-4570",
+        "logiqa:train-5654",
+        "logiqa:train-5656",
+        "logiqa:train-7183",
+        "logiqa:train-7219"
+      ],
+      "source_tasks": 24,
+      "unique_packet_calls": 144,
+      "unmapped_calls": 0
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Retained training-generation reviews only; no validation/final-test donors or new sampling.",
+  "selection_hash": "7c8c4319439c1cb29345961496b2e74a2713a3b0d2714489957be17af2e907fc",
+  "target_bundle": "qwen3-receiver-supervision-001-handoff-1790063068160794241.zip",
+  "target_sha256": "93332881dbe83bd6dd975beaad6a678094c7f1164f9aa044674e1c06593f783b",
+  "training_executed": false,
+  "unique_packet_calls_across_archives": 950,
+  "unmapped_calls": 0
+}

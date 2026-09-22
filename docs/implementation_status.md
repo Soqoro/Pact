@@ -765,3 +765,92 @@ A temporary test-selection typo referenced a nonexistent class; it was corrected
 and the complete intended 25-test subset passed. An initial context comparison
 found tuple/list serialization mismatch; canonical comparison and round-trip tests
 now cover it. Subsequent focused tests cover the final receiver report/contract guards.
+
+## Returned receiver-supervision context collection — 2026-09-22
+
+[Audited handoff](reviews/qwen3-receiver-supervision-001.md), SHA256
+`93332881dbe83bd6dd975beaad6a678094c7f1164f9aa044674e1c06593f783b`:
+96 source tasks, 672/672 validly journaled private-phase calls, 159,313 input and
+34,766 output tokens. Source/plan/request provenance and context reconstruction pass.
+Support is fit hold/repair **2/2** and held-out **0/1**, below 8/4 per-stratum minima.
+Only three source tasks contain both correct and wrong valid packets; 651/672 packets
+are valid. The gate correctly stops with `insufficient_context_support`.
+New receiver training, teacher-forced learning and three-arm evaluation did not execute
+and remain GPU-unverified. No efficacy conclusion or automatic budget extension follows.
+
+## Offline donor inventory — 2026-09-22
+
+Executed `experiments/audits/receiver_donor_inventory.py` against eight verified
+historical training reviews: 950 distinct private/revision call/raw identities;
+zero unmapped calls, zero matches to the frozen 96 selected task inputs, and zero
+known group/content-group overlaps. No additional generation/training, bank mutation,
+validation/final-test donor reuse or methodological gate change. See
+[the report](reviews/receiver-donor-inventory-001.md) and its JSON inventory.
+Authentic external same-task material is a genuine missing-data prerequisite;
+new receiver training/evaluation remains unexecuted.
+
+## Consolidated audit refresh — 2026-09-22
+
+[Current review report](audits/PACT_PROJECT_AUDIT_2026-09-22.md) incorporates the
+receiver-supervision support stop and negative retained-donor inventory without
+altering historical outputs. Fresh local byte/CRC inventory: 21 ZIPs passed;
+offline donor inventory re-execution matches its retained JSON exactly. No source
+behavior changed or test suite rerun for this documentation consolidation. No new
+GPU run or donor-source methodology was selected; user review is the next step.
+
+## controlled_peer_donors_v1 — 22 September 2026 implementation
+
+Implemented a separately versioned offline synthetic donor source feeding the existing
+receiver_supervision_v1 objective. Read-only import validates the reviewed parent plan
+and all 672 call links. Original focal0 bytes, source groups and other peer remain
+fixed; the conditioned donor changes one prespecified sender slot. Both target types
+have two fixed attempts, first accepted wins; rejected bytes remain immutable.
+Missing opposite controls do not block primary supervision. New source reports,
+fixed schedules, three-arm evaluation, persistence and explicit Colab entry points
+reuse the existing trainer/protocol. No legacy replay/DPO/specialization algorithm
+was replaced. [Methodology](controlled_peer_donors_methodology.md),
+[ordered cells](controlled_peer_donors_colab.md).
+
+Actual parent preflight (no inference): 92 eligible source tasks; fit original own
+correct/wrong 31/31, development-held-out 20/10. Four tasks remain excluded with
+original-own length/abstention/invalid-answer reasons (one also has an invalid unchanged
+peer). These are potential source counts, NOT accepted donor support or learning
+results. The configured ceiling remains 384 donor / 1,104 total calls and 273,408
+reserved output tokens. Actual acquisition may use fewer calls.
+
+Executed local checks:
+- Focused controlled-source suite: 8 tests, 7 passed, one optional neural skip
+  (53.567 seconds), including interrupted/resumed bounded acquisition, all-rejected
+  support stop, primary-only donors, three-arm mock evaluation/cache/recovery and
+  metadata ZIP import. Mock optimizer statuses are explicitly marked software doubles.
+- Explicit CPU neural/legacy subset: 26 passed, no skips/failures (28.175 seconds).
+  Includes actual training of both controlled-context arms from identical locally
+  initialized tiny Qwen bytes, unchanged backbone/nonfocal weights and bit-identical
+  optimizer/RNG resume; original loss-improvement, replay/reference/isolation/DPO
+  regressions also passed. No pretrained weights downloaded. Small pinned libraries
+  installed only under `/tmp/pact-controlled-test-deps`; existing environments unchanged.
+- Existing receiver suite: 14 tests, 11 passed / three optional skips (34.309 seconds).
+- Production CLI plan/freeze/local durable snapshot/ZIP round trip passed against
+  the actual reviewed parent and preparation metadata, without loading a model.
+- Exact fixture includes both generator requests, unchanged-own receiver contexts
+  and answer-only masks; eight new notebook cells compile, remain unexecuted, and
+  all GPU stage switches default off.
+
+During development, tests caught a delivered-message schema conversion issue and a
+fixture tuple/list comparison; both were corrected. An earlier full-suite run also
+correctly rejected a resume while executable files were being edited; the final
+regression run is performed with stable source. New real-model donor quality,
+support, training, memory fit, evaluation and Colab recovery remain GPU-unverified.
+Reasoning review, full-PACT coupling and final-test claims remain deferred/unestablished.
+No GPU job, final-test access, commit or push was performed.
+
+Final default regression run: **173 tests — 163 passed, 10 optional skips, no failures**
+(184.200 seconds), using `PYTHONPATH=src python -m unittest discover -s tests -v`.
+All ten optional neural checks are included in the separate passing 26-test CPU
+subset above. Subsequent report wording clarifies that synthetic donors are newly
+constructed offline base-model interventions, not initialization trajectories;
+[the readable exact-input fixture](controlled_peer_donors_example.md) complements
+the complete token/mask JSON. Scientific efficacy remains unestablished.
+Final focused report/export/restore/import and exact-fixture/notebook checks after
+that wording change: two passed, no skips/failures (41.630 seconds). CLI help,
+Python compilation and `git diff --check` also pass.

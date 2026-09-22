@@ -948,3 +948,45 @@ under canonical serialization; six notebook cells compile. GPU run remains pendi
   32 updates per trained arm. No private replay recollection, final-test data or sweep.
 - [Methodology](receiver_supervision_methodology.md), [commands](receiver_supervision_colab.md),
   `experiments/receiver_supervision_v1.json`. The 72-call prompt control stays closed.
+
+## Returned: qwen3-receiver-supervision-001 — support stop (2026-09-22)
+
+- Verified ZIP SHA256 `93332881dbe83bd6dd975beaad6a678094c7f1164f9aa044674e1c06593f783b`;
+  source `fd38b5e90bf6e5c648922405d46094abbc2449b2`, clean.
+- 96/96 source tasks; 672/672 committed private/donor calls, zero unresolved;
+  159,313 input / 34,766 output tokens. No receiver generations or optimizer updates.
+- Recomputed fit hold/repair support 2/2; held-out 0/1. Five contexts across three
+  unique tasks. `insufficient_context_support`; weights correctly remain empty.
+- No rerun, increased draws, relaxed gate or subsequent GPU stage authorized by this
+  result. [Full audit](reviews/qwen3-receiver-supervision-001.md). Study efficacy remains untested.
+
+## Offline follow-up: receiver donor inventory 001 (2026-09-22)
+
+Eight checksummed retained training-generation reviews, 950 distinct private/revision
+call records, **zero matching tasks or known duplicate groups** for the receiver
+study's frozen selection. Zero new model calls and updates. No donor packets imported
+and no new GPU run scheduled. Reproducible audit and source requirements:
+[receiver-donor-inventory-001](reviews/receiver-donor-inventory-001.md).
+
+## Consolidated review checkpoint — project-audit-20260922
+
+Compiled [the updated project audit](audits/PACT_PROJECT_AUDIT_2026-09-22.md):
+completed experiments, corrected matched comparisons, original DPO and new context
+support bottlenecks, verified preparation versus unexecuted receiver training,
+recovery limitations and open donor-source decisions. Fresh SHA256/CRC checks pass
+for all 21 retained top-level ZIPs; donor inventory reproduces exactly. No new model
+calls, training, final-test access or methodology choice. Historical tests are reported
+as previously executed, not rerun. Listed real inference runs total 8,646 recorded
+calls; two clean-answer preparations total 99 updates/396 presentations, not PACT updates.
+
+## Implemented, not GPU-executed: controlled peer donors child study — 2026-09-22
+
+`qwen3-controlled-peer-donors-001` acquisition feeds
+`qwen3-receiver-supervision-controlled-001`, initialized from the existing completed
+120-task preparation. Parent ZIP SHA256 `93332881dbe83bd6dd975beaad6a678094c7f1164f9aa044674e1c06593f783b`
+is imported read-only. Same 64/32 groups, original focal0 own packets; no new parent
+calls. Offline target conditioning is explicitly authorized only for this synthetic
+source. Actual donor yield, receiver learning and evaluation remain unmeasured.
+Ceiling 384 acquisition / 1,104 total calls, 273,408 reserved output tokens; 32 updates
+per trained arm. Missing primary support stops before updates. Historical results
+remain unchanged. [Runbook](controlled_peer_donors_colab.md).

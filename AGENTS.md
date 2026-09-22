@@ -28,3 +28,9 @@ train-split-only and DPO-disabled; official labels supervise answer-bearing pref
 under the unchanged receiver prompt, never gold-bearing input or invented rationale.
 Missing hold/repair support stops the bounded study. Do not reopen completed diagnostics
 or describe receiver SFT as executed full PACT or demonstrated scientific efficacy.
+
+[Controlled peer donors](docs/controlled_peer_donors_methodology.md) explicitly allow
+answer conditioning ONLY in the offline synthetic donor generator. Keep original
+natural focal0 packets unchanged; never route these donors into legacy replay.
+Primary hold/repair support does not require both donor types. Retain the 384 donor /
+1,104 total call caps, unchanged support stops and separate synthetic/natural claims.

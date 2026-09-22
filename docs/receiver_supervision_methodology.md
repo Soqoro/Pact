@@ -163,3 +163,12 @@ enabled DPO in this study runner, archive/ignore-peers/SAC composition, adaptive
 attacks, broader tool transfer, and final-test/paper claims. None are silently marked
 complete by successful receiver SFT. Historical replay, solver and DPO code remains
 unchanged and covered by existing regressions.
+
+## Explicit child source update — 22 September 2026
+
+[controlled_peer_donors_v1](controlled_peer_donors_methodology.md) is a separately
+versioned, authorized label-conditioned offline donor source. It preserves this
+objective and trainer, but fixes own histories to original focal0 packets and uses
+one synthetic peer slot. Its 1,104-call budget replaces, rather than extends, the
+closed parent's schedule. The earlier no-answer-forcing restriction is superseded
+only for this offline generator; historical source recipes remain unchanged.

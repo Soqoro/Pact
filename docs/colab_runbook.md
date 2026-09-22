@@ -273,3 +273,11 @@ freeze a fresh 96-group split, enforce the context-support gate, train two adapt
 independently, and evaluate/report/export. They do not rerun the completed prompt
 control. Source weights, new optimizer checkpoints and lightweight review ZIPs have
 separate roles and paths. Budget: at most 1,296 generation calls; no final-test data.
+
+## Controlled peer donors child study (22 September 2026)
+
+Use [the complete ordered cells](controlled_peer_donors_colab.md) or
+[notebook 05](../notebooks/05_controlled_peer_donors_colab.ipynb) after reviewing and
+pushing the patch. The parent receiver collection remains closed. Acquisition,
+training and evaluation have separate explicit switches, initially off. This
+bounded synthetic-source feasibility study has no new real-model results yet.

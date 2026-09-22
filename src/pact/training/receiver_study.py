@@ -26,7 +26,7 @@ from .preparation_runner import preparation_references
 from .receiver import JournalBackend, inspect_journal
 from .receiver_supervision import (ARMS, ReceiverSupervisionConfig, load_rx_config, study_plan,
                                   build_contexts, prefix_tokens, packet_from_dict)
-from .receiver_supervision_train import training_examples, train_focal, token_loss
+from .receiver_supervision_train import training_examples, train_focal, token_loss, update_schedule
 from .scoring import CollectionBackend, verify_references, scoring_adapter
 
 STATUS = 'training_only_receiver_supervision_feasibility'
@@ -42,8 +42,12 @@ def peer_withheld(record, task):
 
 
 def assert_contexts(root, plan):
-    records = ShardStore(root/'contexts').records()
-    expected = build_contexts(plan, records)
+    if plan.get('source_variant') == 'controlled_peer_donors_v1':
+        from .controlled_donors import build_contexts as controlled_contexts, verified_attempts
+        expected = controlled_contexts(plan, verified_attempts(plan, root))
+    else:
+        records = ShardStore(root/'contexts').records()
+        expected = build_contexts(plan, records)
     if canonical(read_json(root/'contexts.json')) != canonical(expected):
         raise ValueError('Frozen contexts changed from their sampled source records')
     contracts=read_json(root/'target_masks.json')
@@ -111,7 +115,7 @@ class Recovery:
 def validate_local_recovery(root, plan):
     """Only scratch with every attempted operation accounted for can resume locally."""
     from .checkpoints import latest_checkpoint
-    for stage in (root/'contexts', *(root/'evaluation'/a for a in ARMS)):
+    for stage in (root/'contexts', root/'donors', *(root/'evaluation'/a for a in ARMS)):
         inspect_journal(stage, plan['budget'])
         for intent in (stage/'ce-intents').glob('*.json'):
             if ShardStore(stage/'ce').read(intent.stem) is None:
@@ -168,22 +172,34 @@ def score_prefix(backend, tokenized, focal):
     return value
 
 
+def receiver_cases(plan, record):
+    task=task_from_dict(plan['tasks'][record['task_id']])
+    if plan.get('source_variant') == 'controlled_peer_donors_v1':
+        seed=node_seed(plan['config']['generation_seed'], 'controlled_peer_donors_v1', task.task_id, 'heldout-receiver')
+        cases=[(kind,messages(value['messages']),seed) for kind,value in record['donor_variants'].items()]
+        return cases+[('peer_withheld',peer_withheld(record,task),seed)]
+    seed=node_seed(plan['config']['generation_seed'],record['record_id'],'heldout-receiver')
+    return [('full',messages(record['messages']),seed),('peer_withheld',peer_withheld(record,task),seed)]
+
+
+def receiver_conditions(plan):
+    return ('correct_target','wrong_target','peer_withheld') if plan.get('source_variant') else ('full','peer_withheld')
+
+
 def evaluate(plan, contexts, backend, runtime, root, arm, recovery, stop_after=None):
     cfg = ReceiverSupervisionConfig(**plan['config']); stage = root/'evaluation'/arm
     rows = contexts['partitions']['heldout']['records']
     smoke_entries = sorted([e for e in plan['selection'] if e['partition']=='heldout'],
                            key=lambda e:digest([cfg.selection_seed, 'smoke', e['group_id']]))[:cfg.smoke_tasks]
-    calls = len(rows)*2+cfg.heldout_tasks+cfg.smoke_tasks*14
+    calls = sum(len(receiver_cases(plan,r)) for r in rows)+cfg.heldout_tasks+cfg.smoke_tasks*14
     finals = cfg.smoke_tasks*2
     budget = {'generation_calls_upper_bound':calls, 'generated_tokens_upper_bound':(calls-finals)*256+finals*64}
     journal = JournalBackend(backend, stage, budget, stop_after=stop_after, before_new=recovery.before)
     protocol = Protocol(runtime, journal); store = ShardStore(stage); ce_store = ShardStore(stage/'ce')
     for record in rows:
         task = task_from_dict(plan['tasks'][record['task_id']]); gold = record['target_answer']
-        for condition in ('full', 'peer_withheld'):
+        for condition, prompt, seed in receiver_cases(plan, record):
             key = digest(['receiver', record['record_id'], condition]); journal.begin_record(key)
-            prompt = messages(record['messages']) if condition=='full' else peer_withheld(record, task)
-            seed = node_seed(cfg.generation_seed, record['record_id'], 'heldout-receiver')
             packet = protocol.packet(task, cfg.focal_agent, 'revision', prompt, seed)
             row = {'schema_version':1, 'work_id':key, 'kind':'receiver', 'record_id':record['record_id'], 'task_id':task.task_id,
                    'family':task.family, 'source':record['source'], 'stratum':record['stratum'], 'condition':condition,
@@ -280,8 +296,9 @@ def audit_evaluation_row(plan, contexts, row, checkpoint):
         records={r['record_id']:r for r in contexts['partitions']['heldout']['records']}
         record=records[row['record_id']]
         if any(row[k]!=record[k] for k in ('task_id','source','stratum')):raise ValueError('Receiver cohort mismatch')
-        prompt=messages(record['messages']) if row['condition']=='full' else peer_withheld(record,task)
-        seed=node_seed(cfg.generation_seed,record['record_id'],'heldout-receiver');phase='revision'
+        cases={c:(p,s) for c,p,s in receiver_cases(plan,record)}
+        if row['condition'] not in cases:raise ValueError('Unavailable receiver condition')
+        prompt,seed=cases[row['condition']];phase='revision'
         match={'task_id':task.task_id,'record_id':record['record_id'],'context_hash':digest(prompt),
                'actor':cfg.focal_agent,'seed':seed,'decoding':call.parameters_json}
         if row['match']!=match:raise ValueError('Receiver comparison identity changed')
@@ -309,6 +326,13 @@ def report(root):
         rows = ShardStore(root/'evaluation'/arm).records(); ce = ShardStore(root/'evaluation'/arm/'ce').records()
         ce_by_key={r['generation_key']:r for r in ce}
         if len(ce_by_key)!=len(ce) or set(ce_by_key)!={r['work_id'] for r in rows if r['kind']=='receiver'}:raise ValueError('Missing/duplicate teacher-forced diagnostics')
+        expected_keys={digest(['receiver',r['record_id'],c]) for r in contexts['partitions']['heldout']['records'] for c,_,_ in receiver_cases(plan,r)}
+        if expected_keys!={r['work_id'] for r in rows if r['kind']=='receiver'}:raise ValueError('Incomplete receiver cohort')
+        expected_private={e['task_id'] for e in plan['selection'] if e['partition']=='heldout'}
+        if expected_private!={r['task_id'] for r in rows if r['kind']=='private'}:raise ValueError('Incomplete private cohort')
+        smoke=sorted([e for e in plan['selection'] if e['partition']=='heldout'],key=lambda e:digest([plan['config']['selection_seed'],'smoke',e['group_id']]))[:plan['config']['smoke_tasks']]
+        if {(e['task_id'],c) for e in smoke for c in ('clean','exchange')}!={(r['task_id'],r['condition']) for r in rows if r['kind']=='natural_team'}:
+            raise ValueError('Incomplete natural-team cohort')
         all_rows[arm] = rows
         if len({r['work_id'] for r in rows}) != len(rows):raise ValueError('Duplicate evaluation record')
         for row in rows:
@@ -316,9 +340,9 @@ def report(root):
         outputs[arm] = {'checkpoint':status['checkpoint'], 'receiver':{}, 'private':summarize([r for r in rows if r['kind']=='private']),
                         'natural_team':{c:aggregate([r['evaluation'] for r in rows if r['kind']=='natural_team' and r['condition']==c]) for c in ('clean','exchange')},
                         'per_task':rows, 'teacher_forced_answer_nll':ce}
-        for condition in ('full','peer_withheld'):
+        for condition in receiver_conditions(plan):
             for stratum in ('hold','repair'):
-                for source in ('all','natural','curated'):
+                for source in (('all',plan['source_variant']) if plan.get('source_variant') else ('all','natural','curated')):
                     cohort = [r for r in rows if r['kind']=='receiver' and r['condition']==condition and r['stratum']==stratum and (source=='all' or r['source']==source)]
                     summary = summarize(cohort)
                     by_task={}
@@ -337,7 +361,7 @@ def report(root):
             validate_receiver_match(a,b,outputs[left]['checkpoint'],outputs[right]['checkpoint'])
             transitions[f'{a["correct"]}->{b["correct"]}']+=1
         cohorts={}
-        for condition in ('full','peer_withheld'):
+        for condition in receiver_conditions(plan):
             for stratum in ('hold','repair'):
                 pairs={}
                 selected=[k for k,r in paired[left].items() if r['condition']==condition and r['stratum']==stratum]
@@ -373,14 +397,15 @@ def report(root):
         for stratum in ('hold','repair'):
             pairs={};transitions=Counter()
             for (rid,condition),row in controls.items():
-                if condition!='full' or row['stratum']!=stratum:continue
+                primary=('wrong_target' if stratum=='hold' else 'correct_target') if plan.get('source_variant') else 'full'
+                if condition!=primary or row['stratum']!=stratum:continue
                 neutral=controls[(rid,'peer_withheld')]
                 if any(row['match'][k]!=neutral['match'][k] for k in ('task_id','actor','seed','decoding')):raise ValueError('Unmatched peer control')
                 pairs.setdefault(row['task_id'],[]).append((float(row['correct']),float(neutral['correct'])))
                 transitions[f'{neutral["correct"]}->{row["correct"]}']+=1
             peer_effects[arm][stratum]={'peer_withheld_to_full':dict(transitions),'task_cluster_difference':paired_bootstrap(pairs)}
     generation = []; teacher=0
-    for stage in (root/'contexts', *(root/'evaluation'/arm for arm in ARMS)):
+    for stage in (root/'contexts', root/'donors', *(root/'evaluation'/arm for arm in ARMS)):
         intents, calls = inspect_journal(stage, plan['budget']); generation.extend(calls.values())
         teacher += len(ShardStore(stage/'ce').records())
     if (len(generation)>plan['budget']['generation_calls_upper_bound'] or
@@ -401,13 +426,21 @@ def report(root):
               'training':training,
               'compute_units':None,
               'support':{p:{k:v for k,v in s.items() if k!='records'} for p,s in contexts['partitions'].items()}}
+    if plan.get('source_variant'):
+        from .controlled_donors import augment_report
+        augment_report(plan,contexts,result)
     write_json(root/'report.json', result); return result
 
 
 def export(root, persistent, outcome):
     root=Path(root); state=read_json(root/'state.json')
+    plan=read_json(root/'plan.json')
+    if plan.get('source_variant'):
+        from .controlled_donors import progress_report
+        progress_report(plan,root)
     write_json(root/'CODEX_HANDOFF.json', {'variant':'receiver_supervision_v1', 'study_hash':state['study_hash'],
         'scientific_status':STATUS, 'full_pact_ready':False, 'outcome':outcome,
+        'source_variant':plan.get('source_variant','original_sampled_source'), 'parent':plan.get('parent'),
         'checkpoint_paths':{a:str(root/'training'/a/'references') for a in ('task_sft','receiver_sft')},
         'initialization_path':state['initialization_path'], 'persistent_root':str(persistent),
         'review_contains_tensor_weights':False, 'resume_requires_verified_full_snapshot':True})
@@ -416,6 +449,7 @@ def export(root, persistent, outcome):
         'Review ZIP omits tensors; restore the verified full snapshot to resume.\n'
         f'Full durable root: `{persistent}`. Initialization: `{state["initialization_path"]}`.\n'
         'Frozen histories are from initialization; natural-team results are separate. DPO is disabled.\n'
+        + ('Source: controlled_peer_donors_v1. Donors are label-conditioned synthetic intervention data; rationales NOT reviewed.\n' if plan.get('source_variant') else '') +
         'See plan.json, target_masks.json, training/*/examples.json, status.json, report.json and resource files.\n', encoding='utf-8')
     bundle=review_bundle(root, root.parent/'bundles'/f'{root.name}-{time.time_ns()}.zip', outcome,
                          kind='receiver_supervision_review', scientific_status=STATUS,max_metadata_bytes=256*1024**2,include_markdown=True)
@@ -441,9 +475,9 @@ def read_receiver_supervision_review(bundle, expected_sha):
     return content
 
 
-def main(argv=None):
+def main(argv=None, *, controlled=False):
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('stage', choices=('plan','contexts','train','evaluate','report','export','restore'))
+    parser.add_argument('stage', choices=(('plan','acquire','contexts','train','evaluate','report','export','restore') if controlled else ('plan','contexts','train','evaluate','report','export','restore')))
     for name in ('config','data-dir','initialization-bundle','initialization-root','run-dir','persistent'):
         parser.add_argument('--'+name, type=Path, required=True)
     parser.add_argument('--cache-dir', type=Path, default=Path('/content/pact-scratch/cache'))
@@ -453,14 +487,26 @@ def main(argv=None):
     parser.add_argument('--execute', action='store_true')
     parser.add_argument('--resume', action='store_true')
     parser.add_argument('--stop-after', type=int)
+    if controlled:
+        parser.add_argument('--parent-bundle',type=Path,required=True)
+        parser.add_argument('--acquisition-id',required=True)
     args=parser.parse_args(argv); root=args.run_dir
     if args.stop_after is not None and args.stop_after<1: parser.error('--stop-after must be positive')
     if args.stage=='restore':
         if args.snapshot is None: parser.error('--snapshot is required')
         root.parent.mkdir(parents=True, exist_ok=True)
         print(canonical(storage_operation('receiver-supervision-restore',args.snapshot,root,timeout_seconds=600)));return
-    config=load_rx_config(args.config)
-    plan=study_plan(config,args.data_dir,args.initialization_bundle,args.selection)
+    if controlled:
+        from .controlled_donors import load_config
+        config=load_config(args.config)
+    else:config=load_rx_config(args.config)
+    if controlled:
+        from .controlled_donors import plan as controlled_plan
+        if root.name in ('qwen3-receiver-supervision-001','qwen3-preparation-120-001') or args.acquisition_id==root.name:
+            raise ValueError('Use distinct new acquisition and consumer IDs')
+        plan=controlled_plan(config,args.data_dir,args.initialization_bundle,args.selection,args.parent_bundle,args.acquisition_id)
+    else:
+        plan=study_plan(config,args.data_dir,args.initialization_bundle,args.selection)
     # Serialize dataclass/tuple values once, so disk comparisons have identical types.
     plan=json.loads(canonical(plan))
     recipe={'plan':plan, 'source':code_identity(Path(__file__).resolve().parents[3])}
@@ -468,7 +514,7 @@ def main(argv=None):
     if args.stage=='plan' and not args.execute:
         print(canonical({'status':'plan_only','study_hash':identity,'budget':plan['budget'],
                          'selection_hash':plan['selection_hash'], 'training_executed':False}));return
-    if args.stage in ('contexts','train','evaluate') and not args.execute:
+    if args.stage in ('acquire','contexts','train','evaluate') and not args.execute:
         parser.error('GPU stages require --execute; plan first')
     root.mkdir(parents=True, exist_ok=True)
     with run_lock(root):
@@ -489,7 +535,11 @@ def main(argv=None):
         try:
             if args.stage=='plan':
                 recovery.after();outcome={'status':'plan_frozen','study_hash':identity,'budget':plan['budget']}
-            elif args.stage=='report': outcome={'status':'report_complete','summary_path':str(root/'report.json'),'accounting':report(root)['generation_accounting']}
+            elif args.stage=='report':
+                if controlled and read_json(root/'contexts.json')['status']!='ready':
+                    from .controlled_donors import progress_report
+                    outcome=progress_report(plan,root)
+                else:outcome={'status':'report_complete','summary_path':str(root/'report.json'),'accounting':report(root)['generation_accounting']}
             elif args.stage=='export': outcome={'status':'review_export','recovery_safe':True}
             else:
                 initial=initial_recipe(plan,args.initialization_root)
@@ -501,12 +551,23 @@ def main(argv=None):
                 recipe_arm=arm_recipe(root,plan,args.arm,initial) if args.stage=='evaluate' else initial
                 references=(root/'training'/args.arm/'references') if args.stage=='evaluate' and args.arm!='frozen' else args.initialization_root/'references'
                 write_json(root/'environment.json',{'packages':versions(),'runtime_fingerprint':runtime_fingerprint(),'compute_units':None})
-                runtime,backend=load_backend(plan,references,recipe_arm,args.cache_dir)
+                if controlled and args.stage in ('acquire','contexts'):
+                    from .controlled_donors import load_backend as load_donor_backend
+                    runtime,backend=load_donor_backend(plan,args.cache_dir)
+                else:runtime,backend=load_backend(plan,references,recipe_arm,args.cache_dir)
                 try:
-                    if args.stage=='contexts': outcome=collect(plan,backend,runtime,root,recovery,args.stop_after)
+                    if controlled and args.stage in ('acquire','contexts'):
+                        from .controlled_donors import acquire, freeze_contexts
+                        if args.stage=='acquire':outcome=acquire(plan,backend,runtime,root,recovery,args.stop_after)
+                        else:outcome={'status':freeze_contexts(plan,root,backend.tokenizer)['status']}
+                    elif args.stage=='contexts': outcome=collect(plan,backend,runtime,root,recovery,args.stop_after)
                     elif args.stage=='evaluate': outcome=evaluate(plan,contexts,backend,runtime,root,args.arm,recovery,args.stop_after)
                     else:
                         examples=training_examples(plan,contexts,backend.tokenizer,args.arm)
+                        if controlled:
+                            frozen=read_json(root/'training_schedule.json')[args.arm]
+                            if frozen['examples_hash']!=digest(examples) or frozen['schedule']!=update_schedule(examples,config):
+                                raise ValueError('Frozen training exposure/tokenization changed')
                         if args.arm=='receiver_sft':
                             masks=read_json(root/'target_masks.json')
                             if any(e['primary']!=masks[e['record_id']] for e in examples):raise ValueError('Training tokenizer/prefix differs from frozen context preflight')
@@ -524,6 +585,11 @@ def main(argv=None):
                     del backend;gc.collect()
             print(canonical(export(root,args.persistent,outcome)))
         except BaseException as exc:
+            if controlled:
+                from .controlled_donors import progress_report
+                try:progress_report(plan,root)
+                except Exception as report_error:
+                    write_json(root/'source_report_error.json',{'type':type(report_error).__name__,'message':redact(str(report_error))})
             write_json(root/'errors'/f'{time.time_ns()}.json',{'stage':args.stage,'arm':args.arm,
                        'type':type(exc).__name__,'message':redact(str(exc))})
             # Always create a local metadata review before a potentially stalled Drive write.

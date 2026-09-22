@@ -951,3 +951,26 @@ no replenishment; at most 64/32 contexts, 8/4 distinct-task minima per stratum. 
 arms share initialization, label exposure and anchors. 1,296 calls / 322,560 reserved
 output tokens, at most 32 updates per trained arm. Frozen-history and curated results
 stay distinct from natural-team smoke. No new model outcome or improvement claimed.
+
+## 2026-09-22 — Retained donor audit after receiver support stop
+
+Before proposing new sampling, inspect checksummed historical training-generation
+reviews for same-task packets. The [offline inventory](reviews/receiver-donor-inventory-001.md)
+finds zero exact task/input or known group overlaps across 950 distinct private/revision
+call records in eight reviews. Keep the stopped study, gate, source histories and
+DPO-off setting unchanged. Do not introduce an importer that implies missing donor
+material exists. A future external-source contract needs actual authenticated same-task
+material and explicit versioning; no new acquisition/GPU run is prescribed here.
+
+## 2026-09-22 — Authorized controlled_peer_donors_v1 child source
+
+Implement the explicit controlled-donor update, separate from receiver_supervision_v1
+objective. Original focal0 own bytes and the original 96 groups remain fixed; bounded
+offline base-only generation may support correct/wrong selected options under one
+symmetric template. This narrowly supersedes prior offline answer-forcing restrictions.
+Donors are synthetic, label-conditioned, reasoning-unreviewed and excluded from legacy
+private replay. No opposite-donor prerequisite for primary supervision. Reuse the
+existing trainer, journal, storage and natural protocol; link acquisition ID under the
+new consumer's donors directory for a single guarded recovery budget. Preserve all
+closed experiments and prior audit conclusions as historical evidence.
+[Contract, exact selection rules and loss routing](controlled_peer_donors_methodology.md).
