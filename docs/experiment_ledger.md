@@ -916,3 +916,35 @@ requires review/publication and a returned handoff before promoting its GPU stat
 Prompt-control validation: full default suite **151 tests: 145 passed, six optional
 neural skips**, 92.010 seconds. Actual archived requests reconstruct byte-for-byte
 under canonical serialization; six notebook cells compile. GPU run remains pending.
+
+## Completed prompt diagnostic — `qwen3-preparation-prompt-control-001` (2026-09-22)
+
+- ZIP SHA256 `a48bfe31276a58479d80780db48226ef55d3d1d85526f530e435bc497535db34`;
+  all 226 members, 225 payload checksums and 368 inventory entries reconciled.
+- Frozen plan and all 72 journaled calls reconstruct offline. No missing/unresolved
+  calls; no cache hits, training, receiver generations or teacher-forced scoring.
+- Packet versus answer-only correctness unchanged: 45/72 overall, ARC 24/36,
+  LogiQA 21/36. All 72 parse. Answers unchanged 68/72; four wrong-to-wrong changes.
+  Teams remain 15 all-correct/nine all-wrong, with zero mixed correctness.
+- 14,235 input / 432 output tokens; invocation 161.158s including model load54.615s;
+  summed generation36.562s. Receipt reports verified persistence; current Drive and
+  tensor bytes not independently inspected. No run-specific reset/resume test.
+- Evidence: `results_import/qwen3-preparation-prompt-control-001-analysis/`.
+  [Review](reviews/qwen3-preparation-prompt-control-001.md). Close the diagnostic;
+  no automatic follow-up GPU run. Documentation-only update, no suite rerun.
+
+## Planned: qwen3-receiver-supervision-001 (2026-09-22)
+
+- Variant `receiver_supervision_v1`, target `receiver_answer_ce_v1`; GPU **not executed**.
+- Initialization: completed 120-task preparation, final step 90; original provenance
+  ZIP `a1f5a23a14bb5420b963bbe02294345f98c17acd030b41e0686ce2085ff6d388`.
+- Frozen 96-group selection hash `7c8c4319439c1cb29345961496b2e74a2713a3b0d2714489957be17af2e907fc`;
+  64 fitting / 32 diagnostic held-out training groups, both families balanced;
+  excludes 120 preparation and 24 prior probe task IDs plus known duplicate groups.
+- One focal adapter, frozen / task-SFT / receiver-SFT arms; DPO disabled.
+  Context support not yet measured. No new receiver or team accuracy results.
+- Hard planned maximum: 1,296 calls / 322,560 reserved generated tokens;
+  512 training forward/backward microbatches, 192 teacher-forced evaluation forwards,
+  32 updates per trained arm. No private replay recollection, final-test data or sweep.
+- [Methodology](receiver_supervision_methodology.md), [commands](receiver_supervision_colab.md),
+  `experiments/receiver_supervision_v1.json`. The 72-call prompt control stays closed.

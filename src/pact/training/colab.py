@@ -27,19 +27,22 @@ def _restore_snapshot(snapshot: Path, destination: Path, *, progress=lambda mess
         raise ValueError("Invalid snapshot completion marker")
     index = read_json(index_path)
     entries = index["files"]
-    if index.get("schema_version") != 1 or not isinstance(entries, dict) or not 1 <= len(entries) <= 5000:
+    if index.get("schema_version") != 1 or not isinstance(entries, dict) or not 1 <= len(entries) <= (10000 if kind == "receiver_supervision" else 5000):
         raise ValueError("Invalid snapshot inventory")
-    if kind not in ("warmstart", "training_bank", "preference_feasibility_diagnostic", "receiver_feasibility_diagnostic", "private_support_control", "curated_repair_diagnostic", "actor_preparation_probe", "preparation_prompt_control"):
+    if kind not in ("receiver_supervision", "warmstart", "training_bank", "preference_feasibility_diagnostic", "receiver_feasibility_diagnostic", "private_support_control", "curated_repair_diagnostic", "actor_preparation_probe", "preparation_prompt_control"):
         raise ValueError("Unknown snapshot kind")
     required = {"run.json", "examples.json"} if kind == "warmstart" else {"manifest.json", "data_manifest.json", "model_identity.json"}
     if kind in ("preference_feasibility_diagnostic", "private_support_control", "curated_repair_diagnostic", "actor_preparation_probe", "preparation_prompt_control"):
         required = {"manifest.json", "plan.json", "model_identity.json"}
+    if kind == "receiver_supervision": required = {"state.json", "plan.json", "recipe.json"}
     if not required <= entries.keys():
         raise ValueError("Snapshot is not an initialized run of the requested kind")
     if kind in ("receiver_feasibility_diagnostic", "private_support_control", "curated_repair_diagnostic", "actor_preparation_probe", "preparation_prompt_control"):
         latest = max(p.name for p in snapshot.parent.iterdir() if p.is_dir())
         if snapshot.name != latest:
             raise ValueError("Receiver restore must use latest snapshot; no rollback of attempted-call budget")
+    if kind == "receiver_supervision" and snapshot.name != max(p.name for p in snapshot.parent.iterdir() if p.is_dir()):
+        raise ValueError("Receiver study restore requires latest snapshot; no budget rollback")
     objects = snapshot.parent.parent / "objects"
     destination.parent.mkdir(parents=True, exist_ok=True)
     staging = Path(tempfile.mkdtemp(prefix=".pact-restore-", dir=destination.parent))
@@ -62,7 +65,16 @@ def _restore_snapshot(snapshot: Path, destination: Path, *, progress=lambda mess
                 raise ValueError("Corrupt snapshot object")
             if position == 1 or position % 10 == 0 or position == len(entries):
                 progress(f"Restoring verified {kind} files: {position}/{len(entries)}")
-        if kind == "warmstart":
+        if kind == "receiver_supervision":
+            from .receiver_study import validate_local_recovery
+            from ..util import digest
+            state = read_json(staging / "state.json")
+            if not state.get("recovery_safe") or state["study_hash"] != digest(read_json(staging / "recipe.json")):
+                raise ValueError("Unsafe receiver study snapshot; possible lost attempts")
+            if read_json(staging / "plan.json") != read_json(staging / "recipe.json")["plan"]:
+                raise ValueError("Receiver study plan mismatch")
+            validate_local_recovery(staging, read_json(staging / "plan.json"))
+        elif kind == "warmstart":
             latest_checkpoint(staging / "checkpoints", read_json(staging / "run.json")["identity"])
         else:
             from ..artifacts import ShardStore
@@ -96,7 +108,7 @@ def restore_snapshot(snapshot, destination, *, timeout_seconds=120):
 
 
 def review_bundle(root: Path, output: Path, outcome: dict, *, kind="warmstart_engineering_review",
-                  scientific_status="clean_answer_warmstart_engineering_only"):
+                  scientific_status="clean_answer_warmstart_engineering_only", max_metadata_bytes=90 * 1024**2, include_markdown=False):
     """Small diagnostic archive. Tensor checkpoints remain in the full snapshot."""
     if output.exists():
         raise FileExistsError("Never overwrite a prior handoff")
@@ -104,9 +116,9 @@ def review_bundle(root: Path, output: Path, outcome: dict, *, kind="warmstart_en
     inventory = {p.relative_to(root).as_posix(): {"sha256": file_hash(p), "bytes": p.stat().st_size}
                  for p in files}
     # JSON state contains tensor references, not tensor payloads. Include it for audit.
-    metadata = [p for p in files if p.suffix in (".json", ".jsonl", ".txt")]
-    if sum(p.stat().st_size for p in metadata) > 90 * 1024**2:
-        raise ValueError("Review metadata exceeds 90 MiB limit")
+    metadata = [p for p in files if p.suffix in ((".json", ".jsonl", ".txt", ".md") if include_markdown else (".json", ".jsonl", ".txt"))]
+    if sum(p.stat().st_size for p in metadata) > max_metadata_bytes:
+        raise ValueError("Review metadata exceeds declared byte limit")
     payload = {p.relative_to(root).as_posix(): p.read_bytes() for p in metadata}
     payload["HANDOFF.json"] = canonical({"kind": kind, "schema_version": 1,
         "resume_archive": False, "outcome": outcome, "inventory": inventory,

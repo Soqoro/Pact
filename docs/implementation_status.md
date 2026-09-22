@@ -713,3 +713,55 @@ and production offline reconstruction cover the new path. GPU execution pending.
 Prompt-control validation: full default suite **151 tests: 145 passed, six optional
 neural skips**, 92.010 seconds. Actual archived requests reconstruct byte-for-byte
 under canonical serialization; six notebook cells compile. GPU run remains pending.
+
+## Completed prompt control — 2026-09-22
+
+Returned 72/72 calls pass checksum, frozen-plan, model/context/seed and cached-journal
+audit; the report recomputes exactly. Prepared packet versus answer-only correctness
+is 45/72 versus 45/72; four answer changes are all wrong-to-wrong. All 72 new responses
+parse; 15 all-correct and nine all-wrong teams remain. Zero training/scoring occurred.
+Normal GPU execution/persistence is verified from returned evidence on the reported
+environment; current Drive contents, tensor bytes and this run's reset/resume remain
+independently unverified. Diagnostic closed; no next GPU run scheduled.
+[Completed review](reviews/qwen3-preparation-prompt-control-001.md).
+
+## Receiver supervision v1 — 2026-09-22 implementation, not new GPU evidence
+
+Implemented the explicit [methodological addendum](receiver_supervision_methodology.md):
+versioned full-context answer-prefix supervision, token-offset masks without EOS,
+task-averaged hold/repair weighting, bounded natural/traceable-curated context builder,
+one real focal-adapter optimizer path, frozen/task-SFT/receiver-SFT arms, matched
+held-out receiver and peer-withheld probes, private answers and natural-team smoke.
+DPO is disabled and imposes no pair/reference-score gate; legacy DPO, private replay,
+continuation credit, assignment and specialization code remains unchanged.
+
+The real retained pool/initialization metadata passes the dry run and frozen selection
+check: 96 new groups, 144 excluded prior IDs; ceiling 1,296 generation calls / 322,560
+reserved output tokens. Actual new context support and all Qwen training/evaluation
+outcomes are **GPU-unverified**. No final-test data, GPU experiment, commit or push was
+performed. Full-PACT integration and scientific efficacy remain deferred/unestablished.
+
+Validation executed locally:
+- Default full regression suite: 165 tests, 156 passed, nine optional neural tests
+  skipped; no failures (110.053 seconds).
+- Explicit CPU neural/legacy subset: 25 tests passed, no skips/failures (5.654 seconds),
+  including all nine optional neural tests. Used existing CPU torch 2.9.0 and temporary
+  `/tmp` installs of pinned transformers 4.57.6 / peft 0.18.1 / accelerate 1.12.0;
+  no model weights downloaded and no existing environment upgraded.
+- New tiny-Qwen checks independently verify the exact exported prompt/prefix fixture,
+  multi-token causal shift/padding and accumulation; actual LoRA optimization reduces
+  its selected target loss, leaves backbone/nonfocal weights unchanged and resumes
+  bit-identically from the optimizer/RNG boundary. This is implementation evidence,
+  not 8B learning or generalization evidence.
+- New mock study completes all 1,296 planned calls, compares all three arms, counts
+  192 teacher-forced diagnostics and reuses committed generations on repeat. Changed
+  checkpoints/contexts/seeds, unsupported strata, incompatible identity and unresolved
+  attempts fail explicitly. Metadata-only plan/persistence/ZIP/import/restore round
+  trip passed against the real source plan with no model load.
+- Eight new notebook cells compile and remain unexecuted. Exact commands and source
+  weight/new-checkpoint paths are in [the Colab handoff](receiver_supervision_colab.md).
+
+A temporary test-selection typo referenced a nonexistent class; it was corrected,
+and the complete intended 25-test subset passed. An initial context comparison
+found tuple/list serialization mismatch; canonical comparison and round-trip tests
+now cover it. Subsequent focused tests cover the final receiver report/contract guards.

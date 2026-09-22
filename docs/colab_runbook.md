@@ -1,3 +1,9 @@
+# Current status: 72-call prompt control completed
+
+The returned run is audited: 45/72 correct in both arms, with no correctness
+transitions. [Results and limits](reviews/qwen3-preparation-prompt-control-001.md).
+Do not rerun it; no new GPU experiment is scheduled. Prior instructions follow.
+
 # Current next run: fixed 72-call prompt control
 
 Use [these six Colab cells](preparation_prompt_control_colab.md) after publishing the
@@ -257,3 +263,13 @@ PACT_TEST_NEURAL=1 python -m unittest discover -s tests -p test_adapters.py -v
 
 This initializes a tiny random Qwen model and deliberately different adapters; no model
 weights are downloaded. It does not validate Qwen3-8B memory fit or Colab execution.
+
+## Receiver-supervision study (new, GPU-unverified)
+
+Use [these eight ordered cells](receiver_supervision_colab.md), also in
+[`04_receiver_supervision_colab.ipynb`](../notebooks/04_receiver_supervision_colab.ipynb).
+They initialize a new focal-only three-arm experiment from the completed preparation,
+freeze a fresh 96-group split, enforce the context-support gate, train two adapters
+independently, and evaluate/report/export. They do not rerun the completed prompt
+control. Source weights, new optimizer checkpoints and lightweight review ZIPs have
+separate roles and paths. Budget: at most 1,296 generation calls; no final-test data.

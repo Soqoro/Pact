@@ -59,14 +59,14 @@ def copy_source_bundle(source,destination,config,*,timeout_seconds=120):
     return {**result,"path":str(destination)}
 
 
-def read_review(bundle, expected_sha, *, max_members=1000):
+def read_review(bundle, expected_sha, *, max_members=1000, max_bytes=100*1024**2, allow_text=False):
     """Read checksummed JSON as data, with no extraction or imported execution."""
     bundle = Path(bundle)
-    if bundle.is_symlink() or bundle.stat().st_size > 100*1024**2 or file_hash(bundle) != expected_sha:
+    if bundle.is_symlink() or bundle.stat().st_size > max_bytes or file_hash(bundle) != expected_sha:
         raise ValueError("Diagnostic source ZIP hash/size mismatch")
     with zipfile.ZipFile(bundle) as archive:
         infos = archive.infolist()
-        if len(infos) > max_members or sum(i.file_size for i in infos) > 100*1024**2:
+        if len(infos) > max_members or sum(i.file_size for i in infos) > max_bytes:
             raise ValueError("Review archive exceeds bounds")
         names = set()
         for item in infos:
@@ -82,6 +82,9 @@ def read_review(bundle, expected_sha, *, max_members=1000):
             payload = archive.read(name)
             if hashlib.sha256(payload).hexdigest() != checks[name]:
                 raise ValueError("Corrupt review payload")
+            if allow_text and name.endswith((".md", ".txt", ".jsonl")):
+                content[name] = payload.decode("utf-8")
+                continue
             if not name.endswith(".json"):
                 raise ValueError("Diagnostic source expects JSON-only review metadata")
             content[name] = json.loads(payload)

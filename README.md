@@ -1,7 +1,7 @@
 # PACT
 
-Next bounded diagnostic: [72-call prompt-control Colab cells](docs/preparation_prompt_control_colab.md).
-The runner is implemented; actual GPU results remain pending.
+Completed: [72-call prompt-control review](docs/reviews/qwen3-preparation-prompt-control-001.md).
+Answer-only prompting left accuracy unchanged at 45/72; no next GPU run is scheduled.
 
 [Project audit: complete experiment history, corrected results and evidence gaps](docs/audits/PACT_PROJECT_AUDIT_2026-09-21.md).
 
@@ -108,3 +108,10 @@ checkpoint restore exceeded 600 seconds, the [probe recovery repair](docs/review
 adds a verified inference-only restore. Use the [recovery cells](docs/preparation_probe_recovery.md)
 after publishing the repair; preserve completed training. Actual compact Drive
 recovery and the probe outcomes remain unverified.
+
+The explicit **receiver_supervision_v1** variant is implemented for local testing;
+new Qwen GPU outcomes remain unverified. See the
+[methodology and loss routing](docs/receiver_supervision_methodology.md) and
+[ordered Colab cells](docs/receiver_supervision_colab.md). This bounded focal-only
+study keeps the normal packet protocol and does not require sampled DPO pairs.
+It is not completed full PACT or evidence of an improvement.

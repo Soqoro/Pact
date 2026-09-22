@@ -294,3 +294,13 @@ no model. Older per-run scripts may require the corresponding historical source.
 `results_import/` is ignored by Git: a code push does not back up these ZIPs or local
 audit outputs. Preserve them separately along with full Drive snapshots, especially
 `objects/` directories. Small review archives cannot reconstruct missing model tensors.
+
+## Addendum — 22 September 2026
+
+The previously proposed 72-call prompt control is now implemented, executed and
+audited. Same prepared adapters/tasks/seeds: 45/72 correct in both prompt arms;
+68 answer IDs unchanged, four wrong-to-wrong changes. All new responses parse.
+The run adds 72 generations to the earlier 7,902, yielding 7,974 recorded calls
+across these listed runs. The 19-ZIP inventory above remains a dated snapshot; the
+new ZIP has its own verified checksum and audit. The diagnostic is closed.
+[Full review](../reviews/qwen3-preparation-prompt-control-001.md).

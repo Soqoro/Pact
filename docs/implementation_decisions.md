@@ -925,3 +925,29 @@ Strict answer-only and packet parsers apply to their respective arms. Reuse the 
 and compact-export machinery with a distinct command/storage kind, without changing
 the old 104-call run. No optimization, scoring or new receiver contexts are included.
 [Implementation review](reviews/prompt-control-implementation-001.md).
+
+## 2026-09-22: close prompt control after no accuracy change
+
+The frozen 72-call answer-only intervention has 45/72 correct versus the same prepared
+actors' packet baseline at 45/72. Four wrong-to-wrong answer changes do not create
+useful correctness diversity. Apply the predeclared no-benefit-on-this-slice branch;
+no automatic extra sampling, main-protocol change or training follows. This does not
+prove that prompting never matters or newly measure receiver-pair support.
+[Evidence and limits](reviews/qwen3-preparation-prompt-control-001.md).
+
+## 2026-09-22 — Explicit receiver_supervision_v1 update
+
+Implement the user's [receiver update](PACT_Codex_Receiver_Supervision_Update.md) as
+an isolated focal-only supervised study; preserve original proposal/history and
+replay/assignment/specialization/DPO implementations. [Methodology and loss routing](receiver_supervision_methodology.md)
+records answer-bearing prefix masks without EOS, task-averaged balanced hold/repair,
+an explicit 0.1 clean anchor in both trained arms, and optional-DPO integration rules.
+The executed old warmstart base loss is private QA, not receiver CE; no duplicate
+receiver base term is called. The new runner deliberately fixes DPO off.
+
+Freeze 96 fresh groups (64/32, family-balanced), excluding 144 prior IDs and known
+duplicate groups. Focal agent0, original prepared weights, four fixed donor draws,
+no replenishment; at most 64/32 contexts, 8/4 distinct-task minima per stratum. Three
+arms share initialization, label exposure and anchors. 1,296 calls / 322,560 reserved
+output tokens, at most 32 updates per trained arm. Frozen-history and curated results
+stay distinct from natural-team smoke. No new model outcome or improvement claimed.

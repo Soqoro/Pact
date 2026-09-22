@@ -21,3 +21,10 @@ Record choices in `docs/implementation_decisions.md` and evidence in
 Install: `python -m pip install -e .`. Test: `python -m unittest discover -s tests -v`.
 CPU round trip: `python -m pact smoke --config configs/smoke/cpu.yaml --run-id local-smoke`.
 GPU/model tests require explicit opt-in and must remain labeled unverified until executed.
+
+Receiver-supervision methodology is versioned in
+[the addendum](docs/receiver_supervision_methodology.md). Keep its first study focal-only,
+train-split-only and DPO-disabled; official labels supervise answer-bearing prefix tokens
+under the unchanged receiver prompt, never gold-bearing input or invented rationale.
+Missing hold/repair support stops the bounded study. Do not reopen completed diagnostics
+or describe receiver SFT as executed full PACT or demonstrated scientific efficacy.
