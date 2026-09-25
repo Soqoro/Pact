@@ -290,3 +290,11 @@ Use [the complete ordered GPQA cells](gpqa_support_colab.md) or
 preparation arm. Requires personal official GPQA access, private scratch/Drive paths,
 real90-step preparation weights and the pinned completed controlled review. Prior
 receiver experiments remain complete; do not rerun their training or diagnostics.
+
+## Fixed-bank specialization (new opt-in study)
+
+Use [the ordered specialization cells](specialization_colab.md) or
+`notebooks/07_specialization_colab.ipynb`. Default is plan only. Invoke collect,
+replay, assign, each training arm and each evaluation arm separately under the
+same plan hash. Candidate/assignment gates stop without expanding support.
+Review ZIPs are not tensor checkpoints; restore the latest full snapshot only.

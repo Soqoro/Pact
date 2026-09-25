@@ -39,3 +39,9 @@ Primary hold/repair support does not require both donor types. Retain the 384 do
 32 prespecified Diamond tasks, frozen effective preparation actors, 256 calls / 53,248
 reserved output tokens. No training, attacks or protected-remainder generation.
 Keep gated text/prompts/decodable IDs outside Git; private and sanitized exports differ.
+
+[Fixed-bank specialization](docs/specialization_fixed_bank_methodology.md) is a
+separate opt-in all-actor ablation, not full PACT: receiver/DPO off, one frozen
+natural training bank, global base/spec reductions, eight-task support/contrast
+stops. Default to offline plan; each GPU stage requires its frozen plan hash.
+No GPQA access or reopening of completed runs. Preserve exact effective actors.

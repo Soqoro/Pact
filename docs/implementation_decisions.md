@@ -1060,3 +1060,45 @@ detected duplicate groups before domain allocation and seeded selection; all198
 IDs remain accounted for. Private receipts and sanitized summaries record exclusion
 reasons and eligible-group counts. Missing fields, schema/domain/count failures
 and duplicate stable IDs still stop. Existing frozen plans are never overwritten.
+
+
+### Completed GPQA screen: retain the bounded interpretation
+
+Imported evidence reconstructs exactly:2/32 mixed-support tasks, no oracle coverage
+gain over agent0, both single-correct teams lose correctness in clean revision,
+and vote/synthesis/debate all7/32. Preserve sparse_preliminary; no larger cohort,
+new draw, attacks, training or prompt changes are inferred from this result.
+The paired bootstrap[0,0] is not equivalence evidence. Keep two task clusters
+distinct from their four repair contexts, and internal erasure distinct from
+unchanged terminal correctness. No historical receiver result or manuscript
+placeholder modified. [Audit](reviews/qwen3-gpqa-diamond-support-001.md).
+
+## 2026-09-25: authorized assignment contrast and specialization ablation
+
+Implement specialization_fixed_bank_v1 separately from closed receiver/GPQA runs.
+Reuse masked assignment solver, loss_coefficients, natural choose_pair/probe,
+packet protocol, frozen preparation loader and immutable checkpoint/journal code.
+The historical report retains all-cell population standardization; the new preset
+uses eligible-cell global standardization (zero variance scale1), explicitly
+versioned in the frozen settings. Neither uses development scores or per-agent
+normalization. Full sampled packet+EOS specialization and canonical private
+answer JSON+EOS base targets retain the earlier audited token definitions.
+Base=sum/(3U), spec=sum(omega*R*packet_loss)/B, lambda_spec1. Four-row updates use
+global coefficients*U/4, never per-adapter rescaling. Same targets/order/exposure
+across three arms; all actors update sequentially with fresh optimizer state per
+actor/arm.32 updates/actor,96/arm,288 total; clip1 and AdamW inherited. Shared
+adapters change private AND revision policy even though receiver/DPO loss is off.
+
+New32-fit/32-development train-source selection excludes240 known preparation,
+receiver and repeatedly inspected diagnostic IDs plus their source groups/content.
+No GPQA data accessed. Candidate pairs must span8 tasks and8 multi-eligible tasks
+before replay, then credit/local multi-row L1>1e-6 before training; these are
+engineering support checks, not efficacy thresholds. No historical bank can be
+silently mixed with the new effective preparation snapshot. Exact request reuse
+is keyed by actor snapshot and full request, logged in actual attempted counts.
+
+Training reload for evaluation uses exact completed optimizer-boundary actor
+values in the verified preparation architecture, avoiding a fresh lossy adapter
+load. Base/readout remains frozen. Durable latest-only restoration and unknown
+attempt vetoes preserve budgets; export retains partial evidence if reconstruction
+fails. [Methodology and offline findings](specialization_fixed_bank_methodology.md).

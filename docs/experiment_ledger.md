@@ -1062,3 +1062,43 @@ exclusions; these are conditional expectations, not a completed real partition.
 19 fictional CPU tests pass; no generation calls or GPU evidence. Next: user
 review/commit/push, new pinned Colab checkout, repeat dataset preflight on the
 already downloaded source, then the unchanged fixed study if all guards pass.
+
+
+### GPQA completed return — qwen3-gpqa-diamond-support-001
+
+Source1627abae3dd724cdbbb5358ebc6152d4c9be77d7;32/32 complete,256/256 calls,
+0 unresolved;53248 reserved output tokens. Both returned ZIP checksums verified;
+private report reconstructed and identical to sanitized summary. Historical frozen
+contract and returned environment identities match. Partition32 selected/164
+protected/2 malformed exclusions; domains3 Biology/15 Chemistry/14 Physics.
+Mixed support2/32; N0=[23,2,0,7]; coverage9/32 equals best agent9/32. Both mixed
+teams transition1→0; hold0/2, repair0/4 across2 tasks. Vote/synthesis/debate all7/32;
+paired synthesis/debate25 wrong→wrong and7 correct→correct. Screen sparse_preliminary.
+GPU-executed evidence audited; no PACT efficacy/final-test claim or follow-up
+authorized. [Full sanitized audit](reviews/qwen3-gpqa-diamond-support-001.md).
+
+## Assignment characterization / fixed-bank implementation — 2026-09-25
+
+The checksum-verified completed qwen3-bank-001 training bank was characterized
+without a model or optimizer. Two tasks,6 rows,18 cells; eligible-row histogram
+{0:4,1:0,2:1,3:1};5 valid cells but only1 distinct supported/multi-eligible task.
+Historical standardized mean credit/local L1=0.7705078615; local/uniform=0.1122392611;
+raw-NLL credit/local sensitivity=0.7784436707. Thus actual continuation credit
+changes assignment on this bank, but it is not adequate new-study fitting support
+and does not establish learning efficacy. No missing score filled; validation
+replays not promoted into fitting data. Outputs:results_import/assignment-contrast-001/.
+
+New qwen3-specialization-contrast-001 dry planning selects64 fresh groups after240
+known task-ID exclusions;32fit/32development,16/family/partition. No GPU call or
+optimizer update executed on these real tasks. New-stage upper bounds1216collection,
+3072replay,2048evaluation calls,6336total/1363968reserved output tokens,288updates.
+Stage hash/explicit opt-in and candidate/assignment gates are implemented; this is
+specialization only, receiver/DPO off. Completed GPQA and controlled results remain
+unchanged. [Full methodology](specialization_fixed_bank_methodology.md).
+
+Implementation validation completed:204 default tests,191 pass/13 optional skips;
+2 separately executed tiny CPU neural tests pass. The complete mock round trip
+covers all four evaluation systems and safe bundle reconstruction. Mock optimizer
+status remains explicitly synthetic; optional real tiny optimization validates
+sequential actor updates and exact resume, not8B efficacy. Actual new-study GPU
+stages have not been launched. Commands:[specialization Colab/local runbook](specialization_colab.md).

@@ -947,3 +947,59 @@ with two exclusions and immutable repeat preparation. Existing mock256-call
 round-trip, privacy/export/restore, budget and resume tests also pass. Notebook
 cells compile. No full-suite rerun, authorized real CSV access, model download or
 GPU execution for this patch; actual amended preflight awaits Colab evidence.
+
+
+### GPQA returned GPU evidence audited
+
+The bounded study is now GPU-verified on the reported environment, with32 complete
+tasks and256 committed calls,0 missing/unresolved. Both ZIP digests, inventory,
+trusted private report reconstruction and sanitized-summary equality pass locally.
+Returned effective identity matches the previous controlled frozen-arm contract;
+no weights loaded locally. Full-source partition recomputation remains outside
+this review because the protected official CSV is not included. This supersedes
+the prior GPU-unverified status for this specific executed study, not full PACT.
+Support2/32, erasure2/9, repair0/4, terminal7/32 in all three protocols.
+No software changes or test-suite rerun during the artifact audit.
+[Evidence and limits](reviews/qwen3-gpqa-diamond-support-001.md).
+
+## Assignment contrast and fixed-bank specialization implementation
+
+Implemented offline natural-bank characterization, frozen training-pool selection,
+candidate support stop, original K=2 replay/scoring, three responsibility arms,
+sequential all-adapter trainer, matched four-system evaluation, trusted report
+reconstruction, partial/local-first review export, and latest-only full restore.
+New modules:assignment_contrast, specialization_plan, specialization_collect,
+specialization_train, specialization_study. Thin notebook07 defaults to plan only.
+No required neural dependency in default tests; no local pretrained/GPU execution.
+
+Real offline analysis verifies the retained two-task training bank and reports
+insufficient_assignment_support despite numerical continuation contrast. The
+new64-group dry selection succeeds with240 known exposure IDs excluded. No real
+new fitting bank has been collected and no learned specialization efficacy exists.
+Two optional locally initialized CPU neural tests passed (8.416s), including
+independent global gradient agreement and exact resumed versus uninterrupted
+96-update three-actor training with frozen-backbone checks. Export was mocked in
+that tiny architecture test because PEFT is absent in that environment; production
+export reuses existing safetensors/PEFT verification. This does not verify8B behavior.
+Default/full regression results are recorded below after completion.
+
+Advertised zero-model CLI characterization was executed successfully on the
+retained real bank: D_credit_local=0.7705078614967855, distinct_tasks2,
+status insufficient_assignment_support. Source-pool plan selection also executes
+locally, with fresh64 groups after240 excluded IDs. Notebook cells compile with
+plan-only defaults. Full mock round trip passed (8 tests:6 passed,2 optional skips,
+144.612s) before final added restore/adapter routing guards; that separate new
+restore/routing test also passed. Final integrated suite follows.
+
+Final integrated default regression: `PYTHONPATH=src python -m unittest discover
+-s tests -v` ran204 tests in302.788s:191 passed,13 optional skips,zero failures.
+The final production-accumulator neural checks ran separately in the existing
+local gmats environment with PACT_TINY_SPECIALIZATION=1:2 passed in7.174s.
+They exercise the same backward_rows routine as the real trainer; averaging
+minibatch gradients matches an independent full-bank scalar, including unequal
+column masses, zero weights and sparse global denominators. Real three-actor
+96-update training/save/resume matches bit-for-bit after a fresh model restart.
+No pretrained download, local GPU, real-data optimization, commit or push occurred.
+Patch whitespace and all notebook code-cell syntax checks pass. Actual Qwen3
+acquisition, new-bank support, PEFT export/evaluation and learning outcomes remain
+GPU-unverified; the completed older studies are not reopened.
