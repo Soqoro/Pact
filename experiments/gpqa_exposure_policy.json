@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "ledger_review_date": "2026-09-24",
+  "prior_gpqa_use": "No prior GPQA run recorded in the inspected project ledger; not a claim about model pretraining or unknown external exposure.",
+  "exposed_content_hashes": [],
+  "exposed_group_hashes": [],
+  "groups": [],
+  "future_policy": "No GPQA training authorized; exclude all Diamond groups from any future main/extended training design. Selected32 are development-exposed; remainder protected."
+}

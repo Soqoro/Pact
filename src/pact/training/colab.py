@@ -27,21 +27,21 @@ def _restore_snapshot(snapshot: Path, destination: Path, *, progress=lambda mess
         raise ValueError("Invalid snapshot completion marker")
     index = read_json(index_path)
     entries = index["files"]
-    if index.get("schema_version") != 1 or not isinstance(entries, dict) or not 1 <= len(entries) <= (10000 if kind == "receiver_supervision" else 5000):
+    if index.get("schema_version") != 1 or not isinstance(entries, dict) or not 1 <= len(entries) <= (10000 if kind in ("receiver_supervision", "gpqa_support") else 5000):
         raise ValueError("Invalid snapshot inventory")
-    if kind not in ("receiver_supervision", "warmstart", "training_bank", "preference_feasibility_diagnostic", "receiver_feasibility_diagnostic", "private_support_control", "curated_repair_diagnostic", "actor_preparation_probe", "preparation_prompt_control"):
+    if kind not in ("gpqa_support", "receiver_supervision", "warmstart", "training_bank", "preference_feasibility_diagnostic", "receiver_feasibility_diagnostic", "private_support_control", "curated_repair_diagnostic", "actor_preparation_probe", "preparation_prompt_control"):
         raise ValueError("Unknown snapshot kind")
     required = {"run.json", "examples.json"} if kind == "warmstart" else {"manifest.json", "data_manifest.json", "model_identity.json"}
     if kind in ("preference_feasibility_diagnostic", "private_support_control", "curated_repair_diagnostic", "actor_preparation_probe", "preparation_prompt_control"):
         required = {"manifest.json", "plan.json", "model_identity.json"}
-    if kind == "receiver_supervision": required = {"state.json", "plan.json", "recipe.json"}
+    if kind in ("receiver_supervision", "gpqa_support"): required = ({"state.json", "plan.json"} if kind == "gpqa_support" else {"state.json", "plan.json", "recipe.json"})
     if not required <= entries.keys():
         raise ValueError("Snapshot is not an initialized run of the requested kind")
     if kind in ("receiver_feasibility_diagnostic", "private_support_control", "curated_repair_diagnostic", "actor_preparation_probe", "preparation_prompt_control"):
         latest = max(p.name for p in snapshot.parent.iterdir() if p.is_dir())
         if snapshot.name != latest:
             raise ValueError("Receiver restore must use latest snapshot; no rollback of attempted-call budget")
-    if kind == "receiver_supervision" and snapshot.name != max(p.name for p in snapshot.parent.iterdir() if p.is_dir()):
+    if kind in ("receiver_supervision", "gpqa_support") and snapshot.name != max(p.name for p in snapshot.parent.iterdir() if p.is_dir()):
         raise ValueError("Receiver study restore requires latest snapshot; no budget rollback")
     objects = snapshot.parent.parent / "objects"
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -65,7 +65,12 @@ def _restore_snapshot(snapshot: Path, destination: Path, *, progress=lambda mess
                 raise ValueError("Corrupt snapshot object")
             if position == 1 or position % 10 == 0 or position == len(entries):
                 progress(f"Restoring verified {kind} files: {position}/{len(entries)}")
-        if kind == "receiver_supervision":
+        if kind == "gpqa_support":
+            from ..studies.gpqa_study import load_plan, journals
+            plan = load_plan(staging)
+            if not read_json(staging / "state.json")["recovery_safe"] or journals(staging, plan)[2]:
+                raise ValueError("Unsafe GPQA snapshot; no rollback or invisible retry")
+        elif kind == "receiver_supervision":
             from .receiver_study import validate_local_recovery
             from ..util import digest
             state = read_json(staging / "state.json")

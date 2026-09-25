@@ -34,3 +34,8 @@ answer conditioning ONLY in the offline synthetic donor generator. Keep original
 natural focal0 packets unchanged; never route these donors into legacy replay.
 Primary hold/repair support does not require both donor types. Retain the 384 donor /
 1,104 total call caps, unchanged support stops and separate synthetic/natural claims.
+
+[GPQA support study](docs/gpqa_support_methodology.md) is inference-only development:
+32 prespecified Diamond tasks, frozen effective preparation actors, 256 calls / 53,248
+reserved output tokens. No training, attacks or protected-remainder generation.
+Keep gated text/prompts/decodable IDs outside Git; private and sanitized exports differ.

@@ -281,3 +281,12 @@ Use [the complete ordered cells](controlled_peer_donors_colab.md) or
 pushing the patch. The parent receiver collection remains closed. Acquisition,
 training and evaluation have separate explicit switches, initially off. This
 bounded synthetic-source feasibility study has no new real-model results yet.
+
+## GPQA Diamond natural-support development study (implemented, GPU-unverified)
+
+Use [the complete ordered GPQA cells](gpqa_support_colab.md) or
+[the thin notebook](../notebooks/06_gpqa_support_colab.ipynb). This is a new32-task,
+256-call inference-only study using the completed controlled run's frozen effective
+preparation arm. Requires personal official GPQA access, private scratch/Drive paths,
+real90-step preparation weights and the pinned completed controlled review. Prior
+receiver experiments remain complete; do not rerun their training or diagnostics.

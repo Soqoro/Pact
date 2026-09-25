@@ -1003,3 +1003,37 @@ User diagnostics identify exact BF16 rounding, reproduced with a tiny CPU model.
 Explicit evaluation-only recovery implemented; real GPU recovery and all efficacy
 comparisons pending. No completed diagnostics rerun, final-test access, or full
 PACT updates. [Detailed audit](reviews/qwen3-receiver-supervision-controlled-001-training.md).
+
+## 2026-09-24 — controlled-001 bounded evaluation complete
+
+Returned handoff1790186567377083314, SHA256
+`ba84d5a85d4dd8d301ad9bcef2d6fba7f64547a19ec3b261cf45973ede9202ea`.
+All603 evaluation calls and171 CE forwards complete; with217 donors, total820 calls,
+200704 reserved output tokens. Three arms share primary hold13/13 and repair1/6;
+zero correctness changes on57 matched receiver conditions. Private accuracy20/32
+frozen vs21/32 both trained arms; natural clean/exchange5/8,4/8 frozen/task SFT vs
+4/8,5/8 receiver SFT. Lower receiver answer NLL is not a demonstrated repair gain.
+Study closed at original bounds; no extra training, acquisition or final-test work.
+[Full audit and limitations](reviews/qwen3-receiver-supervision-controlled-001-evaluation.md).
+
+## Implemented / CPU-tested / GPU-unverified: qwen3-gpqa-diamond-support-001
+
+Authorized24 September2026 inference-only development screen. Prespecify32 official
+GPQA-Diamond groups at seed20260924 with domain largest-remainder allocation and one
+shared option shuffle. Actual selected IDs/domain counts await authorized CSV access;
+protected remainder is nominally166 (known-group exclusions may reduce it).
+No prior GPQA run found in the inspected ledger; this is not a contamination claim.
+
+Frozen effective preparation arm from completed bundle
+`ba84d5a85d4dd8d301ad9bcef2d6fba7f64547a19ec3b261cf45973ede9202ea` only.
+Actual original90-step weights restored privately; historical effective rounding must
+reproduce. No task-SFT/receiver-SFT checkpoint substitution.256 generation calls /
+53248 reserved output tokens; zero training/scoring/donor/replay forwards.32 tasks
+receive three private packets, vote, independent synthesis, clean synchronous revision,
+and base readout. Two-task smoke reuses16 planned calls; all32 complete regardless
+of initial correctness. Private source CSV, manifests and raw results stay outside Git.
+
+No real GPQA access, loaded-tensor verification or outcomes yet.16 focused CPU tests
+passed on invented fixtures; mocks are software evidence only. Historical receiver
+result remains closed/unchanged. [Methodology](gpqa_support_methodology.md),
+[Colab sequence](gpqa_support_colab.md). Every follow-up requires a new reviewed design.

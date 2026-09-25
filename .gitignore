@@ -14,3 +14,8 @@ results_import/
 *.safetensors
 *.pt
 *.bin
+# Defense in depth: the GPQA runner also rejects private paths inside Git.
+gpqa_private/
+gpqa_diamond.csv
+gpqa_main.csv
+gpqa_extended.csv

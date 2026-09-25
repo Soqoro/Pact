@@ -114,7 +114,7 @@ class ScoredBank:
         for row in self.rows:
             for value in (row.row_id, row.source_hash, row.label_hash):
                 sha(value)
-            if row.split != "train" or not row.task_id:
+            if row.split != "train" or not row.task_id or row.task_id.startswith("gpqa_"):
                 raise ValueError("Every training derivative must inherit the train split")
             if (not 2 <= len(row.allowed_answers) <= 26 or len(set(row.allowed_answers)) != len(row.allowed_answers)
                     or any(x not in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' or len(x) != 1 for x in row.allowed_answers)

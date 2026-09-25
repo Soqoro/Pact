@@ -16,7 +16,7 @@ DEFAULT_TIMEOUT_SECONDS = 120.0
 
 def storage_operation(operation: str, source: Path, destination: Path, *,
                       timeout_seconds=DEFAULT_TIMEOUT_SECONDS, **options) -> dict:
-    if operation not in ("receiver-supervision-restore", "snapshot", "bundle", "bundle-restore", "warmstart-restore", "collection-restore", "feasibility-restore", "receiver-restore", "private-control-restore", "curated-repair-restore", "prompt-control-restore", "preparation-probe-restore", "preparation-references-restore") or not 0 < timeout_seconds < float("inf"):
+    if operation not in ("gpqa-restore", "receiver-supervision-restore", "snapshot", "bundle", "bundle-restore", "warmstart-restore", "collection-restore", "feasibility-restore", "receiver-restore", "private-control-restore", "curated-repair-restore", "prompt-control-restore", "preparation-probe-restore", "preparation-references-restore") or not 0 < timeout_seconds < float("inf"):
         raise ValueError("Invalid storage operation or timeout")
     # This control directory must stay on scratch, never on the mounted destination.
     control_parent = destination.parent if operation.endswith("-restore") else source.parent
@@ -84,9 +84,9 @@ def _worker(control: Path) -> int:
         if request["operation"] == "preparation-references-restore":
             from .training.preparation_restore import _restore_preparation_references
             result = _restore_preparation_references(source,destination,progress=progress)
-        elif request["operation"] in ("receiver-supervision-restore", "warmstart-restore", "collection-restore", "feasibility-restore", "receiver-restore", "private-control-restore", "curated-repair-restore", "preparation-probe-restore", "prompt-control-restore"):
+        elif request["operation"] in ("gpqa-restore", "receiver-supervision-restore", "warmstart-restore", "collection-restore", "feasibility-restore", "receiver-restore", "private-control-restore", "curated-repair-restore", "preparation-probe-restore", "prompt-control-restore"):
             from .training.colab import _restore_snapshot
-            kind = {"receiver-supervision-restore":"receiver_supervision", "warmstart-restore":"warmstart", "collection-restore":"training_bank",
+            kind = {"gpqa-restore":"gpqa_support", "receiver-supervision-restore":"receiver_supervision", "warmstart-restore":"warmstart", "collection-restore":"training_bank",
                     "feasibility-restore":"preference_feasibility_diagnostic",
                     "receiver-restore":"receiver_feasibility_diagnostic",
                     "private-control-restore":"private_support_control",

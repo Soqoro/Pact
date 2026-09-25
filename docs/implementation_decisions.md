@@ -992,3 +992,46 @@ with a separate immutable source-transition receipt and effective snapshot IDs.
 Ordinary nonfocal hash checks remain strict. No new training or donor budget.
 [Audit](reviews/qwen3-receiver-supervision-controlled-001-training.md),
 [Colab cells](controlled_peer_donors_recovery.md). No scientific efficacy claim.
+
+## 2026-09-24 — interpret completed controlled study without extending it
+
+The final controlled-001 return reproduces exactly under the report auditor.
+Record successful execution of supervised focal training and effective-initialization
+recovery separately from the unchanged receiver correctness: neither trained arm
+improves the57 matched outcomes. Teacher-forced loss changes and one private gain
+shared by both SFT arms do not establish receiver-specific efficacy. Keep synthetic
+controls distinct from the eight-task natural smoke. Close this bounded study;
+no automatic extra seeds/draws/updates, inference-protocol change or full-PACT
+promotion. [Evidence](reviews/qwen3-receiver-supervision-controlled-001-evaluation.md).
+
+## 2026-09-24 — GPQA Diamond natural-support development study
+
+Implement the explicitly authorized inference-only `qwen3-gpqa-diamond-support-001`;
+retain the completed controlled-receiver result and all PACT manuscript placeholders.
+Use exactly its frozen-preparation effective tensors (including disclosed nonfocal
+rounding), not trained arms. Real90-step preparation weights plus the pinned completed
+review establish preflight; loaded actor hashes must match before any generation.
+
+Official gated CSV access uses immutable revision83022cefff930aea54f654c0b282e74b9eeda5c6,
+public official Git blob identities and private runtime SHA256 receipts. No gated
+questions accessed locally; actual authenticated header/domain counts are a preflight,
+not a claimed result.32 outcome-independent domain-stratified groups, fixed shared
+option permutation, separate labels, protected remainder and no GPQA training.
+Question lexical grouping and optional known exposure groups do not certify semantic
+nonoverlap. Ledger review found no recorded prior GPQA run.
+
+Reuse Protocol.suffix for vote/synthesis/debate with identical frozen initial packets;
+immutable per-task slots make private-only, two-task smoke and complete stages share
+one256-call/53248-token ceiling. Persist unsafe/safe markers around tasks using the
+existing bounded workers rather than every call; runtime loss within an unsafe task
+requires review, never rollback. Private and allowlisted sanitized views are distinct.
+Half or more invalid private packets (>=48/96) qualifies the practical support screen;
+zero/all-event rates carry explicit boundary uncertainty. No gate authorizes a next
+run. [Methodology](gpqa_support_methodology.md), [ordered Colab cells](gpqa_support_colab.md).
+
+GPQA node-seed clarification: all eight task nodes receive distinct prespecified
+seeds. The independent synthesizer uses an explicit independent-synthesis namespace;
+the debate suffix retains existing revision/final derivation. Both readouts remain
+deterministic with identical prompt template, order and decoding parameters; seed
+differences do not authorize alternative sampling. The call guard rejects any seed
+outside the declared slot, including cached requests.

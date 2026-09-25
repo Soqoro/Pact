@@ -76,6 +76,8 @@ def create_adapters(base, config):
 def prepare_examples(tokenizer, tasks, labels, config):
     examples = []
     for task in tasks:
+        if task.family.startswith("gpqa") or task.task_id.startswith("gpqa_"):
+            raise ValueError("GPQA development/evaluation items are forbidden in warm-start training")
         messages = [dataclasses.asdict(m) for m in warmstart_prompt(task)]
         messages = [{"role": m["role"], "content": m["content"]} for m in messages]
         prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True, enable_thinking=False)

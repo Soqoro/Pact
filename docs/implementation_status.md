@@ -871,3 +871,56 @@ tiny CPU neural environment enabled (random model, no pretrained download),
 including the real BF16 reload, effective actor identity and corruption guards.
 Additional receiver-supervision/controlled-donor regressions with tiny neural
 opt-in: all 22 passed, including actual training-arm initialization and resume.
+
+## 2026-09-24 — controlled-001 evaluation completed and audited
+
+Final bundle SHA256 `ba84d5a85d4dd8d301ad9bcef2d6fba7f64547a19ec3b261cf45973ede9202ea`
+verifies; production report reconstruction matches exactly. All three arms finish
+201 generation calls / 57 CE forwards; total study 820 calls including217 donors,
+zero unresolved. Recovery source13ab011 records the actual effective initialization;
+receipt-linked GPU evaluation is now returned and audited (tensor payloads remain
+omitted locally). Both trained arms retain24 updates; no new training.
+Primary hold13/13 and repair1/6 are identical across arms; all57 matched receiver
+correctness outcomes are unchanged. Private20/32→21/32 for both trained arms.
+Natural-team clean/exchange frozen and task SFT5/8,4/8; receiver SFT4/8,5/8.
+Receiver answer NLL decreases without additional correct receiver completions.
+Feasibility executed, scientific efficacy not established; full PACT remains deferred.
+[Completed evaluation audit](reviews/qwen3-receiver-supervision-controlled-001-evaluation.md).
+Only archive/report/provenance checks were executed locally this turn; no test-suite
+rerun, GPU calls, final-test access, commit or push.
+
+## 2026-09-24 — GPQA support study implemented; GPU-unverified
+
+Implemented `pact.studies.gpqa_study` with official gated data-file acquisition,
+private normalization/partition receipts, prespecified32-item development exposure,
+exact frozen effective actor selection, actual checkpoint preflight, private and
+complete inference stages, same-request two-task smoke, attempt budgets, safe resume,
+metrics/report, private/sanitized export/import and local raw-audit reconstruction.
+Shared changes are narrowly scoped: a GPQA snapshot restore kind and GPQA rejection
+in legacy warm-start/scored-bank paths. No dependency upgrades or protocol changes.
+
+The16 focused fictional CPU tests pass (9.763s): option mapping, metadata isolation,
+access/token errors, stable stratification/group boundaries, excluded remainder,
+training block, adapter-context disable/restore, effective mismatch rejection,
+private/synchronous branch identity, exact budgets, smoke reuse, pause/resume,
+ambiguous calls, partial denominators, unsafe/older snapshot rejection, CSV parser,
+private/sanitized round trip, report reconstruction and notebook compilation.
+The actual completed controlled ZIP was read with its pinned checksum; source-contract
+selection recovers the frozen effective actor hashes and recorded decoding dictionaries.
+No model loaded for that check. Full regression outcome recorded below when complete.
+
+Dataset public metadata revision/file hashes were resolved from the official source;
+no gated CSV, pretrained weights or GPU experiments downloaded/executed locally.
+Authorized CSV/header/domain counts, real effective tensor loading and actual study
+outputs remain unverified until the user's Colab return. No GPQA outcome, training,
+attacks, final-test evidence or full-PACT readiness claimed. [Runbook](gpqa_support_colab.md).
+
+Initial full default suite:192 tests,181 passed /11 optional neural skips (186.949s).
+Final focused suite after distinct node-seed enforcement:16 passed (9.342s), including
+eight distinct stage/actor seeds and rejection of a changed request seed. A final
+full regression run follows this last executable change. No optional tiny neural
+suite was newly executed; dependency availability does not establish pretrained
+behavior, and inherited optional neural tests remain explicitly skipped by default.
+
+Final full regression after the last executable change:192 tests in187.877s;
+181 passed,11 optional tests skipped. No failures. GPU execution remains unverified.
