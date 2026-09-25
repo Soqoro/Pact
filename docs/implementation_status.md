@@ -924,3 +924,26 @@ behavior, and inherited optional neural tests remain explicitly skipped by defau
 
 Final full regression after the last executable change:192 tests in187.877s;
 181 passed,11 optional tests skipped. No failures. GPU execution remains unverified.
+
+
+### GPQA authorized-source preflight return — 2026-09-25
+
+The user reports official-file verification and198 CSV rows with no missing
+options. Two rows contain exact stripped-text duplicates; current option
+normalization rejects one additional row. Cell3 fails before generation.
+Real dataset preflight is therefore BLOCKED, not passed; earlier CPU fixtures
+do not establish actual source compatibility. No raw GPQA content accessed
+locally, GPU/model verification or scientific outcomes supplied. No executable
+change or new test run for this evidence-only update.
+
+
+Approved duplicate-option amendment implemented — 2026-09-25. Focused CPU suite:
+`PYTHONPATH=src python -m unittest discover -s tests -p test_gpqa_support.py -v`
+passed19 tests in10.100s. New coverage includes case/Unicode preservation, exact
+duplicate rejection, label-independent exclusion of gold/wrong and wrong/wrong
+collisions, deterministic stratification, disjoint198-ID accounting, malformed
+group isolation, selected-option guards, and pinned fictional CSV preparation
+with two exclusions and immutable repeat preparation. Existing mock256-call
+round-trip, privacy/export/restore, budget and resume tests also pass. Notebook
+cells compile. No full-suite rerun, authorized real CSV access, model download or
+GPU execution for this patch; actual amended preflight awaits Colab evidence.

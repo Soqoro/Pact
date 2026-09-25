@@ -149,6 +149,8 @@ print("Budget:", plan["budget"])
 print("Selected domain counts:", plan["dataset"]["manifest"]["selected_domain_counts"])
 print("Development items:", len(plan["dataset"]["manifest"]["selected_ids"]))
 print("Protected items:", len(plan["dataset"]["manifest"]["protected_ids"]))
+print("Source-integrity excluded items:", len(plan["dataset"]["manifest"]["source_integrity_excluded_ids"]))
+print("Eligible groups:", plan["dataset"]["manifest"]["eligible_group_count"])
 ```
 
 
@@ -224,3 +226,16 @@ snapshot or remove call intents. The newest snapshot may deliberately be unsafe.
 Report/export are CPU-only; local private recovery artifacts preserve raw audit data.
 The notebook rechecks exact code/runtime/data identities after a reset. Merely
 restarting with a new run ID is not an authorized budget reset.
+
+
+### Restart after the approved duplicate-option fix
+
+Review/commit/push the amendment locally and put that new full SHA in Cell1.
+Rerun Cells1–5, then6–7 after successful preflight. The failed dataset stage used
+no generation calls. The downloaded pinned source can be reused in Cell3 with
+`DOWNLOAD_DATASET=False`; do not edit the CSV or delete a prepared manifest/plan.
+Dataset preparation should report32 items and2 source-integrity excluded items
+for the user-verified pinned source. The exact protected count depends on duplicate
+groups and prior exclusions;164 is the count if only those two singleton rows are
+excluded. Changed prepared data or an existing incompatible frozen plan stops for
+review; do not change run ID or overwrite artifacts to bypass that guard.

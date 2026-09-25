@@ -30,7 +30,19 @@ Unexpected fields needed by the contract, counts or domain values stop the study
 no label-derived domain inference or post-hoc replacement is allowed.
 
 Final text is whitespace-trimmed, with internal Unicode and mathematical notation
-preserved. Each task has four distinct NFKC/casefold/whitespace-normalized options.
+preserved. Following the user-approved 25 September 2026 amendment, option
+identity uses exact case-sensitive strings after outer whitespace stripping only;
+no case folding or Unicode compatibility normalization is applied to options.
+The verified-source diagnostic reported two exact-duplicate-option rows and one
+additional collision under the old normalization. Before domain allocation, exclude
+rows with repeated option text and their detected duplicate groups. Do not edit
+or merge options, change labels, or replace tasks after selection. Missing fields,
+unexpected domains/counts and duplicate stable IDs still stop preflight.
+Partition schema v2 records policy, malformed IDs, exclusion reasons and eligible
+group count; these hash-only details also appear in sanitized reports. With just
+the two malformed singleton exclusions, 196 groups remain eligible and 164 items
+remain protected after selection; actual group screening can reduce these counts.
+Question-group lexical normalization remains unchanged.
 When Record ID exists, ID is SHA256 of its namespaced value; otherwise SHA256 of
 final question plus sorted answer texts (canonical JSON). This is order-independent,
 not a row index. Options are ranked by SHA256 of seed20260924, namespace, task ID

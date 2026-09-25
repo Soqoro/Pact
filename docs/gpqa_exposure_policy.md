@@ -32,3 +32,12 @@ A later full198 score must disclose development exposure. A later protected-rema
 score must state its nonstandard selection and denominator. Any later main/extended
 training design must exclude all Diamond content/groups reserved for evaluation,
 not just the32 exposed tasks. No such follow-up or training is authorized here.
+
+
+Approved 25 September 2026: exact repeated-option rows and their detected duplicate
+groups are source-integrity exclusions before selection. Option comparisons retain
+case and Unicode. All198 source identities remain accounted for across selected,
+protected and excluded sets; excluded text is not retained in the plan or generated
+on. Partition schema v2 records reasons and the eligible-group denominator. With
+only the two reported malformed singleton rows, the protected remainder is164,
+not166. Neither the exclusions nor their labels become training data.

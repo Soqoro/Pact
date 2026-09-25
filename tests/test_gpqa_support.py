@@ -78,6 +78,62 @@ class GPQADataTests(unittest.TestCase):
             bad={**source[0],key:value}
             with self.assertRaises(ValueError):data.normalize(bad,'a'*64)
 
+    def test_option_identity_preserves_case_and_scientific_unicode(self):
+        row=rows()[0]
+        for key,value in zip(data.FIELDS[1:],('m','M','x²','x2')):row[key]=value
+        task,label,_=data.normalize(row,'a'*64)
+        self.assertEqual({o.text for o in task.options},{'m','M','x²','x2'})
+        self.assertEqual(next(o.text for o in task.options if o.answer_id==label.answer_id),'m')
+        self.assertLess(len({data.norm(o.text) for o in task.options}),4)
+        bad={**row,'Incorrect Answer 1':' m '}
+        with self.assertRaisesRegex(ValueError,'distinguishable'):data.normalize(bad,'a'*64)
+
+    def test_malformed_options_excluded_before_selection_with_audit(self):
+        source=rows();original=copy.deepcopy(source)
+        source[0]['Incorrect Answer 1']=source[0]['Correct Answer']
+        source[1]['Incorrect Answer 2']=source[1]['Incorrect Answer 1']
+        expected={data._normalize_for_partition(r,'a'*64)[0].task_id for r in source[:2]}
+        before=copy.deepcopy(source)
+        selected,m=data.partition(source,'a'*64)
+        again,m2=data.partition(list(reversed(source)),'a'*64)
+        self.assertEqual(source,before);self.assertEqual(m,m2);self.assertEqual(selected,again)
+        self.assertEqual(m['schema_version'],2)
+        self.assertEqual(set(m['source_integrity_excluded_ids']),expected)
+        self.assertEqual(set(m['excluded_ids']),expected)
+        self.assertEqual(m['eligible_group_count'],196)
+        self.assertEqual(m['domain_counts'],{'Biology':65,'Chemistry':65,'Physics':66})
+        self.assertEqual(m['selected_domain_counts'],{'Biology':11,'Chemistry':10,'Physics':11})
+        self.assertEqual(len(selected),32);self.assertEqual(len(m['protected_ids']),164)
+        sets=[set(m[k]) for k in ('selected_ids','protected_ids','excluded_ids')]
+        self.assertEqual(len(set.union(*sets)),198)
+        for i,a in enumerate(sets):
+            for b in sets[i+1:]:self.assertFalse(a&b)
+        for k in expected:self.assertEqual(m['exclusion_reasons'][k],['duplicate_option_text'])
+        for task,label,meta in selected:self.assertEqual(len({o.text for o in task.options}),4)
+        self.assertNotIn(source[0]['Question'],canonical(m))
+        # Malformed fields still stop; this is not a general skip-on-error loader.
+        broken=copy.deepcopy(original);broken[0]['Correct Answer']=''
+        with self.assertRaisesRegex(ValueError,'missing or empty'):data.partition(broken,'a'*64)
+        broken=copy.deepcopy(original);broken[0]['High-level domain']='unknown'
+        with self.assertRaisesRegex(ValueError,'domain'):data.partition(broken,'a'*64)
+
+    def test_malformed_group_isolation_and_selected_guard(self):
+        source=rows()
+        source[0]['Incorrect Answer 1']=source[0]['Correct Answer']
+        source[3]['Question']=source[0]['Question']  # same domain, other options
+        bad=data._normalize_for_partition(source[0],'a'*64)[0].task_id
+        sibling=data.normalize(source[3],'a'*64)[0].task_id
+        _,m=data.partition(source,'a'*64)
+        self.assertEqual(m['source_integrity_excluded_ids'],[bad])
+        self.assertEqual(set(m['excluded_ids']),{bad,sibling})
+        self.assertEqual(m['exclusion_reasons'][sibling],['duplicate_option_group'])
+        self.assertEqual(m['group_by_id'][bad],m['group_by_id'][sibling])
+        plan,_,_=fixture();prepared=copy.deepcopy(plan['dataset'])
+        options=prepared['selected'][0]['task']['options']
+        options[1]['text']=options[0]['text']
+        with self.assertRaisesRegex(ValueError,'distinguishable'):
+            study.freeze_plan(prepared,plan['frozen_arm'],plan['source'])
+
     def test_stratification_order_invariance_and_group_isolation(self):
         a,ma=data.partition(rows(),'a'*64);b,mb=data.partition(list(reversed(rows())),'a'*64)
         self.assertEqual(ma,mb);self.assertEqual(a,b)
@@ -306,6 +362,8 @@ class GPQAPreparationTests(unittest.TestCase):
         import csv
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp);src=rows()
+            src[0]['Incorrect Answer 1']=src[0]['Correct Answer']
+            src[1]['Incorrect Answer 2']=src[1]['Incorrect Answer 1']
             with (root/'gpqa_diamond.csv').open('w',newline='') as f:
                 writer=csv.DictWriter(f,fieldnames=list(src[0]));writer.writeheader();writer.writerows(src)
             (root/'README.md').write_text('Fictional notice')
@@ -317,10 +375,11 @@ class GPQAPreparationTests(unittest.TestCase):
                 out=root/'prepared.json';data.prepare(root,out)
                 prepared=read_json(out)
                 self.assertEqual(len(prepared['selected']),32)
-                self.assertEqual(len(prepared['manifest']['protected_ids']),166)
+                self.assertEqual(len(prepared['manifest']['protected_ids']),164)
+                self.assertEqual(len(prepared['manifest']['source_integrity_excluded_ids']),2)
                 self.assertNotIn('PRIVATE_EXPLANATION_SENTINEL',out.read_text())
                 protected=prepared['manifest']['protected_ids'][0]
-                question=next(data.normalize(r,'a'*64)[0].question for r in src if data.normalize(r,'a'*64)[0].task_id==protected)
+                question=next(data.normalize(r,'a'*64)[0].question for r in src[2:] if data.normalize(r,'a'*64)[0].task_id==protected)
                 self.assertNotIn(question,out.read_text())
                 data.prepare(root,out)
                 with self.assertRaisesRegex(ValueError,'changed'):

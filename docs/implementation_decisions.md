@@ -1035,3 +1035,28 @@ the debate suffix retains existing revision/final derivation. Both readouts rema
 deterministic with identical prompt template, order and decoding parameters; seed
 differences do not authorize alternative sampling. The call guard rejects any seed
 outside the declared slot, including cached requests.
+
+
+### GPQA duplicate-option contract review — 2026-09-25
+
+Official pinned-source aggregate evidence supplied by the user exposes two exact
+option-duplicate rows and one additional normalization collision. Preserve the
+fail-closed loader pending policy review: the authorized instruction requires
+exactly four distinguishable options and prohibits silent subset changes.
+Case folding/NFKC are potentially destructive for scientific option identity;
+a case-sensitive, notation-preserving comparison should be used in any reviewed
+fix. That fix alone cannot resolve the two actual duplicate rows. Proposed, NOT
+yet adopted: document source-integrity exclusions before seeded stratification,
+retain their identities/reasons in the private partition receipt, exclude them
+from both selected and protected eligible sets, and preserve all original text
+and the256-call ceiling. Do not silently deduplicate options or manufacture
+distractors. Await user authorization for the eligibility-policy amendment.
+
+
+Approved and implemented — 2026-09-25: the user authorized the eligibility
+amendment above. Option comparison now uses exact stripped strings, preserving
+case and Unicode. Partition schema v2 excludes repeated-option rows and their
+detected duplicate groups before domain allocation and seeded selection; all198
+IDs remain accounted for. Private receipts and sanitized summaries record exclusion
+reasons and eligible-group counts. Missing fields, schema/domain/count failures
+and duplicate stable IDs still stop. Existing frozen plans are never overwritten.

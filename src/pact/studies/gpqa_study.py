@@ -50,7 +50,10 @@ def freeze_plan(prepared,contract,source):
     selected=prepared['selected'];manifest=prepared['manifest']
     if (len(selected)!=32 or manifest['selected_ids']!=[r['task']['task_id'] for r in selected]
         or prepared['receipt']['revision']!=data.REVISION):raise ValueError('GPQA frozen selection contract changed')
-    for row in selected:data.require_development(task_from_dict(row['task']))
+    for row in selected:
+        task=task_from_dict(row['task']);data.require_development(task)
+        if len(task.options)!=4 or len({o.text.strip() for o in task.options})!=4:
+            raise ValueError('GPQA selected options must be four distinguishable strings')
     return {'schema_version':1,'kind':'gpqa_support','run_id':RUN_ID,'seed':data.SEED,'budget':BUDGET,
         'usage':'development_diagnostic','training_allowed':False,'eligible_for_untouched_final':False,
         'source':source,'dataset_hash':digest(prepared),'dataset':prepared,'frozen_arm':contract,
@@ -238,7 +241,8 @@ def report(root):
     result['completion_status_counts']={stage:dict(Counter(s for r in rows for s in r.get(field,[]))) for stage,field in [('private','parser0'),('revision','parser1')]}
     result['incomplete_justification_policy']='length-limited packets fail strict scoring even if an answer prefix is visible; raw status/tokens retained privately; no answer salvage in primary metrics'
     result['logical_cost_note']='Each protocol charged shared private use; actual study totals count private calls only once; generation seconds are not billed GPU time.'
-    result['partition']={k:plan['dataset']['manifest'][k] for k in ('selected_ids','protected_ids','excluded_ids','group_by_id','selected_domain_counts','domain_counts')}
+    result['partition']={k:plan['dataset']['manifest'][k] for k in ('selected_ids','protected_ids','excluded_ids','group_by_id','selected_domain_counts','domain_counts','eligibility_policy','option_identity',
+        'source_integrity_excluded_ids','exclusion_reasons','eligible_group_count')}
     result['configuration']={'run_id':RUN_ID,'selection_seed':data.SEED,'generation_seed':data.SEED,'model':'Qwen/Qwen3-8B',
         'precision':'bfloat16 backbone; recorded effective FP32 actors','thinking':False,'attention':'sdpa',
         'context_cap':4096,'packet_cap':256,'readout_cap':64,'sampling':{'temperature':.7,'top_p':.8,'top_k':20,'min_p':0.,'repetition_penalty':1.},

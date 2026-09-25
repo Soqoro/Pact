@@ -283,3 +283,17 @@ Finish with:
 7. Explicit deferred work and interpretation limits.
 
 Do not manufacture benchmark results, a GPQA access grant, tensor verification, new loss efficacy, or a publication claim. Do not change manuscript result placeholders. Leave a complete usable local implementation ready for my review and Colab execution.
+
+
+## Approved source-integrity amendment — 25 September 2026
+
+After the pinned official198-row source passed file verification, the user reported
+two rows with identical stripped option strings and a third collision introduced
+by normalization/case folding. The user explicitly approved excluding the two
+malformed rows before deterministic stratification and preserving scientific
+case/notation. This supersedes rejection of the entire source for repeated options:
+compare option strings exactly after outer whitespace stripping; exclude malformed
+rows and their detected duplicate groups with explicit reasons before allocation.
+All other schema failures remain fatal. Preserve official text and labels, all198
+identity accounting, fixed seed,32 selected tasks and256-call/53248-token ceiling.
+No already frozen selection or completed run may be overwritten.

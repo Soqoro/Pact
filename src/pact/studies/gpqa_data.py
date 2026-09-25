@@ -67,13 +67,12 @@ def norm(text):
     return ' '.join(unicodedata.normalize('NFKC',text).casefold().split())
 
 
-def normalize(row, source_hash):
+def _normalize_for_partition(row, source_hash):
     if any(not isinstance(row.get(k),str) or not row[k].strip() for k in (*FIELDS,'High-level domain')):
         raise ValueError('GPQA schema: final question/answers/domain missing or empty')
     domain=row['High-level domain'].strip()
     if domain not in DOMAINS:raise ValueError('GPQA schema: unexpected high-level domain')
     question=row['Question'].strip();answers=[row[k].strip() for k in FIELDS[1:]]
-    if len({norm(a) for a in answers})!=4:raise ValueError('GPQA options must be four distinguishable strings')
     content=digest([question,sorted(answers)])
     # Record ID when present, content-derived fallback. No subset-index identity.
     record=row.get('Record ID','').strip()
@@ -89,9 +88,16 @@ def normalize(row, source_hash):
     return task,label,private
 
 
+def normalize(row, source_hash):
+    task,label,private=_normalize_for_partition(row,source_hash)
+    if len({o.text for o in task.options})!=4:
+        raise ValueError('GPQA options must be four distinguishable strings')
+    return task,label,private
+
+
 def partition(rows, source_hash, *, known=None):
     if len(rows)!=198:raise ValueError('GPQA Diamond must contain exactly 198 official rows; stop preflight')
-    normalized=[normalize(r,source_hash) for r in rows]
+    normalized=[_normalize_for_partition(r,source_hash) for r in rows]
     byid={t.task_id:(t,l,m) for t,l,m in normalized}
     if len(byid)!=198:raise ValueError('Duplicate stable GPQA IDs; explicit source review required')
     known=known or {'exposed_content_hashes':[],'exposed_group_hashes':[],'groups':[]}
@@ -115,11 +121,17 @@ def partition(rows, source_hash, *, known=None):
     groups={}
     for k in ids:groups.setdefault(find(k),[]).append(k)
     group_hash={k:digest(sorted(byid[x][2]['question_group'] for x in members)) for k,members in groups.items()}
-    excluded=set()
+    malformed={k for k,(t,_,_) in byid.items() if len({o.text for o in t.options})!=4}
+    excluded=set();reasons={}
     for k,members in groups.items():
+        if malformed.intersection(members):
+            excluded.update(members)
+            for x in members:
+                reasons[x]=['duplicate_option_text' if x in malformed else 'duplicate_option_group']
         if (group_hash[k] in known.get('exposed_group_hashes',[]) or
             any(byid[x][2]['content_hash'] in known.get('exposed_content_hashes',[]) for x in members)):
             excluded.update(members)
+            for x in members:reasons.setdefault(x,[]).append('known_exposure')
         if len({byid[x][2]['domain'] for x in members})!=1:raise ValueError('Duplicate group crosses domains; review required')
     reps=[k for k in sorted(groups) if k not in excluded]
     counts=Counter(byid[k][2]['domain'] for k in reps)
@@ -133,10 +145,17 @@ def partition(rows, source_hash, *, known=None):
     selected=sorted(selected,key=lambda k:digest([SEED,'gpqa-order-v1',k]))
     exposed_groups={find(k) for k in selected}
     remainder=[k for k in ids if k not in excluded and find(k) not in exposed_groups]
-    excluded.update(k for k in ids if find(k) in exposed_groups and k not in selected)
-    manifest={'schema_version':1,'usage':'development_diagnostic','training_allowed':False,
+    siblings={k for k in ids if find(k) in exposed_groups and k not in selected}
+    excluded.update(siblings)
+    for k in siblings:reasons.setdefault(k,[]).append('selected_group_sibling')
+    manifest={'schema_version':2,'usage':'development_diagnostic','training_allowed':False,
         'eligible_for_untouched_final':False,'seed':SEED,'official_count':198,'selected_ids':selected,
         'protected_ids':remainder,'excluded_ids':sorted(excluded),
+        'eligibility_policy':'gpqa-option-integrity-v2; exact stripped strings; exclude malformed groups before allocation',
+        'option_identity':'case-sensitive, Unicode-preserving, outer whitespace stripped only',
+        'source_integrity_excluded_ids':sorted(malformed),
+        'exclusion_reasons':{k:sorted(v) for k,v in sorted(reasons.items())},
+        'eligible_group_count':len(reps),
         'group_by_id':{k:group_hash[find(k)] for k in ids},
         'domain_counts':dict(sorted(counts.items())),'selected_domain_counts':quota,
         'algorithm':'largest remainder on eligible unique groups; alphabetic domain ties; SHA256 seeded group ranking',
@@ -165,7 +184,9 @@ def prepare(directory, output, *, known=None):
           'selected':[{'task':dc.asdict(t),'label':dc.asdict(l),'private_metadata':m} for t,l,m in selected]}
     if output.exists() and canonical(read_json(output))!=canonical(data):raise ValueError('Prepared GPQA selection changed; no overwrite')
     write_json(output,data)
-    return {'prepared_items':32,'protected_items':len(manifest['protected_ids']),'selected_domain_counts':manifest['selected_domain_counts'],
+    return {'prepared_items':32,'protected_items':len(manifest['protected_ids']),
+            'source_integrity_excluded_items':len(manifest['source_integrity_excluded_ids']),
+            'excluded_items':len(manifest['excluded_ids']),'eligibility_policy':manifest['eligibility_policy'],'selected_domain_counts':manifest['selected_domain_counts'],
             'sha256':file_hash(output),'dataset_revision':REVISION}
 
 

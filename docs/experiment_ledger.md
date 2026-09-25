@@ -1037,3 +1037,28 @@ No real GPQA access, loaded-tensor verification or outcomes yet.16 focused CPU t
 passed on invented fixtures; mocks are software evidence only. Historical receiver
 result remains closed/unchanged. [Methodology](gpqa_support_methodology.md),
 [Colab sequence](gpqa_support_colab.md). Every follow-up requires a new reviewed design.
+
+
+### GPQA preflight blocker — 2026-09-25
+
+User-returned Colab aggregate diagnostic reports verified official pinned files,
+198 rows, zero missing options, two rows with exact stripped-string option
+collisions (also two under whitespace-only and NFKC/whitespace comparison), and
+three under the current NFKC/casefold/whitespace comparison. No raw benchmark
+content was returned or inspected locally. Dataset preparation stopped before
+selection was frozen or any study generation occurred. This is data-contract
+evidence, not a GPQA performance result. Historical completed runs are unchanged.
+The four-distinguishable-options contract cannot be satisfied across the source
+by correcting case folding alone. No rows dropped, options edited, labels changed,
+or selection regenerated. A source-integrity exclusion policy requires explicit
+review before continuation.
+
+
+2026-09-25 amendment authorized by user and implemented locally: exact scientific
+option strings retained; malformed-option groups excluded before seeded32-item
+selection. Source remains the same pinned198-row file. Two malformed singleton
+rows imply196 eligible groups and164 protected items absent other group/exposure
+exclusions; these are conditional expectations, not a completed real partition.
+19 fictional CPU tests pass; no generation calls or GPU evidence. Next: user
+review/commit/push, new pinned Colab checkout, repeat dataset preflight on the
+already downloaded source, then the unchanged fixed study if all guards pass.
