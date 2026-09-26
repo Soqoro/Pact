@@ -45,3 +45,11 @@ separate opt-in all-actor ablation, not full PACT: receiver/DPO off, one frozen
 natural training bank, global base/spec reductions, eight-task support/contrast
 stops. Default to offline plan; each GPU stage requires its frozen plan hash.
 No GPQA access or reopening of completed runs. Preserve exact effective actors.
+
+[Controlled private replay](docs/controlled_private_specialization.md) is a separate
+child: controlled_private_packets_v1 / controlled_slot_delta_v1, not natural credit.
+Reuse immutable parent anchors; one shared task pair, base-only generation, matched
+physical-node seeds across slots/signs, fixed order/calibration controls. Synthetic
+positive full packets are targets only; evaluation stays natural. Preserve global
+loss scaling and historical effective weights. Require support/practical screens
+and an explicit artifact-bound review before training. No automatic next run.

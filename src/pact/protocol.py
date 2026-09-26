@@ -67,7 +67,9 @@ class Protocol:
     def private_packet(self, task, agent, attack, seed, max_tokens=None):
         return self.packet(task, agent, "private", private_prompt(task, attack.payload if attack.channel == "early" else ""), seed, max_tokens)
 
-    def suffix(self, task, method, attack, private, seed, identity):
+    def suffix(self, task, method, attack, private, seed, identity, *, display_order="original"):
+        if display_order not in ("original", "reversed"):
+            raise ValueError("Unknown presentation order")
         # Only immutable initial packets are in the delivery graph; revised is a separate tuple.
         start = len(self.backend.calls)
         delivered = deliver(private, attack) if method in EXCHANGE_METHODS else ()
@@ -77,6 +79,8 @@ class Protocol:
             for packet in private:
                 peers = [m for m in delivered if m.recipient == packet.agent]
                 random.Random(node_seed(self.config.seed, task.task_id, packet.agent, "peer-order")).shuffle(peers)
+                if display_order == "reversed":
+                    peers.reverse()
                 messages = revision_prompt(task, packet, tuple(peers), advisory)
                 revised.append(self.packet(task, packet.agent, "revision", messages,
                                            node_seed(seed, "revision", packet.agent)))
@@ -99,6 +103,8 @@ class Protocol:
             if method in ("archive", "archive_matched"):
                 entries += [dict(envelope(p.agent, p.raw), stage="private") for p in private]
             random.Random(node_seed(self.config.seed, task.task_id, "readout-order")).shuffle(entries)
+            if display_order == "reversed":
+                entries.reverse()
             if method == "archive_matched":
                 original = entries
                 cap = min(self.config.limits.archive_context_tokens, reference_tokens)

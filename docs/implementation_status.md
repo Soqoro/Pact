@@ -1003,3 +1003,60 @@ No pretrained download, local GPU, real-data optimization, commit or push occurr
 Patch whitespace and all notebook code-cell syntax checks pass. Actual Qwen3
 acquisition, new-bank support, PEFT export/evaluation and learning outcomes remain
 GPU-unverified; the completed older studies are not reopened.
+
+
+## Fixed-bank collection return — 2026-09-26
+
+qwen3-specialization-contrast-001: uploaded SHA256
+555d9bd2e724c59ca4a91db156d450f814d0149ed6413922e965c3a85fb4e69f verified.
+Trusted report reconstruction and separate complete collection/pair-mask
+reconstruction pass. All32 fitting tasks/64 condition rows complete;1216 calls
+attempted/committed,0 unresolved,299008 reserved output tokens. Five eligible
+cells across2 supported tasks and2 multi-eligible tasks; required minima8/8 fail.
+Row eligibility histogram:62 zero,1 two,1 three. Status
+insufficient_assignment_support. No replay, scoring, optimization or held-out
+evaluation executed. Collection is now GPU-executed/audited; no learning efficacy
+claim. Stop before downstream stages; no automatic draws/task replacements or
+method changes. [Full audit](reviews/qwen3-specialization-contrast-001.md).
+
+## Controlled private specialization implementation — 2026-09-26
+
+Implemented the new typed child planner/importer, donor acquisition, structural
+support gate, controlled slot replay, reversed-order control, five-cell natural
+calibration, frozen scoring, assignment/practical gates, artifact-bound review,
+real reused all-adapter trainer, natural four-system evaluation, offline report
+reconstruction, review export and latest-only full restoration. Notebook08 defaults
+to plan only. No large-model download, GPU run, commit or push was performed.
+
+Actual parent import/characterization and zero-model child planning pass locally.
+A dirty-source local plan is a design artifact, not a Colab execution identity.
+The first full fictional round trip passed all4 initial tests in341.889s; covers
+acquisition through all arms/evaluation and exported-bundle reconstruction. Mock
+optimizer traversal is explicitly marked nonexecuted training; it is not8B evidence.
+Three optional tiny CPU neural tests pass in9.906s: unequal-length full-packet
+independent global-gradient comparison, prior production-accumulator comparison,
+and real sequential three-actor optimization with exact restart/resume/isolation.
+The tiny trainer's final PEFT export is mocked; real8B export remains unverified.
+Two initial isolation/cap tests pass; final guards and full regression recorded below.
+
+GPU acquisition/replay/scoring/training/evaluation of the new child remain
+unverified. No controlled credit, assignment signal or efficacy has been observed
+on real tasks. Full PACT refresh, receiver coupling, adaptive robustness and final
+test remain deferred. Existing completed receiver/GPQA and stopped parent unchanged.
+
+Final validation: full default CPU regression ran215 tests in571.661s:201 passed,
+14 optional skips, zero failures. A test-only string-versus-Path error in the first
+run was corrected; latest-only restore and parent immutability then passed.
+The final additional guard suite ran7 tests in0.089s, all passing, including
+separate initialization/evaluation environment receipts and pre-dispatch frozen
+snapshot rejection. Three optional tiny CPU neural tests passed again in6.932s
+after training token/timer accounting was added. Notebook syntax/unexecuted
+outputs and git diff --check pass. No dependency migration occurred.
+
+The final zero-model CLI plan from the actual parent succeeded with the exact
+6096-call/1274112-reserved-token bounds. Its plan-only export/import reconstruction
+also passed with zero child generation, scoring, training or evaluation calls.
+These /tmp dirty-source plans are local design evidence, not pinned Colab plans.
+Training logs now distinguish actual executed sequence/target tokens from full
+planned exposure and record optimizer timing separately from storage; none is
+claimed to be billed GPU time. Actual child GPU behavior remains unverified.

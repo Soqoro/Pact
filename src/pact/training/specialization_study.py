@@ -75,7 +75,7 @@ def backend_for(plan,initial,cache,root,arm='frozen'):
         if step!=96 or _weights_hash(params)!=status['final_weight_hash']:raise ValueError('Final weight identity mismatch')
         hashes=[_weights_hash(actor_view(params,i)) for i in range(3)]
         backend.identity={**backend.identity,'effective_actor_tensor_hashes':hashes,
-            'snapshot':digest({'base':backend.base_identity['snapshot'],'actors':hashes,'variant':'specialization_fixed_bank_v1'})}
+            'snapshot':digest({'base':backend.base_identity['snapshot'],'actors':hashes,'variant':plan['variant']})}
         backend.versions=[(n,p,p._version) for n,p in backend.model.named_parameters()]
         backend.assert_unchanged()
     return backend,dtypes
@@ -86,8 +86,8 @@ def offline_backend(plan,identity=None):
         tokenizer=SimpleNamespace(eos_token_id=plan['frozen_arm']['parameters']['final']['eos_token_id']),count_tokens=lambda text:len(text.split()))
 
 
-def evaluate(plan,backend,root,arm,*,readonly=False,stop_after=None,before_new=lambda:None,after_row=lambda:None):
-    if arm not in ('frozen',*ARMS):raise ValueError('Unknown arm')
+def evaluate(plan,backend,root,arm,*,arms=ARMS,readonly=False,stop_after=None,before_new=lambda:None,after_row=lambda:None):
+    if arm not in ('frozen',*arms):raise ValueError('Unknown arm')
     destination=root/'evaluation'/arm
     if not readonly:immutable(destination/'identity.json',backend.identity)
     journal=StudyJournal(backend,destination,budgets()['evaluate_per_arm'],plan,'development',readonly=readonly,stop_after=stop_after,before_new=before_new)
@@ -140,15 +140,15 @@ def accounting(root):
         'teacher_forced_scores':len(list((root/'score-intents').glob('*.json')))}
 
 
-def report(root):
-    plan=load_plan(root);systems={};allrows={};training={}
-    if (root/'bank_manifest.json').exists():
+def report(root, *, plan=None, arms=ARMS, accounting_fn=accounting, verify_bank=True, output_name='specialization_results.json'):
+    plan=load_plan(root) if plan is None else plan;systems={};allrows={};training={}
+    if verify_bank and (root/'bank_manifest.json').exists():
         rows,records=replay(plan,offline_backend(plan),root,readonly=True)
         if digest(records)!=read_json(root/'bank_manifest.json')['bank_hash']:raise ValueError('Bank report integrity mismatch')
         if (root/'assignment_contrast.json').exists() and canonical(contrast(rows))!=canonical(read_json(root/'assignment_contrast.json')):raise ValueError('Assignment report integrity mismatch')
-    for arm in ('frozen',*ARMS):
+    for arm in ('frozen',*arms):
         path=root/'evaluation'/arm/'identity.json'
-        rows=evaluate(plan,offline_backend(plan,read_json(path)),root,arm,readonly=True) if path.exists() else []
+        rows=evaluate(plan,offline_backend(plan,read_json(path)),root,arm,arms=arms,readonly=True) if path.exists() else []
         allrows[arm]={(r['task_id'],r['condition']):r for r in rows};systems[arm]={}
         for condition in plan['conditions']:
             cohort=[r for r in rows if r['condition']==condition]
@@ -160,8 +160,8 @@ def report(root):
         p=root/'training'/arm/'status.json'
         if p.exists():training[arm]=read_json(p)
     comparisons={}
-    for arm in ARMS:
-        for control in ('frozen',*ARMS):
+    for arm in arms:
+        for control in ('frozen',*arms):
             if control==arm:continue
             common=allrows[arm].keys()&allrows[control].keys();item={}
             for outcome in ('debate','synthesis','vote','coverage','all_correct','mixed'):
@@ -178,12 +178,12 @@ def report(root):
                 item[outcome]['note']='task-clustered clean/early; one training seed; degenerate intervals are not equivalence'
             comparisons[arm+' vs '+control]=item
     result=boundary({'variant':plan['variant'],'plan_hash':digest(plan),'synthetic_fixture':plan['synthetic_fixture'],
-        'systems':systems,'paired':comparisons,'generation_accounting':accounting(root),'training_by_arm_and_actor':training,
+        'systems':systems,'paired':comparisons,'generation_accounting':accounting_fn(root),'training_by_arm_and_actor':training,
         'training_executed':any(s.get('training_executed') for s in training.values()),
         'evaluation_executed':any(allrows.values()),'scientific_efficacy':'not_established','full_pact_ready':False,
         'assignment':read_json(root/'assignment_contrast.json') if (root/'assignment_contrast.json').exists() else None,
         'missing_evaluation_rows':{a:64-len(v) for a,v in allrows.items()},'no_automatic_followup':True})
-    write_json(root/'specialization_results.json',result)
+    write_json(root/output_name,result)
     write_json(root/'training_by_arm_and_actor.json',training)
     write_json(root/'resource_usage.json',result['generation_accounting'])
     (root/'evaluation_per_task.jsonl').write_text(''.join(canonical({k:v for k,v in r.items() if k not in ('trajectory','independent_synthesis')})+'\n' for arm in allrows.values() for r in arm.values()))

@@ -1102,3 +1102,42 @@ values in the verified preparation architecture, avoiding a fresh lossy adapter
 load. Base/readout remains frozen. Durable latest-only restoration and unknown
 attempt vetoes preserve budgets; export retains partial evidence if reconstruction
 fails. [Methodology and offline findings](specialization_fixed_bank_methodology.md).
+
+## 2026-09-26: controlled private insertion and synthetic-target specialization
+
+User explicitly authorized controlled_private_packets_v1 / controlled_slot_delta_v1
+as a methodology change. The stopped natural parent remains closed: no extra
+anchors, candidates or budget. The child imports its exact fit/development cohort
+and immutable contexts, and documents later development-use review. Local parent
+reconstruction found361 valid-correct/405 valid-wrong/two length-limited candidates;
+100 cells lack correct,87 lack incorrect,5 eligible. These are not team accuracy.
+
+The shared pair is generated per task with the pinned unadapted base, the existing
+symmetric template/validator and a source-versioned disclosure check. Both signs
+share target-independent instructions; wrong option and two-attempt seeds freeze
+before output. No length-bin gate; retain that flag as a confound. Packet raw bytes
+enter a cloned own state AND derived delivery views. Generator instructions never
+enter learner prompts. Legacy natural record loading explicitly rejects this
+provenance. This is a full-packet insertion effect, not on-policy policy credit.
+
+Suffix seeds omit sign, intervention actor and display variant, retaining distinct
+physical receiver/stage seeds. Cache keys include all intervention context and
+checkpoint identities. Primary order remains unchanged. Eight fixed task controls
+reverse presented peer/readout order only; five retained natural pairs calibrate
+separately. Their results never select targets or replace primary credits.
+
+Keep eligible-cell global population standardization with scale1 at zero variance,
+matching the approved parent specialization interpretation. Sensitivities replace
+only delta, with identical full-bank transform/masks. Use existing solver and
+trainer. Base=sum/(3U); spec=sum(omega*R*synthetic_packet_NLL)/B; batch coefficients
+multiply by U/4. Same base/full-packet targets and schedules in all three arms;
+receiver/DPO off. Historical effective actor precision is preserved, not repaired.
+
+Support8 tasks/8 multi tasks precedes replay. Numerical tolerance1e-6 is distinct
+from task-mean practical L1≥.10 and at least8 tasks each≥.10. A passing screen is
+ready_for_user_review. An explicit review JSON binds the plan, packet sample,
+assignment, order and seed artifacts before training. Review is not rationale
+certification; a declared systematic defect stops work. Raw/centered/order/seed
+signals and actor dominance stay available for that review. No automatic fallback,
+extra sampling, new GPQA or final-test use. [Method](controlled_private_specialization.md)
+and [exact staged commands](controlled_private_colab.md).

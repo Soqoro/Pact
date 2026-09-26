@@ -298,3 +298,12 @@ Use [the ordered specialization cells](specialization_colab.md) or
 replay, assign, each training arm and each evaluation arm separately under the
 same plan hash. Candidate/assignment gates stop without expanding support.
 Review ZIPs are not tensor checkpoints; restore the latest full snapshot only.
+
+## Controlled private replay child (plan only by default)
+
+Use [the exact staged cells](controlled_private_colab.md) and
+notebooks/08_controlled_private_specialization_colab.ipynb. The stopped natural
+parent is imported, never resumed for generation. Pin newly reviewed/pushed code.
+Start with plan/exposure review, then only the explicitly requested acquisition.
+Do not automatically chain replay, training or evaluation. Real initialization
+weights and later an artifact-bound packet/seed/order review are required.

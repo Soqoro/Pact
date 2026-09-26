@@ -1102,3 +1102,44 @@ covers all four evaluation systems and safe bundle reconstruction. Mock optimize
 status remains explicitly synthetic; optional real tiny optimization validates
 sequential actor updates and exact resume, not8B efficacy. Actual new-study GPU
 stages have not been launched. Commands:[specialization Colab/local runbook](specialization_colab.md).
+
+
+## Fixed-bank collection return — 2026-09-26
+
+qwen3-specialization-contrast-001: uploaded SHA256
+555d9bd2e724c59ca4a91db156d450f814d0149ed6413922e965c3a85fb4e69f verified.
+Trusted report reconstruction and separate complete collection/pair-mask
+reconstruction pass. All32 fitting tasks/64 condition rows complete;1216 calls
+attempted/committed,0 unresolved,299008 reserved output tokens. Five eligible
+cells across2 supported tasks and2 multi-eligible tasks; required minima8/8 fail.
+Row eligibility histogram:62 zero,1 two,1 three. Status
+insufficient_assignment_support. No replay, scoring, optimization or held-out
+evaluation executed. Collection is now GPU-executed/audited; no learning efficacy
+claim. Stop before downstream stages; no automatic draws/task replacements or
+method changes. [Full audit](reviews/qwen3-specialization-contrast-001.md).
+
+## qwen3-controlled-specialization-001 — implementation, no GPU execution
+
+2026-09-26. Authorized child of the stopped natural collection, source
+controlled_private_packets_v1, estimator controlled_slot_delta_v1. Reuses original
+32fit/32development groups,64 clean/early anchors, early bytes and effective frozen
+preparation actors. Real parent import and missingness reconstruction passed:
+768 candidates=361 valid-correct+405 valid-wrong+2 length-limited;100 missing-correct,
+87 missing-incorrect,5 eligible cells. Historical parent status unchanged.
+
+New ceilings128 donor/3072 primary/768 order/80 natural-calibration/2048 evaluation
+calls =6096;1274112 reserved tokens;384 frozen scores;288 optimizer updates.
+Zero new real generation/scoring/training calls locally. Implementation/mock and
+tiny CPU tests are software evidence only. Planning requires later-development-use
+review. Each GPU stage needs the frozen child plan hash and explicit invocation;
+training also needs passed practical gates and an artifact-bound user review.
+No outcome automatically authorizes another run. [Method](controlled_private_specialization.md).
+
+Local validation completed:215 default tests (201 pass,14 optional skips),7 final
+guard tests pass,3 optional tiny CPU neural tests pass. The full fictional
+controlled pipeline and review ZIP reconstruction pass; actual-parent plan-only
+export/import passes with zero new model calls. First full-run test fixture Path
+error was fixed and verified. Training initialization and final evaluation have
+separate immutable environment receipts; frozen actor mismatches stop before
+replay/scoring. Next authorized implementation handoff is user review/push and
+pinned plan-only Colab setup, not an automatically scheduled GPU experiment.

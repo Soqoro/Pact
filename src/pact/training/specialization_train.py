@@ -1,6 +1,7 @@
 """Sequential three-adapter optimization of one globally reduced frozen objective."""
 from pathlib import Path
 import random
+import time
 
 from ..util import digest,read_json,write_json,canonical
 from .warmstart import adapter_parameters,training_adapter,_weights_hash,_save_step,_load_step,_restore_rng,export_references
@@ -55,13 +56,17 @@ def training_audit(examples,seed):
     result={'optimizer_updates':96,'updates_per_actor':32,'scheduler':'none; constant LR',
         'reduction':'L=sum(baseNLL)/(3U)+sum(omega*R*packetNLL)/B; update=sum4rows(global coefficients)*U/4',
         'U':64,'lambda_spec':1.,'actor_specialization_mass':[sum(r['cells'][i]['packet_coefficient'] for r in examples) for i in range(3)],
-        'base_forwards':0,'packet_forwards':0,'base_target_tokens':0,'packet_target_tokens':0,'example_presentations':384}
+        'base_forwards':0,'packet_forwards':0,'base_target_tokens':0,'packet_target_tokens':0,
+        'base_prompt_tokens':0,'packet_prompt_tokens':0,'base_sequence_tokens':0,'packet_sequence_tokens':0,
+        'exposure_scope':'full planned schedule','example_presentations':384}
     for batch in sched:
         for j in batch['indices']:
             cell=examples[j]['cells'][batch['agent']]
             for role in ('base','packet'):
                 if cell[role] is not None:
                     result[role+'_forwards']+=1;result[role+'_target_tokens']+=sum(cell[role]['completion_mask'])
+                    result[role+'_sequence_tokens']+=sum(cell[role]['attention_mask'])
+                    result[role+'_prompt_tokens']+=sum(cell[role]['attention_mask'])-sum(cell[role]['completion_mask'])
     return result
 
 
@@ -87,6 +92,8 @@ def backward_rows(model,examples,batch,actor):
             # Preserve forward/token exposure even for a numerical zero R.
             if weight:(value*weight).backward()
             item[role+'_nll']=float(value.detach());item[role+'_weight']=weight
+            item[role+'_target_tokens']=sum(cell[role]['completion_mask'])
+            item[role+'_sequence_tokens']=sum(cell[role]['attention_mask'])
         parts.append(item)
     return parts
 
@@ -129,6 +136,7 @@ def train_team(model,examples,plan,root,identity,*,resume=False,stop_after=None,
             for index,batch in batches:
                 if stop_after is not None and performed>=stop_after:break
                 before_update();write_json(attempt,{'step':step+1,'identity_hash':digest(identity),'state':'attempted'})
+                started=time.monotonic()
                 optimizer.zero_grad(set_to_none=True)
                 parts=backward_rows(model,examples,batch,actor)
                 grads=[p.grad for p in selected.values() if p.grad is not None]
@@ -136,7 +144,10 @@ def train_team(model,examples,plan,root,identity,*,resume=False,stop_after=None,
                 if any(p.grad is not None or p._version!=v for p,v in protected) or any(p.grad is not None for p in inactive.values()):raise ValueError('Inactive/backbone gradient or mutation')
                 norm=torch.nn.utils.clip_grad_norm_(list(selected.values()),1.,error_if_nonfinite=True)
                 optimizer.step();optimizer.zero_grad(set_to_none=True);step+=1;performed+=1
-                logs.append({'step':step,'agent':actor,'actor_step':batch['actor_step'],'gradient_norm':float(norm),'examples':parts})
+                if next(model.parameters()).is_cuda:torch.cuda.synchronize(next(model.parameters()).device)
+                logs.append({'step':step,'agent':actor,'actor_step':batch['actor_step'],'gradient_norm':float(norm),'examples':parts,
+                    'optimizer_step_seconds':time.monotonic()-started,
+                    'timer_scope':'forward/backward/clip/optimizer; excludes checkpoint and persistence; not billed GPU time'})
                 _save_step(root/'checkpoints',identity,step,model,optimizer,name,logs)
                 write_json(attempt,{'step':step,'identity_hash':digest(identity),'state':'committed'})
                 write_json(root/'status.json',{'complete':False,'completed_steps':step,'training_executed':True})
@@ -148,6 +159,10 @@ def train_team(model,examples,plan,root,identity,*,resume=False,stop_after=None,
     result={'complete':step==96,'completed_steps':step,'planned_steps':96,'training_executed':step>0,
         'initial_weight_hash':contract['initial_weight_hash'],'final_weight_hash':_weights_hash(parameters),'logs':logs,
         'loss_audit':training_audit(examples,plan['seed']),'backbone_and_inactive_isolation':True}
+    result['executed_training_tokens']={role:{
+        'forwards':sum(role+'_nll' in item for log in logs for item in log['examples']),
+        'target_tokens':sum(item.get(role+'_target_tokens',0) for log in logs for item in log['examples']),
+        'sequence_tokens':sum(item.get(role+'_sequence_tokens',0) for log in logs for item in log['examples'])} for role in ('base','packet')}
     if result['complete']:result['references']=export_references(model,root,identity,step)
     write_json(root/'status.json',result);after_update()
     return result

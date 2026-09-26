@@ -79,6 +79,8 @@ def contrast(rows, *, scope='eligible_cells', mode='standardized'):
 
 def reconstruct_record(record, identity):
     """Natural raw collection only; verify selected packets, K=2 credits and scores."""
+    if record.get('source_variant', 'natural') != 'natural' or 'estimator' in record:
+        raise ValueError('Legacy natural loader rejects controlled provenance')
     row=record['row'];tr=record['trajectory'];task=tr['task'];gold=row['gold']
     if task['split']!='train' or row['split']!='train' or task['family'] not in ('arc_challenge','logiqa'):
         raise ValueError('Only original ARC/LogiQA training records are fitting banks')
