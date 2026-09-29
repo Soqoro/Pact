@@ -129,6 +129,8 @@ def build_plan(parent, anchors, calibration, exposure, source, *, parent_sha=PAR
 
 
 def plan_from_bundle(bundle, root, exposure, repo):
+    if (root/'plan.json').exists():
+        raise ValueError('Existing child plan; restore/resume its pinned stages instead of planning again')
     if file_hash(bundle) != PARENT_SHA: raise ValueError('Wrong parent ZIP checksum')
     # Work in a temporary import first so a failed preflight cannot initialize a child.
     with tempfile.TemporaryDirectory(prefix='controlled-parent-') as tmp:

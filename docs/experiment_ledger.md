@@ -1143,3 +1143,31 @@ error was fixed and verified. Training initialization and final evaluation have
 separate immutable environment receipts; frozen actor mismatches stop before
 replay/scoring. Next authorized implementation handoff is user review/push and
 pinned plan-only Colab setup, not an automatically scheduled GPU experiment.
+
+
+## 2026-09-27 — controlled-specialization acquisition imported
+
+CPU-only returned-bundle audit passed for SHA256
+`4e5e522894f8a67d6486c7ddc769e70843c3110000f0f6a9386e3af371378c52`.
+Real Colab acquisition: 75 committed calls, zero unresolved, 22/32 complete
+synthetic pairs (11 per family), 132 eligible cells across 44 clean/early rows.
+Both eight-task support gates pass; replay/scoring/training/evaluation remain
+unexecuted. Fixed-sample inspection identifies answer/rationale contradictions
+in some negative packets; structural acceptance is not reasoning verification
+or human training approval. Parent and original results unchanged; no new run
+authorized. See [acquisition audit](reviews/qwen3-controlled-specialization-001-acquisition.md).
+
+
+## 2026-09-29 — controlled child implementation completion (no new experiment)
+
+Reconciled the consolidated brief with the existing all-stage implementation and
+actual acquisition. Only the previously audited 75-call acquisition ZIP is present;
+no new replay, scoring, training or development outcomes have been imported.
+Preserve the existing child ID, source/plan, exposure attestation and all artifacts.
+New local guards/fixture/handoff/restore options do not authorize extra calls or
+source migration. Parent remains stopped at 1,216 calls/five cells/two tasks.
+See [completion handoff](controlled_replay_completion.md) for tests and commands.
+
+Completion validation: 221 default tests (207 pass,14 optional skips),12 final guard
+tests and3 tiny CPU neural tests passed; existing acquisition re-audit passed.
+These are software checks, not additional experiment calls or learned outcomes.

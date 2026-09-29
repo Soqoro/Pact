@@ -223,6 +223,7 @@ def score_bank(plan, backend, root, replay_cells, *, readonly=False, before_new=
         raise ValueError('Frozen parent scoring actors required')
     if any(c['source_variant']!=SOURCE for c in replay_cells if c['stage']=='primary'):
         raise ValueError('Not a controlled primary replay')
+    validate_replay_coverage(plan, build_bank(plan, root), replay_cells)
     pairs = verified_pairs(plan,root)['pairs']; lookup = {(c['row_id'],c['agent']):c for c in replay_cells if c['stage']=='primary'}
     rows=[]; records=[]
     for anchor in plan['anchors']:
@@ -268,6 +269,25 @@ def score_bank(plan, backend, root, replay_cells, *, readonly=False, before_new=
         else: ShardStore(root/'scored-bank').put(rid,record);after_row()
         rows.append(row);records.append(record)
     return rows,records
+
+
+def validate_replay_coverage(plan, support, cells):
+    """Require every planned compatible cell before any scoring forward.
+
+    Missing replay is an interruption, not permission to shrink the frozen mask.
+    Full branch/request reconstruction remains the replay reader's responsibility.
+    """
+    if support['status'] != 'ready_for_replay':
+        raise ValueError('insufficient_controlled_support')
+    primary = {(r['row_id'], i) for r in support['rows']
+               for i, eligible in enumerate(r['mask']) if eligible}
+    order_rows = {r['row_id'] for r in support['rows'] if r['task_id'] in plan['order_task_ids']}
+    expected = ({('primary', r, i) for r, i in primary}
+                | {('order', r, i) for r, i in primary if r in order_rows}
+                | {('calibration', c['row_id'], c['agent']) for c in plan['natural_calibration']})
+    actual = [(c['stage'], c['row_id'], c['agent']) for c in cells]
+    if len(actual) != len(set(actual)) or set(actual) != expected:
+        raise ValueError('Incomplete, duplicate, or unplanned controlled replay evidence')
 
 
 def assignment(rows, replay_cells):

@@ -28,6 +28,7 @@ PLAN_HASH = ""
 ARM = "frozen"
 RESUME = False
 STOP_AFTER = None
+RESTORE_TIMEOUT_SECONDS = 5400  # storage deadline only
 DEVELOPMENT_USE_REVIEWED = False  # explicit prerequisite, not a model result
 DEVELOPMENT_REVIEW_NOTE = ""  # who checked which records / any external uses
 LATER_DEVELOPMENT_USES = []  # any optimization/outcome-selection use stops planning
@@ -94,7 +95,8 @@ if STAGE == "restore":
     assert not RUN.exists(), "Restore requires fresh scratch; never erase partial work."
     snapshots = sorted(p for p in (PERSISTENT / "snapshots").glob("*") if p.is_dir())
     assert snapshots, "No full child snapshot. Review ZIPs are not resumable weights."
-    study("restore", "--snapshot", snapshots[-1])
+    study("restore", "--snapshot", snapshots[-1],
+          "--restore-timeout-seconds", RESTORE_TIMEOUT_SECONDS)
 elif STAGE == "plan":
     assert DEVELOPMENT_USE_REVIEWED and DEVELOPMENT_REVIEW_NOTE, "Complete the later-development-use review required by specification section4."
     exposure = SCRATCH / "controlled-development-exposure.json"
@@ -123,6 +125,58 @@ else:
         if RESUME: options.append("--resume")
     study(STAGE, *options)
 ```
+
+
+## Existing run: do not re-plan or silently change its revision
+
+The returned acquisition already belongs to `qwen3-controlled-specialization-001`:
+
+- Recorded commit: `e719c088425b4986d1ad63beb0623779269c9547`.
+- Plan: `fb554a12c60da2d354606f8fb1f5d5c6894321adb47df4de96940e51256432af`.
+- 75 committed acquisition calls, 22 supported tasks, no returned replay evidence.
+
+Continue that active run with its recorded commit and plan. Do not replace its
+GIT_REF with a future commit containing the September 29 completion guards. The
+source guard deliberately rejects that migration; this update does not authorize
+one. Do not rerun plan/acquire to create a replacement child. A newer implementation
+can audit its ZIP locally without changing its recorded source or results.
+
+On the existing pinned Colab revision, after restoring the latest full snapshot
+and the preparation export with the setup below, the already authorized next steps
+remain (run individual cells, never an automatic training sweep):
+
+```python
+PLAN_HASH = "fb554a12c60da2d354606f8fb1f5d5c6894321adb47df4de96940e51256432af"
+assert digest(read_json(RUN / "plan.json")) == PLAN_HASH
+H = ["--plan-hash", PLAN_HASH]
+GPU = ["--execute", "--initialization-root", INITIAL, "--cache-dir", SCRATCH / "cache"]
+assert read_json(RUN / "controlled_support.json")["status"] == "ready_for_replay"
+study("replay", *H, *GPU)
+```
+
+```python
+assert (RUN / "replay_complete.json").is_file()
+study("score-assign", *H, *GPU)
+study("export", *H)
+# STOP: return the printed ZIP and SHA256 for packet/assignment/seed/order review.
+```
+
+The new `--restore-timeout-seconds` option below is available only in the updated
+implementation. With the existing pinned revision, use its same verified worker
+directly if Drive exceeds the CLI's 30-minute deadline:
+
+```python
+assert not RUN.exists(), "Preserve partial work; restore requires a fresh destination."
+snapshots = sorted(p for p in (PERSISTENT / "snapshots").glob("*") if p.is_dir())
+assert snapshots
+print(storage_operation("controlled-specialization-restore", snapshots[-1], RUN,
+                        timeout_seconds=5400))
+assert digest(read_json(RUN / "plan.json")) == PLAN_HASH
+```
+
+This raises only a storage deadline. It does not change model/token/call budgets.
+Restoration verifies every object and the latest safe snapshot; it recopies from
+the beginning after timeout. Do not delete locks or promote partial staging files.
 
 ## Explicit individual stages after setup
 

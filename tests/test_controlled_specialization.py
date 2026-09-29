@@ -79,6 +79,35 @@ class Continuation(Backend):
         return raw,call
 
 
+def all_slot_fixture():
+    """Fictional complete own/peer views for every physical slot/sign/replicate."""
+    from pact.protocol import Protocol
+    from pact.schemas import task_from_dict, AttackRecord
+    from pact.training.specialization_collect import runtime
+    p = fixture(); backend = Continuation(p, symmetric=True)
+    task = task_from_dict(p['tasks'][p['selection'][0]['task_id']])
+    attack = AttackRecord(**{k:v for k,v in p['attacks'][task.task_id]['early'].items() if k!='schema_version'})
+    protocol = Protocol(runtime(p), backend)
+    original = tuple(protocol.private_packet(task,i,attack,node_seed(19,i)) for i in range(3))
+    pair = {sign: canonical({'answer':answer, 'justification':'Fictional controlled evidence.'})
+            for sign,answer in [('positive','A'),('negative','B')]}
+    result = {'fixture_only': True, 'shared_pair': pair,
+              'original_private_raw': [p.raw for p in original], 'views': []}
+    before = canonical(original)
+    for actor in range(3):
+        for sign, raw in pair.items():
+            replacement = dc.replace(original[actor],raw=raw,answer_id=json.loads(raw)['answer'],parser_status='ok')
+            private = tuple(replacement if i==actor else p for i,p in enumerate(original))
+            for k in range(2):
+                branch = protocol.suffix(task,'debate',attack,private,node_seed(19,'suffix',k),digest([actor,sign,k]))
+                result['views'].append({'actor':actor,'sign':sign,'replicate':k,
+                    'private_raw':[p.raw for p in branch.private], 'attack':dc.asdict(branch.attack),
+                    'node_seeds':[c.seed for c in branch.calls],
+                    'revision_messages':[[dc.asdict(m) for m in r.call.messages] for r in branch.revised]})
+    assert canonical(original) == before
+    return result
+
+
 class ControlledTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -177,6 +206,9 @@ class ControlledTests(unittest.TestCase):
                             self.assertEqual(u[key],list(reversed(v[key])))
             rows,records=score_bank(self.plan,backend,root,cells)
             self.assertEqual(len(backend.forwards),384)
+            with self.assertRaisesRegex(ValueError, 'replay evidence'):
+                score_bank(self.plan, backend, root, cells[:-1])
+            self.assertEqual(len(backend.forwards),384)
             assignments=write_assignments(root,rows,records,cells)
             self.assertEqual(assignments['status'],'ready_for_user_review')
             self.assertEqual(canonical((rows,records)),canonical(score_bank(self.plan,offline_backend(self.plan),root,cells,readonly=True)))
@@ -200,7 +232,12 @@ class ControlledTests(unittest.TestCase):
                     self.assertNotIn('Fictional controlled evidence.',canonical(call['messages']))
             result=report(root);self.assertFalse(result['training_executed']);self.assertEqual(set(result['missing_evaluation_rows'].values()),{0})
             self.assertLessEqual(result['generation_accounting']['attempted_calls'],6096)
-            bundle=export(root);self.assertEqual(canonical(audit(bundle['path'],bundle['sha256'])),canonical(result))
+            bundle=export(root)
+            handoff=(root/'CODEX_HANDOFF.md').read_text()
+            self.assertIn('Replay complete: True',handoff)
+            self.assertIn('Assignment: ready_for_user_review',handoff)
+            self.assertIn('executed=False',handoff)
+            self.assertEqual(canonical(audit(bundle['path'],bundle['sha256'])),canonical(result))
             validate_recovery(root,self.plan)
 
     def test_latest_restore_and_immutable_parent(self):
@@ -233,6 +270,78 @@ class ControlledTests(unittest.TestCase):
 
 
 class GuardTests(unittest.TestCase):
+    def test_full_slot_fixture_views_and_paired_seeds(self):
+        path=Path(__file__).parent/'fixtures/controlled_private_v1.json'
+        example=read_json(path)['all_slot_views']
+        self.assertEqual(canonical(all_slot_fixture()),canonical(example))
+        self.assertEqual(len(example['views']),12)
+        for k in range(2):
+            views=[v for v in example['views'] if v['replicate']==k]
+            self.assertEqual(len({tuple(v['node_seeds']) for v in views}),1)
+            for view in views:
+                actor=view['actor']; raw=example['shared_pair'][view['sign']]
+                for i,packet in enumerate(view['private_raw']):
+                    self.assertEqual(packet,raw if i==actor else example['original_private_raw'][i])
+                for messages in view['revision_messages']:
+                    body=json.loads(messages[1]['content'])
+                    packets=[body['own_private'],*body['peers']]
+                    self.assertEqual(next(p['text'] for p in packets if p['source']==f'peer-{actor+1}'),raw)
+                    self.assertNotIn('support_option',canonical(messages))
+
+    def test_replay_coverage_rejects_missing_duplicate_and_unplanned_cells(self):
+        from pact.training.controlled_private import validate_replay_coverage
+        plan = {'order_task_ids': ['t0'], 'natural_calibration': [{'row_id': 'old', 'agent': 2}]}
+        support = {'status': 'ready_for_replay', 'rows': [
+            {'row_id': 'r0', 'task_id': 't0', 'mask': [True]*3},
+            {'row_id': 'r1', 'task_id': 't1', 'mask': [True]*3},
+            {'row_id': 'missing', 'task_id': 't2', 'mask': [False]*3}]}
+        cells = [{'stage': stage, 'row_id': row, 'agent': i}
+                 for stage, rows in [('primary', ['r0','r1']), ('order', ['r0'])]
+                 for row in rows for i in range(3)]
+        cells.append({'stage': 'calibration', 'row_id': 'old', 'agent': 2})
+        validate_replay_coverage(plan, support, cells)
+        for changed in (cells[:-1], cells + [cells[0]], cells + [
+                {'stage': 'primary', 'row_id': 'missing', 'agent': 0}]):
+            with self.assertRaisesRegex(ValueError, 'replay evidence'):
+                validate_replay_coverage(plan, support, changed)
+        with self.assertRaisesRegex(ValueError, 'insufficient'):
+            validate_replay_coverage(plan, {**support, 'status': 'insufficient_controlled_support'}, cells)
+
+    def test_existing_plan_is_not_reinitialized(self):
+        from pact.training.controlled_private_plan import plan_from_bundle
+        with tempfile.TemporaryDirectory() as t:
+            root = Path(t); write_json(root/'plan.json', {'existing': True})
+            before = (root/'plan.json').read_bytes()
+            with self.assertRaisesRegex(ValueError, 'Existing child plan'):
+                plan_from_bundle(root/'absent.zip', root, {}, root)
+            self.assertEqual((root/'plan.json').read_bytes(), before)
+            self.assertFalse((root/'parent_metadata').exists())
+
+    def test_restore_deadline_is_storage_only(self):
+        from pact.training.controlled_specialization import main
+        with tempfile.TemporaryDirectory() as t, patch(
+                'pact.training.controlled_specialization.storage_operation', return_value={}) as restore:
+            with contextlib.redirect_stdout(io.StringIO()):
+                main(['restore', '--run-dir', str(Path(t)/'run'), '--snapshot', '/fixture/snapshots/latest',
+                      '--restore-timeout-seconds', '5400'])
+            self.assertEqual(restore.call_args.kwargs, {'timeout_seconds': 5400.})
+            self.assertEqual(restore.call_args.args[0], 'controlled-specialization-restore')
+
+    def test_nonzero_row_constant_credit_and_singletons(self):
+        rows = [{'row_id': str(b), 'task_id': str(b//2), 'condition': 'clean' if b%2==0 else 'early',
+                 'split': 'train', 'identity': {'snapshot': 'fixture', 'source_variant': SOURCE, 'estimator': ESTIMATOR},
+                 'initial_correct': [False]*3, 'cells': [
+                     {'eligible': b < 16 or i == b%3, 'answer_nll': 1+i*.3+b*.01,
+                      'delta': (.5 if b%2 else -.5) if b < 16 or i == b%3 else None,
+                      'per_seed_differences': [1,0] if b%2 else [-1,0], 'positive_tokens': 10}
+                     for i in range(3)]} for b in range(32)]
+        result, *_ = assignment(rows, [])
+        self.assertEqual(result['status'], 'no_assignment_contrast')
+        for local, credit in zip(result['weights'][ARMS[1]], result['weights'][ARMS[2]]):
+            for a,b in zip(local,credit): self.assertAlmostEqual(a,b,places=6)
+        for j in range(16,32):
+            self.assertEqual(result['weights'][ARMS[2]][j], [float(i==j%3) for i in range(3)])
+
     def test_base_generator_restores_state_even_on_exception(self):
         from test_adapters import FakeModel
         class Model(FakeModel):

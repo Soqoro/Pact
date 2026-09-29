@@ -1141,3 +1141,29 @@ certification; a declared systematic defect stops work. Raw/centered/order/seed
 signals and actor dominance stay available for that review. No automatic fallback,
 extra sampling, new GPQA or final-test use. [Method](controlled_private_specialization.md)
 and [exact staged commands](controlled_private_colab.md).
+
+
+## 2026-09-29: idempotent controlled-replay implementation completion
+
+The consolidated implementation brief is reconciled with the existing complete
+controlled acquisition/replay/scoring/assignment/training/evaluation path. No new
+framework, estimator, loss, mask policy, model, solver setting or budget is needed.
+Persisted field names map context_source -> source_variant, credit_estimator ->
+estimator, learning_variant -> variant; do not rename fields inside a frozen plan.
+The existing 22-task supported acquisition is real later evidence and is retained.
+
+Add exact replay-cell set validation before scoring, including primary, fixed order
+and five natural calibration cells. Missing evidence must not silently shrink the
+support mask; duplicates and unplanned cells fail before a scoring forward.
+Reject a plan invocation when plan.json already exists, before importing anything.
+Expand human handoffs to state attempted/committed/missing stages; retain legacy
+report payloads so prior acquisition ZIPs reconstruct unchanged. Storage-only restore
+timeouts are configurable and finite through the existing worker, with no broad
+storage rewrite, partial staging promotion or budget reset.
+
+The active real child remains pinned to e719c088425b4986d1ad63beb0623779269c9547
+and plan fb554a12c60da2d354606f8fb1f5d5c6894321adb47df4de96940e51256432af.
+A future commit of these changes cannot silently replace its recorded code identity.
+The runbook distinguishes existing-revision recovery from new implementation options.
+No source-migration exception is introduced. Its replay/assignment was authorized
+separately; training still requires the artifact-bound packet/seed/order review.

@@ -1060,3 +1060,38 @@ These /tmp dirty-source plans are local design evidence, not pinned Colab plans.
 Training logs now distinguish actual executed sequence/target tokens from full
 planned exposure and record optimizer timing separately from storage; none is
 claimed to be billed GPU time. Actual child GPU behavior remains unverified.
+
+
+## 2026-09-27 — controlled-specialization acquisition imported
+
+CPU-only returned-bundle audit passed for SHA256
+`4e5e522894f8a67d6486c7ddc769e70843c3110000f0f6a9386e3af371378c52`.
+Real Colab acquisition: 75 committed calls, zero unresolved, 22/32 complete
+synthetic pairs (11 per family), 132 eligible cells across 44 clean/early rows.
+Both eight-task support gates pass; replay/scoring/training/evaluation remain
+unexecuted. Fixed-sample inspection identifies answer/rationale contradictions
+in some negative packets; structural acceptance is not reasoning verification
+or human training approval. Parent and original results unchanged; no new run
+authorized. See [acquisition audit](reviews/qwen3-controlled-specialization-001-acquisition.md).
+
+
+## 2026-09-29 — controlled replay completion verified locally
+
+Implemented exact replay coverage guards before scoring, existing-child planning
+rejection, stage/accounting-aware handoffs, configurable bounded restore deadline,
+and expanded all-slot/sign/replicate fictional fixture. Reused the complete real
+trainer and natural evaluation; no alternate framework or objective introduced.
+The active child remains pinned to its original revision/plan and no source
+migration, training approval, model execution or historical artifact mutation occurred.
+
+Executed validation: full suite 221 tests in 535.001s, **207 passed / 14 optional
+skips / zero failures**. Final focused guards 12 passed in 0.563s (including final
+fixture/notebook edits); optional tiny CPU neural tests 3 passed in 9.873s.
+The full mock acquisition -> replay/controls -> scoring/assignments -> three mocked
+optimizer schedules -> four-system evaluation -> export/import passed. Actual
+optimizer gradients/isolation/exact resume are covered separately by tiny CPU tests;
+PEFT/8B training/export remains GPU-unverified. Existing acquisition bundle audit
+passed again without changing its 75 calls, 22 supported tasks or plan hash.
+Notebook syntax/empty outputs, CLI help and diff whitespace checks passed.
+
+[Complete handoff, changed files, fixture, exact commands and limits](controlled_replay_completion.md).

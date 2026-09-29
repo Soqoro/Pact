@@ -113,6 +113,53 @@ def report(root):
     return result
 
 
+def handoff_text(root, outcome_status):
+    """Human-readable stage evidence; never infer execution from planned budgets."""
+    plan = load_plan(root)
+    try:
+        usage = accounting(root)
+    except (ValueError, KeyError, FileNotFoundError):
+        usage = {'teacher_forced_scores': 'unverified', 'by_stage': {}}
+    support = read_json(root/'controlled_support.json') if (root/'controlled_support.json').exists() else {}
+    assignment = read_json(root/'assignment_contrast.json') if (root/'assignment_contrast.json').exists() else {}
+    lines = [
+        '# Controlled specialization handoff', '',
+        f"Run: {plan['run_id']}", f"Plan hash: {digest(plan)}",
+        f"Code identity: {canonical(plan['source'])}",
+        f"Export status: {outcome_status}",
+        f"Source: {SOURCE}; estimator: {ESTIMATOR}; variant: {VARIANT}", '',
+        '## Executed evidence',
+        f"Acquisition complete: {(root/'controlled_pair_manifest.json').exists()}",
+        f"Support: {support.get('status', 'not_run')}; supported tasks: {support.get('supported_tasks', 'unknown')}",
+        f"Replay complete: {(root/'replay_complete.json').exists()}",
+        f"Assignment: {assignment.get('status', 'not_run')}",
+        f"Frozen scoring forwards: {usage['teacher_forced_scores']}",
+    ]
+    for stage, values in usage['by_stage'].items():
+        lines.append(f"{stage}: {values['committed_calls']} committed / {values['attempted_calls']} attempted; "
+                     f"{values['unresolved']} unresolved; {values['reserved_output_tokens']} reserved tokens")
+    for arm in ARMS:
+        path = root/'training'/arm/'status.json'
+        status = read_json(path) if path.exists() else {}
+        lines.append(f"Training {arm}: executed={status.get('training_executed', False)}, "
+                     f"complete={status.get('complete', False)}, steps={status.get('completed_steps', 0)}")
+    lines += ['', '## Review and recovery',
+        'Task groups are sampling units; missing evaluation rows are not observed failures.',
+        'Structural packet acceptance is not rationale verification. Inspect the fixed sample,',
+        'assignment contrast, seed/order sensitivity and calibration before approving training.',
+        'Assignment completion always stops for an explicit artifact-bound review.',
+        'This is a controlled packet-insertion study, not on-policy credit or full PACT.',
+        'No efficacy claim follows from support or assignment contrast.',
+        'Review ZIPs omit weights and optimizer tensors. Resume requires the latest verified',
+        'full snapshot and the exact recorded code/model/plan; never re-plan an existing run.',
+        'Environment receipts are environment-*.json; resource_usage.json records actual counts.',
+        'Unknown compute units remain null. Parent calls and historical outcomes are unchanged.',
+        'No automatic follow-up. Return this ZIP and its separately printed SHA256 for audit.']
+    if outcome_status == 'partial_requires_review':
+        lines += ['Report reconstruction failed: see partial_export_status.json; scientific results are unverified.']
+    return '\n'.join(lines) + '\n'
+
+
 def export(root,persistent=None):
     try:
         result=report(root);outcome_status='review'
@@ -121,7 +168,7 @@ def export(root,persistent=None):
         result={'plan_hash':digest(plan),'synthetic_fixture':plan['synthetic_fixture']}
         write_json(root/'partial_export_status.json',{'status':outcome_status,'error_type':type(exc).__name__,
                    'error_hash':digest(str(exc)),'scientific_results_verified':False})
-    (root/'CODEX_HANDOFF.md').write_text('Controlled private packet insertion / synthetic-target specialization, not full PACT. Parent remains stopped. No automatic follow-up. Review ZIP is metadata only; tensors remain in full snapshots.\n')
+    (root/'CODEX_HANDOFF.md').write_text(handoff_text(root, outcome_status))
     bundle=review_bundle(root,root.parent/'bundles'/f'{RUN_ID}-handoff-{time.time_ns()}.zip',
         {'plan_hash':result['plan_hash'],'status':outcome_status},kind=VARIANT,include_markdown=True,
         scientific_status='synthetic_fixture' if result['synthetic_fixture'] else 'controlled_training_development',max_metadata_bytes=512*1024**2)
@@ -168,12 +215,14 @@ def main(argv=None):
         parser.add_argument('--'+name,type=Path)
     parser.add_argument('--sha256');parser.add_argument('--plan-hash');parser.add_argument('--arm',choices=('frozen',*ARMS))
     parser.add_argument('--execute',action='store_true');parser.add_argument('--resume',action='store_true');parser.add_argument('--stop-after',type=int)
+    parser.add_argument('--restore-timeout-seconds', type=float, default=1800,
+                        help='Storage-only deadline; does not change model or call budgets')
     args=parser.parse_args(argv);root=args.run_dir;repo=Path(__file__).resolve().parents[3]
     if args.stage=='audit':
         result=audit(args.source_bundle,args.sha256);write_json(root/'audited_controlled_results.json',result);print('Controlled audit passed.');return
     if args.stage=='restore':
         root.parent.mkdir(parents=True,exist_ok=True)
-        print(canonical(storage_operation('controlled-specialization-restore',args.snapshot,root,timeout_seconds=1800)));return
+        print(canonical(storage_operation('controlled-specialization-restore',args.snapshot,root,timeout_seconds=args.restore_timeout_seconds)));return
     with run_lock(root):
         if args.stage=='plan':
             if args.parent_bundle is None or args.exposure_review is None:raise ValueError('Parent ZIP and later-development-use review required')

@@ -53,3 +53,8 @@ physical-node seeds across slots/signs, fixed order/calibration controls. Synthe
 positive full packets are targets only; evaluation stays natural. Preserve global
 loss scaling and historical effective weights. Require support/practical screens
 and an explicit artifact-bound review before training. No automatic next run.
+
+The [controlled replay completion brief](docs/PACT_Controlled_Replay_Codex_Implementation_Prompt.md)
+consolidates the existing child. Never re-plan its existing ID or migrate its pinned
+source implicitly. Require complete primary/order/calibration evidence before scoring;
+storage deadline changes do not expand scientific budgets.

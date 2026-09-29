@@ -2,8 +2,8 @@
 
 This implements [the authorized update](PACT_Codex_Controlled_Private_Replay_Update.md).
 It is a new child study, `qwen3-controlled-specialization-001`, not a repair or
-continuation of the stopped parent's natural-pair experiment. There are no new GPU
-results. The 1,216 parent calls and its failed support gate remain unchanged.
+continuation of the stopped parent's natural-pair experiment. The returned acquisition now has real GPU evidence; replay, scoring, training
+and evaluation have no returned evidence. See the acquisition audit below. The 1,216 parent calls and its failed support gate remain unchanged.
 
 ## Parent evidence and import
 
@@ -185,3 +185,26 @@ training token counts and per-step optimizer timers are recorded separately from
 planned exposure and persistence. Training-initialization receipts and final
 trained-evaluation receipts are distinct immutable artifacts. No real child GPU
 stage, pretrained download, commit or push occurred; PEFT/8B behavior is unverified.
+
+
+## September 29 completion review and existing evidence
+
+The [consolidated brief](PACT_Controlled_Replay_Codex_Implementation_Prompt.md)
+confirms the existing method rather than changing its estimand or budget.
+[Acquisition audit](reviews/qwen3-controlled-specialization-001-acquisition.md):
+75 committed calls, 22/32 complete synthetic pairs, 132 eligible actor/row cells;
+no unresolved calls. Sampled negative packets include answer/rationale conflicts.
+No assumption of reliable credit or positive outcome follows. Earlier statements
+of no child GPU execution above describe the original implementation handoff.
+
+Completion guards reject incomplete/duplicate/unplanned replay-cell sets before
+scoring and reject planning over an existing child. Human handoffs now list
+executed/missing stages and budgets. Restore deadlines are configurable independently
+of the scientific contract. Neither the plan hash, historical artifacts nor
+successful method outputs are rewritten. The current active run must retain its
+recorded source revision; there is no automatic source migration.
+
+The fictional fixture now additionally includes all three physical actor slots,
+both signs and both suffix replicates (12 full sets of revision views). It tests
+shared bytes in own/peer views and fixed physical-node seeds. Row-constant positive
+and negative credits with unequal NLL and singleton masks leave allocations unchanged.

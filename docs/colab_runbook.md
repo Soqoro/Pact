@@ -307,3 +307,13 @@ parent is imported, never resumed for generation. Pin newly reviewed/pushed code
 Start with plan/exposure review, then only the explicitly requested acquisition.
 Do not automatically chain replay, training or evaluation. Real initialization
 weights and later an artifact-bound packet/seed/order review are required.
+
+
+### Controlled replay completion, September 29
+
+The controlled child already has audited acquisition. Continue its recorded
+revision/plan; do not re-plan or recollect after this local update. The
+[controlled runbook](controlled_private_colab.md#existing-run-do-not-re-plan-or-silently-change-its-revision)
+contains exact existing-run replay/scoring/export commands, checkpoint prerequisites,
+and the storage-only timeout workaround. The updated notebook exposes a configurable
+restore deadline for the new implementation. Neither path crosses training review.
