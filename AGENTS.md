@@ -58,3 +58,11 @@ The [controlled replay completion brief](docs/PACT_Controlled_Replay_Codex_Imple
 consolidates the existing child. Never re-plan its existing ID or migrate its pinned
 source implicitly. Require complete primary/order/calibration evidence before scoring;
 storage deadline changes do not expand scientific budgets.
+
+[Heterogeneous complementarity](docs/heterogeneity_methodology.md) is a separate
+clean inference-only diagnostic: exact 80 exposed pilot tasks, fresh official
+Qwen2.5/Llama3.1/Mistral actors, common unadapted Qwen3 readout. Native tokenizers,
+predeclared shared nine-packet bindings, all-task communication, one resident model,
+2,400 attempts / 476,160 reserved tokens, included two-task smoke. No adapters,
+training, attacks, replay, GPQA or final tests. All-model access precedes generation.
+Unsafe dispatch windows remain unsafe even when partial reports reconstruct.

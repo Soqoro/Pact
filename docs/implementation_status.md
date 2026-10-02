@@ -1095,3 +1095,166 @@ passed again without changing its 75 calls, 22 supported tasks or plan hash.
 Notebook syntax/empty outputs, CLI help and diff whitespace checks passed.
 
 [Complete handoff, changed files, fixture, exact commands and limits](controlled_replay_completion.md).
+
+
+## 2026-09-30 — controlled replay recovery receipt audited
+
+Receipt SHA256 `e1df0d2818306cf5cdd384ac42f178c06a27dd6e15399962cb57ab5a0f70cc51`.
+Latest indexed snapshot `1790455158060324752-c824b049ff36` has recovery_safe=false.
+Verified index/COMPLETE/state hashes and compared frozen acquisition hashes against
+its previously audited ZIP. Plan, pairs, support, parent receipt and indexed
+acquisition/donor artifacts are unchanged. Reconstructed expected replay cell IDs:
+132/132 primary,36/36 order,4/5 calibration indexed. Missing calibration cell is
+arc_challenge:MCAS_2004_8_8 / early / agent2 (zero-based), record key
+`dd97205b8e8b3ed83c19648126dabca933eaf866e52422ffb5603d76f55529ad`.
+
+The receipt contains inventory hashes, not replay object payloads; actual outcomes
+and credit values have not been reconstructed. Saved call counts are75 acquisition,
+2112 primary,576 order,64 calibration (2827 total); this is not a bound on calls
+that may have occurred after the unsafe marker. Up to16 calls of the last calibration
+cell may be unrecorded. No safety flag was changed, older snapshot selected, call
+reissued, source migrated, or training authorized. The original80-call calibration
+cap and complete-evidence gate remain in force. Recovery requires additional
+retained evidence or an explicitly reviewed amendment, not implicit budget reset.
+Machine-readable local audit: results_import/controlled-recovery-receipt-audit.json.
+
+
+## 2026-09-30 — saved controlled replay payloads forensically reconstructed
+
+Forensic ZIP SHA256 `2ad3152c12d7215a421e35e68325cb98cd541c36d769ede3a6da7b4b9c6d736b`;
+latest snapshot remains `1790455158060324752-c824b049ff36`, recovery_safe=false.
+This supplements the earlier inventory-only receipt audit; it does not supersede
+its unsafe-resume finding. All 177 selected payload hashes match the full snapshot
+index and COMPLETE hash; the index equals the previously audited recovery receipt.
+The pinned plan hash remains
+`fb554a12c60da2d354606f8fb1f5d5c6894321adb47df4de96940e51256432af`.
+
+Offline verification reconstructed all 688 saved continuation branches (2,752
+embedded generation call records), validating exact planned cell identities,
+slot substitutions, immutable initial peers, attack bytes, corresponding seeds,
+display orders, prompt messages, recorded checkpoint/template identities, decoding
+parameters, parsed packets and terminal outcomes. All saved Q+/Q-/delta values
+recomputed exactly. No generation or teacher-forced scoring was executed. This is
+payload reconstruction, not an independent full dispatch-journal audit, tokenizer
+recount or physical weight reload. Forty final outputs were abstentions and 648
+parsed successfully; abstentions count as failures.
+
+| Saved stage | Cells | Tasks | Delta distribution |
+| --- | ---: | ---: | --- |
+| Primary controlled | 132/132 | 22 | 125 zero, 3 at +0.5, 3 at +1, 1 at -1 |
+| Reversed order | 36/36 | 6 | 35 zero, 1 at +1 |
+| Retained natural calibration | 4/5 | 2 | 1 zero, 2 at +1, 1 at -1 |
+
+Primary positive-packet branches succeeded in 112/264 continuations versus
+105/264 negative-packet branches. Within the 264 matched seed comparisons,
+150 were both wrong, 103 both correct, 9 positive-only correct and 2 negative-only
+correct. Mean cell delta is 0.026515; these correlated continuations are not 264
+independent task observations. Seven nonzero cells occupy six tasks; 38/44 task /
+condition rows have identical delta across all three slots, six rows vary. Three
+primary cells disagree between their two replicate differences. Clean rows have
+one nonzero cell (+1); early rows contain the other six. These are controlled
+packet intervention results, not natural credit or learned accuracy improvements.
+
+Reversed order changes delta in 3/36 matched cells and changes the best-slot tie
+set in 2/12 matched rows, with one strict pairwise slot-rank reversal. No control
+order was selected post hoc. Natural calibration has no exact row/actor overlap
+with supported controlled cells, so estimator agreement cannot be computed.
+Saved calibration values: ARC MCAS_2004_8_8 early agent0=-1, agent1=0;
+LogiQA train-0903 clean agent0=+1, agent2=+1 (agents zero-based).
+The fifth cell remains missing: ARC MCAS_2004_8_8 early agent2.
+
+This evidence is sparse and incomplete. No likelihood scoring, responsibility
+assignment contrast, optimizer update, trained evaluation or scientific efficacy
+claim follows from this audit. Up to 16 calls after the unsafe snapshot remain
+unaccounted for; rerunning them is not authorized under the original 80-call
+calibration cap. No recovery flag, source revision, budget or historical run was
+changed. Complete-evidence and explicit training-review gates remain closed.
+
+Reproducible local audit (ignored, no raw text in these summaries):
+`results_import/controlled-replay-forensic-audit/audit.py`, `summary.json`,
+`cells.json`. Executed with `PYTHONPATH=src python
+results_import/controlled-replay-forensic-audit/audit.py`; all assertions passed.
+These are evidence checks, not new CPU/mock or GPU experiment results.
+
+
+## 2026-09-30 — continuation recommendation recorded
+
+Post-forensic review recommends closing the child as incomplete, pending the user's
+decision. No run marker was changed. Assignment contrast remains unevaluated,
+not failed: missing NLL and globally coupled responsibilities prevent inference
+from the count of nonzero-credit tasks alone. No new calls or training authorized.
+See the dated continuation review in implementation_decisions.md and the ledger.
+
+
+## 2026-09-30 — controlled specialization closed as incomplete
+
+The user accepted the preceding closure recommendation with “proceed”.
+`qwen3-controlled-specialization-001` is administratively **closed — incomplete**;
+no further execution is scheduled or authorized. This disposition supersedes the
+pending-decision wording above, without declaring scientific completion or a
+failed assignment-contrast test.
+
+Retained evidence: 75 acquisition calls, 132/132 primary replay cells, 36/36
+order-control cells and 4/5 natural calibration cells. The saved inventory contains
+2,827 committed calls; up to 16 subsequent calls remain unaccounted for. The missing
+cell is arc_challenge:MCAS_2004_8_8 / early / agent2 (zero-based).
+The forensic archive remains bound to SHA256
+`2ad3152c12d7215a421e35e68325cb98cd541c36d769ede3a6da7b4b9c6d736b`.
+
+Assignment contrast remains unevaluated; scoring, training and trained development
+evaluation were not executed in this child. Sparse controlled replay effects are
+descriptive evidence, not demonstrated PACT efficacy. The latest snapshot retains
+recovery_safe=false. No COMPLETE marker, missing cell, likelihood, assignment,
+checkpoint or outcome has been manufactured. Existing archives, source/plan hashes,
+budgets and completed historical studies are preserved. No new study or recovery
+amendment is authorized by this administrative closure.
+
+
+## 2026-09-30 — consolidated project review
+
+Created [the September 30 project audit](audits/PACT_PROJECT_AUDIT_2026-09-30.md),
+covering historical diagnostics, preparation, completed controlled receiver training
+and evaluation, GPQA support, and both stopped specialization studies. Reconciled
+13,765 recorded generation calls plus up to 16 unresolved subsequent calls, and
+147 optimizer updates across distinct preparation/task-SFT/receiver-SFT recipes.
+No specialization training or full PACT efficacy is claimed. The controlled child
+remains closed incomplete. Report links and aggregate arithmetic passed; no model
+execution, regression-suite rerun, commit or push occurred for this consolidation.
+
+## 2026-10-02 — heterogeneous phase implemented and CPU tested
+
+Implemented the new official-model registry/native backend, exact 80-task pilot
+import, shared nine-packet bank, four-team model-major runner, all-model access
+preflight, common readout/task-only baseline, metrics/bootstrap, compact recovery,
+private/sanitized export and offline reconstruction. Thin notebook 09 defaults to
+plan/preflight; explicit CLI commands perform the actual download/inference path.
+All new official-model loading, generation, memory/throughput and remote persistence
+remain GPU-unverified until the user returns Colab evidence. No pretrained weights,
+GPU jobs, old-run continuations, commits or pushes were performed locally.
+
+Actual validation in this implementation pass:
+- Default suite: 231 tests in 498.396s; 215 passed, 14 optional skipped, two errors.
+  Both errors were existing GPQA temporary-directory privacy guards: this sandbox
+  places a .git marker under /tmp. The guard was not changed or bypassed.
+- Affected GPQA fixture tests plus protocol/metrics/artifacts/notebook regressions,
+  using TMPDIR=/var/tmp outside Git: 20 passed in 0.562s.
+- Final heterogeneous focused suite: 17 passed in 40.168s, including the full
+  80-task/2,400-request mock, exact budget, smoke reuse, native EOT/slicing/context
+  handling, cleanup, model-major/task-major equivalence, missingness, tamper/unknown
+  rejection, safe/unsafe compact restore, and private/sanitized report round trips.
+- Actual retained pilot ZIP checksum reader and all 80 canonical inputs/labels/
+  selection hashes verified offline; zero benchmark generations.
+- CLI help, notebook Python syntax/empty outputs and diff whitespace checks passed.
+
+No new optional neural test or official tokenizer/model execution is claimed.
+The fictional prompt/team fixture is `tests/fixtures/heterogeneity_v1.json`.
+[Exact stage commands, data/access prerequisites and recovery limits](heterogeneity_colab.md).
+
+Final acceptance additions: safe snapshot object/receipt validation and reporting
+checks passed four focused tests (0.691s); native-generation/cache reuse checks
+passed four (1.498s); report/export/missingness checks passed five (4.807s).
+The real retained pilot also passed a temporary CLI plan -> report -> export
+round trip with zero attempted generations and all 80 tasks correctly missing.
+That temporary local plan is not the user's authoritative future Colab plan hash.
+Final post-edit heterogeneous suite rerun: all 17 tests passed in 42.384s.
+No official tokenizer, pretrained model or GPU experiment was run locally.

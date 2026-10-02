@@ -46,6 +46,18 @@ def revision_prompt(task: TaskInput, own: PrivatePacket, delivered: tuple[Delive
                                        "peers": [envelope(m.sender, m.text) for m in delivered]})))
 
 
+def vote_answer(packets):
+    """Existing strict ballot policy: ties and all-invalid teams abstain."""
+    counts = Counter(p.answer_id for p in packets if p.parser_status == "ok")
+    winners = [a for a, n in counts.items() if n == max(counts.values())] if counts else []
+    return winners[0] if len(winners) == 1 else None
+
+
+def readout_prompt(task, entries):
+    return (Message("system", READOUT_INSTRUCTION),
+            Message("user", safe_json({"trusted_task": trusted_input(task), "packets": entries})))
+
+
 def deliver(private: tuple[PrivatePacket, ...], attack: AttackRecord) -> tuple[DeliveredMessage, ...]:
     return tuple(DeliveredMessage(sender.agent, receiver.agent,
                     attack.payload if attack.channel == "exchange" and sender.agent == attack.sender else sender.raw,
@@ -90,11 +102,7 @@ class Protocol:
         if method.startswith("single"):
             final = private[0]
         elif method.startswith("vote"):
-            answers = [p.answer_id for p in private if p.parser_status == "ok"]
-            counts = Counter(answers)
-            # Invalid ballots remain in metrics; ties/all-invalid deterministically abstain.
-            winners = [a for a, n in counts.items() if n == max(counts.values())] if counts else []
-            answer = winners[0] if len(winners) == 1 else None
+            answer = vote_answer(private)
             final = dataclasses.replace(private[0], agent=-1, raw=canonical({"answer": answer or "ABSTAIN"}),
                                         answer_id=answer, explanation="", parser_status="ok" if answer else "abstention")
         else:
@@ -117,7 +125,7 @@ class Protocol:
                 if entries != original:
                     warnings.append(f"archive_matched: symmetric text cap {per_packet} tokens per packet; trusted task untouched")
             low_trust_tokens = self.backend.count_tokens(safe_json(entries))
-            messages = (Message("system", READOUT_INSTRUCTION), Message("user", safe_json({"trusted_task": trusted_input(task), "packets": entries})))
+            messages = readout_prompt(task, entries)
             final = self.packet(task, -1, "final", messages, node_seed(seed, "final"))
         return Trajectory(identity, task, method, attack.channel, "complete", self.backend.identity["snapshot"],
                           seed, attack, private, delivered, tuple(revised), final, tuple(self.backend.calls[start:]),

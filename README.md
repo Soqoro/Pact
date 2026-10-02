@@ -115,3 +115,13 @@ new Qwen GPU outcomes remain unverified. See the
 [ordered Colab cells](docs/receiver_supervision_colab.md). This bounded focal-only
 study keeps the normal packet protocol and does not require sampled DPO pairs.
 It is not completed full PACT or evidence of an improvement.
+
+The **heterogeneous_natural_support_v1** phase (2 October 2026) is implemented and
+CPU-tested, with new GPU behavior unverified. It compares QLM with QQQ/LLL/MMM on
+the exact 80 exposed pilot tasks, using fresh official models, native templates,
+one resident model and a common frozen readout. See [methodology](docs/heterogeneity_methodology.md),
+[ordered Colab commands](docs/heterogeneity_colab.md), and
+[notebook 09](notebooks/09_heterogeneity_colab.ipynb). `python -m pact heterogeneity --help`
+exposes the staged CLI. Default notebook execution performs plan/access preflight;
+no generation sweep starts automatically. Historical findings and closures are
+summarized in [the September 30 review](docs/audits/PACT_PROJECT_AUDIT_2026-09-30.md).

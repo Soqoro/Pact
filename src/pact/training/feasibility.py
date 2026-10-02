@@ -59,7 +59,7 @@ def copy_source_bundle(source,destination,config,*,timeout_seconds=120):
     return {**result,"path":str(destination)}
 
 
-def read_review(bundle, expected_sha, *, max_members=1000, max_bytes=100*1024**2, allow_text=False):
+def read_review(bundle, expected_sha, *, max_members=1000, max_bytes=100*1024**2, allow_text=False, checksum_name="review_checksums.json", selected_names=None):
     """Read checksummed JSON as data, with no extraction or imported execution."""
     bundle = Path(bundle)
     if bundle.is_symlink() or bundle.stat().st_size > max_bytes or file_hash(bundle) != expected_sha:
@@ -74,15 +74,17 @@ def read_review(bundle, expected_sha, *, max_members=1000, max_bytes=100*1024**2
             if item.filename in names or item.is_dir() or stat.S_IFMT(item.external_attr >> 16) not in (0, stat.S_IFREG):
                 raise ValueError("Duplicate or nonregular review member")
             names.add(item.filename)
-        checks = json.loads(archive.read("review_checksums.json"))
-        if set(checks) != names - {"review_checksums.json"}:
+        checks = json.loads(archive.read(checksum_name))
+        if set(checks) != names - {checksum_name}:
             raise ValueError("Review checksum inventory mismatch")
         content = {}
         for name in sorted(checks):
             payload = archive.read(name)
             if hashlib.sha256(payload).hexdigest() != checks[name]:
                 raise ValueError("Corrupt review payload")
-            if allow_text and name.endswith((".md", ".txt", ".jsonl")):
+            if selected_names is not None and name not in selected_names:
+                continue
+            if allow_text and name.endswith((".md", ".txt", ".jsonl", ".csv")):
                 content[name] = payload.decode("utf-8")
                 continue
             if not name.endswith(".json"):

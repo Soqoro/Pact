@@ -101,18 +101,29 @@ class TransformersBackend:
         return self.tokenizer.decode(self.tokenizer.encode(text, add_special_tokens=False)[:tokens],
                                      skip_special_tokens=False)
 
-    def generate(self, request: Request):
-        torch = self.torch
-        messages = [{"role": m.role, "content": m.content} for m in request.messages]
-        rendered = self.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True,
-                                                      enable_thinking=self.config.model.enable_thinking)
-        inputs = self.tokenizer(rendered, return_tensors="pt", add_special_tokens=False)
-        input_tokens = int(inputs["input_ids"].shape[-1])
+    def render_messages(self, messages):
+        return self.tokenizer.apply_chat_template(
+            [{"role": m.role, "content": m.content} for m in messages],
+            tokenize=False, add_generation_prompt=True,
+            enable_thinking=self.config.model.enable_thinking)
+
+    def generation_parameters(self, request):
         params = {"max_new_tokens": request.max_tokens, "do_sample": not request.deterministic,
                   "use_cache": True, "num_beams": 1, "repetition_penalty": 1.0,
                   "pad_token_id": self.tokenizer.pad_token_id, "eos_token_id": self.tokenizer.eos_token_id}
         if not request.deterministic:
             params.update(dataclasses.asdict(self.config.sampling), min_p=0.0)
+        return params
+
+    def generation_kwargs(self):
+        return {}
+
+    def generate(self, request: Request):
+        torch = self.torch
+        rendered = self.render_messages(request.messages)
+        inputs = self.tokenizer(rendered, return_tensors="pt", add_special_tokens=False)
+        input_tokens = int(inputs["input_ids"].shape[-1])
+        params = self.generation_parameters(request)
         raw, output_tokens, stop = "", 0, "context_overflow"
         output = []
         started = time.perf_counter()
@@ -128,7 +139,7 @@ class TransformersBackend:
                 torch.manual_seed(request.seed)
                 if devices:
                     torch.cuda.manual_seed_all(request.seed)
-                generated = self.model.generate(**inputs.to(self.model.device), **params)
+                generated = self.model.generate(**inputs.to(self.model.device), **self.generation_kwargs(), **params)
             output = generated[0, input_tokens:].tolist()
             output_tokens = len(output)
             eos = self.model.generation_config.eos_token_id

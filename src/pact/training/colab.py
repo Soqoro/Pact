@@ -125,7 +125,7 @@ def restore_snapshot(snapshot, destination, *, timeout_seconds=120):
 
 
 def review_bundle(root: Path, output: Path, outcome: dict, *, kind="warmstart_engineering_review",
-                  scientific_status="clean_answer_warmstart_engineering_only", max_metadata_bytes=90 * 1024**2, include_markdown=False):
+                  scientific_status="clean_answer_warmstart_engineering_only", max_metadata_bytes=90 * 1024**2, include_markdown=False, include_csv=False):
     """Small diagnostic archive. Tensor checkpoints remain in the full snapshot."""
     if output.exists():
         raise FileExistsError("Never overwrite a prior handoff")
@@ -134,6 +134,7 @@ def review_bundle(root: Path, output: Path, outcome: dict, *, kind="warmstart_en
                  for p in files}
     # JSON state contains tensor references, not tensor payloads. Include it for audit.
     metadata = [p for p in files if p.suffix in ((".json", ".jsonl", ".txt", ".md") if include_markdown else (".json", ".jsonl", ".txt"))]
+    if include_csv: metadata += [p for p in files if p.suffix == '.csv']
     if sum(p.stat().st_size for p in metadata) > max_metadata_bytes:
         raise ValueError("Review metadata exceeds declared byte limit")
     payload = {p.relative_to(root).as_posix(): p.read_bytes() for p in metadata}

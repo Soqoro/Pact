@@ -17,6 +17,7 @@ from .util import canonical, write_json
 def parser():
     p = argparse.ArgumentParser(prog="pact", description="PACT validation diagnostics and local learning foundations")
     commands = p.add_subparsers(dest="command", required=True)
+    commands.add_parser("heterogeneity", help="bounded four-team natural complementarity study; use heterogeneity --help")
     d = commands.add_parser("doctor")
     d.add_argument("--scratch", type=Path, default=Path("scratch"))
     d.add_argument("--persistent", type=Path)
@@ -169,6 +170,10 @@ def parser():
 
 
 def main(argv=None) -> int:
+    routed = list(sys.argv[1:] if argv is None else argv)
+    if routed and routed[0] == "heterogeneity":
+        from .studies.heterogeneity import cli as heterogeneous_main
+        return heterogeneous_main(routed[1:]) or 0
     args = parser().parse_args(argv)
     try:
         command = args.command

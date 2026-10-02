@@ -1,0 +1,48 @@
+{
+  "status": "proposed_design_not_executed",
+  "tasks": 80,
+  "datasets": {
+    "ARC-Challenge": 40,
+    "English LogiQA": 40
+  },
+  "teams": [
+    "heterogeneous_QLM",
+    "homogeneous_QQQ",
+    "homogeneous_LLL",
+    "homogeneous_MMM"
+  ],
+  "stage_ceilings": [
+    {
+      "stage": "private",
+      "generation_calls": 720,
+      "reserved_output_tokens": 184320
+    },
+    {
+      "stage": "revisions",
+      "generation_calls": 960,
+      "reserved_output_tokens": 245760
+    },
+    {
+      "stage": "private_synthesis",
+      "generation_calls": 320,
+      "reserved_output_tokens": 20480
+    },
+    {
+      "stage": "revised_synthesis",
+      "generation_calls": 320,
+      "reserved_output_tokens": 20480
+    },
+    {
+      "stage": "readout_task_only",
+      "generation_calls": 80,
+      "reserved_output_tokens": 5120
+    }
+  ],
+  "total_generation_calls": 2400,
+  "total_reserved_output_tokens": 476160,
+  "optimizer_updates": 0,
+  "teacher_forced_forwards": 0,
+  "smoke_included_tasks": 2,
+  "smoke_included_calls": 60,
+  "notes": "Counts describe the proposed plan, not actual execution, independent observations, or billing."
+}

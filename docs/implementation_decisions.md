@@ -1167,3 +1167,101 @@ A future commit of these changes cannot silently replace its recorded code ident
 The runbook distinguishes existing-revision recovery from new implementation options.
 No source-migration exception is introduced. Its replay/assignment was authorized
 separately; training still requires the artifact-bound packet/seed/order review.
+
+
+## 2026-09-30 — post-forensic continuation review
+
+Recommendation: close `qwen3-controlled-specialization-001` as an incomplete
+feasibility study with retained descriptive replay evidence, rather than spend
+additional compute recovering its final calibration cell. This is a recommendation
+pending the user's decision, not a completed-run marker or a methodological amendment.
+The archive and all historical artifacts remain unchanged.
+
+Reasons: primary effects are zero in 125/132 cells, nonzero effects occupy six
+of 22 supported tasks, order changes three of 36 matched estimates, and retained
+natural calibration has no matched controlled cells. The unsafe latest snapshot
+also leaves up to 16 post-snapshot calls unaccounted for. Completing calibration
+alone would not resolve sparse credit, packet-quality concerns, or establish
+learning benefit. These observations support stopping expenditure, not a claim
+that the prespecified assignment screen has formally failed.
+
+The practical assignment gate is **not evaluated**: frozen answer NLL and
+responsibility matrices are absent. The global column-balance penalty couples
+rows, so six tasks with within-row credit variation does not by itself prove that
+fewer than eight tasks would meet the L1 threshold. Do not substitute invented
+NLL, per-row softmaxes, or mock weights for missing scoring evidence.
+
+No further Colab command is authorized by this review. Recovering the existing
+study requires retained evidence that resolves unknown dispatches, or a separately
+reviewed amendment identifying the one missing calibration cell, worst-case
+consumed calls, any additional reservation, handling of duplicate requests, and
+source/provenance treatment. It must preserve the original run as incomplete and
+cannot silently set recovery_safe=true, reset the 80-call cap, waive complete
+controls, change thresholds, or authorize training. A new scientific study also
+requires its own explicit design and budget; none is proposed for automatic launch.
+
+Review used the audited saved payload summaries and the actual assignment solver.
+No model execution, scoring forward, optimizer update, new experiment, commit or
+push occurred. Existing completed studies and manuscript placeholders are unchanged.
+
+
+## 2026-09-30 — controlled specialization closed as incomplete
+
+The user accepted the preceding closure recommendation with “proceed”.
+`qwen3-controlled-specialization-001` is administratively **closed — incomplete**;
+no further execution is scheduled or authorized. This disposition supersedes the
+pending-decision wording above, without declaring scientific completion or a
+failed assignment-contrast test.
+
+Retained evidence: 75 acquisition calls, 132/132 primary replay cells, 36/36
+order-control cells and 4/5 natural calibration cells. The saved inventory contains
+2,827 committed calls; up to 16 subsequent calls remain unaccounted for. The missing
+cell is arc_challenge:MCAS_2004_8_8 / early / agent2 (zero-based).
+The forensic archive remains bound to SHA256
+`2ad3152c12d7215a421e35e68325cb98cd541c36d769ede3a6da7b4b9c6d736b`.
+
+Assignment contrast remains unevaluated; scoring, training and trained development
+evaluation were not executed in this child. Sparse controlled replay effects are
+descriptive evidence, not demonstrated PACT efficacy. The latest snapshot retains
+recovery_safe=false. No COMPLETE marker, missing cell, likelihood, assignment,
+checkpoint or outcome has been manufactured. Existing archives, source/plan hashes,
+budgets and completed historical studies are preserved. No new study or recovery
+amendment is authorized by this administrative closure.
+
+## 2026-10-02 — heterogeneous natural complementarity implementation
+
+Applied the explicit heterogeneous-phase specification as a new inference-only
+study, not a continuation or a change to any earlier completed/incomplete run.
+Official Q/L/M commits are frozen in `backends.registry`; common R inherits the
+existing Qwen3 ModelConfig pin. Native tokenizers/templates and native stop sets
+are resolved and hashed in explicit Colab preflight. Mistral uses its template's
+native initial-system handling; Llama date is fixed to 02 Oct 2026; only R gets
+thinking=False. Fresh generation configuration plus explicit sampling fields
+prevents inherited checkpoint-specific forced tokens. No dependency changes.
+
+The exact original pilot source is pinned both by archive SHA and canonical
+input/label/manifest digests. Balanced six-permutation schedules are frozen before
+outcomes; QLM uses family F's replica j when F occupies slot j. Homogeneous teams
+reuse all three family draws. Source identities and view bindings remain separate.
+Private prompts are identity-neutral; peer/readout order is ascending anonymous
+slot in this explicitly named variant. Seeds match selected physical family/replica
+across team revisions, while message-dependent request identities stay distinct.
+
+Existing protocol builders, strict parser, vote policy, Transformers generation,
+provenance validator, shard store, bounded snapshots/copy and review archive reader
+are reused. Backend hooks preserve legacy defaults. Readout and vote helpers are
+factored without changing their old semantics. New analysis groups by family and
+resamples whole tasks within dataset; best observed maxima are recomputed inside
+bootstrap draws. It does not assume independent errors or use a support stop.
+
+Compact state.zip/receipt snapshots reuse the existing storage layer at explicit
+model-stage or stop-after boundaries. Verify unsafe durable state before dispatch;
+verify safe accumulated state after a known committed boundary. Unknown work never
+becomes safe from reconstructed metrics, and latest-only restore never rolls back.
+This reduces tiny-file Drive traffic but a lost in-flight model stage can still be
+unsafe; explicit bounded invocations permit more frequent durable boundaries.
+
+This adapts the cited diversity idea to the existing one-exchange protocol. It does
+not reproduce the paper's personas/multiround recipe or authorize extra models,
+seeds, training, attacks or any automatic next experiment. See
+[methodology](heterogeneity_methodology.md) and [Colab commands](heterogeneity_colab.md).
