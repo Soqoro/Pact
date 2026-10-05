@@ -326,7 +326,7 @@ def execute(root,persistent,stage,model,cache,*,smoke=False,stop_after=None):
     if not read_json(root/'state.json')['recovery_safe']:raise ValueError('Unsafe run; no automatic resume')
     access=read_json(root/'access_preflight.json')
     if not access['all_authorized'] or set(access['models'])!=set('QLMR') or access['runtime']!=runtime_fingerprint():raise ValueError('All-model access/runtime preflight required')
-    _, existing, unknown = reconstruct(root,plan)
+    _, existing, unknown, _ = reconstruct(root,plan)
     if unknown: raise ValueError('Unknown dispatch; no retry')
     planned = schedule(plan)
     selected = [r for r in planned if r['model']==model and

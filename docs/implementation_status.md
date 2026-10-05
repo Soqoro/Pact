@@ -1258,3 +1258,22 @@ round trip with zero attempted generations and all 80 tasks correctly missing.
 That temporary local plan is not the user's authoritative future Colab plan hash.
 Final post-edit heterogeneous suite rerun: all 17 tests passed in 42.384s.
 No official tokenizer, pretrained model or GPU experiment was run locally.
+
+
+## 2026-10-05 — Pre-dispatch smoke failure fixed locally
+
+User-provided Colab diagnostics for plan
+`1bf11069721fb09169d10c1337112e5cef3dd92ebaec078110bb7ec392294331`
+show recovery_safe=true, zero intents/call shards/resource records, successful
+plan/source/runtime checks and six initial Q smoke requests constructed. These
+are reported diagnostics, not an imported-bundle audit or model outcome. Local
+inspection identified a four-value reconstruct return unpacked into three values
+in execute, explaining the pre-dispatch ValueError. Fixed the caller and added
+a CPU wrapper regression; prior collector tests did not cover that wrapper.
+
+Validation: `PYTHONPATH=src python -m unittest discover -s tests -p
+test_heterogeneity.py -v`: 18 passed in 48.490s. Initial invocation without
+PYTHONPATH failed to import pact in this shell; corrected invocation passed.
+`git diff --check` passed. No GPU execution, model downloads, commit or push.
+GPU behavior remains unverified; Colab source transition remains pending and
+must preserve the existing plan/snapshots without weakening identity guards.

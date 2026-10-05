@@ -45,6 +45,31 @@ class FakeBackend:
 
 
 class HeterogeneityTests(unittest.TestCase):
+    def test_execute_wrapper_reconstruct_contract(self):
+        from pact.studies.heterogeneity import execute
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)/'run'
+            plan=initialize(root,source(),{},True)
+            # Only bypass official-plan/access prerequisites; reconstruction and
+            # request construction stay real. No model downloads or CUDA.
+            plan['fixture']=False
+            write_json(root/'access_preflight.json',{
+                'all_authorized':True,'runtime':'cpu-test',
+                'models':{k:{} for k in 'QLMR'}})
+            with patch('pact.studies.heterogeneity.load_plan',return_value=plan), \
+                 patch('pact.studies.heterogeneity.code_identity',return_value={}), \
+                 patch('pact.studies.heterogeneity.runtime_fingerprint',return_value='cpu-test'), \
+                 patch('pact.studies.heterogeneity.checkpoint') as persist, \
+                 patch('pact.backends.native.NativeBackend') as backend, \
+                 patch('pact.studies.heterogeneity.collect_stage',return_value={'cached_reuses':0}) as collect:
+                backend.return_value.resource_usage.return_value={}
+                self.assertEqual(execute(root,None,'private','Q',Path(tmp),smoke=True),
+                                 {'cached_reuses':0})
+                collect.assert_called_once()
+                backend.return_value.close.assert_called_once()
+                self.assertEqual(persist.call_count,2)
+                self.assertTrue(read_json(root/'state.json')['recovery_safe'])
+
     def test_budget_mapping_and_seeds(self):
         p=freeze_plan(source(80),{},True);rows=schedule(p)
         self.assertEqual(len(rows),2400);self.assertEqual(sum(r['cap'] for r in rows),476160)

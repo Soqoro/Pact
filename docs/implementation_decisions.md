@@ -1265,3 +1265,15 @@ This adapts the cited diversity idea to the existing one-exchange protocol. It d
 not reproduce the paper's personas/multiround recipe or authorize extra models,
 seeds, training, attacks or any automatic next experiment. See
 [methodology](heterogeneity_methodology.md) and [Colab commands](heterogeneity_colab.md).
+
+
+## 2026-10-05 — Heterogeneous execute-wrapper contract fix
+
+The model-stage wrapper now unpacks all four return values from reconstruct,
+matching its existing contract. The previous three-value unpack raised ValueError
+before dispatch. A focused CPU test reaches the wrapper with real reconstruction
+and request construction, mocked access/model/persistence boundaries, and verifies
+cleanup and safe completion. No methodology, request schedule, budgets, or source
+identity checks change. Existing pinned plans must not be edited in place to adopt
+the fix; preserve the failed Colab plan and snapshots for provenance. No automatic
+source migration or inference retry is introduced.
