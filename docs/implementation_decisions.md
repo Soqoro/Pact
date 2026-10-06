@@ -1277,3 +1277,41 @@ cleanup and safe completion. No methodology, request schedule, budgets, or sourc
 identity checks change. Existing pinned plans must not be edited in place to adopt
 the fix; preserve the failed Colab plan and snapshots for provenance. No automatic
 source migration or inference retry is introduced.
+
+## 2026-10-06 — Native benchmark breadth, separate A/B stages
+
+Implemented the explicit breadth update in `benchmarks` and `studies.breadth`,
+reusing native backends, the journal/shard store, protocol envelopes, heterogeneous
+decompositions and bounded storage. Legacy TaskInput and MCQ parsing stay strict;
+a typed public BenchmarkInput supports A-J MCQ, boxed mathematics, complete Python
+programs and native single-turn tasks, with private EvalSpecs kept separate.
+The parent registry hash freezes the exact completed pristine Q/L/M/R identities.
+No new methodological change is inferred from diagnostic outcomes.
+
+Source verification found official MBPP+ hosted data differs from the canonical
+expanded-test release; use the official v0.2.0 asset and SHA256, retaining the pinned
+hosted card as provenance only. Preserve the official empty-plus-input record.
+MuSR object-placement narratives have four related variants: retain every source
+row but choose one outcome-independent SHA-ranked representative per group, with
+all siblings assigned to its partition. Cross-category MMLU duplicate groups are
+excluded explicitly. Exact earlier-dataset fingerprints, including locked pools,
+are excluded via a portable exposure index. Lexical checks have stated limits.
+
+MMLU/MuSR score strict official mappings; Math-Verify is an actually invoked pinned
+parser/equivalence library with explicit dependencies and bounded work. EvalPlus
+expanded tests and LiveBench objective dispatch live in an OS-isolated worker;
+ordinary subprocess execution is never the code sandbox. Missing isolation leaves
+hash-identified jobs pending for a trusted external evaluator. Worker receipts are
+provenance, not cryptographic attestation. LiveBench release metadata does not prove
+question availability: the checked official public inventories do not establish
+2026-06-25, so that dataset stops without older-release substitution.
+
+No labels/test scores enter generation or voting. Code voting is N/A; optional math
+semantic voting is not enabled. Phase A communication quantities are null. Selected
+maxima are recomputed under group/stratum bootstrap, and native partial credit stays
+separate from full success. Source/scorer identity drift rejects resume; a failed
+dispatch cannot be repaired from a plausible partial report. Compact durable state
+and explicit stop-after boundaries preserve the existing storage safety contract.
+
+See [methodology](benchmark_breadth_methodology.md), [source checks](benchmark_breadth_sources.md),
+[exposure ledger](benchmark_exposure_ledger.md), and [exact commands](benchmark_breadth_colab.md).

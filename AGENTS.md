@@ -66,3 +66,13 @@ predeclared shared nine-packet bindings, all-task communication, one resident mo
 2,400 attempts / 476,160 reserved tokens, included two-task smoke. No adapters,
 training, attacks, replay, GPQA or final tests. All-model access precedes generation.
 Unsafe dispatch windows remain unsafe even when partial reports reconstruct.
+
+[Benchmark breadth](docs/benchmark_breadth_methodology.md) reuses the completed
+heterogeneous pristine Q/L/M/R identities. New per-dataset development cohorts:
+nine-call private Phase A, separately invoked 21-call Phase B on four cores only.
+No positive-support gate, training, attacks, donors, old-GPQA regeneration or locked
+cohort execution. Freeze source/group/exposure/scorer/contracts before inference;
+do not route math/code through MCQ parsing. Code requires capability-checked OS
+isolation; otherwise export jobs and leave scores pending. Requested LiveBench
+2026-06-25 must be proven available, never replaced by older public questions.
+Keep private/sanitized exports separate, preserve unsafe resume and exact budgets.

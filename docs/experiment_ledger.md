@@ -1346,3 +1346,96 @@ These are software fixtures, not new research outcomes. All new GPU behavior is
 unverified. Exact Colab steps: [heterogeneity runbook](heterogeneity_colab.md).
 No run is scheduled automatically and no model result is claimed. Earlier study
 closures, safety flags, precision history and manuscript placeholders are unchanged.
+
+
+## 2026-10-05 — Heterogeneous diagnostic completed; imported GPU evidence
+
+Imported `pact-heterogeneous-complementarity-001` bundles with suffix
+`1791189410949196090`. PRIVATE SHA256:
+`57cde0e55b4acf8443582b06205778a12f4b0214d5007932e23f1f0b102f89d4`;
+SANITIZED SHA256:
+`c96c04aa1303dec275f9f9db534786727ec75300d02da4fe71779a5c29b887d7`.
+Both outer hashes matched. The existing offline audit returned passed/complete;
+private records regenerated the saved summary exactly. The sanitized archive
+passed read_review checksum validation and its summary equals the reconstruction.
+Raw archives and extracted audit remain ignored, outside tracked documentation.
+
+Source: clean commit `874b3b184c6cdcde6c27368621d7747fd6e01467`.
+Plan: `b972e06e3b8e69f8e53053d238b7fa7f04c1ddb331654b7555262021d47a506f`.
+Returned transition receipt records the original zero-call plan and the source
+fix, with scientific plan unchanged; it is provenance evidence, not a separate
+local audit of the old Drive snapshot. Recorded GPU: NVIDIA A100-SXM4-80GB.
+
+Completed 80/80 development-exposed tasks, 2,400 attempted/committed calls,
+476,160 reserved output tokens, zero unresolved calls and zero context overflows.
+Recovery-safe state is true. Actual output tokens: 100,395; input tokens: 926,451.
+Optimizer updates and teacher-forced forwards: zero. GPU execution is now evidenced
+for this returned run; other runtimes remain unverified. Completion includes
+abstentions and invalid answers, which remain failures rather than missing calls.
+
+| Team | Initial correct coverage | Valid correct/wrong mixed tasks | Vote correct | Initial synthesis correct | Post-exchange readout correct |
+|---|---:|---:|---:|---:|---:|
+| QQQ | 45/80 | 2/80 | 44/80 | 46/80 | 45/80 |
+| LLL | 49/80 | 14/80 | 39/80 | 42/80 | 44/80 |
+| MMM | 34/80 | 7/80 | 32/80 | 32/80 | 31/80 |
+| QLM | 63/80 | 47/80 | 36/80 | 43/80 | 40/80 |
+
+Common task-only readout: 41/80. QLM individual accuracies: Q=44/80,
+L=37/80, M=31/80. Initial N0 distribution (0,1,2,3 correct):
+[17,28,21,14]. QLM coverage exceeds its best observed member by 19 tasks,
+but post-exchange readout solves fewer tasks than initial synthesis (40 vs 43).
+Paired synthesis-to-debate outcomes: 3 gains, 6 losses, 37 both correct,
+34 both incorrect. Difference -3.75 percentage points; stored paired stratified
+1,000-draw task-bootstrap interval [-11.25,+3.75] percentage points.
+These are 80 sampling units, not 2,400 independent observations.
+
+QLM hold=61/67 eligible actor opportunities; repair=12/69. Team erasure=3/63
+initially covered tasks. Utilization=39/63, construction=1/17; readout loss
+occurs on 22/80 tasks. Correct coverage and valid mixed support are distinct:
+N0=1 or 2 includes invalid/abstaining peers and is not automatically valid
+correct/wrong support. Invalid and abstention rates remain part of interpretation.
+
+Interpretation: heterogeneous actors provide more natural complementary correct
+answers on this exposed cohort, but the tested communication/readout pipeline
+does not turn that coverage advantage into higher final accuracy. This is a
+clean inference diagnostic, not trained PACT or demonstrated PACT efficacy.
+One seed schedule, small exposed sample, differing family strengths/tokenizers,
+and observed-best selection limit generalization. No next experiment is
+implicitly authorized. Historical closures and manuscript placeholders unchanged.
+
+
+## 2026-10-06 — Consolidated audit report
+
+Created [the October 6 project audit](audits/PACT_PROJECT_AUDIT_2026-10-06.md),
+extending the September 30 overview with the completed heterogeneous GPU evidence.
+Cumulative recorded generations: 16,165, plus the unchanged up-to-16 unknown
+controlled-child calls. Executed optimizer updates remain 147 across separate
+recipes; no specialization training occurred. Reviewed current ledger/status and
+reconstructed heterogeneous summary, checked report links and aggregate arithmetic.
+Historical audits were carried forward, not represented as freshly re-executed.
+No model run, full regression rerun, commit or push was performed for this report.
+
+## 2026-10-06 — Benchmark breadth implementation, not experimental results
+
+Added six official-source/native-evaluator adapters and separately invoked
+heterogeneous Phase A/B development runners under new `pact-breadth-*-001` IDs.
+No new benchmark generation or optimizer update occurred. Historical cumulative
+generation/update counts above are unchanged; source inspection and CPU fixtures
+are not scientific outcomes. No confirmation/reserve/final-test generation occurred.
+
+MMLU/MuSR/MATH source normalization and grouping were checked on official public
+files; MBPP's canonical official 378-record expanded-test asset was verified.
+Pinned Math-Verify ran invented equivalence cases. GPQA new32 allocation is tested
+with an invented parent fixture; real authorized source/parent verification is a
+Colab prerequisite. LiveBench 2026-06-25 is unavailable in the checked public
+inventories and is explicitly blocked. Real OS-isolated EvalPlus execution and all
+new GPU paths remain unverified; pending scoring exports cannot be called failures.
+
+Final focused validation: 25 tests, 23 passed/two isolated-runtime skips. Full
+CPU/mock regression rerun: 265 tests, 248 passed/17 skips, no failures/errors;
+initial errors and their environment/source-stability causes are preserved in
+[implementation status](implementation_status.md). Latest small scorer/report
+changes passed the focused rerun. Exact pins, exposure policy, budgets, commands,
+runtime prerequisites and private/sanitized return artifacts are documented in
+[benchmark methodology](benchmark_breadth_methodology.md) and its linked runbook.
+Implementation does not authorize an automatic portfolio run or imply efficacy.

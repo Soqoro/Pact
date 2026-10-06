@@ -1277,3 +1277,60 @@ PYTHONPATH failed to import pact in this shell; corrected invocation passed.
 `git diff --check` passed. No GPU execution, model downloads, commit or push.
 GPU behavior remains unverified; Colab source transition remains pending and
 must preserve the existing plan/snapshots without weakening identity guards.
+
+
+## 2026-10-05 — Heterogeneous GPU bundle audited
+
+The returned source-fix run completed all 80 tasks and 2,400 calls on a recorded
+A100-SXM4-80GB, with 476,160 reserved output tokens and zero unresolved calls.
+Both submitted SHA256 values matched; the existing offline CLI audit passed,
+and sanitized checksum validation plus summary equality against reconstruction
+passed. See the 2026-10-05 entry in [the experiment ledger](experiment_ledger.md)
+for provenance, comparisons, limitations and exact archive hashes. This updates
+the earlier GPU-unverified status only for the observed returned configuration.
+No local model calls, training, additional experiment, commit or push occurred.
+QLM coverage 63/80 did not translate into a final advantage: synthesis 43/80,
+post-exchange readout 40/80, common task-only 41/80. No efficacy claim is made.
+
+## 2026-10-06 — Benchmark breadth implementation (no new GPU results)
+
+Implemented official-file preparation, immutable development/locked partitions,
+parent-bound new GPQA allocation, cross-dataset exposure indexing, four typed
+response contracts, real native scorer adapters, separate A/B CLI stages, guarded
+resume, compact snapshots, private/sanitized exports and reconstruction. Existing
+native model backends, request journals, protocol envelopes and heterogeneous
+metrics are reused. Historical run artifacts and manuscript placeholders were not
+changed. The portfolio cap is 14,088 attempts / 9,744,768 reserved output tokens;
+default notebooks do not launch it.
+
+MMLU-Pro, MuSR and MATH-500 official file schemas/partitions were exercised locally;
+the official 378-record MBPP+ release schema was checked. Real pinned Math-Verify
+passed eight invented equivalence cases. New GPQA allocation passed an invented
+198-row parent/child fixture without a new gated download. LiveBench's pinned
+public inventories inspected here do not establish 2026-06-25 availability and
+the loader stops explicitly. The native scorer dispatch is fixture-tested only.
+OS-isolated EvalPlus is implemented but not verified on this host (Bubblewrap is
+absent); pending-job export/import is available. All new GPU behavior is unverified.
+
+Focused command:
+`PACT_MATH_PYTHON=/tmp/pact-breadth-math/bin/python PYTHONPATH=src python -m unittest discover -s tests -p test_benchmark_breadth.py -v`.
+Final focused rerun: 25 tests in 19.194s, 23 passed and two explicit isolated-runtime
+tests skipped.
+This includes actual CLI plan/smoke/B/scoring/export/audit, all six fixture types,
+notebook compilation, zero-support completion, missingness, source/model/phase
+guards, partitions, GPQA inheritance and exact budget parity. The separate budget
+design verifier also passed; it verifies arithmetic, not execution.
+
+The first full-suite attempt ran 252 tests in 545.544s with three errors and 16
+skips: two existing GPQA tests rejected `/tmp` because it contains a `.git`
+directory, and a curated resume test saw a source identity change while development
+was still in progress. No privacy or resume guard was weakened. With source held
+fixed and temporary fixtures outside Git, the full rerun passed: **265 tests in
+566.441s, 248 passed, 17 skipped, no failures/errors**, using
+`TMPDIR=/var/tmp/pact-breadth-cpu-tests PYTHONPATH=src python -m unittest discover -s tests -v`.
+The final native-score aggregation/binary-import tightening and four-option GPQA fixture were covered by
+the final focused rerun above. `compileall`, notebook compilation and
+`git diff --check` also passed. No pretrained downloads, GPU runs, commits or pushes.
+
+Details: [methodology](benchmark_breadth_methodology.md), [verified sources](benchmark_breadth_sources.md),
+[exposure ledger](benchmark_exposure_ledger.md), [Colab sequence](benchmark_breadth_colab.md).

@@ -17,6 +17,8 @@ from .util import canonical, write_json
 def parser():
     p = argparse.ArgumentParser(prog="pact", description="PACT validation diagnostics and local learning foundations")
     commands = p.add_subparsers(dest="command", required=True)
+    commands.add_parser("breadth", help="explicit per-dataset breadth stages")
+    commands.add_parser("benchmarks", help="official sources and isolated scoring")
     commands.add_parser("heterogeneity", help="bounded four-team natural complementarity study; use heterogeneity --help")
     d = commands.add_parser("doctor")
     d.add_argument("--scratch", type=Path, default=Path("scratch"))
@@ -171,6 +173,12 @@ def parser():
 
 def main(argv=None) -> int:
     routed = list(sys.argv[1:] if argv is None else argv)
+    if routed and routed[0] == "breadth":
+        from .studies.breadth import cli as breadth_main
+        return breadth_main(routed[1:])
+    if routed and routed[0] == "benchmarks":
+        from .benchmarks.__main__ import main as benchmarks_main
+        return benchmarks_main(routed[1:])
     if routed and routed[0] == "heterogeneity":
         from .studies.heterogeneity import cli as heterogeneous_main
         return heterogeneous_main(routed[1:]) or 0
