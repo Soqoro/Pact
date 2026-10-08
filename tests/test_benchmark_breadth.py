@@ -148,6 +148,18 @@ class BreadthTests(unittest.TestCase):
         self.assertFalse(set(parent['selected_ids'])&set(m['partitions']['characterization_dev']))
         tampered=copy.deepcopy(parent);tampered['selected_ids'][0]='unknown'
         with self.assertRaises(ReadinessError):gpqa_child_rows(raw,'fixture',tampered)
+        # Match the original production CLI's full policy, not just the fixture default.
+        policy=json.loads((ROOT/'experiments/gpqa_exposure_policy.json').read_text())
+        _,recorded=gpqa_partition(raw,'fixture',known=policy)
+        self.assertEqual(recorded['selected_ids'],parent['selected_ids'])
+        self.assertEqual(gpqa_child_rows(raw,'fixture',recorded),
+                         gpqa_child_rows(raw,'fixture',parent))
+        for field in ('selected_ids','protected_ids','excluded_ids'):
+            altered=copy.deepcopy(recorded);altered[field][0]='unknown'
+            with self.assertRaises(ReadinessError):gpqa_child_rows(raw,'fixture',altered)
+        altered=copy.deepcopy(recorded)
+        altered['prior_exposure_screen']['ledger_review_date']='unreviewed'
+        with self.assertRaises(ReadinessError):gpqa_child_rows(raw,'fixture',altered)
 
     def test_pending_scores_not_failures_and_no_communication_zeros(self):
         with tempfile.TemporaryDirectory() as tmp,contextlib.redirect_stdout(io.StringIO()):

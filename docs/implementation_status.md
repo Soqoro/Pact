@@ -1334,3 +1334,212 @@ the final focused rerun above. `compileall`, notebook compilation and
 
 Details: [methodology](benchmark_breadth_methodology.md), [verified sources](benchmark_breadth_sources.md),
 [exposure ledger](benchmark_exposure_ledger.md), [Colab sequence](benchmark_breadth_colab.md).
+
+## 2026-10-06 — MMLU-Pro private smoke GPU evidence
+
+Audited the returned PRIVATE/SANITIZED pair ending `1791253131407744749` against
+both user-supplied SHA256 values. The offline audit CLI passed and all 18 MCQ
+scores independently reproduced. The two included tasks have six calls/family,
+18 valid parses/EOS stops, zero unresolved attempts and recovery_safe=true on a
+recorded A100-SXM4-80GB. Sanitized inventory/equality and raw-content exclusion
+checks passed. See [the experiment ledger](experiment_ledger.md) for exact hashes,
+provenance, counts and the small-sample results.
+
+This verifies the observed Q/L/M MMLU private GPU smoke, not full Phase A,
+communication/readout, other datasets or scientific efficacy. Full A is partial
+(18/1,260), B not executed. No implementation change or new model run was needed.
+
+## 2026-10-06 — Full MMLU-Pro Phase A GPU return verified
+
+The later return `1791264819488214146` completes the same frozen plan: all 140
+characterization tasks, ten/category, 1,260 private calls scored, zero unresolved
+attempts, recovery_safe=true. Both submitted ZIP SHA256 values and internal checksums
+matched; offline reconstruction passed; all 1,260 scores independently reproduced.
+The original smoke plan and all 72 smoke intent/call/dependency/score records remain
+unchanged. Sanitized summary equality and raw-content exclusion checks passed.
+
+Private coverage: QQQ 40/140, LLL 46/140, MMM 38/140, QLM 61/140. QLM valid mixed
+support is 42/140 and majority-vote correctness is 32/140. 154 non-ok parses are
+included as failures (81 abstentions, 9 invalid answers, 43 malformed, 21 length).
+See [experiment ledger](experiment_ledger.md) for full accounting and uncertainty.
+This verifies the observed MMLU Phase A path only; no communication, readout,
+training or new local generation occurred. Phase B remains 0/2,940 and unverified.
+
+## 2026-10-06 — MMLU-Pro Phase B GPU return verified
+
+Return `1791270113690429538` completes A/B: 4,200 calls scored across the same
+140 characterization tasks, zero unresolved attempts, recovery_safe=true. Both
+archive hashes/internal inventories passed, the real offline CLI audit passed,
+and all 4,200 scores independently reproduced. All 5,040 prior Phase A intent,
+call, dependency and score records are unchanged. Sanitized/private/reconstructed
+summaries agree, with raw-content exclusion checks passing.
+
+QQQ/LLL/MMM/QLM private synthesis: 42/42/32/40 correct out of 140. Post-exchange
+readout: 43/38/32/43; common task-only: 35. QLM retains greater initial coverage
+(61/140) but ties QQQ final accuracy. Its synthesis-to-debate net +3/140 has a
+paired interval including zero. Detailed loss/construction, hold/repair, parser
+failures and accounting are in [the experiment ledger](experiment_ledger.md).
+This upgrades only the observed MMLU A/B GPU path to verified. No new local
+generation, implementation change or follow-on experiment occurred.
+
+## 2026-10-06 — MuSR private smoke GPU evidence audited
+
+Return `1791271351392273370` passed both submitted ZIP hashes, internal inventories,
+the offline CLI reconstruction and independent rescoring of all 18 calls. All
+parses/EOS stops are valid, zero unresolved attempts, recovery_safe=true. Actual
+selected domain quotas, sibling partition integrity and the exact prior-exposure
+index from the audited MMLU return were checked. Sanitized equality and raw-text
+exclusion checks passed. QQQ/LLL/MMM/QLM smoke coverage is 2/1/2/2 out of two tasks;
+this is execution evidence, not a general complementarity result.
+
+The observed MuSR private-smoke GPU path is verified. Full A remains partial
+(18/810), B not executed (0/1,890). See [experiment ledger](experiment_ledger.md)
+for provenance/accounting. No implementation change or new local generation occurred.
+
+## 2026-10-06 — MuSR full Phase A GPU evidence audited
+
+Return `1791274491198207091` passes archive hashes, offline audit, independent
+rescoring of all 810 calls, identity/privacy checks and exact preservation of
+the prior smoke's 72 call/intent/dependency/score records and frozen plan.
+All 90 characterization tasks are complete; zero unresolved calls, safe recovery.
+759 responses parse ok; 51 malformed/invalid/abstaining responses remain failures.
+
+Coverage QQQ/LLL/MMM/QLM is 50/53/41/62 out of 90; majority vote is 48/45/38/44.
+QLM therefore offers more correct-answer availability but no majority-vote gain
+over QQQ in this development cohort. Phase B remains unexecuted at 0/1,890:
+communication outcomes and the MuSR Phase B GPU path remain unverified.
+See [experiment ledger](experiment_ledger.md) for accounting and uncertainty.
+No implementation change, local generation, commit or push was performed.
+
+## 2026-10-06 — MuSR A/B GPU evidence complete and audited
+
+Return `1791278710347362192` passes both archive hashes, internal inventories,
+real offline report reconstruction and independent scoring of all 2,700 calls.
+The frozen plan and 3,240 prior A records are identical to the audited A return.
+Identity and sanitized privacy checks passed. A=810/810, B=1,890/1,890, zero
+unresolved, safe recovery; zero training updates.
+
+Private synthesis to post-exchange accuracy: QQQ 48 to 47, LLL 46 to 46,
+MMM 38 to 35, QLM 45 to 46 (all /90). Shared task-only control: 52/90.
+QLM's paired change is +1.11 pp, reported interval [-2.22,+5.56]; it does not
+establish a communication benefit. Its initial 62-task coverage falls to 57
+after exchange, with five erasures and eleven revised readout-loss events.
+
+The observed MuSR A/B GPU path is verified; other unexecuted benchmark paths
+remain unverified. Full accounting, transitions and domain results are in the
+[experiment ledger](experiment_ledger.md). No implementation changes or local
+model execution were required; no commit or push was made.
+
+## 2026-10-07 — MATH-500 private smoke audited
+
+Return `1791353073408058583` passed both archive hashes, report reconstruction,
+18 independent CPU score-outcome/parse comparisons, exposure-index/quotas,
+model identity and sanitized privacy checks. Cross-host scorer timing/environment
+metadata were not required to match; pinned scoring package versions agree.
+Colab's isolated virtualenv scorer passed recorded gold-reference preflight.
+
+A=18/900; B=0/2,100. Zero unresolved calls, safe recovery. Twelve valid outputs,
+five malformed, one length-limited; all are scored without dropping failures.
+Q/L/M correctness is 6/6, 1/6, 1/6. QLM and QQQ each cover both smoke tasks;
+all teams have zero coverage gain over their best member. Two-task evidence
+does not establish scientific efficacy. Observed math smoke GPU/scoring path
+verified; full A/B deferred. See [experiment ledger](experiment_ledger.md).
+
+## 2026-10-07 — MATH-500 full Phase A evidence returned
+
+Return `1791368956454486655` passes both ZIP hashes, internal inventories,
+offline report reconstruction, unchanged frozen-plan/72-smoke-record checks,
+model identity, quota and sanitized privacy checks. A is complete at 900/900;
+B is not executed (0/2,100), zero unresolved, safe recovery.
+
+Coverage QQQ/LLL/MMM/QLM is 84/39/22/74 of 100. QLM adds only one covered task
+beyond its Q member; QQQ exceeds QLM by ten covered tasks. Output contract
+failures total 278 (190 malformed, 88 length-limited), retained as failures.
+No communication benefit can be inferred from private availability.
+See [experiment ledger](experiment_ledger.md) for uncertainty and accounting.
+No local model inference, methodology change, commit or push occurred.
+
+All 900 independent CPU score/parse comparisons subsequently completed with zero
+mismatches (excluding cross-host timing/environment metadata). Observed Math A
+GPU/scoring path verified; Math B remains unverified.
+
+## 2026-10-08 — MATH-500 A/B return reconstructed
+
+Return `1791412685067931571` passes both ZIP hashes, internal inventories,
+offline report reconstruction, exact frozen-plan/3,600-A-record preservation,
+model identity and sanitized privacy checks. A=900/900, B=2,100/2,100;
+zero unresolved, safe recovery, zero training updates.
+
+Private synthesis to post-exchange accuracy (out of 100): QQQ 79 to 80,
+LLL 73 to 74, MMM 64 to 59, QLM 81 to 77. Shared task-only control: 74.
+QLM has four paired regressions and no improvements; reported difference
+-4 pp, stratified group-bootstrap interval [-7,-1]. Readout construction is
+substantial for weaker actor teams and must not be described as peer utilization.
+Combined output-contract failures: 446 malformed and 243 length-limited.
+See [experiment ledger](experiment_ledger.md) for detailed accounting/metrics.
+
+Independent CPU rescoring of all 2,100 new Phase B records completed with zero score-outcome/parse mismatches. The exact pinned Math-Verify source and dependencies were restored in a temporary local environment; no model was downloaded. Cross-host elapsed-time and evaluator-environment metadata were excluded from equality. All 900 previously independently rescored A records are unchanged. The observed MATH A/B GPU/scoring path is verified. No local GPU run, commit or push occurred.
+
+## 2026-10-08 — MBPP+ smoke artifacts verified; code evaluation pending
+
+Return `1791443310313931697` passed both ZIP hashes, job-file hash, offline report
+reconstruction, all 18 parse/score/job reconstructions, three-parent exposure-index,
+identity and sanitized privacy checks. No generated code was executed.
+Q/L each have six valid-format responses awaiting isolated correctness scoring;
+M has six malformed responses already scored as failures. Eighteen generation
+calls are committed, zero unresolved, safe recovery. A=18/900 generated,
+six scored / twelve pending; B=0/2,100. No accuracy claim is supported.
+
+Observed private-smoke generation/export path verified; isolated EvalPlus execution
+remains unverified (recorded safe_execution_unavailable). See the experiment ledger.
+
+## 2026-10-08 — MBPP isolated evaluator attempt blocked before execution
+
+Attempted to establish the existing Bubblewrap boundary for the 18 smoke jobs.
+Host initially lacked bwrap; prlimit and a simple user/network namespace check
+were available. Downloaded and extracted official Ubuntu arm64 Bubblewrap
+0.9.0-1ubuntu0.3 into a dedicated /var/tmp directory without changing system
+packages. The stale apt candidate URL returned 404; the current official package
+was used. Created a dedicated system-Python 3.12 evaluator prefix outside Git/home;
+ensurepip was unavailable, so no working EvalPlus environment is claimed.
+A pinned EvalPlus dependency dry-run was performed, not a completed installation.
+
+The ordinary tool sandbox denied the probe's host loopback socket. An approved
+host-level probe still failed with safe_execution_unavailable. A trusted print-only
+diagnostic using the exact same Bubblewrap command/restrictions exposed the cause:
+`bwrap: Creating new namespace failed: Resource temporarily unavailable`.
+No isolation restriction was removed and no generated program or benchmark
+canonical solution was executed. No model calls, score imports or outcome changes.
+The blocker is host namespace capability/resources; installing Python packages
+alone does not resolve it. Need a dedicated Linux evaluator passing the existing
+code-probe before executing scoring jobs. Twelve smoke correctness scores remain
+pending; six malformed responses remain scored failures. No continuation launched.
+
+## 2026-10-08 — MBPP+ deferred after Colab isolation probe failure
+
+User returned a Colab code-probe traceback ending in
+IsolationUnavailable: safe_execution_unavailable. This is user-reported runtime
+evidence, not an imported probe receipt; the traceback does not identify the
+underlying namespace failure. The local evaluator had separately failed its
+isolation probe. Per the user's instruction to skip MBPP+ if Colab cannot support
+safe scoring, MBPP+ is deferred without weakening the boundary or rerunning data.
+
+Preserve the 18-call smoke: six malformed responses remain scored failures,
+twelve correctness scores remain pending, and all 18 scoring jobs remain available
+in the verified private bundle. Full A (remaining 882 calls) and B (2,100 calls)
+are not executed. No accuracy or complementarity result is claimed and no budget
+is reassigned. Resumption requires a capable evaluator passing the existing probe
+and official evaluator validation. No new generation or score import occurred.
+
+## 2026-10-08 — GPQA breadth preparation metadata mismatch fixed locally
+
+User reported GPQA parent partition changed during prepare, before planning or
+inference. Reproduced the implementation mismatch using the original CLI's full
+reviewed exposure policy versus the minimal fixture default. Loader now rebuilds
+with the validated recorded policy and retains strict manifest checks. Regression
+coverage includes full-policy compatibility and selected/protected/excluded-ID
+and policy-metadata tampering. Actual returned parent/source comparison in Colab
+remains unverified until retry on a user-reviewed pushed revision. Historical
+bundles, completed runs and unrelated evidence edits preserved; no commit/push.
+
+Validation: PYTHONPATH=src python -m unittest discover -s tests -p test_benchmark_breadth.py -v: 25 tests, 22 passed / 3 optional runtime tests skipped. git diff --check passed. No model generation or official GPQA download locally.

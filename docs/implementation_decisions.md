@@ -1315,3 +1315,16 @@ and explicit stop-after boundaries preserve the existing storage safety contract
 
 See [methodology](benchmark_breadth_methodology.md), [source checks](benchmark_breadth_sources.md),
 [exposure ledger](benchmark_exposure_ledger.md), and [exact commands](benchmark_breadth_colab.md).
+
+## 2026-10-08 — GPQA breadth parent policy reconstruction
+
+The original GPQA CLI records experiments/gpqa_exposure_policy.json in the parent
+manifest. The breadth child recomputed with the minimal default policy, so exact
+manifest comparison rejected an otherwise equivalent allocation due to policy
+provenance metadata. Reconstruct with the recorded policy only if it equals the
+reviewed repository policy or the historical minimal empty policy. Continue exact
+whole-manifest comparison and 32/164/2 accounting. Do not strip provenance, accept
+arbitrary imported policies, modify parent artifacts or replace task selection.
+This is a loader compatibility fix, not a new partition methodology. A new pushed
+source revision may be used before the new child plan is frozen; existing study
+plans must never be migrated implicitly.

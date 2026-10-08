@@ -1439,3 +1439,693 @@ changes passed the focused rerun. Exact pins, exposure policy, budgets, commands
 runtime prerequisites and private/sanitized return artifacts are documented in
 [benchmark methodology](benchmark_breadth_methodology.md) and its linked runbook.
 Implementation does not authorize an automatic portfolio run or imply efficacy.
+
+## 2026-10-06 — MMLU-Pro included smoke return audited
+
+Run `pact-breadth-mmlu-pro-001`, export timestamp `1791253131407744749`.
+Both submitted archive SHA256 values matched:
+
+- PRIVATE: `f0900fd38127b12686b4b4eff80fe9158aa53cd231fb234266f09bd560c94cac`
+- SANITIZED: `5a9ab08d71cdc4e40412180eb8a5b4f3cb10bfdb03a0a6144b019efc162b0f87`
+
+Pinned clean source `7185b0c4bda278edabfbe45865d922844bf206d6`, source hash
+`9411820ecbc65b069665cd4ef4999b746be04f8cef814160b6d512dae1eee43f`;
+plan `516dcaba5ba4200e2e194c55b7470a774c116c733b06a912fb514937b0b088a9`.
+Recorded GPU: NVIDIA A100-SXM4-80GB. Q/L/M identities retain BF16, SDPA and no
+adapters. R access was preflighted; no R generation was exercised by this smoke.
+
+The real offline `breadth audit` CLI passed outside Git. Internal archive checksums
+passed, sanitized summary equaled private/reconstructed summary, and all 18 scores
+agreed exactly with independent strict-MCQ rescoring. The observed calls are
+exactly the two planned smoke IDs, six per family, all private Phase A. All 18
+parsed successfully and stopped at EOS; zero unresolved attempts; recovery_safe=true.
+Sanitized inventory contains only summary/report/handoff, with no selected question,
+raw completion or rendered prompt found in the public summary/report.
+
+| Team | Private coverage, tasks | N0 counts (0/1/2/3 correct) | Mixed support | Vote correct |
+|---|---:|---|---:|---:|
+| QQQ | 0/2 | 2/0/0/0 | 0/2 | 0/2 |
+| LLL | 1/2 | 1/1/0/0 | 1/2 | 0/2 |
+| MMM | 0/2 | 2/0/0/0 | 0/2 | 0/2 |
+| QLM | 1/2 | 1/1/0/0 | 1/2 | 0/2 |
+
+Across all nine-packet banks: Q 0/6, L 1/6, M 0/6 correct. QLM's one correct
+candidate is the same saved Llama draw used by LLL, not independent evidence.
+All teams have zero observed gain over their best member. The two task strata are
+`other` and `philosophy`; these are smoke observations, not a representative
+14-category estimate, evidence of model ranking or a complementarity conclusion.
+No communication/utilization/repair outcome was measured.
+
+Accounting: 18 attempted/committed/scored calls, 9,216 reserved output tokens,
+4,368 input tokens and 765 actual output tokens; zero optimizer updates. Full Phase A
+is correctly partial (18/1,260 calls); Phase B is not executed (0/2,940). Remaining
+planned A work is 1,242 calls / 635,904 reserved output tokens, reusing these 18 calls.
+This return adds 18 to the prior ledger's 16,165 recorded generations: 16,183 total,
+plus the unchanged up-to-16 unknown controlled-child calls; optimizer updates stay
+147. Historical entries were not re-audited for this increment.
+
+Only this observed MMLU private-smoke GPU path is now verified. Full A/B, common
+readout and other benchmark GPU behavior remain unverified. No local model calls,
+new experiment, commit or push was performed. No outcome automatically authorizes
+continuation or methodological change.
+
+## 2026-10-06 — Complete MMLU-Pro Phase A return audited
+
+Run `pact-breadth-mmlu-pro-001`, export `1791264819488214146`. Uploaded archives
+matched the submitted SHA256 values and their internal inventories/checksums:
+
+- PRIVATE: `199ebcffd076671ddb20d026614d1c78296d1fca763f5ad90952a4ce594fcfb0`
+- SANITIZED: `ba45c8f71363126dbc72ec8bbf560bd4bcca72672a484628edf7aee64241ad10`
+
+The plan is unchanged from the smoke:
+`516dcaba5ba4200e2e194c55b7470a774c116c733b06a912fb514937b0b088a9`, clean source
+`7185b0c4bda278edabfbe45865d922844bf206d6`, source hash
+`9411820ecbc65b069665cd4ef4999b746be04f8cef814160b6d512dae1eee43f`.
+Recorded GPU is A100-SXM4-80GB; runtime fingerprint matches the smoke. The real
+offline audit CLI passed outside Git. All 1,260 scores independently reproduced
+under the frozen strict MCQ contract. All 72 old smoke intent/call/dependency/score
+records are exactly preserved, and the entire frozen plan equals the earlier plan.
+
+Phase A is complete: 140 tasks, ten in each of 14 categories, nine private calls
+per task (420/family), 1,260 attempted/committed/scored, zero unresolved attempts,
+recovery_safe=true. No locked-cohort or Phase B generation is present. All actual
+responses, including invalid/abstaining/length-limited responses, retain the intended
+denominator; there are no omitted tasks. Parser counts: ok 1,106, abstention 81,
+invalid_answer 9, malformed 43, length 21. Stop reasons: EOS 1,239 and length 21.
+
+| Team | Coverage | Best member | Gain over best member | Valid mixed support | Majority vote | N0 (0/1/2/3) |
+|---|---:|---:|---:|---:|---:|---|
+| QQQ | 40/140 (28.57%) | 35/140 | 5/140 | 7/140 | 35/140 (25.00%) | 100/6/5/29 |
+| LLL | 46/140 (32.86%) | 37/140 | 9/140 | 14/140 | 35/140 (25.00%) | 94/13/5/28 |
+| MMM | 38/140 (27.14%) | 30/140 | 8/140 | 13/140 | 31/140 (22.14%) | 102/9/8/21 |
+| QLM | 61/140 (43.57%) | 36/140 | 25/140 | 42/140 | 32/140 (22.86%) | 79/31/19/11 |
+
+QLM member correctness: Q 35/140, L 36/140, M 31/140. Across all three draws per
+family: Q 103/420, L 107/420, M 88/420; these 420 responses are not independent
+sampling units. Primary equal-category macro coverage equals micro coverage here
+because each category has ten fully observed tasks. Paired group bootstrap within
+category (140 groups, 1,000 draws) gives QLM coverage differences and percentile
+intervals: QQQ +15.00 percentage points [8.57,22.14], LLL +10.71 [4.29,17.14], MMM
++16.43 [10.00,22.86]. These are descriptive development-cohort comparisons under
+one seed schedule, not an official leaderboard or a corrected multiple-testing claim.
+
+The mixed team has greater observed private correct-answer availability than each
+homogeneous team. Its majority-vote outcome does not establish a final-answer
+advantage. Synthesis, revisions, utilization, hold/repair and readout loss remain
+unmeasured: Phase B is not executed (0/2,940). Zero-support categories remain in
+the cohort; no task/model/seed substitution or positive-support gate is introduced.
+
+Accounting: 645,120 reserved output tokens, 430,029 input tokens, 111,058 actual
+output tokens, zero optimizer updates. This adds only the 1,242 new calls to the
+previous cumulative count: 17,425 recorded generations plus the unchanged up-to-16
+unknown controlled-child calls; historical optimizer updates remain 147.
+
+Sanitized summary equals private and reconstructed summaries. Its only payloads
+are summary/report/handoff; all selected questions, raw completions and rendered
+prompts were checked absent from its summary/report. Raw evidence remains private.
+No local generation, commit, push or methodological change occurred. The observed
+MMLU Phase A GPU path is verified; Phase B and other benchmark GPU paths remain
+unverified. Any continuation is a separate explicit invocation under the same plan.
+
+## 2026-10-06 — MMLU-Pro Phase B completed and audited
+
+Run `pact-breadth-mmlu-pro-001`, export `1791270113690429538`. Both uploaded
+archives match their submitted SHA256 values and internal checksum inventories:
+
+- PRIVATE: `7e15746dbc7832dda3c5698e86737af66d806f25954ce1fc5910844e5b521bad`
+- SANITIZED: `c6cf9b5a087ef4610a986e823d3d5dde6bb1353c66d40994bacdf1fb92f4b2e6`
+
+The plan remains `516dcaba5ba4200e2e194c55b7470a774c116c733b06a912fb514937b0b088a9`
+at clean source `7185b0c4bda278edabfbe45865d922844bf206d6` (source hash
+`9411820ecbc65b069665cd4ef4999b746be04f8cef814160b6d512dae1eee43f`). Recorded GPU:
+A100-SXM4-80GB. All Q/L/M/R identities retain BF16, SDPA and absent adapters.
+The actual offline audit CLI passed outside Git, checking native identities,
+request construction/dependencies, frozen initial-peer delivery, accounting and
+summary reconstruction. Independent strict-MCQ rescoring reproduced all 4,200
+outcomes, including the final-answer parsing mode for readout. All 5,040 earlier
+Phase A intent/call/dependency/score records and the entire plan are unchanged.
+
+Both phases are complete on all 140 characterization tasks, ten/category:
+1,260 private calls; 1,680 revisions (560/family); 560 private syntheses; 560 revised
+readouts; 140 common task-only calls. Total 4,200 attempted/committed/scored,
+zero unresolved attempts, recovery_safe=true. No locked cohort generated.
+
+| Team | Initial coverage | Private vote | Private synthesis | Revised vote | Post-exchange readout |
+|---|---:|---:|---:|---:|---:|
+| QQQ | 40/140 | 35/140 | 42/140 | 39/140 | 43/140 |
+| LLL | 46/140 | 35/140 | 42/140 | 37/140 | 38/140 |
+| MMM | 38/140 | 31/140 | 32/140 | 30/140 | 32/140 |
+| QLM | 61/140 | 32/140 | 40/140 | 39/140 | 43/140 |
+
+The common task-only readout is 35/140; it is one shared 140-call control, not
+four independently generated controls. Equal-category macro and micro terminal
+accuracy coincide on this fully observed balanced cohort. Private correctness
+availability remains higher for QLM, but its post-exchange accuracy ties QQQ at
+30.71%, and its private synthesis is below QQQ/LLL (40 versus 42 correct).
+
+QLM synthesis-to-post-exchange paired outcomes: 38 correct in both, five repairs
+of final outcomes, two regressions, 95 incorrect in both. Net +3/140 = +2.14
+percentage points; category-stratified paired group-bootstrap percentile interval
+[-1.43,+5.71] points includes zero. These final-outcome transitions are distinct
+from the recipient-level repair opportunities below. QLM post-exchange minus QQQ
+is 0.00 points [-5.71,+5.71]; versus LLL +3.57 [-2.86,+10.71]; versus MMM +7.86
+[1.43,+14.29]. Intervals use the frozen 1,000-draw procedure and 140 task/group
+sampling units, one seed schedule, without a multiple-comparison correction.
+This does not establish a general heterogeneous final-answer advantage.
+
+QLM availability and receiver accounting:
+
+- Initial coverage 61, revised coverage 59: 11/61 initially covered tasks lose all
+  correct packets; 9/79 initially uncovered tasks gain a correct revised packet.
+- Hold succeeds on 44/55 eligible receiver opportunities; repair on 10/63.
+  These are correlated receiver opportunities, not independent task samples.
+- Post-exchange success occurs on 38/61 initially covered tasks and 5/79 initially
+  uncovered tasks: 38 + 5 = 43. The latter is construction relative to the initial
+  bank, not necessarily construction by the final readout itself.
+- Private synthesis loses 24 initially covered tasks and constructs three successes
+  on initially uncovered tasks: 61 - 24 + 3 = 40.
+- Of 59 revised-covered tasks, 16 end in a wrong readout; no correct final readout
+  occurs without a correct revised candidate: 59 - 16 + 0 = 43.
+
+Thus initial coverage minus final accuracy (61-43) is a net difference, not an
+ignored-answer count or a causal explanation. Honest-error hold/repair and clean
+exchange outcomes do not measure attack robustness or trained PACT efficacy.
+
+Phase B parser counts: ok 2,595, abstention 309, invalid_answer 6, malformed 23,
+length 7. These 345 non-ok responses remain scored failures, not missing tasks.
+Combined parser counts are ok 3,701, abstention 390, invalid_answer 15, malformed
+66, length 28; stop reasons EOS 4,172 / length 28. Infrastructure missingness is
+zero. Combined accounting: 1,585,920 reserved output tokens, 2,223,136 input tokens,
+228,833 actual output tokens, zero optimizer updates. Incremental B consumption:
+940,800 reserved, 1,793,107 input and 117,775 actual output tokens.
+
+Sanitized summary/report equal the private copies and reconstructed results. The
+sanitized inventory contains summary/report/handoff only; selected questions,
+nonempty raw continuations and rendered prompts were checked absent. Raw content
+remains private and ignored by Git. Only 2,940 new calls are added to the ledger:
+20,365 cumulative recorded generations plus the unchanged up-to-16 unknown calls;
+historical optimizer updates remain 147. Historical totals were carried forward,
+not re-audited in this import.
+
+This verifies the observed MMLU A/B GPU configuration, including common readout.
+Other benchmark GPU paths remain unverified. No local model generation, source
+change, commit, push, final-test run or automatic next experiment occurred.
+
+## 2026-10-06 — MuSR included smoke return audited
+
+Run `pact-breadth-musr-001`, export `1791271351392273370`. Both uploaded SHA256
+values and internal archive checksum inventories matched:
+
+- PRIVATE: `7919a6e86f2322a1372647b5334dd2ff90c998362cf07db660dd69e2b5c59d09`
+- SANITIZED: `2720a1cc9ac965e6818f261c713fa3d54a9e0ed6d602a54fe822d4b8d985f9e8`
+
+Plan `a706c424665a7feec213c5864a2bd591c5781c5136bbeba16b365f96e75166ae`;
+clean source `7185b0c4bda278edabfbe45865d922844bf206d6`, source hash
+`9411820ecbc65b069665cd4ef4999b746be04f8cef814160b6d512dae1eee43f`.
+Recorded GPU: A100-SXM4-80GB. Q/L/M identities retain BF16, SDPA and absent
+adapters. The real offline audit CLI passed outside Git and all 18 strict MCQ
+scores independently reproduced. There are six calls/family on exactly the two
+planned smoke IDs; all responses parse ok and stop at EOS, zero unresolved
+attempts, recovery_safe=true. No Phase B or locked-cohort call is present.
+
+The plan's prior-exposure index exactly equals an independently reconstructed index
+from the audited MMLU A/B archive `1791270113690429538`. Selected MuSR fingerprints
+do not intersect its blocked fingerprints. Actual selected quotas are thirty per
+domain. All source siblings inherit one partition; 756 source rows form 564 eligible
+groups, zero excluded groups, and 90/90/384 characterization/confirmation/reserve
+representatives. These lexical checks do not establish semantic decontamination.
+
+| Team | Coverage | Majority vote correct | Valid mixed support | N0 (0/1/2/3) |
+|---|---:|---:|---:|---|
+| QQQ | 2/2 | 2/2 | 0/2 | 0/0/0/2 |
+| LLL | 1/2 | 1/2 | 1/2 | 1/0/1/0 |
+| MMM | 2/2 | 2/2 | 0/2 | 0/0/0/2 |
+| QLM | 2/2 | 2/2 | 1/2 | 0/0/1/1 |
+
+Across all draws: Q 6/6, L 2/6, M 6/6 correct. Every team's observed coverage gain
+over its best member is zero. Smoke strata are murder_mysteries and object_placements;
+team_allocation has no returned generation evidence yet. Two tasks are insufficient
+for a domain-balanced or population complementarity claim. No communication,
+utilization, hold/repair or readout outcome was measured.
+
+Accounting: 18 attempted/committed/scored calls, 9,216 reserved output tokens,
+24,381 input tokens, 1,132 actual output tokens, zero optimizer updates. Phase A
+is correctly partial at 18/810; B is not executed at 0/1,890. Remaining A work is
+792 calls / 405,504 reserved output tokens, retaining the smoke calls. This adds
+18 to the previous cumulative ledger count: 20,383 recorded generations plus the
+unchanged up-to-16 unknown controlled-child calls; historical updates remain 147.
+
+Sanitized summary/report exactly equal the private copies; only summary/report/
+handoff are present. All selected questions/narratives, generated continuations and
+rendered prompts were checked absent from the sanitized summary/report. Only this
+observed MuSR private-smoke GPU path is now verified. No local model generation,
+code change, commit, push, automatic continuation or methodological change occurred.
+
+## 2026-10-06 — MuSR full Phase A audited
+
+Run `pact-breadth-musr-001`, export `1791274491198207091`. Uploaded hashes
+and internal archive inventories verified:
+
+- PRIVATE: `65da166dc076d4e33c70d37580d1b70d6cf2ff97beef4bfd6c68e3dffa979e7e`
+- SANITIZED: `518f3a1d2d1daf64d35fc6a1748f3ed49c210864a203ec3003a171c05f777eb4`
+
+The frozen plan exactly matches the smoke return:
+`a706c424665a7feec213c5864a2bd591c5781c5136bbeba16b365f96e75166ae`.
+All 72 smoke call/intent/dependency/score artifacts are unchanged. This preserves
+the previously audited source/model pins, selection, group partitions and MMLU
+exposure index. Q/L/M identity records retain BF16, SDPA and no adapters.
+The real offline audit CLI passed outside Git. All 810 strict MCQ scores were
+independently reproduced; no inference was executed locally.
+
+All 90 characterization tasks have their nine private responses, 270 per family.
+Phase A is complete; Phase B remains not executed (0/1,890). There are zero
+unresolved calls and recovery_safe=true. All stops are EOS. Parser outcomes:
+759 ok, 8 malformed, 10 invalid_answer and 33 abstention. These 51 non-ok responses
+remain failures, not dropped observations or missing calls.
+
+| Team | Correct coverage | Majority vote correct | Valid mixed support | Gain over best member | N0 (0/1/2/3) |
+|---|---:|---:|---:|---:|---|
+| QQQ | 50/90 | 48/90 | 6/90 | 2/90 | 40/2/4/44 |
+| LLL | 53/90 | 45/90 | 15/90 | 8/90 | 37/10/12/31 |
+| MMM | 41/90 | 38/90 | 9/90 | 4/90 | 49/7/7/27 |
+| QLM | 62/90 | 44/90 | 38/90 | 17/90 | 28/18/25/19 |
+
+Across private draws, Q is correct on 142/270, L on 127/270 and M on 102/270.
+Tasks with wrong-answer diversity number 0, 9, 4 and 5 respectively; wrong-answer
+diversity is not correct coverage. Mixed support requires valid correct/wrong
+responses, so it need not equal the sum of the N0=1 and N0=2 counts.
+
+Domain results (coverage / vote, each denominator 30):
+
+| Domain | QQQ | LLL | MMM | QLM |
+|---|---|---|---|---|
+| murder_mysteries | 21 / 19 | 20 / 20 | 18 / 16 | 24 / 19 |
+| object_placements | 14 / 14 | 15 / 10 | 13 / 13 | 18 / 12 |
+| team_allocation | 15 / 15 | 18 / 15 | 10 / 9 | 20 / 13 |
+
+QLM coverage exceeds QQQ by 13.33 percentage points (reported paired stratified
+group-bootstrap interval 6.67 to 21.11), LLL by 10.00 (1.11 to 18.89) and MMM by
+23.33 (13.33 to 33.33). The sampling units are the 90 task groups, not 810 calls.
+These are balanced development-subset estimates, not official leaderboard results.
+QLM's greater available coverage does not produce a majority-vote advantage over
+QQQ here. Communication, preservation, utilization and readout remain unmeasured;
+this is not evidence of trained PACT efficacy and does not authorize another run.
+
+Accounting: 810 attempted/committed/scored, 414,720 reserved output tokens,
+926,715 input tokens, 62,168 actual output tokens and zero optimizer updates.
+Only 792 new generations are added beyond the smoke: cumulative recorded
+generations 21,175 plus the unchanged up-to-16 unknown controlled-child calls.
+Historical optimizer updates remain 147; historical totals were carried forward,
+not re-audited.
+
+Sanitized summary/report exactly match the private copies; its inventory contains
+only handoff/summary/report. Selected questions/narratives, rendered prompts and
+nonempty raw continuations were checked absent from the public summary/report.
+Private artifacts remain outside tracked outputs. Only the observed MuSR Phase A
+GPU path is now verified. No source change, commit, push, protected-cohort use,
+local generation or automatic Phase B execution occurred.
+
+## 2026-10-06 — MuSR complete A/B return audited
+
+Run `pact-breadth-musr-001`, export `1791278710347362192`. Uploaded SHA256
+values and internal archive checksum inventories verified:
+
+- PRIVATE: `1eaa5a5a04f4feb2405ae29ff17c90c831886691ea060ee69fe978025f44dd57`
+- SANITIZED: `298082b20be17a51e40059a5281eb8f3625cca6bd6f0739b0ff010902a8ca4a6`
+
+Frozen plan `a706c424665a7feec213c5864a2bd591c5781c5136bbeba16b365f96e75166ae`
+exactly equals the audited A return. All 3,240 prior call/intent/dependency/score
+records are unchanged. No selection, exposure partition or source migration.
+Q/L/M/R identity records retain BF16, SDPA and no adapters. Real offline audit
+outside Git passed; all 2,700 strict MCQ scores independently reproduced.
+Sanitized summary/report equal private copies; only handoff/summary/report are
+present. All selected questions/narratives, rendered prompts and nonempty raw
+continuations were checked absent from the sanitized summary/report.
+
+A is complete at 810/810 and B at 1,890/1,890. B contains 360 revisions per Q/L/M
+family and 810 common R readouts. All 90 tasks are observed, zero unresolved calls,
+recovery_safe=true. All 2,700 stop reasons are EOS. B parser counts are 1,781 ok,
+15 malformed, 15 invalid_answer and 79 abstention. Non-ok responses remain failures;
+they are not omitted. A's 759 ok / 51 non-ok responses remain unchanged.
+
+| Team | Initial coverage | Private vote | Private synthesis | Revised vote | Post-exchange readout |
+|---|---:|---:|---:|---:|---:|
+| QQQ | 50/90 | 48/90 | 48/90 | 48/90 | 47/90 |
+| LLL | 53/90 | 45/90 | 46/90 | 46/90 | 46/90 |
+| MMM | 41/90 | 38/90 | 38/90 | 35/90 | 35/90 |
+| QLM | 62/90 | 44/90 | 45/90 | 43/90 | 46/90 |
+
+The shared task-only Qwen3 control is 52/90. It is one control, not four independent
+measurements. QLM retains the largest initial coverage, but this does not translate
+into superior final accuracy in this cohort.
+
+| Team | Erasure | New availability | Utilization | Construction | Hold | Repair | Private / revised readout loss events |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| QQQ | 2/50 | 0/40 | 47/50 | 0/40 | 8/10 | 1/8 | 2 / 1 |
+| LLL | 4/53 | 3/37 | 44/53 | 2/37 | 16/22 | 6/23 | 7 / 6 |
+| MMM | 2/41 | 1/49 | 33/41 | 2/49 | 12/15 | 1/12 | 4 / 7 |
+| QLM | 5/62 | 0/28 | 46/62 | 0/28 | 50/58 | 6/55 | 17 / 11 |
+
+Readout losses are actual event counts out of 90 tasks, not coverage-minus-accuracy
+estimates. Hold/repair use the report's eligible receiver opportunities. Zero
+construction/new-availability estimates do not establish population zero rates.
+
+N0-to-N1 matrices (rows initial correct count 0..3; columns revised count 0..3):
+
+- QQQ: [[40,0,0,0],[2,0,0,0],[0,0,3,1],[0,0,0,44]]
+- LLL: [[34,3,0,0],[4,5,1,0],[0,1,6,5],[0,0,1,30]]
+- MMM: [[48,1,0,0],[2,4,1,0],[0,2,4,1],[0,1,3,23]]
+- QLM: [[28,0,0,0],[5,12,1,0],[0,2,18,5],[0,0,2,17]]
+
+For QLM, coverage falls from 62 to 57 tasks: five erasures and no newly covered
+task. Its final readout succeeds on 46 of the 62 initially covered tasks; 11
+tasks retain a correct revised packet but receive an incorrect final readout.
+
+Paired private-synthesis to post-exchange outcomes:
+
+| Team | Incorrect to correct | Correct to incorrect | Net tasks | Difference (pp), reported bootstrap interval |
+|---|---:|---:|---:|---|
+| QQQ | 0 | 1 | -1 | -1.11 [-3.33, 0.00] |
+| LLL | 3 | 3 | 0 | 0.00 [-5.56, 4.44] |
+| MMM | 1 | 4 | -3 | -3.33 [-8.89, 1.11] |
+| QLM | 2 | 1 | +1 | +1.11 [-2.22, 5.56] |
+
+Sampling units are the 90 task groups, bootstrapped within the three strata;
+2,700 calls are not independent task observations. QLM's interval includes zero.
+This bounded development study does not establish a communication benefit or
+trained PACT efficacy. Historical MMLU/ARC/LogiQA results remain descriptive,
+not pooled independent evidence.
+
+Domain private-synthesis / post-exchange counts (each denominator 30):
+
+| Domain | QQQ | LLL | MMM | QLM | Task-only |
+|---|---|---|---|---|---:|
+| murder_mysteries | 19 / 18 | 19 / 19 | 15 / 14 | 18 / 18 | 20 |
+| object_placements | 14 / 14 | 11 / 11 | 14 / 11 | 12 / 13 | 15 |
+| team_allocation | 15 / 15 | 16 / 16 | 9 / 10 | 15 / 15 | 17 |
+
+Accounting: 2,700 attempted/committed/scored, 1,019,520 reserved output tokens,
+3,510,679 input tokens, 149,131 actual output tokens, zero optimizer updates.
+Incremental B: 1,890 calls, 604,800 reserved, 2,583,964 input, 86,963 actual output
+tokens. Adding only B yields 23,065 cumulative recorded generations plus unchanged
+up-to-16 unknown controlled-child calls. Historical optimizer updates remain 147;
+historical totals were carried forward, not re-audited.
+
+The observed MuSR A/B GPU path, including the common readout, is now verified.
+No local model generation, code/methodology change, commit, push, locked-cohort
+execution or automatic next experiment occurred.
+
+## 2026-10-07 — MATH-500 included smoke audited
+
+Run `pact-breadth-math-500-001`, export `1791353073408058583`.
+Both uploaded SHA256 values and internal inventories verified:
+
+- PRIVATE: `12d4003f3183e24bfd015d6c4dcab40c86eb07f0f76ff4fcbf09a116a6a2e477`
+- SANITIZED: `207aee4be2e9790b72f17acdeda3c6764d2ddccc25c8008d09adc51a52d2dcab`
+
+Frozen plan `e27e7c6db74ac478ddfb90c6255ac8254be2c1d9da7fcf09070914c563ecc5c6`;
+clean source `7185b0c4bda278edabfbe45865d922844bf206d6`, source hash
+`9411820ecbc65b069665cd4ef4999b746be04f8cef814160b6d512dae1eee43f`.
+Real offline report reconstruction passed outside Git. All 18 score outcomes and
+parse records independently reproduced using the existing local pinned math
+environment. Elapsed time and evaluator environment metadata were excluded from
+cross-host equality; scorer package versions agree. Colab records Python 3.13.15,
+Math-Verify 0.9.0, latex2sympy2_extended 1.11.0, SymPy 1.14.0, mpmath 1.3.0,
+antlr4-python3-runtime 4.13.2. Readiness records ready=true/gold_parse_checked with
+the frozen evaluator identity. The replacement virtualenv setup succeeded; it
+does not change scorer policy or the scientific plan.
+
+Eighteen committed/scored private calls, six per family on two tasks; zero
+unresolved, recovery_safe=true. Twelve parse ok, five malformed, one length-limited.
+Seventeen EOS stops and one length stop. All six contract failures remain failures.
+Q is correct on 6/6, L on 1/6 and M on 1/6 draws.
+
+| Team | Coverage | Valid mixed support | N0 (0/1/2/3) | Gain over best member |
+|---|---:|---:|---|---:|
+| QQQ | 2/2 | 0/2 | 0/0/0/2 | 0/2 |
+| LLL | 1/2 | 0/2 | 1/1/0/0 | 0/2 |
+| MMM | 1/2 | 1/2 | 1/1/0/0 | 0/2 |
+| QLM | 2/2 | 2/2 | 0/2/0/0 | 0/2 |
+
+QLM's selected Q member supplies both correct answers. This smoke does not show
+coverage gain over its best member. Two tasks are insufficient for broader
+complementarity claims. Math voting is disabled; no communication/readout outcome
+has been measured.
+
+The prior exposure index exactly equals the reconstruction from completed
+MMLU-Pro and MuSR plans. Selected math fingerprints have no overlap with its
+blocked fingerprints. All subject/level quotas match, including explicitly zero
+quotas. Source has 500 rows, 495 eligible groups; partitions contain 100
+characterization, 100 confirmation and 295 reserve representatives. These lexical
+checks do not establish semantic decontamination. Q/L/M retain BF16/SDPA/no adapters.
+
+Accounting: 18 attempts/commits/scores, 18,432 reserved output tokens, 2,247 input,
+6,593 actual output, zero optimizer updates. A is partial 18/900; B not executed
+0/2,100. Remaining A: 882 calls / 903,168 reserved output tokens. Cumulative
+recorded generations become 23,083 plus unchanged up-to-16 unknown historical
+controlled-child calls; historical optimizer updates remain 147. Prior totals
+were carried forward, not re-audited.
+
+Private/sanitized summaries and reports match. Sanitized inventory contains only
+handoff/summary/report; selected questions, prompts and nonempty continuations
+were checked absent. Only the observed math private-smoke GPU/scoring path is
+verified. Full A/B remain unverified. No local model generation, methodology
+change, commit, push or automatic continuation occurred.
+
+## 2026-10-07 — MATH-500 full Phase A return
+
+Run `pact-breadth-math-500-001`, export `1791368956454486655`.
+Both uploaded SHA256 values and internal archive inventories verified:
+
+- PRIVATE: `d7df5c7399357076caf42a1dc9f98dea798c5bbe68ab2c40b638dc05876647b4`
+- SANITIZED: `a2c7c88c2af75e6e6b8ed550810a14147a0b0915f4fff0f54365e66264bd5254`
+
+Frozen plan `e27e7c6db74ac478ddfb90c6255ac8254be2c1d9da7fcf09070914c563ecc5c6`
+exactly matches the smoke return. All 72 smoke call/intent/dependency/score records
+are identical. This retains the previously audited source, scorer, prior-exposure
+index and partitions. Q/L/M identities retain BF16, SDPA and no adapters.
+The real offline audit CLI reconstructed an identical report outside Git.
+
+Phase A is complete at 900/900 on 100 tasks, 300 calls/family; B remains unexecuted
+at 0/2,100. Zero unresolved calls, recovery_safe=true. There are 812 EOS stops and
+88 length stops. Parsing: 622 ok, 190 malformed, 88 length-limited. The 278 output
+contract failures remain scored failures, not missing observations or exclusions.
+
+| Team | Correct coverage | Best member | Coverage gain | Valid mixed support | N0 (0/1/2/3) |
+|---|---:|---:|---:|---:|---|
+| QQQ | 84/100 | 77/100 | 7/100 | 15/100 | 16/9/9/66 |
+| LLL | 39/100 | 25/100 | 14/100 | 13/100 | 61/26/8/5 |
+| MMM | 22/100 | 14/100 | 8/100 | 18/100 | 78/16/4/2 |
+| QLM | 74/100 | 73/100 | 1/100 | 56/100 | 26/46/27/1 |
+
+Across all private draws, Q is correct on 225/300, L 57/300, M 30/300.
+Within QLM's fixed bindings, Q/L/M are correct on 73/19/11 of 100 respectively.
+Thus mixed correct/wrong support does not imply complementary coverage: QLM adds
+only one covered task beyond Q. Three Q draws cover ten more tasks than QLM.
+
+QLM minus QQQ coverage is -10 pp (reported paired stratified group-bootstrap
+interval [-16,-5]); versus LLL +35 pp [27,43], versus MMM +52 pp [44,60].
+These are 100 task-group sampling units, not 900 independent calls. Primary
+aggregation is micro across the selected subject/level allocation. Subject counts:
+Algebra 25, Intermediate Algebra 19, Prealgebra 16, Precalculus 12, Number Theory
+12, Geometry 9, Counting & Probability 7. All quotas, including zero strata, match.
+
+The observed pattern differs descriptively from MMLU/MuSR: heterogeneity here
+does not outperform QQQ on initial correct-answer availability. These are bounded
+development results under the frozen format and token limits, not an unrestricted
+ranking of mathematical capability. Math voting remains disabled. No communication,
+hold/repair, utilization or final readout result is available; no claim of trained
+PACT efficacy follows and no outcome authorizes an automatic subsequent run.
+
+Accounting: 900 attempted/committed/scored, 921,600 reserved output tokens,
+136,899 input tokens, 420,720 actual output tokens, zero optimizer updates.
+Only the 882 calls beyond smoke are added to cumulative accounting: 23,965
+recorded generations plus unchanged up-to-16 unknown controlled-child calls.
+Historical optimizer updates remain 147; prior totals were carried forward,
+not re-audited.
+
+Sanitized inventory contains handoff/summary/report only; summary/report exactly
+equal private copies. Selected questions, rendered prompts and nonempty raw
+continuations were checked absent from sanitized summary/report. No local model
+generation, source/methodology change, commit, push or protected-cohort use occurred.
+
+Independent CPU rescoring completed for all 900 records using the existing pinned
+local math environment: zero outcome/parse mismatches. Cross-host elapsed-time and
+evaluator-environment metadata were excluded from equality, as in the smoke audit.
+Per-family parser counts (ok / malformed / length): Q 273/1/26, L 114/133/53,
+M 235/56/9. This highlights substantial format failures in L under the fixed
+contract. No rescoring changed an imported outcome. The observed full Math A
+GPU/scoring path is verified; B remains unverified.
+
+## 2026-10-08 — MATH-500 complete A/B return
+
+Run `pact-breadth-math-500-001`, export `1791412685067931571`.
+Both uploaded SHA256 values and internal inventories verified:
+
+- PRIVATE: `0cb8d640bf6b039df046fafdb7d1785fc0ef23dabedea082cd8d42f15c72f748`
+- SANITIZED: `b41f2624fd012dbf09282a3b83627803151f87b197b162fb7568efa17d8804d1`
+
+Frozen plan `e27e7c6db74ac478ddfb90c6255ac8254be2c1d9da7fcf09070914c563ecc5c6`
+and all 3,600 Phase A call/intent/dependency/score records are unchanged from
+the audited A return. Previously audited source/scorer/exposure partitions remain
+fixed. Q/L/M/R identities retain BF16, SDPA and absent adapters.
+Real offline audit outside Git reconstructs an identical report. Private/sanitized
+summary and report match. Sanitized inventory is handoff/summary/report only;
+selected questions, rendered prompts and nonempty continuations were checked
+absent from those public outputs.
+
+A complete 900/900; B complete 2,100/2,100; all 100 characterization tasks observed,
+zero unresolved, recovery_safe=true. All 3,000 records have available scores.
+Combined parsers: 2,311 ok, 446 malformed, 243 length-limited. B alone:
+1,689 ok, 256 malformed, 155 length-limited. Combined stops: 2,757 EOS, 243 length.
+All output contract failures remain failures; no task or response was dropped.
+
+| Team | Initial coverage | Private synthesis | Post-exchange readout | Task-only control |
+|---|---:|---:|---:|---:|
+| QQQ | 84/100 | 79/100 | 80/100 | 74/100 |
+| LLL | 39/100 | 73/100 | 74/100 | 74/100 |
+| MMM | 22/100 | 64/100 | 59/100 | 74/100 |
+| QLM | 74/100 | 81/100 | 77/100 | 74/100 |
+
+Task-only is one shared Qwen3 control, not four independent measurements.
+Math private/revised voting remains disabled. The unadapted readout can solve
+tasks absent correct peer answers, so terminal accuracy is not a pure measure of
+peer-answer utilization. In particular, high LLL/MMM terminal accuracy relative
+to initial coverage includes readout construction.
+
+| Team | Erasure | New availability | Utilization | Construction | Hold | Repair | Private / revised readout loss events |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| QQQ | 3/84 | 0/16 | 79/84 | 1/16 | 16/22 | 14/21 | 7 / 2 |
+| LLL | 2/39 | 17/61 | 37/39 | 37/61 | 9/16 | 7/17 | 2 / 1 |
+| MMM | 6/22 | 2/78 | 20/22 | 39/78 | 12/21 | 2/30 | 2 / 2 |
+| QLM | 2/74 | 2/26 | 70/74 | 7/26 | 70/74 | 17/63 | 3 / 3 |
+
+Readout losses are actual events out of 100 tasks. Hold/repair denominators are
+eligible receiver opportunities, not independent task samples. Construction uses
+final correctness with no initially correct actor; new availability instead
+requires a correct revised actor packet.
+
+N0-to-N1 matrices, rows initial 0..3, columns revised 0..3:
+
+- QQQ: [[16,0,0,0],[3,1,3,2],[0,0,1,8],[0,0,0,66]]
+- LLL: [[44,7,5,5],[2,6,14,4],[0,1,1,6],[0,0,1,4]]
+- MMM: [[76,2,0,0],[6,7,3,0],[0,3,1,0],[0,0,0,2]]
+- QLM: [[24,2,0,0],[2,25,15,4],[0,3,16,8],[0,0,0,1]]
+
+Paired private-synthesis to post-exchange outcomes:
+
+| Team | Incorrect to correct | Correct to incorrect | Net tasks | Difference pp, reported bootstrap interval |
+|---|---:|---:|---:|---|
+| QQQ | 4 | 3 | +1 | +1 [-3,+6] |
+| LLL | 6 | 5 | +1 | +1 [-4,+6] |
+| MMM | 8 | 13 | -5 | -5 [-12,+3] |
+| QLM | 0 | 4 | -4 | -4 [-7,-1] |
+
+Sampling units are 100 task groups, resampled within subject/level strata with
+micro aggregation, not 3,000 calls. QLM private synthesis has the highest observed
+point estimate, but exchange worsens four tasks with none improved. These paired
+development results do not establish a general ranking of model families or
+trained PACT efficacy; they do not authorize a methodological change or another
+run. The math format/token limits remain part of the observed configuration.
+
+Accounting: 3,000 attempted/committed/scored, 3,072,000 reserved output tokens,
+3,523,618 input tokens, 1,343,727 actual output tokens, zero optimizer updates.
+Incremental B: 2,100 calls, 2,150,400 reserved, 3,386,719 input, 923,007 actual
+output tokens. Add only B to the cumulative ledger: 26,065 recorded generations
+plus unchanged up-to-16 unknown controlled-child calls; historical updates remain
+147. Prior historical totals were carried forward, not re-audited.
+No local model generation, source/methodology change, commit, push, protected
+cohort execution or automatic follow-up occurred.
+
+For clarity, final readout-construction events with no correct revised actor packet
+are QQQ 1, LLL 21, MMM 43, QLM 6 (each out of 100). Private synthesis construction
+events with no correct initial actor are respectively 2, 36, 44 and 10.
+These differ from the initial-uncovered construction column above.
+
+Independent CPU rescoring of all 2,100 new Phase B records completed with zero score-outcome/parse mismatches. The exact pinned Math-Verify source and dependencies were restored in a temporary local environment; no model was downloaded. Cross-host elapsed-time and evaluator-environment metadata were excluded from equality. All 900 previously independently rescored A records are unchanged. The observed MATH A/B GPU/scoring path is verified. No local GPU run, commit or push occurred.
+
+## 2026-10-08 — MBPP+ included smoke audited, correctness pending
+
+Run `pact-breadth-mbpp-plus-001`, export `1791443310313931697`.
+Uploaded ZIP hashes and internal inventories verified:
+
+- PRIVATE: `dcb4f4c773535954302bd35722d70e0012d723d687bc5269a238651c0bc131ad`
+- SANITIZED: `5f6bcf971498b8ac79820707fac0385e14dc76388979991a06c4f436c4464aae`
+- scoring_jobs.json: `7dd3a06259562aadbf4d5c5bc365e58ed4d2bbed329eb2a121a83d83e266401f`
+
+Frozen plan `72a10bbf296c6210cc5645ceeacc520dd15f6dfe8409e2d8217f8a890a3c0ae9`.
+Real offline audit reconstructs the report outside Git. All 18 parse/score
+classifications and exported scoring jobs independently reconstructed without
+executing generated code. Jobs inventory contains 18 jobs; its exact byte hash
+matches the user-provided value. Q/L/M identity records retain BF16/SDPA/no adapters.
+
+| Family | Calls | Parse ok, correctness pending | Malformed, scored failure |
+|---|---:|---:|---:|
+| Q | 6 | 6 | 0 |
+| L | 6 | 6 | 0 |
+| M | 6 | 0 | 6 |
+
+All stops are EOS. Six scored records mean six output-contract failures, not six
+successful programs or completed EvalPlus tests. The twelve syntactically valid
+responses remain pending_isolated_scoring; their correctness is unknown.
+scorer_readiness is ready=false / safe_execution_unavailable. No generated program
+or imported code was executed locally. Neither family accuracy nor team coverage/
+complementarity can be concluded from this return. Invalid outputs remain failures;
+unavailable correctness remains missing, never assumed incorrect.
+
+Prior exposure index exactly equals reconstruction from completed MMLU-Pro,
+MuSR and MATH-500 plans. Source has 378 rows/groups, with 100 characterization,
+100 locked confirmation and 178 locked reserve representatives. Only two selected
+smoke tasks have generation evidence. Private/sanitized summary/report match;
+sanitized inventory is handoff/summary/report only. Selected questions, rendered
+prompts and nonempty continuations were checked absent from public summary/report.
+
+Accounting: 18 attempted/committed calls, 18 scoring attempts, six scored failures
+and twelve pending; zero unresolved, recovery_safe=true. Reserved output 18,432,
+input 2,742, actual output 2,886, optimizer updates zero. A partial: 18/900
+generated, six scored; B unexecuted 0/2,100. Cumulative recorded generations become
+26,083 plus unchanged up-to-16 historical unknown controlled-child calls;
+historical optimizer updates remain 147. Earlier totals were carried forward.
+
+Observed MBPP private-smoke generation/export path verified; real isolated
+EvalPlus execution remains unverified. The next prerequisite is capability-checked
+isolated scoring of these jobs, not in-notebook program execution. No automatic
+continuation, source/methodology change, commit, push or protected-cohort use.
+
+## 2026-10-08 — MBPP isolated evaluator attempt blocked before execution
+
+Attempted to establish the existing Bubblewrap boundary for the 18 smoke jobs.
+Host initially lacked bwrap; prlimit and a simple user/network namespace check
+were available. Downloaded and extracted official Ubuntu arm64 Bubblewrap
+0.9.0-1ubuntu0.3 into a dedicated /var/tmp directory without changing system
+packages. The stale apt candidate URL returned 404; the current official package
+was used. Created a dedicated system-Python 3.12 evaluator prefix outside Git/home;
+ensurepip was unavailable, so no working EvalPlus environment is claimed.
+A pinned EvalPlus dependency dry-run was performed, not a completed installation.
+
+The ordinary tool sandbox denied the probe's host loopback socket. An approved
+host-level probe still failed with safe_execution_unavailable. A trusted print-only
+diagnostic using the exact same Bubblewrap command/restrictions exposed the cause:
+`bwrap: Creating new namespace failed: Resource temporarily unavailable`.
+No isolation restriction was removed and no generated program or benchmark
+canonical solution was executed. No model calls, score imports or outcome changes.
+The blocker is host namespace capability/resources; installing Python packages
+alone does not resolve it. Need a dedicated Linux evaluator passing the existing
+code-probe before executing scoring jobs. Twelve smoke correctness scores remain
+pending; six malformed responses remain scored failures. No continuation launched.
+
+## 2026-10-08 — MBPP+ deferred after Colab isolation probe failure
+
+User returned a Colab code-probe traceback ending in
+IsolationUnavailable: safe_execution_unavailable. This is user-reported runtime
+evidence, not an imported probe receipt; the traceback does not identify the
+underlying namespace failure. The local evaluator had separately failed its
+isolation probe. Per the user's instruction to skip MBPP+ if Colab cannot support
+safe scoring, MBPP+ is deferred without weakening the boundary or rerunning data.
+
+Preserve the 18-call smoke: six malformed responses remain scored failures,
+twelve correctness scores remain pending, and all 18 scoring jobs remain available
+in the verified private bundle. Full A (remaining 882 calls) and B (2,100 calls)
+are not executed. No accuracy or complementarity result is claimed and no budget
+is reassigned. Resumption requires a capable evaluator passing the existing probe
+and official evaluator validation. No new generation or score import occurred.

@@ -288,7 +288,14 @@ def prepare(name,directory,output,*,download=False,parent=None,known=None):
 
 def gpqa_child_rows(raw,source_hash,parent_manifest):
     from ..studies.gpqa_data import partition as gpqa_partition, _normalize_for_partition
-    _,computed=gpqa_partition(raw,source_hash)
+    # The original CLI records the full reviewed policy, including provenance
+    # metadata. Reconstruct with that policy rather than the minimal default.
+    legacy_policy={'exposed_content_hashes':[],'exposed_group_hashes':[],'groups':[]}
+    reviewed_policy=read_json(Path(__file__).resolve().parents[3]/'experiments/gpqa_exposure_policy.json')
+    policy=parent_manifest.get('prior_exposure_screen')
+    if policy not in (legacy_policy,reviewed_policy):
+        raise ReadinessError('GPQA parent exposure policy changed')
+    _,computed=gpqa_partition(raw,source_hash,known=policy)
     if parent_manifest!=computed:raise ReadinessError('GPQA parent partition changed')
     if [len(computed[k]) for k in ('selected_ids','protected_ids','excluded_ids')]!=[32,164,2]:raise ReadinessError('GPQA parent accounting changed')
     rows=[]
