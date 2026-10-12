@@ -1,0 +1,43 @@
+{
+  "design_version": "2026-10-11",
+  "status": "proposed_not_executed",
+  "study_id": "pact-adjudication-diagnostic-001",
+  "master_seed": 20261011,
+  "datasets": [
+    {"key": "mmlu_pro", "tasks": 140, "audit_reported_eligible_attack_tasks": 42},
+    {"key": "musr", "tasks": 90, "audit_reported_eligible_attack_tasks": 38}
+  ],
+  "judges": ["parent_pinned_Qwen3_8B", "official_Qwen3_14B_revision_to_resolve"],
+  "clean_modes": [
+    "task_only_free", "qlm_answers_select", "qlm_full_select",
+    "qlm_evidence_select", "qlm_free_synthesis", "qqq_full_select"
+  ],
+  "attack_types": ["argument_pressure", "claimed_verification", "claimed_consensus", "claimed_independence"],
+  "control_types": ["ordinary_rephrase"],
+  "attacked_modes_per_judge": ["qlm_full_select", "qlm_evidence_select", "qlm_free_synthesis"],
+  "attempts_per_perturbation_type": 1,
+  "defender_query_prefixes": [1, 2, 4],
+  "victim_feedback_to_generator": false,
+  "max_new_tokens_all_calls": 512,
+  "total_recipient_context_cap": 8192,
+  "maximum_clean_calls": 2760,
+  "maximum_perturbation_generation_calls": 400,
+  "maximum_perturbed_victim_calls": 2400,
+  "maximum_generation_calls": 5560,
+  "maximum_reserved_output_tokens": 2846720,
+  "training_updates": 0,
+  "new_proposer_calls": 0,
+  "new_receiver_revision_calls": 0,
+  "counterfactual_suffix_calls": 0,
+  "teacher_forced_scoring_forwards": 0,
+  "confirmation_generation_allowed": false,
+  "natural_candidate_answers_may_change": false,
+  "target_rationale_only": true,
+  "num_eligible_tasks_must_be_reconstructed": true,
+  "notes": [
+    "This is a design calculator input, not a resolved runtime or benchmark manifest.",
+    "Actual source IDs/revisions/model access and prompt versions must be resolved by the repository planner.",
+    "Private bank and labels are not included. No task generation or new result is asserted.",
+    "Rejected perturbations and exact input reuse can reduce actual execution without increasing any cap."
+  ]
+}

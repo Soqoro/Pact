@@ -14,12 +14,13 @@ METADATA = ['config.json','generation_config.json','tokenizer*','special_tokens_
             'chat_template.jinja','vocab.json','merges.txt','model.safetensors.index.json']
 
 
-def metadata(key, cache, *, token=None):
+def metadata(key, cache, *, token=None, spec=None):
     """Called only by explicit Colab preflight. No model weights fetched here."""
     from huggingface_hub import HfApi, snapshot_download, get_hf_file_metadata, hf_hub_url
     from transformers import AutoTokenizer
     import json
-    spec = REGISTRY[key]
+    spec = REGISTRY[key] if spec is None else spec
+    if spec.key != key: raise ValueError('Explicit model key mismatch')
     try:
         info = HfApi().model_info(spec.repository, revision=spec.revision, token=token)
         if info.sha != spec.revision: raise ValueError('Revision mismatch')
@@ -56,11 +57,12 @@ def metadata(key, cache, *, token=None):
 class NativeBackend(TransformersBackend):
     _resident = False
 
-    def __init__(self, key, receipt, cache, *, token=None):
+    def __init__(self, key, receipt, cache, *, token=None, spec=None):
         if NativeBackend._resident: raise RuntimeError('Only one native model may be resident')
         NativeBackend._resident = True
         self.model = None
         self.tokenizer = None
+        self.explicit_spec = spec
         try:
             self._load(key, receipt, cache, token=token)
         except BaseException:
@@ -71,7 +73,9 @@ class NativeBackend(TransformersBackend):
         import torch
         from huggingface_hub import snapshot_download
         from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig
-        self.spec=REGISTRY[key];self.receipt=receipt;self.torch=torch
+        self.spec=REGISTRY[key] if self.explicit_spec is None else self.explicit_spec
+        if self.spec.key != key: raise ValueError('Explicit model key mismatch')
+        self.receipt=receipt;self.torch=torch
         if receipt['spec']!=dc.asdict(self.spec) or receipt['runtime_fingerprint']!=runtime_fingerprint():
             raise ValueError('Native preflight identity/runtime changed')
         if not torch.cuda.is_available() or torch.cuda.device_count()!=1 or not torch.cuda.is_bf16_supported():

@@ -1,0 +1,16 @@
+{
+  "type": "prompt_pack_checks_not_repository_tests",
+  "passed": [
+    "budget arithmetic",
+    "syntax parse of design checker",
+    "reject mismatched declared budget",
+    "starter specification path exists"
+  ],
+  "not_executed": [
+    "PACT repository code",
+    "benchmark or model loading",
+    "GPU experiments",
+    "attack generation",
+    "training"
+  ]
+}

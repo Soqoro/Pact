@@ -317,3 +317,12 @@ revision/plan; do not re-plan or recollect after this local update. The
 contains exact existing-run replay/scoring/export commands, checkpoint prerequisites,
 and the storage-only timeout workaround. The updated notebook exposes a configurable
 restore deadline for the new implementation. Neither path crosses training review.
+
+## Fixed-bank adjudication — 11 October 2026
+
+Use [the exact new sequence](adjudication_colab.md) and
+[notebook 20](../notebooks/20_adjudication_colab.ipynb). It starts with the three
+pinned completed PRIVATE MMLU/MuSR/MATH bundles and metadata-only preflight.
+First compute is the included two-task J8 smoke. Clean, rewrite acquisition and
+victim evaluation are separate explicit stages; no automatic transition, training
+or regeneration of old actor outputs. GPU behavior remains unverified.

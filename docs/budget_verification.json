@@ -1,0 +1,30 @@
+{
+  "status": "design_arithmetic_verified_not_experiment_results",
+  "per_dataset": [
+    {
+      "dataset": "mmlu_pro",
+      "clean_calls": 1680,
+      "acquisition_calls": 210,
+      "perturbed_victim_calls": 1260,
+      "max_calls": 3150,
+      "reserved_output_tokens": 1612800
+    },
+    {
+      "dataset": "musr",
+      "clean_calls": 1080,
+      "acquisition_calls": 190,
+      "perturbed_victim_calls": 1140,
+      "max_calls": 2410,
+      "reserved_output_tokens": 1233920
+    }
+  ],
+  "totals": {
+    "maximum_clean_calls": 2760,
+    "maximum_perturbation_generation_calls": 400,
+    "maximum_perturbed_victim_calls": 2400,
+    "maximum_generation_calls": 5560,
+    "maximum_reserved_output_tokens": 2846720
+  },
+  "included_two_task_full_clean_smoke_calls": 24,
+  "included_two_task_j8_clean_smoke_calls": 12
+}

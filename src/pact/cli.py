@@ -173,6 +173,9 @@ def parser():
 
 def main(argv=None) -> int:
     routed = list(sys.argv[1:] if argv is None else argv)
+    if routed and routed[0] == "adjudication":
+        from .studies.adjudication import cli
+        return cli(routed[1:])
     if routed and routed[0] == "breadth":
         from .studies.breadth import cli as breadth_main
         return breadth_main(routed[1:])

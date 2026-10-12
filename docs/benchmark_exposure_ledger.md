@@ -144,3 +144,40 @@ observes two characterization tasks with 18 private calls; twelve correctness
 scores remain pending isolated evaluation. Remaining 98 selected tasks have no
 generation evidence in this return. No locked-cohort, training or B execution.
 Raw code, tests and exact task content remain private.
+
+## 2026-10-08 — New GPQA breadth characterization smoke exposed
+
+Plan `28798ee286711224cc311de51212dd3efce7074a944cb32c6bef7a3f291fdadf`
+allocates 32 characterization / 32 locked confirmation / 100 locked reserve tasks
+from the original GPQA protected pool. New selected IDs are disjoint from the
+original exposed 32; original two exclusions remain outside allocation. The
+MMLU/MuSR/MATH/MBPP prior-exposure index exactly matches the four verified archives.
+Return `1791448113743497544` observes two selected development tasks, 18 private
+calls; remaining 30 selected tasks have no generation evidence yet. No child
+locked-cohort generation or training. B is not authorized. Keep task text private
+and historical GPQA outcomes separate; lexical checks are not decontamination proof.
+
+## 2026-10-11 — GPQA breadth characterization complete
+
+Return `1791449632230724762` observes all 32 selected development tasks with 288
+private calls, including the unchanged 18-call smoke. Frozen plan, original GPQA
+parent partition and prior MMLU/MuSR/MATH/MBPP exposure index are unchanged.
+All new IDs remain in the original protected pool and disjoint from the old exposed
+32. Domain counts are Biology 3, Chemistry 15, Physics 14. Child locked confirmation
+and reserve remain unexecuted; no training. B is not authorized. Raw gated text
+remains private, and no run or budget is automatically added from these outcomes.
+
+## 2026-10-11 — Fixed-bank adjudication reuse (offline, no new generation)
+
+`pact-adjudication-diagnostic-001` reuses exactly the already exposed 140 MMLU-Pro
+and 90 MuSR characterization tasks, group IDs, option mappings and original
+QLM/QQQ sample bindings. All remain training-disallowed and not untouched final
+tests. Offline import reconstructed 42/38 originally mixed-support attack tasks;
+that conditional selection is fixed before new judge outcomes. The entire clean
+cohort remains 230 tasks. Human rationale review cannot remove tasks.
+
+The 100 previously exposed MATH tasks contribute offline historical joint/format
+analysis only. No new task allocation, protected cohort access/generation, GPQA B,
+MBPP execution, LiveBench substitution or training data was introduced. Actual
+new judge/rewrite generations await pinned Colab execution; fixture calls are not
+benchmark exposure. Exact identifiers/text remain in private artifacts outside Git.

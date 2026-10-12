@@ -1328,3 +1328,41 @@ arbitrary imported policies, modify parent artifacts or replace task selection.
 This is a loader compatibility fix, not a new partition methodology. A new pushed
 source revision may be used before the new child plan is frozen; existing study
 plans must never be migrated implicitly.
+
+## 2026-10-11 — Explicit fixed-bank adjudication diagnostic
+
+Implement [the new brief](PACT_Codex_Fixed_Bank_Adjudication.md) as a separate
+inference-only child. Preserve the PACT loss/replay/receiver paths and all old
+results. Reuse native loading, immutable call journals, parsers/scorers, safe
+bundle readers and compact persistence. The only shared-backend changes are an
+optional explicit pinned ModelSpec and making non-thinking template handling
+follow `thinking=False` (unchanged for legacy R, additionally supports J8/J14).
+No dependency upgrade is needed.
+
+Use all exact old QLM/QQQ private bindings; c0/c1/c2 are original slots, including
+duplicate answers and nonselectable unavailable envelopes. Evaluator labels never
+enter public views. New responses put a bounded explanation before the decision;
+strict full JSON is required. New 512-token matched readouts are not relabeled
+historical 64-token results. No loss is added: optimizer and scoring-forward
+budgets remain zero.
+
+Pin official J14 to 40c069824f4251a91eefaf281ebe4c544efd3e18 from official metadata.
+Keep parent pristine J8 and Q identities. All new calls, including rewrite Q,
+are greedy; both Qwen3 judges explicitly disable thinking. One resident BF16/SDPA
+model, 8192 total context, no adapters/quantization/offload. Preflight is metadata
+and tokenization, not evidence that 14B fits a particular accelerator.
+
+Fixed seed/hash targeting and four-style ordering use original correct/wrong
+support only. Q sees the assigned wrong answer/rationale, not peers or hidden
+gold. One attempt/style, including ordinary rephrase; no repair or feedback.
+Entire shared pool freezes before any victim. Rejections and context-incompatible
+victims remain missing for robustness; q-prefix lower/upper bounds prevent
+vacuous success. Rationale-blind controls reuse exact requests/results.
+
+Safe persistence boundaries are explicit completed invocations (optionally
+--stop-after); intermediate snapshots retain the unsafe dispatch flag. We do not
+infer safety from counts or resume from an older snapshot after an unsafe latest
+snapshot. Aggregate reports remain reconstructable for incomplete local journals.
+Private exports retain selected parent evidence and new calls; sanitized exports
+use an explicit aggregate allowlist. See [methodology](adjudication_methodology.md)
+and [complete Colab cells](adjudication_colab.md).

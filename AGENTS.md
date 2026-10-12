@@ -76,3 +76,13 @@ do not route math/code through MCQ parsing. Code requires capability-checked OS
 isolation; otherwise export jobs and leave scores pending. Requested LiveBench
 2026-06-25 must be proven available, never replaced by older public questions.
 Keep private/sanitized exports separate, preserve unsafe resume and exact budgets.
+
+[Fixed-bank adjudication](docs/adjudication_methodology.md) is inference-only on
+exact completed 140 MMLU / 90 MuSR development tasks and original PRIVATE QLM/QQQ
+bindings. Six clean modes for pristine non-thinking J8/J14 use 512 output / 8192
+context caps. One wrong candidate's justification only may change; freeze all
+80 × 5 one-attempt rewrites before victims, preserve all correct packets, and reuse
+rationale-blind controls by exact identity. Cap 5,560 calls / 2,846,720 reserved
+tokens, included smoke; no training, new proposers/revisions, GPQA or locked data.
+Keep rejected/missing variants explicit, unsafe dispatch windows unsafe, and
+private/sanitized exports separate. No result authorizes the next study.

@@ -1543,3 +1543,104 @@ remains unverified until retry on a user-reviewed pushed revision. Historical
 bundles, completed runs and unrelated evidence edits preserved; no commit/push.
 
 Validation: PYTHONPATH=src python -m unittest discover -s tests -p test_benchmark_breadth.py -v: 25 tests, 22 passed / 3 optional runtime tests skipped. git diff --check passed. No model generation or official GPQA download locally.
+
+## 2026-10-08 — GPQA breadth smoke and parent-policy fix GPU evidence
+
+Return `1791448113743497544` passes both hashes, inventories, offline report audit,
+18 independent MCQ score comparisons, identity/privacy checks, disjoint old/new
+GPQA selection and four-parent exposure-index reconstruction. Source is
+`1ae086239f9b6a85fb3a0673715e68d425baf228`; the corrected parent-policy path has now
+succeeded through real planning and smoke. No historical GPQA task was reused.
+
+A=18/288, B not authorized; zero unresolved, safe recovery. Q/L/M correct 0/6,
+1/6, 0/6. Three abstentions and two length-limited responses remain failures.
+LLL and QLM each cover one of two tasks; no team gains over its best member.
+Only the observed smoke GPU path is verified, not full A or scientific efficacy.
+See experiment ledger for provenance and accounting. No local model generation.
+
+## 2026-10-11 — GPQA breadth Phase A fully audited
+
+Return `1791449632230724762` passes ZIP/internal hashes, report reconstruction,
+288 independent MCQ score comparisons, unchanged plan/72-smoke-record checks,
+model identity, allocation and sanitized privacy checks. A=288/288, zero unresolved,
+safe recovery; B not authorized. The notebook reset did not require regeneration.
+
+QQQ/LLL/MMM/QLM coverage is 9/11/13/16 of 32; majority vote is 9/4/10/5.
+QLM offers more observed available coverage but does not convert it into a vote
+advantage. There are 61 non-ok responses retained as failures. No communication
+outcome or trained PACT efficacy follows. Observed full new-GPQA A GPU path verified.
+Detailed uncertainty and accounting are in the experiment ledger; no commit/push.
+
+## 2026-10-11 — Breadth review boundary
+
+Latest audited breadth evidence consolidated in the experiment ledger: MMLU/MuSR/
+MATH A/B complete; new GPQA A complete, B unauthorized; MBPP smoke deferred with
+12 correctness scores pending; LiveBench blocked under existing source proof.
+10,206 committed generation calls, zero optimizer updates/unresolved generation.
+No new source lookup, generation, methodology change, commit or push. Further work
+requires resolving the named prerequisites or an explicitly reviewed new design.
+
+## 2026-10-11 — Current consolidated audit document
+
+[Project audit dated 11 October](audits/PACT_PROJECT_AUDIT_2026-10-11.md) now provides
+the current overview. Historical audits remain unchanged. New tables and totals
+were checked against reconstructed breadth summaries; links/arithmetic/whitespace
+checks passed. This documentation update executes and authorizes no experiment.
+
+## 2026-10-11 — Fixed-bank adjudication study
+
+**Implemented:** `pact adjudication` import/analyze/plan/preflight/clean/smoke,
+one-attempt perturbation acquisition, frozen-pool victim evaluation, report,
+export/audit and latest-safe compact restore. Four scoped study modules add typed
+public/evaluator separation, original candidate bindings, strict decision JSON,
+role-delimiter escaping, context checks, field-level coverage proofs, exact
+rationale-blind reuse, task/group paired bootstrap and partial q-prefix bounds.
+Shared changes are limited to CLI routing and optional explicit native ModelSpec /
+non-thinking template support. No training objective or old protocol was changed.
+
+**Locally tested:** 31 focused CPU/mock tests pass, including actual top-level CLI,
+all six modes, five-style acquisition, all six victim configurations, zero effect,
+attack-induced flips, rejected/missing variants, no support, exact caps, source/
+model/seed identity, role-token escaping, empty selectors, restore safety and
+sanitized exports. A full fictional round trip commits 188 calls; the rejection
+fixture commits 164 with 24 unavailable victim responses. These are test outcomes,
+not neural results. The 18 notebook code cells compile and have no saved outputs.
+
+**Real offline evidence:** the exact three completed parent bundles were imported,
+all old requests/reports reconstructed, and all MMLU/MuSR MCQ scores independently
+recomputed. The 230 primary tasks and 42/38 eligible attack tasks match the audit.
+MATH remains offline with recorded pinned symbolic scores. See the [offline
+report](audits/PACT_ADJUDICATION_OFFLINE_2026-10-11.md), [fictional contract
+example](adjudication_fixture.md), and [Colab sequence](adjudication_colab.md).
+
+**GPU-unverified:** actual new J8/J14 judgments, Q rewrites, recipient context fit,
+14B memory/throughput, neural attack effects and Colab execution. Metadata revision
+resolution is not weight restoration or GPU validation. No pretrained weights,
+local CUDA experiments, commits or pushes were performed. The local offline plan
+has a dirty implementation source identity; freeze the real run after review/push.
+
+**Deferred:** full-PACT joint integration/training, learned adjudicator baselines,
+adaptive attacks, new cohorts/seeds, GPQA B, MBPP execution, LiveBench source
+resolution and final tests. Prior negative/stopped/incomplete results and manuscript
+placeholders are unchanged. No result authorizes another run automatically.
+
+Final validation on the completed implementation:
+
+- `TMPDIR=/var/tmp/pact-adjudication-cpu-tests PYTHONPATH=src python -m unittest discover -s tests -v`:
+  **296 run, 279 passed, 17 optional skips, zero failures/errors**, 499.514 seconds.
+  Log: `/tmp/pact-adjudication-verified-suite.log`.
+- Focused `test_adjudication.py`: **31 passed**, zero skips/errors.
+  Log: `/tmp/pact-adjudication-verified-focused.log`.
+- Real zero-call PRIVATE bundle restored and reproduced its report exactly;
+  SANITIZED scan found no original task IDs/questions or decodable token arrays.
+  Verified 230 primary tasks, 80 eligible tasks and 32 unreviewed review records.
+- All 18 notebook code cells compile, local documentation links resolve,
+  implemented modes/styles/caps/budgets match the supplied design JSON, and
+  `git diff --check` passes.
+
+An earlier full-suite invocation under `/tmp` produced two GPQA fixture-path
+errors because `/tmp` is itself a Git checkout. The privacy guard was retained;
+fixtures were moved outside Git for the successful full runs. Intermediate
+superseded runs and a corrected test assertion are not counted as passing final
+suite evidence. Optional neural/model, pinned symbolic-runtime and isolated
+execution tests remain skipped unless explicitly configured.

@@ -23,7 +23,7 @@ def registry():
 
 def render_native(tokenizer, messages, spec):
     """Use native system handling, including Mistral's system-in-first-user rule."""
-    kwargs = {'enable_thinking': False} if spec.key == 'R' else {}
+    kwargs = {'enable_thinking': False} if spec.thinking is False else {}
     # Native Llama template otherwise embeds a default date; make it explicit.
     if spec.key == 'L': kwargs['date_string'] = '02 Oct 2026'
     return tokenizer.apply_chat_template([{'role':m.role, 'content':m.content} for m in messages],

@@ -2129,3 +2129,204 @@ in the verified private bundle. Full A (remaining 882 calls) and B (2,100 calls)
 are not executed. No accuracy or complementarity result is claimed and no budget
 is reassigned. Resumption requires a capable evaluator passing the existing probe
 and official evaluator validation. No new generation or score import occurred.
+
+## 2026-10-08 — New GPQA breadth smoke audited
+
+Run `pact-breadth-gpqa-001`, export `1791448113743497544`.
+Both uploaded SHA256 values and internal archive inventories verified:
+
+- PRIVATE: `37f9d422e31e63fc9c009957c268754ffc24d0a3930b165ccde11bb75dcdc915`
+- SANITIZED: `20bd9ce9a63dd581f45c0b95a3f833ac4f80ff81b60b6eecb1f0cc981ef7e3c5`
+
+Plan `28798ee286711224cc311de51212dd3efce7074a944cb32c6bef7a3f291fdadf`;
+clean source `1ae086239f9b6a85fb3a0673715e68d425baf228`, source hash
+`ec1f7e8899468c38cdabbc94655ab01e4d473e803bd63c0d36ea7a3c22417f10`.
+Real offline audit passed outside Git. All 18 MCQ score records independently
+reproduced. Six private calls/family on exactly the two planned smoke tasks;
+Q/L/M retain BF16, SDPA and no adapters. Zero unresolved, recovery_safe=true.
+Parsers: 13 ok, three abstentions, two length-limited; stops: 16 EOS/two length.
+Five non-ok responses remain failures. Q/L/M correctness: 0/6, 1/6, 0/6.
+
+| Team | Coverage | Valid mixed support | N0 (0/1/2/3) | Gain over best member |
+|---|---:|---:|---|---:|
+| QQQ | 0/2 | 0/2 | 2/0/0/0 | 0/2 |
+| LLL | 1/2 | 1/2 | 1/1/0/0 | 0/2 |
+| MMM | 0/2 | 0/2 | 2/0/0/0 | 0/2 |
+| QLM | 1/2 | 1/2 | 1/1/0/0 | 0/2 |
+
+Two tasks do not establish scientific complementarity or a population zero rate.
+The smoke's single correct draw is from Llama. No communication is authorized
+for this breadth cohort; historical frozen-preparation GPQA results are separate.
+
+The embedded original parent records 32 selected / 164 protected / two excluded.
+All new selected IDs are in its protected remainder and disjoint from its exposed
+32. Child partitions are 32 characterization / 32 locked confirmation / 100 locked
+reserve; domain quotas match. The four-parent exposure index exactly matches
+reconstruction from MMLU-Pro, MuSR, MATH-500 and deferred MBPP+ archives. Thus
+MBPP's allocation remains protected despite pending code correctness. This return
+verifies that the parent-policy loader fix reached planning and GPU smoke execution;
+no original GPQA task was regenerated. Raw official-source parent reconstruction
+was enforced in Colab; no new gated-source download was performed locally.
+
+Accounting: 18 attempted/committed/scored, 4,608 reserved output tokens, 5,541
+input, 2,146 actual output, zero optimizer updates. A is partial 18/288;
+remaining A 270 calls / 69,120 reserved tokens. B is not_authorized (zero budget).
+Cumulative recorded generations become 26,101 plus unchanged up-to-16 historical
+unknown controlled-child calls; historical optimizer updates remain 147. Earlier
+totals were carried forward, not re-audited.
+
+Sanitized inventory contains handoff/summary/report only; summary/report equal
+private copies. Selected questions, prompts and nonempty continuations were
+checked absent from public summary/report. Observed new-GPQA smoke path verified;
+full A remains unexecuted beyond the smoke. No local generation, commit, push,
+methodology change, automatic continuation or protected-child-cohort execution.
+
+## 2026-10-11 — GPQA breadth Phase A completed return audited
+
+Run `pact-breadth-gpqa-001`, export `1791449632230724762`. Both uploaded SHA256
+values and internal checksum inventories verified:
+
+- PRIVATE: `4608b1f93fcf5024af0188360f462bbe04e7026672b51ea66fdc59b728bfcd05`
+- SANITIZED: `c7081743e994bdc37a55b4254cf7ba7f35393bc62f5971c25c436f996987c04f`
+
+Frozen plan `28798ee286711224cc311de51212dd3efce7074a944cb32c6bef7a3f291fdadf`
+and all 72 smoke call/intent/dependency/score artifacts exactly match the audited
+smoke. Source/selection/parent partitions and four-parent exposure index are
+unchanged. All 32 selected IDs remain within the original parent's protected pool
+and disjoint from its exposed 32. Q/L/M identities retain BF16/SDPA/no adapters.
+Real offline audit outside Git reconstructs an identical report. All 288 strict
+MCQ scores independently reproduced; no inference rerun was needed after reset.
+
+This resolves the user's missing notebook output: the returned evidence has
+288/288 committed/scored calls, zero unresolved, recovery_safe=true, A complete.
+B remains not_authorized with zero budget. Each family has 96 calls. Stop reasons:
+274 EOS, 14 length. Parser outcomes: 227 ok, 42 abstentions, 14 length-limited,
+five malformed. All 61 non-ok outputs remain failures, not missing/excluded rows.
+
+| Team | Correct coverage | Majority vote correct | Valid mixed support | Gain over best member | N0 (0/1/2/3) |
+|---|---:|---:|---:|---:|---|
+| QQQ | 9/32 | 9/32 | 2/32 | 0/32 | 23/0/4/5 |
+| LLL | 11/32 | 4/32 | 8/32 | 3/32 | 21/7/1/3 |
+| MMM | 13/32 | 10/32 | 5/32 | 2/32 | 19/3/3/7 |
+| QLM | 16/32 | 5/32 | 12/32 | 7/32 | 16/12/2/2 |
+
+Across draws Q/L/M correctness is 23/96, 18/96, 30/96. Tasks with wrong-answer
+diversity are QQQ 1, LLL 8, MMM 2, QLM 7; diversity is not correct coverage.
+QLM has the highest observed coverage but its vote succeeds on only five tasks.
+No communication, synthesis, preservation or utilization result is measured here.
+
+Domain coverage, with unequal frozen denominators:
+
+| Domain | Tasks | QQQ | LLL | MMM | QLM |
+|---|---:|---:|---:|---:|---:|
+| Biology | 3 | 1 | 1 | 3 | 2 |
+| Chemistry | 15 | 5 | 8 | 6 | 10 |
+| Physics | 14 | 3 | 2 | 4 | 4 |
+
+All domain quotas match. Reported paired within-stratum group-bootstrap coverage
+differences for QLM: versus QQQ +21.875 pp [3.125,40.625]; versus LLL +15.625 pp
+[-3.125,34.375]; versus MMM +9.375 pp [0,21.875]. Sampling units are 32 task groups,
+not 288 calls. This small development cohort does not establish superiority to
+all homogeneous teams, population complementarity or trained PACT efficacy.
+The original preparation-adapter GPQA study remains separate historical evidence.
+
+Accounting: 288 attempted/committed/scored, 73,728 reserved output tokens, 94,338
+input tokens, 32,827 actual output tokens, zero optimizer updates. Only 270 new
+calls beyond smoke are added: cumulative 26,371 recorded generations plus unchanged
+up-to-16 historical unknown controlled-child calls; historical optimizer updates
+remain 147. Earlier historical totals were carried forward, not re-audited.
+
+Sanitized inventory contains handoff/summary/report only, matching private copies.
+Selected questions, rendered prompts and nonempty continuations were checked
+absent from public summary/report. Observed new GPQA full A GPU path is verified.
+No local generation, source change, commit, push, automatic follow-up or child
+locked-cohort execution occurred. No Phase B is authorized for this cohort.
+
+## 2026-10-11 — Breadth portfolio review boundary
+
+Consolidated the latest audited returns without new generation or new data access.
+MMLU-Pro and MuSR and MATH-500 have completed A/B; new GPQA has completed its
+only authorized phase, A. MBPP+ remains deferred after local and Colab isolation
+failures: 18 smoke calls, six format failures, twelve correctness scores pending.
+LiveBench remains blocked under the current frozen source proof: the pinned
+inventories do not establish requested release 2026-06-25. This is not a new claim
+about today's upstream availability; no fresh upstream search or source-pin update
+was performed. No older release or different dataset was substituted.
+
+| Completed dataset | Tasks | QLM private synthesis | QLM post-exchange | QQQ post-exchange | Shared task-only |
+|---|---:|---:|---:|---:|---:|
+| MMLU-Pro | 140 | 40 | 43 | 43 | 35 |
+| MuSR | 90 | 45 | 46 | 47 | 52 |
+| MATH-500 | 100 | 81 | 77 | 80 | 74 |
+
+These are separate development subsets, not a pooled effect estimate. QLM does not
+exceed QQQ's post-exchange accuracy in any of these three completed communication
+studies. New GPQA has QLM coverage 16/32 but vote accuracy 5/32, and no authorized
+communication result. This motivates review, not an automatic training/protocol
+change. Original GPQA/preparation/receiver/replay results and paper placeholders
+remain unchanged.
+
+Latest breadth snapshots total 10,206 committed generation calls, 5,769,600 reserved
+output tokens, 9,354,513 input tokens, 1,757,404 actual output tokens, zero optimizer
+updates and zero unresolved generation attempts. MBPP pending correctness is
+separate from unresolved generation. Totals count each study once, not smoke plus
+full returns. They do not imply the entire six-dataset portfolio is complete.
+
+No further runnable stage remains under current prerequisites/authorizations.
+Resume MBPP only with verified isolation and official scoring; LiveBench needs a
+reviewed official release inventory/source proof and isolated native scorer. New
+GPQA communication, new cohorts or changed methodology require explicit review.
+
+## 2026-10-11 — Consolidated audit report for user review
+
+Created [PACT project audit](audits/PACT_PROJECT_AUDIT_2026-10-11.md), carrying forward
+historical receiver/preparation/replay/specialization findings and adding completed
+breadth evidence, provenance, output failures, exposure and current blockers.
+The two GPQA cohorts remain separate. The discussed GPQA communication extension
+is only a proposal, not authorized or implemented. Tables and breadth totals were
+cross-checked against the five latest reconstructed summaries; relative links,
+arithmetic and git diff --check passed. No GPU/model/program execution, fresh
+source search or full regression run was performed for the report. Historical
+unknown calls and pending MBPP correctness remain explicit. No commit or push.
+
+## 2026-10-11 — Fixed-bank adjudication implementation and offline parent import
+
+New child `pact-adjudication-diagnostic-001`, `fixed_candidate_adjudication_v1` /
+`fixed_rationale_pool_v1`, is implemented as an inference-only development study.
+This entry does not authorize an automatic run or change any earlier conclusion.
+
+Exact completed MMLU-Pro/MuSR/MATH PRIVATE bundles were verified and their old
+reports reconstructed. All MMLU/MuSR MCQ calls independently rescored; MATH joint
+and format analysis uses its recorded pinned Math-Verify results without another
+symbolic rescore. Primary bank retains all 140/90 tasks and original QLM/QQQ
+bindings; eligibility reconstructed exactly 42/38 tasks before any new outcomes.
+The private human-review pack has only `not_reviewed` annotations.
+
+QLM O0/O1/Y: MMLU 61/59/43; MuSR 62/57/46; MATH 74/74/77. Initially covered
+terminal failures are 23/16/4, revised readout losses 16/11/3, construction from
+initial unavailability 5/0/7. Full joint cells and limitations are in the
+[offline adjudication audit](audits/PACT_ADJUDICATION_OFFLINE_2026-10-11.md).
+
+Local real-data offline evidence lives outside Git at
+`/var/tmp/pact-adjudication-reviewed-20261011/pact-adjudication-diagnostic-001`.
+No new real model call, optimizer update, protected-cohort generation, pretrained
+weight download, commit or push occurred. The local dirty-source plan is an
+implementation audit; the user will freeze a new Colab plan after reviewing and
+pushing. Actual J8/J14/rewrite GPU behavior remains unverified.
+
+Implemented budget: 2,760 clean + 400 rewrites + 2,400 victims, at most 5,560 calls /
+2,846,720 reserved output tokens. Two-task smoke is included. Each model/dataset
+stage explicitly stops after report/export. Training, proposer/revision generation,
+replay and teacher-forced scoring remain zero. GPQA B, MBPP/LiveBench and controlled
+specialization retain their prior dispositions. No paper placeholder is filled.
+
+Next user action: review the diff and [exact Colab sequence](adjudication_colab.md),
+push the reviewed source, pin its full SHA, import the three completed PRIVATE
+parents, inspect plan/preflight, then explicitly invoke the included J8 smoke.
+Return the matched PRIVATE/SANITIZED pair and both hashes for review.
+
+Final local validation for this implementation: 296 CPU/mock tests run, 279 passed,
+17 optional skips, no failures/errors; focused adjudication 31/31 passed. The real
+zero-call bundle round trip and sanitized privacy scan passed. No GPU evidence is
+inferred from these tests. Full details and the initial `/tmp` fixture-path failure
+are retained in implementation_status.md and the offline audit.
