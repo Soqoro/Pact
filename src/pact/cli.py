@@ -173,6 +173,12 @@ def parser():
 
 def main(argv=None) -> int:
     routed = list(sys.argv[1:] if argv is None else argv)
+    if routed and routed[0] == "adjudication-forensics":
+        from .studies.forensics import main as forensics_main
+        return forensics_main(routed[1:])
+    if routed and routed[0] == "rationale-spans":
+        from .studies.rationale_spans import main as spans_main
+        return spans_main(routed[1:])
     if routed and routed[0] == "adjudication":
         from .studies.adjudication import cli
         return cli(routed[1:])

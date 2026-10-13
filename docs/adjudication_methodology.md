@@ -3,7 +3,19 @@
 Implementation of [the explicit study brief](PACT_Codex_Fixed_Bank_Adjudication.md)
 for `pact-adjudication-diagnostic-001`. This is an inference-only development
 diagnostic, not trained PACT, a learned adjudicator, an adaptive attack, or final-test
-evidence. Actual J8/J14/rewrite GPU execution remains unverified.
+evidence. The returned J8 two-task smoke is now verified; see the
+[imported audit](audits/PACT_ADJUDICATION_SMOKE_2026-10-12.md). J8/MMLU-Pro clean is also complete; see its
+[audit](audits/PACT_ADJUDICATION_MMLU_J8_2026-10-12.md). J8/MuSR is also complete; see its
+[audit](audits/PACT_ADJUDICATION_MUSR_J8_2026-10-12.md). J14/MMLU-Pro is also complete; see its
+[audit](audits/PACT_ADJUDICATION_MMLU_J14_2026-10-12.md). All four clean stages are now complete; see the
+[complete audit](audits/PACT_ADJUDICATION_CLEAN_COMPLETE_2026-10-12.md).
+Rewrite acquisition is complete with a frozen pool; see the
+[pool audit](audits/PACT_ADJUDICATION_REWRITE_POOL_2026-10-12.md). MMLU-Pro/J8 victim execution is now verified; see its
+[audit](audits/PACT_ADJUDICATION_MMLU_J8_VICTIMS_2026-10-13.md). MuSR/J8 victim execution is also complete; see its
+[audit](audits/PACT_ADJUDICATION_MUSR_J8_VICTIMS_2026-10-13.md). MMLU-Pro/J14 victims are also complete; see the
+[audit](audits/PACT_ADJUDICATION_MMLU_J14_VICTIMS_2026-10-13.md). All prescribed stages are now complete with returned GPU evidence; see the
+[complete-study audit](audits/PACT_ADJUDICATION_COMPLETE_2026-10-13.md).
+Completion does not authorize another study.
 
 ## Frozen evidence and estimands
 

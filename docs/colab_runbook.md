@@ -326,3 +326,14 @@ pinned completed PRIVATE MMLU/MuSR/MATH bundles and metadata-only preflight.
 First compute is the included two-task J8 smoke. Clean, rewrite acquisition and
 victim evaluation are separate explicit stages; no automatic transition, training
 or regeneration of old actor outputs. GPU behavior remains unverified.
+
+## Reviewed rationale spans (optional; no current execution approval)
+
+Use [notebook 21](../notebooks/21_rationale_spans_colab.ipynb) and the
+[exact Colab cells](rationale_spans_colab.md) only after the
+[local semantic review workflow](semantic_forensics_runbook.md).
+The input is a completed, reviewed PRIVATE forensics bundle. Metadata preflight
+and plan export precede a separate artifact-bound user decision. All generation
+flags default false; no dataset download or adapter checkpoint is required.
+The included two-unit smoke is at most 36 of the hard 576 judge attempts.
+Return both matching-timestamp private/sanitized exports and their hashes.

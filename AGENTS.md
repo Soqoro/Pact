@@ -86,3 +86,13 @@ rationale-blind controls by exact identity. Cap 5,560 calls / 2,846,720 reserved
 tokens, included smoke; no training, new proposers/revisions, GPQA or locked data.
 Keep rejected/missing variants explicit, unsafe dispatch windows unsafe, and
 private/sanitized exports separate. No result authorizes the next study.
+
+[Semantic forensics](docs/semantic_forensics_methodology.md) reads only the closed
+final adjudication parent. Main review is 20 outcome-independent mixed-support
+tasks; enriched examples never select interventions. Two real independent reviews
+must lock before outcome reveal. Keep raw casebooks/mappings/reviewer IDs outside
+Git; no automatic semantic labels. The optional exact cue/sham deletion child
+requires completed reviews, both edit approvals, tokenizer checks, a frozen plan
+and a separate artifact-bound user decision. New reference repeats count toward
+576 attempts / 294,912 reserved tokens, with ≤36 included smoke calls. No implicit
+approval, retries of ambiguous dispatch, fabricated shams, paid APIs or training.

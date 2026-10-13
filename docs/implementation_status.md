@@ -1644,3 +1644,212 @@ fixtures were moved outside Git for the successful full runs. Intermediate
 superseded runs and a corrected test assertion are not counted as passing final
 suite evidence. Optional neural/model, pinned symbolic-runtime and isolated
 execution tests remain skipped unless explicitly configured.
+
+
+## 2026-10-12 — Returned adjudication J8 smoke verified
+
+Imported the matched PRIVATE/SANITIZED `1791775339796803377` bundles. Both
+checksums/internal manifests, frozen request journal and saved model identity
+checks passed. Local response-based report reconstruction exactly matches the
+private and sanitized summaries. Safe recovery; 12/12 calls committed, zero
+unresolved, all 12 parsed valid, 6,144 reserved output tokens. All six modes score
+0/2 on the same two MMLU-Pro tasks; this is engineering smoke evidence, not an
+efficacy estimate. J8 smoke GPU execution is now evidenced; J14, rewrite generation
+and victim evaluation remain GPU-unverified. No new calls or training ran locally.
+
+See [the imported smoke audit](audits/PACT_ADJUDICATION_SMOKE_2026-10-12.md).
+Next prescribed stage: same-plan MMLU-Pro/J8 clean, reusing 12 committed requests
+and leaving 828 new calls. No methodology or budget change; no automatic execution.
+
+
+## 2026-10-12 — MMLU-Pro / J8 adjudication complete
+
+Verified matched bundles `1791783404661337736`: archive/internal checksums,
+plan/request/model journal, exact report reproduction, sanitized-summary agreement
+and unchanged smoke shards passed. All six modes have 140 scored outcomes, no
+missing tasks. 823 calls committed, zero unresolved; 17 empty QQQ candidate sets
+are deterministic no-call failures. Actual continuation: 811 calls, not the 828
+upper bound previously stated. Recovery safe; no training or local GPU execution.
+
+Correct counts: task-only 58, QLM answers 42, QLM full 45, QLM evidence 42,
+QLM free synthesis 49, QQQ full 34 (each /140). These are exploratory development
+results, not learned PACT efficacy. J14 and rewrites/victims remain unexecuted.
+See [the full audit](audits/PACT_ADJUDICATION_MMLU_J8_2026-10-12.md).
+Next prescribed stage: existing-plan J8/MuSR clean, at most 540 calls; not launched.
+
+
+## 2026-10-12 — MuSR / J8 adjudication complete
+
+Matched bundles `1791789278906883011` passed archive/internal hash checks,
+frozen request/model journal audit, exact report reconstruction and sanitized
+summary comparison. All 823 prior MMLU call shards remain unchanged. MuSR has
+540 committed calls, all six modes scored on 90 tasks, no missing outcomes.
+Correct counts: task-only 50, QLM answers 45, QLM full 48, QLM evidence 47,
+QLM free synthesis 48, QQQ full 48 (each /90). Paired task-only versus full/free
+intervals include zero; no efficacy or equivalence claim follows.
+
+Both J8 datasets are complete: 1,363 calls plus 17 deterministic no-call failures,
+zero unresolved, safe recovery. J14 and rewrite/victim GPU execution remain
+unverified. See [the MuSR audit](audits/PACT_ADJUDICATION_MUSR_J8_2026-10-12.md).
+Next prescribed stage: same-plan MMLU-Pro/J14 clean, at most 840 calls; not launched.
+
+
+## 2026-10-12 — MMLU-Pro / J14 adjudication complete
+
+Matched bundles `1791795047291016862` passed hash/internal-manifest and frozen
+request/model journal checks; reconstructed report and sanitized summary match.
+All 1,363 prior J8 call shards are unchanged. J14 has 823 new calls and 17
+prescribed no-call abstentions, all 840 outcomes scored, no missing/unresolved.
+Correct counts /140: task-only 63, QLM answers 43, QLM full 43, QLM evidence 37,
+QLM free synthesis 53, QQQ full 30. Retain all 52 malformed outputs as failures.
+All paired J8-to-J14 intervals include zero; no general capacity/efficacy claim.
+
+J14/MMLU GPU execution is now evidenced. Cumulative 2,186 committed calls,
+34 no-call failures, safe recovery. Only 540 MuSR/J14 clean outcomes remain;
+rewrite/victim execution has not begun. See
+[the J14 audit](audits/PACT_ADJUDICATION_MMLU_J14_2026-10-12.md).
+Next prescribed stage: same-plan MuSR/J14; not launched locally.
+
+
+## 2026-10-12 — All fixed-bank clean adjudication complete
+
+Verified matched bundles `1791812264006463251`; hash/internal checks, frozen
+request/model journal audit and exact report reproduction passed. Sanitized
+summary matches, and all 2,186 earlier call shards remain unchanged.
+MuSR/J14 correct /90: task-only 51, answers 38, full 49, evidence 43,
+free synthesis 50, QQQ full 47. Answers-only includes 13 invalid-candidate
+failures; retain the frozen parser and count these as failures.
+
+All four clean stages now have real GPU evidence: 2,760 scored task-mode outcomes,
+2,726 committed calls and 34 deterministic no-call failures. Zero missing or
+unresolved, recovery safe; 1,395,712 reserved output tokens. No training or local
+GPU execution. See [the complete clean audit](audits/PACT_ADJUDICATION_CLEAN_COMPLETE_2026-10-12.md).
+Next prescribed stage: rationale-only acquisition, 210 MMLU + 190 MuSR attempts;
+freeze both pools before victims. Neither acquisition nor victims were launched.
+
+
+## 2026-10-12 — Fixed rewrite pool complete and verified
+
+Matched bundles `1791814527918178831` passed hash/internal checks, frozen request
+and pool reconstruction, report reproduction and sanitized-summary comparison.
+All 2,726 clean calls and clean results are unchanged. All 400 attempts completed:
+MMLU 182/210 accepted, MuSR 187/190 accepted; 31 rejections remain fixed. Accepted
+status is structural with unverified semantics, not attack success.
+
+Both dataset pools are frozen. Accepted victim plan: 2,214 requests; next is
+attacked-request preflight then MMLU/J8 (546 requests). Victims have not run.
+Cumulative 3,126 committed calls, zero unresolved, recovery safe. Rewrite Q has
+returned GPU evidence; no training/local GPU work. See
+[the pool audit](audits/PACT_ADJUDICATION_REWRITE_POOL_2026-10-12.md).
+
+
+## 2026-10-13 — MMLU-Pro / J8 victim stage verified
+
+Returned pair `1791819015419087502` passes hash/internal-manifest, frozen
+request/model/pool and exact report reconstruction checks. All 3,126 previous
+call shards, clean summaries and pool bytes unchanged. 546/546 accepted victim
+requests completed, zero unresolved, recovery safe. 84 rejected-variant slots
+remain unavailable for this stage; do not replace them.
+
+Full-selection argument-pressure flips 10/24 clean-correct responses; ordinary
+rephrase flips 2/14. Results are conditional on accepted variants and original
+mixed support, with task groups as sampling units. Complete four-style prefixes
+exist for 37/42 tasks; robustness bounds preserve missingness. No semantic or
+security certification. See [the victim audit](audits/PACT_ADJUDICATION_MMLU_J8_VICTIMS_2026-10-13.md).
+Cumulative 3,672 calls; no training/local GPU work. Next prescribed stage:
+MuSR/J8 victims (561 requests), not launched locally.
+
+
+## 2026-10-13 — MuSR / J8 victim completion confirmed after reset
+
+Returned pair `1791860294671979211` proves 561/561 accepted MuSR/J8 requests
+completed despite truncated notebook output. Both hashes, internal manifests,
+frozen request/model audit and exact report reproduction passed. All 3,672 prior
+call shards, pool bytes and clean summaries unchanged; sanitized summary matches.
+Recovery safe, zero unresolved. No MuSR/J8 rerun required.
+
+Full-selection claimed-verification flips 13/24 clean-correct answers; ordinary
+rephrase flips 6/23. Results remain conditional on accepted variants and original
+mixed-support tasks, not robustness certification. See
+[the MuSR victim audit](audits/PACT_ADJUDICATION_MUSR_J8_VICTIMS_2026-10-13.md).
+Cumulative 4,233 calls, both J8 victim stages complete. Remaining accepted J14
+requests: MMLU 546 and MuSR 561. Next stage not launched locally.
+
+
+## 2026-10-13 — MMLU-Pro / J14 victims verified
+
+Matched pair `1791899265606987921` passed archive/internal checks, frozen journal
+and exact report reconstruction. All 4,233 previous call shards, pool bytes and
+clean summaries unchanged. 546/546 accepted requests complete, zero unresolved,
+recovery safe. Outputs: 492 valid, 12 abstentions, 41 malformed, one invalid
+candidate; failures retained. Full-selection argument-pressure flips 8/23;
+evidence-selection claimed-independence flips 11/20, including four invalid/
+abstaining failures. No robustness/efficacy certification follows.
+
+See [the J14 victim audit](audits/PACT_ADJUDICATION_MMLU_J14_VICTIMS_2026-10-13.md).
+Cumulative 4,779 calls; remaining accepted work is MuSR/J14 (561 requests).
+No local GPU execution or next-stage launch.
+
+
+## 2026-10-13 — Fixed-bank adjudication study complete
+
+Final pair `1791903639856421059` passed both hashes/internal manifests, frozen
+journal audit, exact report reconstruction and sanitized-summary comparison.
+All 4,779 earlier shards, frozen pool and clean results unchanged. All 2,214
+accepted victim requests complete. Final MuSR/J14: 561 calls, 555 valid outputs
+and six invalid-candidate failures; claimed-consensus full-selection flips 17/25
+clean-correct answers. These are conditional development results, not robustness
+or learned PACT efficacy certification.
+
+Total 5,340 attempted/committed calls, zero unresolved, recovery safe; 2,734,080
+reserved output tokens, within the frozen 5,560 / 2,846,720 ceilings. 34 clean
+no-call failures and 186 rejected-variant victim slots explain unused capacity.
+`attack_unobserved=186` is expected, not unfinished generation. All prescribed
+GPU stages now have returned evidence; no local GPU work or training occurred.
+See [the complete-study audit](audits/PACT_ADJUDICATION_COMPLETE_2026-10-13.md).
+No further generation or new study is authorized by completion; next is review.
+
+## 2026-10-14 — Semantic forensics implemented; real offline census complete
+
+Implemented `adjudication-forensics` and optional `rationale-spans`, including
+safe closed-parent import, immutable relational views, judge-relative T/O/Y,
+matched transitions, deterministic main/enriched samples, private escaped two-pass
+review, append-only locks/adjudication, exact cue/sham validation, native inference,
+explicit artifact-bound authorization, journaled resume, compact persistence and
+separate private/sanitized exports. [Methodology](semantic_forensics_methodology.md),
+[local commands](semantic_forensics_runbook.md), [Colab cells](rationale_spans_colab.md)
+and [actual findings](audits/PACT_SEMANTIC_FORENSICS_2026-10-14.md) are available.
+No broad dependency change or parent-methodology change occurred.
+
+Real offline evidence: exact parent 230 tasks / 2,760 clean outcomes / 400 rewrites /
+369 accepted / 2,214 victims / 186 unavailable slots reconstructed. The parent SHA
+remains unchanged. Main sample 20 tasks / 100 pairs (82 accepted); 115 total display
+units (97 accepted), 32 potential span slots. Two blank review registrations;
+zero submitted human records, zero semantic adjudications, zero real span calls.
+Private and sanitized bundles were checksummed/size-validated; all 230 original
+IDs and sensitive raw field names were checked absent from sanitized output.
+
+Validation actually executed:
+
+- `PYTHONPATH=src python -m unittest discover -s tests -p test_semantic_forensics.py -v`:
+  19 passed in 64.929 seconds, including full mock round trip and notebook compile/defaults.
+- Added negative-effect fixture then ran
+  `PYTHONPATH=src:tests python -m unittest test_semantic_forensics.Study.test_negative_cue_effect_is_retained -v`:
+  one passed in 12.868 seconds. Total 20 new distinct tests passed.
+- `PYTHONPATH=src python -m unittest discover -s tests -v`: 315 tests in 519.941 seconds;
+  296 passed, 17 optional tests skipped, two existing GPQA fixture errors because
+  `/tmp` has a `.git` ancestor and the privacy guard rejected it. These were not
+  scientific/model failures and the guard was not weakened.
+- Reran exactly those two tests with
+  `TMPDIR=/var/tmp/pact-test-temp-20261014 PYTHONPATH=src:tests python -m unittest test_gpqa_support.GPQADataTests.test_access_pinning_and_no_secret_exception test_gpqa_support.GPQAPreparationTests.test_real_csv_parser_and_selection_only_retention -v`:
+  both passed in 0.055 seconds; all access is mocked/fictional, with no GPQA download.
+- Across these runs: 299 distinct passing tests, 17 intentional skips; no remaining
+  failing test after the targeted environment correction. The broad discovery
+  invocation itself was not rerun or misrepresented as a single all-green run.
+- `git diff --check` passed. No commit/push was performed.
+
+Real generation and new-child GPU/native/Drive execution remain **unverified**.
+No real approval was created; fixture approvals are explicitly fixture-only.
+No pretrained download, paid API, credentials, training, new benchmark exposure or
+final-test access. The next action is actual independent semantic review, with
+truthful blinding, followed by the user's separate decision on a concrete plan.

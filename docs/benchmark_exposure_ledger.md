@@ -181,3 +181,20 @@ analysis only. No new task allocation, protected cohort access/generation, GPQA 
 MBPP execution, LiveBench substitution or training data was introduced. Actual
 new judge/rewrite generations await pinned Colab execution; fixture calls are not
 benchmark exposure. Exact identifiers/text remain in private artifacts outside Git.
+
+## 2026-10-14 — Offline adjudication semantic forensics
+
+`pact-adjudication-forensics-001` inspected only the completed private adjudication
+parent: the same 140 MMLU-Pro and 90 MuSR development tasks. No new generation,
+benchmark download, protected task allocation or training exposure was introduced.
+Twenty existing mixed-support tasks (ten per dataset) define the main review panel;
+all 100 scheduled rewrite pairs remain, including 18 unavailable. Enriched examples
+are separate, with 115 total physical display units after deduplication. Exact task
+IDs and review mappings stay private. Two blank reviewer casebooks were generated;
+no semantic reviews or human labels were supplied by Codex.
+
+The 32 frozen optional source slots do not authorize an experiment. The span child
+is implemented and CPU-tested only; zero real calls. All source/review tasks remain
+training-disallowed and cannot serve as untouched final confirmation. GPQA, code,
+LiveBench, reserve/final-test splits and historical incomplete training studies are
+unchanged. Future training must exclude all inspected source/casebook tasks.

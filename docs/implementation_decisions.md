@@ -1366,3 +1366,42 @@ snapshot. Aggregate reports remain reconstructable for incomplete local journals
 Private exports retain selected parent evidence and new calls; sanitized exports
 use an explicit aggregate allowlist. See [methodology](adjudication_methodology.md)
 and [complete Colab cells](adjudication_colab.md).
+
+## 2026-10-14 — Closed-parent semantic forensics and gated exact spans
+
+Implemented the [semantic-forensics specification](PACT_Codex_Semantic_Forensics_and_Span_Interventions.md)
+as three small study modules routed through the existing CLI. Existing parent
+readers, reports, request/response contracts, native models, journals and compact
+persistence remain authoritative. No parent code, scores or source archives were
+changed. The full source inventory and derived views are immutable. Both model
+and public export boundaries remain inherited; annotations have a separate origin.
+
+Primary O always means QLM selectable correct coverage. QQQ is a separate matched
+comparison. The exact net identity uses the common-cohort unweighted mean; the
+reused bootstrap is equal-stratum weighted and explicitly named separately. Both
+use task groups, never independent-call sample sizes. Partial/rejected outcomes
+remain missing, while known empty-candidate clean failures remain scored failures.
+
+Review assignment is outcome-independent for the main panel. Casebooks separate
+reviewer-facing A/B material from analyst-only mappings and enrichment reasons.
+First-pass annotations are append-only until lock, then immutable; all available
+assigned units must lock before reveal. Third-person resolutions preserve original
+labels. Original reviewer edit disputes remain excluded from this first intervention
+runner even if an adjudicator explains the disagreement; neither reviewer can be
+silently overridden. Human origin, independence and blinding are declared provenance,
+not a software guarantee of actual human identity.
+
+The supplied configs/semantic_forensics_design.json and annotation_template.json
+remain design reference files, unchanged. Executable bound templates come from
+export-review; they include display hashes, review status/locks and exact-span fields.
+Caps/constants are frozen in the implementation rather than made extensible via
+an editable config that might silently enlarge this child. Both new CLI families
+are versioned schema 1. No new dependency or provider client was introduced.
+
+Preflight/plan are separated from explicit user authorization. New child source and
+runtime are pinned; parent model weights/precision/template/decoding are verified
+without pretending historical runtime determinism. New reference repeats are real
+child requests. Compact durable snapshots mark unsafe before dispatch and preserve
+ambiguity; no automatic fallback or retry. Published/sanitized outputs are aggregate
+allowlists; private annotations must be backed up separately from code. See the
+[local runbook](semantic_forensics_runbook.md) and [optional Colab cells](rationale_spans_colab.md).
