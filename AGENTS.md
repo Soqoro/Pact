@@ -96,3 +96,13 @@ requires completed reviews, both edit approvals, tokenizer checks, a frozen plan
 and a separate artifact-bound user decision. New reference repeats count toward
 576 attempts / 294,912 reserved tokens, with ≤36 included smoke calls. No implicit
 approval, retries of ambiguous dispatch, fabricated shams, paid APIs or training.
+
+[Selective correction](docs/selective_correction_methodology.md) trains only five
+small CPU gates; all Q/L/M/J8 weights stay pristine and frozen. Use 224 fresh official
+training groups with enforced fit/tune/source-development separation. Shared extractor,
+paired full/restricted checks, exact source spans are unverified hypotheses. Metadata
+gate has no checker dependency. Freeze whole-policy thresholds before development or
+separately invoked exact-parent transfer. KEEP_ONLY is a valid negative outcome.
+Cap core at 5,600 calls, optional transfer at 5,156, five fits/500 iterations each;
+first smoke is eight included FIT source calls. No old-bank training, unsafe retries,
+new datasets, final tests or reactivation of deferred human/span review.

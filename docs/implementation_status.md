@@ -1851,5 +1851,79 @@ Validation actually executed:
 Real generation and new-child GPU/native/Drive execution remain **unverified**.
 No real approval was created; fixture approvals are explicitly fixture-only.
 No pretrained download, paid API, credentials, training, new benchmark exposure or
-final-test access. The next action is actual independent semantic review, with
-truthful blinding, followed by the user's separate decision on a concrete plan.
+final-test access. Independent semantic review and a separate user decision would
+be required before inference; the user has now deferred that follow-up (see below).
+
+## 2026-10-14 — User deferral
+
+Independent human semantic review and the optional rationale-span experiment are
+**deferred at the user's request**. The completed parent and offline numerical
+forensics remain complete. Blank reviewer packages were reported exported and
+verified on Drive; no actual human review or real span inference is complete.
+Retain code and artifacts, perform no further follow-up work until requested,
+and preserve all existing review/approval gates. See the experiment ledger for
+the reported package hashes. This is a scheduling decision, not a failed result
+or authorization for another experiment.
+
+## 2026-10-14 — Consolidated research decision review
+
+Added [the research decision review](audits/PACT_RESEARCH_DECISION_REVIEW_2026-10-14.md)
+at the user's request, synthesizing completed audits through offline forensics.
+It distinguishes private coverage, communication/readout losses, judge-relative
+rescue, and executed training from unproven efficacy. Proposed follow-ups are
+unapproved; human review and span inference remain deferred. Existing runs and
+methodology are unchanged. Validated report links and accounting/rescue arithmetic;
+`git diff --check` passed. Documentation only: no regression suite, model calls,
+training, scoring, downloads, commit or push.
+
+## 2026-10-14 — Selective correction complete CPU implementation
+
+Implemented `pact-selective-correction-001` / `anchor_check_gate_v1` as a separate
+bounded learning study. See [methodology](selective_correction_methodology.md),
+[full Colab sequence](selective_correction_colab.md), and
+`notebooks/22_selective_correction_colab.ipynb`. Implemented official train-source
+allocation/exclusions, immutable independent anchors and natural Q/L/M packets,
+fixed wrong-rationale pools, common extraction and paired full/restricted checking,
+five actual NumPy multinomial CPU fits, whole-policy tuning/freezing, all required
+controls, source-development evaluation and separate exact-parent transfer.
+Reports include task-group comparisons, common-clean attack comparisons, fixed
+prefix bounds, strict/fallback outcomes, class/task support and measured resources.
+Private and aggregate-only sanitized bundles and compact guarded restore are tested.
+
+Executed validation:
+
+- `PYTHONPATH=src python -m unittest discover -s tests -v`:
+  **347 tests in 615.014 seconds**, 328 passed, 17 skipped, two errors. Both errors
+  were the existing GPQA temporary-path privacy checks: this environment has a
+  `/tmp/.git`, so those tests' default temporary paths are inside a Git checkout.
+- Reran exactly those two fictional tests with
+  `TMPDIR=/var/tmp/pact-test-temp-20261014 PYTHONPATH=src:tests python -m unittest test_gpqa_support.GPQADataTests.test_access_pinning_and_no_secret_exception test_gpqa_support.GPQAPreparationTests.test_real_csv_parser_and_selection_only_retention -v`:
+  **2 passed in 0.063 seconds**, with no dataset/network access or privacy bypass.
+- After final selective-only hardening and reporting changes,
+  `PYTHONPATH=src python -m unittest discover -s tests -p test_selective_correction.py -v`:
+  **35 passed in 21.721 seconds**. Includes actual BFGS fits and reference gradients,
+  complete fixture CLI core and separate closed-parent transfer, immutable source
+  and rewrite checks, split/feature boundaries, limits, safe/unsafe compact restore,
+  rejected paths, privacy and notebook defaults. This focused run supersedes the
+  earlier 31 selective tests in the broad run; it is not a second full-suite run.
+- `python tools/verify_selective_design.py`: exact 5,600 core + 5,156 transfer =
+  10,756 attempts / 5,507,072 reserved output tokens checked. This arithmetic
+  checker does not itself test repository implementation or models.
+- Notebook code cells compile with empty outputs and all five execution flags false.
+  `git diff --check` passed.
+
+**CPU-trained:** gates on fictional fixtures only. **Implemented but unexecuted:**
+real 224-group allocation and GPU source/check acquisition, real gate operating
+points, 64-task source-development results and 230-task transfer results. The real
+run requires a reviewed prior/locked hash-ID inventory matching the exposure ledger;
+no such new inventory was certified this turn. Existing exclusion machinery alone
+is not represented as exhaustive cross-study/locked decontamination. Access to all
+four pinned official model repositories is another Colab prerequisite. No adapter
+checkpoint is required. Optional transfer needs the exact final PRIVATE adjudication
+bundle documented in the runbook.
+
+No real benchmark collection, pretrained download, GPU execution, LLM training,
+credentials, paid APIs, final-test access, commit or push occurred. CPU fixtures do
+not establish improved PACT or a risk certificate. Historical results and manuscript
+placeholders are unchanged; human reviews, cue/sham intervention and original
+all-agent PACT training remain deferred.

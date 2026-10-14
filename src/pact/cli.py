@@ -173,6 +173,9 @@ def parser():
 
 def main(argv=None) -> int:
     routed = list(sys.argv[1:] if argv is None else argv)
+    if routed and routed[0] == "selective-correction":
+        from .selective.study import main as selective_main
+        return selective_main(routed[1:])
     if routed and routed[0] == "adjudication-forensics":
         from .studies.forensics import main as forensics_main
         return forensics_main(routed[1:])

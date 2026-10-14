@@ -1405,3 +1405,37 @@ child requests. Compact durable snapshots mark unsafe before dispatch and preser
 ambiguity; no automatic fallback or retry. Published/sanitized outputs are aggregate
 allowlists; private annotations must be backed up separately from code. See the
 [local runbook](semantic_forensics_runbook.md) and [optional Colab cells](rationale_spans_colab.md).
+
+## 2026-10-14 — Selective correction / anchor_check_gate_v1
+
+Explicit user methodological update: implement outcome-supervised routing, separate
+from original PACT/SFT/specialization. See [method notes](selective_correction_methodology.md)
+and [exact Colab stages](selective_correction_colab.md). LLM parameters stay frozen;
+only five multinomial gates train on CPU. The prescribed objective, class order,
+L2, task/view/alternative weighting, max-candidate rule and finite threshold grid are
+implemented directly. BFGS/Armijo uses NumPy 2.2.3, analytic gradients, zero start,
+1e-6 gradient infinity tolerance and 500 iterations maximum; no dependency upgrade to
+SciPy is required. Failed numeric fits consume their intent and stop, not a sixth fit.
+
+Numeric feature transforms use fit-only task/view/alternative weights renormalized
+over observed rows; the loss retains the full N_fit denominator. Rationale length is
+bounded at 8192 characters. Threshold ties minimize tasks switched in any observed
+view, then prefer the larger grid threshold. Optional restricted-verdict rule is
+fixed, untrained and reuses existing checking outputs. KEEP_ONLY never triggers more
+generation. Invalid baseline final actions share original-anchor fallback; missing
+infrastructure blocks evaluation instead of yielding a successful fallback.
+
+Conservative source screening excludes the entire historical 1200 allocation plus
+full validation-connected groups and explicit selection inventories, in addition to
+a required reviewed cross-study/locked hash-only exposure index. This is stronger
+than excluding only executed training examples and may cause a genuine quota
+shortfall; no silent shrink/fallback source is allowed. No new exposure index has
+been certified in this implementation turn. The first real plan must supply one.
+
+A changed extractor request/result invalidates both verifier caches, even if returned
+challenge wording matches. Native full/restricted prompts differ only in the raw
+peer justification; corresponding seeds match. The transfer reader reuses the exact
+complete parent validator and raw J8 evidence; no review ZIP is mistaken for weights.
+Private coefficients/text/tokens stay out of sanitized exports. Historical unsafe
+closures, completed results, deferred human/span work and manuscript placeholders
+remain unchanged. No inference or result is authorized by fixture success.

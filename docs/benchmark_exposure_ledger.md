@@ -198,3 +198,18 @@ is implemented and CPU-tested only; zero real calls. All source/review tasks rem
 training-disallowed and cannot serve as untouched final confirmation. GPQA, code,
 LiveBench, reserve/final-test splits and historical incomplete training studies are
 unchanged. Future training must exclude all inspected source/casebook tasks.
+
+## 2026-10-14 — Selective-correction allocation implemented, not executed
+
+`pact-selective-correction-001` implements 224 new official ARC-Challenge/original
+English LogiQA training groups: 128 fit, 32 threshold tuning, 64 source-development,
+equally allocated by family. No real source selection or new generation occurred
+locally. A reviewed ID/hash-only prior/locked exposure inventory matching this ledger
+is required before real planning. The loader also excludes the entire old 1200
+allocation, full validation-connected duplicate groups and saved selection IDs.
+Actual selected identities remain private; fixture identities are not exposure.
+
+Optional transfer is separately invoked after gates/thresholds freeze and reuses
+all 140 MMLU/90 MuSR parent tasks and 369 accepted rewrites without regeneration.
+They remain development-exposed, training/tuning-disallowed. No GPQA, MATH, MBPP,
+LiveBench, protected reserve/confirmation or human/span-review work is reopened.

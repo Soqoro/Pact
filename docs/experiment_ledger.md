@@ -2519,3 +2519,54 @@ findings and exact artifacts: [offline audit](audits/PACT_SEMANTIC_FORENSICS_202
 unexecuted and GPU-unverified. No real authorization record. Maximum 576 judge
 attempts / 294,912 reserved output tokens, included smoke ≤36; missing reviewed
 controls reduce the budget. No training, paid APIs, new generator, GPQA or final tests.
+
+## 2026-10-14 — Semantic review and span follow-up deferred by user
+
+The user explicitly deferred the independent human semantic review and optional
+`pact-rationale-span-intervention-001` follow-up. The completed adjudication and
+offline forensics results remain complete and unchanged. No submitted human
+annotations or real span inference are recorded; no further review or execution
+is scheduled. Resume requires a new user instruction and the existing review and
+artifact-bound authorization gates still apply.
+
+The user reported verified Drive copies of the blank reviewer packages:
+
+- `reviewer-1-pass1-1791955200072769760.zip`, SHA256
+  `f8912edb5b4beaed0d6aff9bf41caa0fbc62381d4a9dc3cb3dc8147a2ec5239b`.
+- `reviewer-2-pass1-1791955203123907752.zip`, SHA256
+  `5e35f6d4b8cb7d6cdc7b169a716cbdd25b5905475841725c7db69d4a414d208b`.
+
+Their reported directory is
+`/content/drive/MyDrive/PACT/forensics/pact-adjudication-forensics-001/review-packages/`.
+These receipts describe blank material exports, not completed reviews. Packages
+and implementation are retained for possible later use; no replacement study is
+authorized by the deferral.
+
+## 2026-10-14 — Research decision review (no new experiment)
+
+Compiled [the consolidated review](audits/PACT_RESEARCH_DECISION_REVIEW_2026-10-14.md)
+from completed project, breadth, adjudication and offline-forensics audits.
+Recorded generations carried forward total 31,711 plus up to 16 unknown historical
+controlled-replay calls; executed updates remain 147 across separate recipes.
+No new evidence generation or raw-archive reaudit was performed. The recommendation
+to consider independent-answer preservation is a proposed design direction only,
+not an approved study. Human semantic review and optional span inference remain
+deferred, with all prior gates and completed-run dispositions preserved.
+
+## 2026-10-14 — Selective correction implemented; no real collection
+
+User-authorized update `pact-selective-correction-001` / `anchor_check_gate_v1` adds
+fresh official-training-source allocation, frozen natural Q/L/M/J8 banks, bounded
+wrong-rationale pools, shared extraction/full/restricted verification, five real
+CPU gate fits, held-out threshold selection, frozen policy evaluation and separately
+invoked exact-parent MMLU/MuSR transfer. See
+[method notes](selective_correction_methodology.md) and
+[Colab sequence](selective_correction_colab.md).
+
+Only fictional CPU/mock runs occurred here. Real source quotas/exclusion inventory,
+feature collection, learned operating point and core/transfer outcomes remain
+unverified. A reviewed complete prior/locked hash-only inventory is a prerequisite,
+not replaced by an empty default. No large-model download, GPU inference, LLM update,
+paid API, final-test access, commit or push occurred. Historical counts/results are
+unchanged; fixture calls are not added to them. Human semantic review and cue/sham
+work remain deferred. Full original PACT integration remains unexecuted.
