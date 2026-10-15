@@ -1927,3 +1927,63 @@ credentials, paid APIs, final-test access, commit or push occurred. CPU fixtures
 not establish improved PACT or a risk certificate. Historical results and manuscript
 placeholders are unchanged; human reviews, cue/sham intervention and original
 all-agent PACT training remain deferred.
+
+### Follow-up: private exposure inventory delivered
+
+Resolved the missing-file Colab stop by reviewing existing ID/hash-only manifests
+and producing a private inventory compatible with pushed revision `9b65ae3`.
+Five historical breadth plan hashes and manifest bindings, four carried exposure
+indices, original GPQA partition metadata, training/pilot manifest hashes and three
+repository selection files were checked. Added a reproducible metadata-only builder
+and three CPU tests (3 passed in 0.060s); no core inference/learning code changed.
+See [inventory review](audits/PACT_SELECTIVE_EXPOSURE_INVENTORY_2026-10-14.md) for
+exact file/hash, counts, provenance and the known-fingerprint scope. No protected
+question/label parsing, new allocation, GPU calls, semantic review, commit or push.
+
+## 2026-10-15 — Returned real selective-correction core evidence
+
+The complete core study is now executed and locally reconstructed from the returned
+PRIVATE/SANITIZED pair, superseding the prior real-core-unverified status only.
+All 224 natural source banks, fit/tuning/check evidence, five converged CPU fits,
+frozen thresholds and 64-task development outcomes are present. 3,579 committed
+calls, zero unresolved, safe saved state; no LLM optimizer updates. All gates select
+KEEP_ONLY: primary 44/64 correct with no rescue/harm/switching. No demonstrated gain.
+
+Important limitation: all 202 anchor-inclusive selection outputs fail the strict
+schema (198 extra-key JSONs, four non-JSON responses); deployed results use original
+anchor fallback. Preserve strict failures and historical outputs; no parsing rescue
+or replacement call was performed. Transfer remains unexecuted and separately
+invoked. Human/span review and full PACT remain deferred.
+
+Validated ZIP/internal hashes, plan/native identities and call accounting; rebuilt
+source/pool/features, evaluated the exact saved fitting objective and gradient,
+reproduced tuning and baseline/policy outcomes and matched the complete summary.
+Sanitized ID/question screening passed; private archive unchanged. No new model
+call, fit, download, commit or push. Details and private audit location are in the
+[core audit](audits/PACT_SELECTIVE_CORRECTION_CORE_2026-10-15.md).
+
+Added a fail-closed ledger-revision guard to the local exposure-inventory builder:
+an inventory reviewed before this new cohort cannot be recertified against a newer
+ledger by merely updating its hash. Four focused inventory tests passed in 0.039s;
+`git diff --check` passed. Core inference, fitting and parsing code is unchanged.
+
+## 2026-10-15 — Gate diagnostics and selector contract child
+
+**Implemented / CPU-tested:** exact closed-parent import; read-only gate/transform/
+objective/tuning reconstruction; weighted signal, checker, collision and fixed
+fit/tuning sensitivity analyses; escaped private dossier; paired selector planning,
+native J8 runtime, strict scoring/fallback, included smoke, resume, reports and
+private/sanitized exports. Thin notebook 23 and exact runbook are available.
+
+**Actual offline evidence:** real parent reconstruction succeeded with zero fits or
+model calls. Primary maximum active tuning utility −.571269; correct alternative
+ranked highest in 16/16 opportunity views across six tasks. All original KEEP_ONLY
+choices remain unchanged. Dossier has 59 groups. Real model-free planning verifies
+202 views/404 requests and four included smoke requests; no real dispatch.
+See [audit](audits/PACT_GATE_DIAGNOSTICS_2026-10-15.md).
+
+**Validation:** 25 new CPU/mock tests passed (19.832 s), plus 39 existing selective
+and exposure-guard tests (20.143 s). Notebook syntax/defaults and design checks pass.
+Not a full-suite claim. **GPU-unverified:** all prospective real selector behavior.
+**Deferred:** new policies/gates, transfer, human/span review and full PACT. No
+new exposure allocation, dependency upgrade, model download, commit or push.

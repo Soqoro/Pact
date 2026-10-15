@@ -213,3 +213,30 @@ Optional transfer is separately invoked after gates/thresholds freeze and reuses
 all 140 MMLU/90 MuSR parent tasks and 369 accepted rewrites without regeneration.
 They remain development-exposed, training/tuning-disallowed. No GPQA, MATH, MBPP,
 LiveBench, protected reserve/confirmation or human/span-review work is reopened.
+
+## 2026-10-15 — Selective-correction source cohort executed
+
+Audited return `1791993400383124336`, plan
+`848b8e6941f958628e8697e96fcd11a465237c056f313d84b12b7088c461c0d6`, executes
+224 distinct official ARC-Challenge/LogiQA training-source groups: 128 fitting,
+32 threshold tuning and 64 source-development, equally allocated by source. They
+are now used/exposed; future allocations must exclude all 224 IDs and duplicate
+groups, not only fitting tasks. Their private identities, group/content hashes and
+cross-dataset fingerprints are retained in the frozen plan of the verified PRIVATE
+return. No confirmation/reserve/final-test task or optional transfer was executed.
+
+The prior-exposure inventory used for this run remains bound to the earlier ledger
+revision; do not relabel it current for a new study. Existing pinned-run recovery
+uses its original immutable provenance. A future inventory review must incorporate
+this new cohort. See [core audit](audits/PACT_SELECTIVE_CORRECTION_CORE_2026-10-15.md).
+
+## 2026-10-15 — Offline gate diagnosis; selector child implemented only
+
+The offline derivative further inspects the same 128 fit, 32 tuning and 64
+source-development groups of the closed selective parent. No new source allocation,
+model generation or protected-data access occurred. The retrospective dossier
+is not training data or independent semantic review. The implemented prospective
+selector child reuses the same 64 development groups/202 views; it has not run
+on real models locally. These groups remain exposed, not fresh confirmation.
+The prior-exposure inventory freshness guard is retained; this derivative cannot
+certify any of the parent's 224 groups as new. No human/span review is reactivated.

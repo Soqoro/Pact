@@ -106,3 +106,12 @@ separately invoked exact-parent transfer. KEEP_ONLY is a valid negative outcome.
 Cap core at 5,600 calls, optional transfer at 5,156, five fits/500 iterations each;
 first smoke is eight included FIT source calls. No old-bank training, unsafe retries,
 new datasets, final tests or reactivation of deferred human/span review.
+
+[Gate diagnostics and selector contract](docs/gate_diagnostics_methodology.md)
+reads the exact closed selective parent without refits or new checking. Sensitivity
+is diagnostic fit/tuning arithmetic only; never select/export a replacement policy
+or tune on development. Keep all 202 historical selector failures unchanged. The
+separate child pairs a fresh legacy repeat with an output-passage-only clarification
+on 202 existing views, pristine J8, 404 attempts/206848 tokens including <=16 smoke
+calls. Smoke exports and stops. No key stripping, parent-cache substitution, new
+sources, transfer, human review or implicit next experiment. Preserve freshness guard.

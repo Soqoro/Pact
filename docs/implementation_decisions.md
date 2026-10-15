@@ -1439,3 +1439,32 @@ complete parent validator and raw J8 evidence; no review ZIP is mistaken for wei
 Private coefficients/text/tokens stay out of sanitized exports. Historical unsafe
 closures, completed results, deferred human/span work and manuscript placeholders
 remain unchanged. No inference or result is authorized by fixture success.
+
+### 2026-10-15 — Returned core result and exposure advancement
+
+Preserve the executed KEEP_ONLY policies and all strict selector-format failures;
+do not reinterpret extra fields or relax thresholds after evaluation. The malformed
+selector's fallback accuracy is not evidence of a functioning selector. No prospective
+prompt change or new call is authorized by the result. The optional transfer remains
+separate. The local metadata-inventory builder is pinned to its reviewed ledger hash
+and refuses newer ledgers until new cohorts enter its reviewed coverage; existing
+pinned-run provenance is not migrated. See the completed selective core audit.
+
+## 2026-10-15 — Saved-gate diagnosis and prospective selector contract child
+
+Implemented the user-prespecified diagnostic grid as non-deployable arithmetic;
+no gate fitting or policy selection is performed. Trusted import compares parent
+bytes before/after authoritative source/check/feature/tuning reconstruction.
+Saved numeric transforms are checked against fit-only weights and never changed.
+Weighted tied ROC/AP and 500 task-cluster bootstrap replicates use seed 20261015;
+log-only clipping is 1e-15, with zero prior support explicitly reported. Numerical
+boundary cancellation is recorded instead of adjusting utilities or log-odds.
+
+The selector child retains the original parser/fallback and changes only the
+ambiguous output-contract passage. Child-specific keys force a fresh legacy repeat;
+exact own-child results are reusable. Two separate explicit smoke/full invocations
+retain all frozen views irrespective of efficacy. Parent weight/file/template hashes
+must match; runtime may differ from the parent but remains fixed within the child.
+Only derived partial reports are replaceable; committed call shards and parent
+artifacts remain immutable. Compact snapshots retain unsafe windows. See
+[methodology](gate_diagnostics_methodology.md) for precise scopes and limits.

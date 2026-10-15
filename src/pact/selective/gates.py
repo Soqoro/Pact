@@ -100,6 +100,8 @@ def fit(tasks,arm):
 
 
 def validate_model(m):
+    if m.get('diagnostic_only') or m.get('policy_selection_authorized') is False:
+        raise ValueError('Diagnostic artifacts are not deployable gate models')
     if digest({k:v for k,v in m.items() if k!='model_hash'})!=m['model_hash']:raise ValueError('Gate changed')
     if m['arm'] not in ARMS or m['feature_spec']!=feature_spec(m['arm']=='metadata_augmented'):raise ValueError('Gate feature contract changed')
 

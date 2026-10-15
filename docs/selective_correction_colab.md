@@ -31,8 +31,13 @@ cells below. No Run All starts model generation: choose one stage explicitly.
 Do not fill this with empty lists or set `reviewed_complete` merely to bypass readiness.
 The implementation additionally reconstructs/excludes the entire old 1,200-task
 preparation allocation and full validation-connected groups automatically. That does
-not replace the cross-study/locked inventory. No new inventory has been independently
-certified by this implementation turn; this is an explicit real-data prerequisite.
+not replace the cross-study/locked inventory. The subsequent metadata-only review
+produced `/var/tmp/pact-selective-exposure-20261014/prior-exposure.json`, SHA256
+`c1632567b6b1be2d1351f3389e0fcbc474a7aa7eb8abcb10ee2cb125a0d305c7`.
+See [the inventory review](audits/PACT_SELECTIVE_EXPOSURE_INVENTORY_2026-10-14.md).
+Upload that private file to the required Drive path before Cell 3. It is compatible
+with pushed revision `9b65ae343b52777b5b716c9adf090959588b72c3`; no runtime code patch
+or new plan is needed. This is a provenance/metadata review, not human semantic review.
 Only inventory hashes/IDs are needed, not protected question text or labels. Do not
 open protected datasets to manufacture this file. If the inventory cannot be supplied,
 real source preparation remains blocked; the complete fixture path is still runnable.

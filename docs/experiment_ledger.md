@@ -2570,3 +2570,47 @@ not replaced by an empty default. No large-model download, GPU inference, LLM up
 paid API, final-test access, commit or push occurred. Historical counts/results are
 unchanged; fixture calls are not added to them. Human semantic review and cue/sham
 work remain deferred. Full original PACT integration remains unexecuted.
+
+## 2026-10-15 — Selective correction core completed and audited
+
+Return `1791993400383124336` verifies the complete 224-task source acquisition,
+five real CPU fits, separate 32-task tuning and all 64 source-development tasks.
+PRIVATE SHA256 `b013fc63b8c4331b25f0589374b162cdade24759b1a5442bb85ca89c81926449`;
+SANITIZED `120cffccfd552fdd6c0bf747ebbd0cfb6e7e8455700bf2200c53b9b1e96dab4e`.
+Plan `848b8e6941f958628e8697e96fcd11a465237c056f313d84b12b7088c461c0d6`, clean
+source commit `9b65ae343b52777b5b716c9adf090959588b72c3`.
+
+3,579 attempts/commits, zero unresolved, 1,832,448 reserved output tokens; no LLM
+updates. All five gates converged and selected KEEP_ONLY. Primary clean results:
+ARC 27/32 and LogiQA 17/32, zero rescue/harm/switching; nine available LogiQA peer
+rescue opportunities unused. Independent reconsideration has two rescues/two harms;
+the fixed restricted rule three rescues/eighteen harms. Anchor-inclusive selection
+has 202/202 malformed outputs and only anchor-fallback accuracy; do not call it a
+successful selector comparison. Transfer is not invoked.
+
+See [complete core audit](audits/PACT_SELECTIVE_CORRECTION_CORE_2026-10-15.md).
+Local checks reproduced sources, pools, features, fitting objective/convergence,
+tuning, frozen decisions and summary without new fits or model calls. No change to
+historical scores, thresholds or parser; no automatic rerun/transfer authorization.
+Human/span follow-up and full PACT remain deferred.
+
+## 2026-10-15 — Gate diagnostic derivative completed; selector child not executed
+
+`pact-gate-diagnostics-001` reads the exact completed selective parent PRIVATE hash
+`b013fc63b8c4331b25f0589374b162cdade24759b1a5442bb85ca89c81926449`.
+Authoritative raw-to-feature and original policy reconstruction passed with zero
+new fits/calls. Primary tuning active maximum utility is −.571269; its 16 observed
+opportunity views span six tasks and all have a correct top-ranked alternative.
+This explains score suppression before thresholding, not proven generalization.
+All five parent KEEP_ONLY choices and 202 malformed historical selector outputs
+are preserved. Full offline evidence and limitations are in the
+[diagnostic audit](audits/PACT_GATE_DIAGNOSTICS_2026-10-15.md).
+
+`pact-anchor-selector-contract-002` is implemented and mock-tested only. A real
+model-free plan verifies exactly 64 clean +138 accepted views, 404 fresh two-arm
+requests, ceiling 206,848 output tokens. Hash-selected smoke has four included
+requests (the two selected tasks have no accepted variants); do not substitute
+other tasks. The fresh Colab plan must use the user's reviewed/pushed source.
+No real child inference, model access, new source allocation or transfer occurred.
+The 64 source-development groups are further-exposed development material, never
+fresh confirmation. No diagnostic grid point is promoted to a new policy.

@@ -1,0 +1,82 @@
+{
+  "design_version": "2026-10-15-v1",
+  "status": "proposed_not_executed",
+  "offline_run": "pact-gate-diagnostics-001",
+  "inference_child": "pact-anchor-selector-contract-002",
+  "parent": {
+    "run": "pact-selective-correction-001",
+    "pair": "1791993400383124336",
+    "private_sha256": "b013fc63b8c4331b25f0589374b162cdade24759b1a5442bb85ca89c81926449",
+    "sanitized_sha256": "120cffccfd552fdd6c0bf747ebbd0cfb6e7e8455700bf2200c53b9b1e96dab4e",
+    "plan_hash": "848b8e6941f958628e8697e96fcd11a465237c056f313d84b12b7088c461c0d6"
+  },
+  "offline": {
+    "model_calls": 0,
+    "gate_fits": 0,
+    "policy_selection_authorized": false,
+    "sensitivity_splits": [
+      "fit",
+      "threshold_tuning"
+    ],
+    "costs": [
+      0.0,
+      0.5,
+      1.0,
+      2.0
+    ],
+    "thresholds": [
+      -2.0,
+      -1.0,
+      -0.5,
+      -0.25,
+      -0.1,
+      0.0,
+      0.05,
+      0.1,
+      0.2,
+      0.35,
+      0.5,
+      0.75,
+      "KEEP_ONLY"
+    ],
+    "bootstrap_seed": 20261015,
+    "bootstrap_replicates_max": 2000
+  },
+  "selector": {
+    "clean_tasks": 64,
+    "accepted_variants": 138,
+    "views": 202,
+    "arms": [
+      "legacy_prompt_repeat",
+      "selector_contract_v2"
+    ],
+    "max_output_tokens": 512,
+    "total_context_tokens": 8192,
+    "call_ceiling": 404,
+    "reserved_output_tokens": 206848,
+    "paired_seed_source": "parent_corresponding_selector_request",
+    "order_seed": 20261015,
+    "requires_explicit_invocation": true,
+    "smoke": {
+      "tasks_per_dataset": 1,
+      "datasets": 2,
+      "max_views_per_task": 4,
+      "max_calls": 16,
+      "reserved_output_tokens": 8192,
+      "included_in_main": true
+    },
+    "llm_updates": 0,
+    "gate_fits": 0,
+    "teacher_forced_forwards": 0
+  },
+  "forbidden": [
+    "parent_result_repair",
+    "retrospective_field_stripping",
+    "new_gate_selection",
+    "development_tuning",
+    "transfer_inference",
+    "new_data_or_model",
+    "human_review_reactivation",
+    "paid_api_calls"
+  ]
+}
