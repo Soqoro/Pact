@@ -1,3 +1,5 @@
+> Source-allocation amendment: [approved v2 allocation](revival_source_allocation_v2.md) supersedes the equal-source quotas and four-blocks-per-source rule below. Other requirements remain in force.
+
 # PACT revival: train the communicating agents, then test prospective update allocation
 
 Prepared 16 October 2026. Design version: `pact-revival-20261016-v1`.

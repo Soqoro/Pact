@@ -2662,3 +2662,13 @@ The fixture run exercises all six trained adapters and24 temporary branches with
 actual tiny-model gradients; fixture responses are not research results. Stage III
 has CPU-only finite coupling controls; no real MethodSpec or GPU budget exists.
 See [methodology](revival_methodology.md) and [Colab commands](revival_colab.md).
+
+
+## Approved revival source allocation v2
+
+User-authorized [400 ARC / 560 LogiQA revision](revival_source_allocation_v2.md)
+after the reported original preparation shortfall of 74 ARC (zero model calls).
+Exact split quotas and three/five homogeneous blocks preserve total budgets.
+Implemented version guards reject v1 sources/plans; historical evidence is retained.
+560 eligible LogiQA groups remain unverified; CPU source preparation must precede
+a new plan or GPU smoke. No new allocation, model run, commit or push locally.

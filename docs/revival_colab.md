@@ -1,10 +1,11 @@
 # Revival: exact commands and execution prerequisites
 
-**Current disposition: real Stage I is blocked by at least73 missing fresh ARC
-training groups. Do not buy GPU time or run the smoke for this design yet.** The
-commands below describe the implemented interfaces. Source preparation must report
-`ready` under a separately reviewed feasible data contract before any real model
-stage. No command below changes the960 quotas or exclusion policy.
+**Current disposition: v2 source preparation must verify 400 ARC / 560 LogiQA.**
+Use CPU for this prerequisite; 560 LogiQA availability is unverified. The original
+480/480 preparation stopped at 74 missing ARC groups with zero model calls.
+See [the approved allocation amendment](revival_source_allocation_v2.md).
+Preserve that result and use the new source filename below. Do not migrate any
+existing frozen plan. Return the preparation result before running GPU stages.
 
 Local prerequisite artifacts already produced from verified manifests:
 
@@ -59,7 +60,7 @@ EXPOSURE = SCRATCH / 'prior-exposure.json'
 content = uploaded['prior-exposure.json']
 assert hashlib.sha256(content).hexdigest() == '3138e7a0ab7b3deb8b05d24f530a68f15f0fd92c436e0c301224242618a01849'
 EXPOSURE.write_bytes(content)
-SOURCE = SCRATCH / 'source.private.json'
+SOURCE = SCRATCH / 'source-v2.private.json'
 
 def command(group, stage, *options):
     cmd = [sys.executable,'-u','-m','pact',group,stage,
@@ -74,13 +75,20 @@ def assay(stage,*options): return command('update-probe',stage,*options)
 
 Source preparation accesses only the pinned official ARC TRAIN/original English
 LogiQA TRAIN and validation files for grouping. It does not access final tests.
-With the current contract this step must stop on shortage; it cannot issue calls.
+This step cannot issue model calls. It reports required and available counts and
+stops on any remaining shortage.
 
 ```python
 study('prepare-source','--source',SOURCE,'--exposure',EXPOSURE,'--download')
 source = json.loads(SOURCE.read_text())
-print({k:source.get(k) for k in ('status','shortfall')})
-assert source['status']=='ready', 'STOP: return the shortfall; no quota/source substitutions.'
+print({k:source.get(k) for k in ('status','shortfall','available','required','allocation_version')})
+# Stop here and return this status for review.
+```
+
+After source review confirms readiness, create the fresh v2 plan:
+
+```python
+assert source['status']=='ready', 'STOP: no quota/source substitutions.'
 study('plan','--source',SOURCE)
 from pact.util import digest
 PLAN_HASH = digest(json.loads((RUN/'plan.json').read_text()))

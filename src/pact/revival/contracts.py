@@ -7,13 +7,18 @@ from ..schemas import Message
 from ..util import canonical, digest
 from ..backends.registry import registry
 
-VERSION = 'heterogeneous_dense_pact_v1'
+VERSION = 'heterogeneous_dense_pact_v2'
 RUN = 'pact-heterogeneous-receiver-training-001'
 PROBE = 'pact-update-allocation-probe-001'
 SEED = 20261016
 FAMILIES = ('Q','L','M')
 ARMS = ('frozen_qlm','independent_adversarial_sft','uniform_joint_sft')
 SPLITS = {'main_fit':512,'allocation_probe':64,'validation':128,'source_evaluation':256}
+ALLOCATION_VERSION = 'arc400_logiqa560_v2'
+SOURCE_QUOTAS = {
+    'arc_challenge': {'main_fit':192,'allocation_probe':24,'validation':64,'source_evaluation':120},
+    'logiqa': {'main_fit':320,'allocation_probe':40,'validation':64,'source_evaluation':136},
+}
 BUDGETS = {'I':{'generation':17030,'tokens':8719360,'updates':768,'forwards':18432,'scratch_updates':48,'scratch_forwards':48},
            'II':{'generation':4928,'tokens':2523136,'updates':192,'forwards':1536,'scores':1792}}
 LORA = {'r':16,'alpha':32,'dropout':.05,'targets':['q_proj','k_proj','v_proj','o_proj'],'precision':'fp32_adapter_bf16_base_v1'}

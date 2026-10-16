@@ -33,7 +33,7 @@ def main(argv=None,probe_cli=False):
         else:
             if a.exposure is None:raise ValueError('Reviewed current exposure inventory required')
             train,val=data.load_training_sources(a.cache_dir/'data',download=a.download);value=data.allocate(train,val,read_json(a.exposure))
-        write_json(a.source,value);print(canonical({'status':value['status'],'shortfall':value.get('shortfall')}));return
+        write_json(a.source,value);print(canonical({k:value.get(k) for k in ('status','shortfall','available','required','allocation_version')}));return
     if a.stage=='plan' and not probe_cli:
         print(canonical(s.plan(root,read_json(a.source))));return
     if a.stage=='inspect':

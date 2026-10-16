@@ -123,6 +123,8 @@ pair gate. The independent control retains the same malicious incoming packet.
 Stage I caps 17,030 generations / 768 main updates; the separately reviewed Stage II
 caps 4,928 generations / 192 temporary updates with exact rollback. Never allocate
 probe tokens to gradients or treat two epochs as outer refreshes. Preserve all
-prior exclusions; the requested 960 fresh groups currently have a proven ARC
-shortfall. No silent quota/source change. Coupled real training needs a new finite
+prior exclusions. The [approved v2 allocation](docs/revival_source_allocation_v2.md)
+requires 400 ARC / 560 LogiQA with three/five homogeneous probe blocks; source
+preparation must verify availability. Reject v1 source/plan resume. No silent
+quota/source change. Coupled real training needs a new finite
 MethodSpec; current coupling orchestration is fixture-only.

@@ -14,6 +14,37 @@ class Contracts(unittest.TestCase):
         fit={s.tid(r) for r in d['records'] if r['split']=='main_fit'};pr={s.tid(r) for r in d['records'] if r['split']=='allocation_probe'}
         self.assertFalse(fit&pr);self.assertEqual(len(d['blocks']),8)
         self.assertEqual(set(t for b in d['blocks'] for t in b['fit']),fit)
+    def test_revised_allocation(self):
+        self.assertEqual({f:sum(q.values()) for f,q in c.SOURCE_QUOTAS.items()},
+                         {'arc_challenge':400,'logiqa':560})
+        self.assertEqual({k:sum(q[k] for q in c.SOURCE_QUOTAS.values()) for k in c.SPLITS},c.SPLITS)
+        design=read_json(Path(__file__).resolve().parents[1]/'configs/pact_training_revival_design.json')
+        self.assertEqual(design['data']['source_quotas'],c.SOURCE_QUOTAS)
+        d=data.fixture();data.validate_source(d)
+        self.assertEqual([b['family'] for b in d['blocks']],['arc_challenge']*3+['logiqa']*5)
+        for b in d['blocks']:
+            self.assertEqual(len(b['fit']),2);self.assertEqual(len(b['probe']),2)
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)/'run';s.plan(root,d)
+            old=read_json(root/'plan.json');old['version']='heterogeneous_dense_pact_v1'
+            write_json(root/'plan.json',old)
+            with self.assertRaisesRegex(ValueError,'Frozen plan'):s.guard(root,digest(old),fixture=True)
+        d['allocation_version']='historical_equal_v1'
+        with self.assertRaisesRegex(ValueError,'allocation contract'):data.validate_source(d)
+
+    def test_revised_shortfall(self):
+        from pact.schemas import task_from_dict,TaskLabel
+        d=data.fixture()
+        rows=[r for r in d['records'] if r['family']=='arc_challenge' or r['split']!='source_evaluation']
+        training=[(task_from_dict(r['task']),TaskLabel(r['task']['task_id'],d['labels'][r['task']['task_id']])) for r in rows]
+        from dataclasses import replace
+        valtask=replace(training[0][0],task_id='validation-unrelated',source_id='validation-unrelated',split='validation',question='Other unrelated validation',context='unrelated validator quasar')
+        result=data.allocate(training,[(valtask,TaskLabel(valtask.task_id,'A'))],{},fixture=True)
+        self.assertEqual(result['status'],'source_shortfall')
+        self.assertEqual(result['shortfall'],{'arc_challenge':0,'logiqa':2})
+        self.assertEqual(result['model_calls'],0)
+        self.assertNotIn('records',result)
+
     def test_delivery(self):
         b=[{'status':'ok','answer':x,'justification':x} for x in 'ABC'];a={'sender':1,'packet':{'status':'ok','answer':'C','justification':'MALICE'}}
         self.assertEqual(c.delivered(b,0,a,True)[0]['packet'],a['packet'])

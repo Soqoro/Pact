@@ -5,7 +5,14 @@ Implements the [16 October brief](PACT_Codex_Heterogeneous_Training_Revival.md) 
 update replaces the former focal-only/same-backbone and sampled-DPO prerequisites
 for this new study only. It does not change historical results or manuscript claims.
 
-## Execution prerequisite: source shortage
+## Execution prerequisite: source availability
+
+The [approved v2 revision](revival_source_allocation_v2.md) now requires 400 ARC /
+560 LogiQA, with three ARC and five LogiQA blocks. Preparation must verify both
+quotas; LogiQA availability at 560 is not yet established. The original v1 evidence
+below is retained as history, not the current quota.
+
+### Historical equal-source blocker
 
 The exact requested cohort cannot currently be allocated. The pinned official
 ARC-Challenge training source has 1,119 rows. Verified historical manifests reserve
@@ -23,9 +30,8 @@ pinned; edits advancing exposure require another review. Source preparation appl
 the official loaders and grouping policy and reports actual eligible shortfalls
 when complete source bytes are supplied. It cannot silently shrink quotas.
 
-The code remains fixture-testable. Do not start a real smoke until the user supplies
-an explicit revised data design and the corresponding new frozen contract. The
-provided design files remain unchanged apart from correcting the checker path.
+The code remains fixture-testable. Do not start a real smoke until the approved v2 source preparation reports ready
+and the new frozen plan is reviewed. Existing v1 plans cannot resume under v2.
 
 ## Objective and native adapter implementation
 

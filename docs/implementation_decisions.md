@@ -1507,3 +1507,13 @@ verified disjoint prior ARC reservations of600+112 leave at most407/480 required
 from1119 official rows, before further grouping. No quota/source change is inferred
 from the implementation request. This is a genuine execution blocker; code and
 fixtures continue independently. See [methodology](revival_methodology.md).
+
+
+## Approved revival source allocation v2
+
+User-authorized [400 ARC / 560 LogiQA revision](revival_source_allocation_v2.md)
+after the reported original preparation shortfall of 74 ARC (zero model calls).
+Exact split quotas and three/five homogeneous blocks preserve total budgets.
+Implemented version guards reject v1 sources/plans; historical evidence is retained.
+560 eligible LogiQA groups remain unverified; CPU source preparation must precede
+a new plan or GPU smoke. No new allocation, model run, commit or push locally.

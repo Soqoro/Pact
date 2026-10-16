@@ -1,5 +1,5 @@
 {
-  "design_version": "pact-revival-20261016-v1",
+  "design_version": "pact-revival-20261016-v2",
   "status": "proposed_not_executed",
   "execution": {
     "default": "offline_plan",
@@ -20,11 +20,26 @@
       "official ARC-Challenge training",
       "original English LogiQA training"
     ],
-    "equal_source_allocation": true,
+    "equal_source_allocation": false,
     "seed": 20261016,
     "exclude_all_recorded_prior_use": true,
     "allocation_probe_is_training_use": true,
-    "locked_confirmation_access": false
+    "locked_confirmation_access": false,
+    "allocation_version": "arc400_logiqa560_v2",
+    "source_quotas": {
+      "arc_challenge": {
+        "main_fit": 192,
+        "allocation_probe": 24,
+        "validation": 64,
+        "source_evaluation": 120
+      },
+      "logiqa": {
+        "main_fit": 320,
+        "allocation_probe": 40,
+        "validation": 64,
+        "source_evaluation": 136
+      }
+    }
   },
   "models": {
     "Q": {
@@ -131,7 +146,11 @@
     "diagnostic_score_forwards": 1792,
     "primary_score": "paired_common_frozen_readout_answer_NLL_reduction",
     "save_generated_accuracy": true,
-    "rollback_every_branch": true
+    "rollback_every_branch": true,
+    "blocks_by_source": {
+      "arc_challenge": 3,
+      "logiqa": 5
+    }
   },
   "stage_iii": {
     "implementation": "generic_two_round_orchestrator_with_CPU_mock_tests",

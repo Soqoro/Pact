@@ -10,6 +10,14 @@ def main() -> None:
     sp = d['splits']
     assert sum(sp.values()) == 960
     assert all(v % 2 == 0 for v in sp.values())
+    q = d['data']['source_quotas']
+    assert d['data']['allocation_version'] == 'arc400_logiqa560_v2'
+    assert d['data']['equal_source_allocation'] is False
+    assert {f:sum(v.values()) for f,v in q.items()} == {'arc_challenge':400,'logiqa':560}
+    assert {k:sum(v[k] for v in q.values()) for k in sp} == sp
+    for f, blocks in d['stage_ii']['blocks_by_source'].items():
+        assert q[f]['main_fit'] == blocks * 64
+        assert q[f]['allocation_probe'] == blocks * 8
     n_fit, n_val, n_eval, n_probe = (sp[k] for k in ('main_fit', 'validation', 'source_evaluation', 'allocation_probe'))
     assert (n_fit, n_val, n_eval, n_probe) == (512, 128, 256, 64)
     i = {

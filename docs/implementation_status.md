@@ -2053,3 +2053,17 @@ real runtime resource/Drive performance, and scientific outcomes. Existing model
 revisions/dependency pins were reused; no pretrained downloads or GPU/API calls,
 commit or push. [Runbook](revival_colab.md) stops at inadequate source preparation.
 Validation results are recorded in the companion implementation audit.
+
+
+## Approved revival source allocation v2
+
+User-authorized [400 ARC / 560 LogiQA revision](revival_source_allocation_v2.md)
+after the reported original preparation shortfall of 74 ARC (zero model calls).
+Exact split quotas and three/five homogeneous blocks preserve total budgets.
+Implemented version guards reject v1 sources/plans; historical evidence is retained.
+560 eligible LogiQA groups remain unverified; CPU source preparation must precede
+a new plan or GPU smoke. No new allocation, model run, commit or push locally.
+
+Validation: 23 revival CPU/mock tests passed (90.221s), including the full revised
+allocation round trip. Design arithmetic, notebook syntax, compilation, inventory
+freshness and diff checks passed. Real 560-LogiQA availability remains unverified.
