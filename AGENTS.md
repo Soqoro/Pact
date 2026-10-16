@@ -115,3 +115,14 @@ separate child pairs a fresh legacy repeat with an output-passage-only clarifica
 on 202 existing views, pristine J8, 404 attempts/206848 tokens including <=16 smoke
 calls. Smoke exports and stops. No key stripping, parent-cache substitution, new
 sources, transfer, human review or implicit next experiment. Preserve freshness guard.
+
+[Heterogeneous training revival](docs/PACT_Codex_Heterogeneous_Training_Revival.md)
+is a separate dense-supervision study: Q/L/M adapters, pristine R, matched independent
+and joint arms, FP32 LoRA/BF16 bases, answer-prefix-only targets, no DPO or sampled
+pair gate. The independent control retains the same malicious incoming packet.
+Stage I caps 17,030 generations / 768 main updates; the separately reviewed Stage II
+caps 4,928 generations / 192 temporary updates with exact rollback. Never allocate
+probe tokens to gradients or treat two epochs as outer refreshes. Preserve all
+prior exclusions; the requested 960 fresh groups currently have a proven ARC
+shortfall. No silent quota/source change. Coupled real training needs a new finite
+MethodSpec; current coupling orchestration is fixture-only.

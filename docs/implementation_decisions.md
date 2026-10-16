@@ -1468,3 +1468,42 @@ must match; runtime may differ from the parent but remains fixed within the chil
 Only derived partial reports are replaceable; committed call shards and parent
 artifacts remain immutable. Compact snapshots retain unsafe windows. See
 [methodology](gate_diagnostics_methodology.md) for precise scopes and limits.
+
+## 2026-10-15 — Verified pre-dispatch CPU-to-L4 recovery
+
+The user explicitly changed an accidentally CPU-only runtime to L4. Recovery
+preserved the frozen child plan and archived its CPU access receipt; replacement
+was allowed only after confirming zero intents/results, safe state and no loaded
+identity/resource records. Returned evidence shows metadata identical except the
+runtime fingerprint and real loaded weights matching the original pristine parent.
+Fresh-process execution avoided the notebook's import-state failure without a
+package upgrade. This recorded pre-dispatch correction is not authorization to
+replace runtime receipts after generation or bypass unsafe recovery checks.
+
+## 2026-10-15 — Close gate diagnostics and selector comparison
+
+The completed 404-call child and saved-gate diagnostic are synthesized in the
+[decision review](audits/PACT_GATE_SELECTOR_DECISION_REVIEW_2026-10-15.md).
+All eight missed clean selector opportunities have valid responses, so their
+remaining failure is not a parser rejection. Preserve original gates, thresholds,
+parent results and strict fallback. V2 is a measured simple comparison baseline,
+not a promoted policy or demonstrated learned PACT improvement. The recommendation
+is to review a separately prespecified switch-discrimination study if continuing;
+no new model, data allocation, policy, budget or run is selected here. Deferred
+human/span review and transfer stay deferred.
+
+## 2026-10-16 — Authorized heterogeneous dense training revival
+
+Implemented the separate new study contract in `pact.revival`; original methods,
+results and deferrals stay unchanged. Explicit FP32 low-rank delta computation
+avoids the historical adapter cast problem. This objective is .5 private + .5
+receiver answer-prefix CE, with global shared bank weights, no duplicate legacy
+base term, no specialization term in Stage I and no DPO. Temporary Stage II fits
+use only private targets, fresh optimizers and exact value/RNG rollback. Stage III
+remains fixture-only pending a new finite MethodSpec.
+
+The requested 960-group allocation is infeasible under existing exclusions:
+verified disjoint prior ARC reservations of600+112 leave at most407/480 required
+from1119 official rows, before further grouping. No quota/source change is inferred
+from the implementation request. This is a genuine execution blocker; code and
+fixtures continue independently. See [methodology](revival_methodology.md).

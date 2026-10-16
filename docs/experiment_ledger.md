@@ -2614,3 +2614,51 @@ other tasks. The fresh Colab plan must use the user's reviewed/pushed source.
 No real child inference, model access, new source allocation or transfer occurred.
 The 64 source-development groups are further-exposed development material, never
 fresh confirmation. No diagnostic grid point is promoted to a new policy.
+
+## 2026-10-15 — Selector contract included smoke returned
+
+`pact-anchor-selector-contract-002`, plan
+`d704f2c4e10ed509547773cbabecd214890a23d8f69004ba2cbdb6d9d958d09f`, clean source
+`58e7bf3e6ed7b9defdc231298133b4a1b2dd6c8e`: four committed attempts, zero unresolved,
+2,048 reserved tokens / 419 actual outputs. Pair `1792068326092771454` PRIVATE
+SHA256 `06c502d0f8d65d04269f54430f1e99f4cf3214eb3051d969f93bf86c304a3ead`, SANITIZED
+`e41c1d8e2123537eebef70a7c455d81dc048b56ed8fb2be66ac9c457f7c6c7f3` verified.
+V2 valid 2/2, strict/deployed correct 2/2, one rescue/no harm; fresh legacy valid 0/2,
+strict correct 0/2, deployed 1/2 from fallback. Only two clean task groups; no
+robustness or general efficacy conclusion. Existing 400 remaining requests await
+separate continuation; no new study or changes to the frozen design.
+See [audit](audits/PACT_SELECTOR_CONTRACT_SMOKE_2026-10-15.md).
+
+## 2026-10-15 — Selector contract child complete
+
+`pact-anchor-selector-contract-002` return `1792072183327689752`, unchanged plan
+`d704f2c4e10ed509547773cbabecd214890a23d8f69004ba2cbdb6d9d958d09f` and source
+`58e7bf3e6ed7b9defdc231298133b4a1b2dd6c8e`: 404/404 calls, zero unresolved,
+206,848 reserved tokens, 242,154 input / 41,854 output tokens. Four included smoke
+calls preserved; exactly 400 continuation calls. No fitting or new source/checking.
+PRIVATE SHA256 `146677bedbfe12481abd4b996fb924faefbc4c544661693737bb5e304dab2b9c`;
+SANITIZED `369e2b8df18ce9d695a9a05796e121e2f61e5d577e79de914c7f78fd382dccef`.
+Local archive, parent, request, identity and report reconstruction checks pass.
+
+V2 valid selections 190/202 versus legacy 0/202; clean deployed 45/64 versus 44/64,
+one rescue/no observed harm. Joint clean-plus-both-attacks correctness 27/46 in
+both arms. Parent KEEP_ONLY outcomes remain unchanged; exposed-development prompt
+comparison only, no new policy or learned PACT efficacy claim. See
+[completed audit](audits/PACT_SELECTOR_CONTRACT_COMPLETE_2026-10-15.md).
+
+## 2026-10-16 — Heterogeneous training revival implemented; real allocation blocked
+
+Presets `pact-heterogeneous-receiver-training-001` and separately invoked
+`pact-update-allocation-probe-001` have collection, adapter training, evaluation,
+update-probe scoring/allocation and recovery entry points. No real plan or new
+cohort has been frozen; no model calls, fits, checkpoint updates or source downloads
+occurred on real data. Stage I remains bounded to17030 calls/768 main updates and
+Stage II to4928 calls/192 temporary updates. Two epochs are not outer refreshes.
+
+Verified metadata shows at most407 fresh ARC rows versus480 needed, minimum73
+shortfall, before additional exclusions. No task reuse/quota/source substitution
+is authorized. Exact eligible counts require the complete official source files.
+The fixture run exercises all six trained adapters and24 temporary branches with
+actual tiny-model gradients; fixture responses are not research results. Stage III
+has CPU-only finite coupling controls; no real MethodSpec or GPU budget exists.
+See [methodology](revival_methodology.md) and [Colab commands](revival_colab.md).

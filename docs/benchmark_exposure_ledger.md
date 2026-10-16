@@ -240,3 +240,33 @@ selector child reuses the same 64 development groups/202 views; it has not run
 on real models locally. These groups remain exposed, not fresh confirmation.
 The prior-exposure inventory freshness guard is retained; this derivative cannot
 certify any of the parent's 224 groups as new. No human/span review is reactivated.
+
+## 2026-10-15 — Selector smoke re-exposure
+
+Four included child calls revisit exactly the two hash-selected development tasks
+(one ARC, one LogiQA) from the closed selective parent, one clean view per task and
+two prompt arms. No new allocation or training exposure; these remain development
+material. The full 64-task/202-view continuation is not complete in this return.
+No protected cohorts or deferred human/span-review material were accessed.
+
+## 2026-10-15 — Selector contract full development re-exposure
+
+Verified full child return `1792072183327689752` completes paired fresh inference
+on all 64 existing source-development tasks (32 ARC, 32 LogiQA), 202 views and 404
+calls including the preserved smoke. The 138 variant views cover 46 of these tasks;
+they are not new independent groups. No fresh allocation, training, transfer,
+protected/final-test access or deferred human review occurred. All 64 tasks remain
+exposed development material. The parent's prior-exposure inventory is not thereby
+recertified for any future study. See the
+[completed audit](audits/PACT_SELECTOR_CONTRACT_COMPLETE_2026-10-15.md).
+
+## 2026-10-16 — Revival allocation feasibility, no new exposure
+
+The proposed 512 fit /64 allocation-probe /128 validation /256 source-evaluation
+cohort has not been allocated or executed. Proposal-1200 reserves600 ARC rows;
+the completed selective cohort adds112 disjoint ARC rows. With1119 pinned official
+ARC training rows, at most407 remain versus480 required, before further exclusions.
+The minimum shortfall is73; exact eligible grouping has not been recomputed locally
+because complete source bytes are absent. No old task was released, no protected
+item used and no source was downloaded. The reviewed exclusion-inventory extension
+adds all224 selective groups to earlier exclusions; it grants no training permission.

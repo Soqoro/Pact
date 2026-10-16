@@ -1987,3 +1987,69 @@ and exposure-guard tests (20.143 s). Notebook syntax/defaults and design checks 
 Not a full-suite claim. **GPU-unverified:** all prospective real selector behavior.
 **Deferred:** new policies/gates, transfer, human/span review and full PACT. No
 new exposure allocation, dependency upgrade, model download, commit or push.
+
+## 2026-10-15 — Selector contract real smoke verified
+
+Returned pair `1792068326092771454` verifies four exact included smoke calls on the
+reported L4 runtime, zero unresolved and safe recovery. V2 is valid/correct on both
+tasks (one retained correct ARC anchor, one LogiQA rescue); the fresh legacy arm is
+malformed on both and has 1/2 deployed correctness entirely through fallback.
+This verifies the bounded execution path on returned evidence, not full-study
+scientific efficacy. The remaining 400 calls are unexecuted in this return.
+
+Both archive hashes, parent receipt, all 404 planned renderings/legacy request
+identities/seeds, actual loaded model identity, runtime-only pre-dispatch transition,
+accounting and reconstructed private/sanitized report parity passed. No local
+inference, fit or unit-suite rerun. See [smoke audit](audits/PACT_SELECTOR_CONTRACT_SMOKE_2026-10-15.md).
+Historical parent outcomes and all deferred work remain unchanged.
+
+## 2026-10-15 — Selector contract full return verified
+
+The completed child has 404/404 committed/scored calls, zero unresolved, and safe
+recovery. Both bundle hashes, internal checks, immutable parent, exact request
+coverage/contracts/seeds, model/runtime identities and unchanged four-call smoke
+passed. Reconstructed private and sanitized summaries agree. V2 has 190/202 valid
+selections (eight abstentions, four malformed), versus zero for fresh legacy.
+Clean deployed correctness is 45/64 versus 44/64: one LogiQA rescue, no observed
+harm; eight of nine clean rescue opportunities remain unused. Accepted variants
+show no binary correctness flips; this is not a general robustness certificate.
+
+Returned GPU execution is verified for this complete child; no new local model
+calls or fits. CPU artifact reconstruction/contract checks passed; unit suite not
+rerun for documentation-only changes. Historical gates and parent results remain
+unchanged. See [completed audit](audits/PACT_SELECTOR_CONTRACT_COMPLETE_2026-10-15.md).
+No remaining calls or automatic next study are authorized by this result.
+
+## 2026-10-15 — Combined gate/selector decision review
+
+Read-only follow-up of the completed selector records finds that all eight missed
+clean rescue opportunities have valid responses: six wrong-anchor selections and
+two wrong-peer selections. Both clean abstentions occur without any correct
+candidate available. This separates the residual selection gap from formatting;
+it does not assign a semantic cause or select a replacement policy. The
+[decision review](audits/PACT_GATE_SELECTOR_DECISION_REVIEW_2026-10-15.md) joins this
+breakdown to the saved-gate evidence and records remaining evidence needs. Zero
+new model calls, fits or exposures; no code or method change and no next run.
+
+## 2026-10-16 — Heterogeneous dense training revival
+
+**Implemented:** separate versioned Q/L/M receiver study, matched independent and
+joint supervision, explicit FP32 LoRA/BF16 delta casting, native prefix masks,
+global stratum/condition reductions, six adapter fits and safe optimizer checkpoints,
+fixed epoch2 live evaluation, shared-history peer-access diagnostic, separately
+frozen24-branch update assay with rollback, paired common-readout/local NLL,
+allocation controls, private/sanitized/full-recovery exports and CLI/notebook.
+Finite multi-round orchestration and static/refreshed/local/uniform/shuffled/split
+controls are fixture-only until a new finite real MethodSpec is reviewed.
+
+**Real source blocker:** the verified600 historical ARC reservations and112
+selective ARC tasks are disjoint. At most407 of1119 rows remain versus480 needed:
+minimum73 shortfall, with further exclusions not yet enumerated. An updated reviewed
+metadata inventory was built outside Git; no new source allocation or model call.
+No unauthorized quota/source change. Historical results and deferrals are preserved.
+
+**GPU-unverified:** all new native-family adapter training, tokenization contracts,
+real runtime resource/Drive performance, and scientific outcomes. Existing model
+revisions/dependency pins were reused; no pretrained downloads or GPU/API calls,
+commit or push. [Runbook](revival_colab.md) stops at inadequate source preparation.
+Validation results are recorded in the companion implementation audit.

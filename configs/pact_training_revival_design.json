@@ -1,0 +1,161 @@
+{
+  "design_version": "pact-revival-20261016-v1",
+  "status": "proposed_not_executed",
+  "execution": {
+    "default": "offline_plan",
+    "local_real_inference": false,
+    "automatic_stage_ii": false,
+    "automatic_stage_iii": false,
+    "first_smoke_calls": 6,
+    "smoke_included": true
+  },
+  "splits": {
+    "main_fit": 512,
+    "allocation_probe": 64,
+    "validation": 128,
+    "source_evaluation": 256
+  },
+  "data": {
+    "sources": [
+      "official ARC-Challenge training",
+      "original English LogiQA training"
+    ],
+    "equal_source_allocation": true,
+    "seed": 20261016,
+    "exclude_all_recorded_prior_use": true,
+    "allocation_probe_is_training_use": true,
+    "locked_confirmation_access": false
+  },
+  "models": {
+    "Q": {
+      "id": "Qwen/Qwen2.5-7B-Instruct",
+      "revision": "resolve_existing_verified_registry",
+      "adapter_trainable": true
+    },
+    "L": {
+      "id": "meta-llama/Llama-3.1-8B-Instruct",
+      "revision": "resolve_existing_verified_registry",
+      "adapter_trainable": true
+    },
+    "M": {
+      "id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "revision": "resolve_existing_verified_registry",
+      "adapter_trainable": true
+    },
+    "readout": {
+      "id": "Qwen/Qwen3-8B",
+      "revision": "resolve_existing_verified_registry",
+      "trainable": false,
+      "thinking": false
+    }
+  },
+  "profile": {
+    "one_resident_backbone": true,
+    "backbone_dtype": "bfloat16",
+    "adapter_dtype": "float32",
+    "attention": "sdpa",
+    "max_new_tokens": 512,
+    "max_total_context": 8192,
+    "silent_fallback": false
+  },
+  "training": {
+    "rank": 16,
+    "alpha": 32,
+    "dropout": 0.05,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj"
+    ],
+    "optimizer": "AdamW",
+    "lr": 5e-05,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-08,
+    "weight_decay": 0,
+    "grad_clip": 1.0,
+    "task_group_accumulation": 8,
+    "epochs": 2,
+    "stage_i_warmup_steps": 8,
+    "dpo": false,
+    "same_prompt_pair_requirement": false,
+    "supervise_generated_rationales_as_gold": false,
+    "answer_prefix_only": true,
+    "checkpoint_rule": "fixed_epoch_2"
+  },
+  "stage_i": {
+    "id": "pact-heterogeneous-receiver-training-001",
+    "arms": [
+      "frozen_qlm",
+      "independent_adversarial_sft",
+      "uniform_joint_sft"
+    ],
+    "generation_components": {
+      "fit_private": 1536,
+      "attack_acquisition": 896,
+      "live_evaluation": 12672,
+      "extra_fixed_context": 1920,
+      "scratch_generation": 6
+    },
+    "max_generation_calls": 17030,
+    "reserved_output_tokens": 8719360,
+    "main_optimizer_steps": 768,
+    "scratch_optimizer_steps": 48,
+    "main_supervised_forwards": 18432,
+    "scratch_supervised_forwards": 48,
+    "independent_control_retains_attack": true,
+    "no_outcome_support_stop": true
+  },
+  "stage_ii": {
+    "id": "pact-update-allocation-probe-001",
+    "starting_snapshot": "uniform_joint_sft_fixed_epoch_2",
+    "requires_separate_invocation": true,
+    "fitting_blocks": 8,
+    "tasks_per_block": 64,
+    "probe_tasks_per_block": 8,
+    "update_branches": 24,
+    "temporary_steps_per_branch": 8,
+    "paired_generation_seeds": 2,
+    "generation_components": {
+      "probe_attack_acquisition": 64,
+      "baseline_two_seeds": 1408,
+      "updated_branches_two_seeds": 3456
+    },
+    "max_generation_calls": 4928,
+    "reserved_output_tokens": 2523136,
+    "temporary_optimizer_steps": 192,
+    "temporary_supervised_forwards": 1536,
+    "diagnostic_score_forwards": 1792,
+    "primary_score": "paired_common_frozen_readout_answer_NLL_reduction",
+    "save_generated_accuracy": true,
+    "rollback_every_branch": true
+  },
+  "stage_iii": {
+    "implementation": "generic_two_round_orchestrator_with_CPU_mock_tests",
+    "real_execution_plan": null,
+    "auto_launch": false,
+    "requires_new_budget": true
+  },
+  "bounded_portfolio": {
+    "max_generation_calls": 21958,
+    "reserved_output_tokens": 11242496,
+    "not_one_automatic_job": true
+  },
+  "deferred": [
+    "original_replay_recovery",
+    "CPU_gate_retraining",
+    "judge_finetuning",
+    "human_semantic_review",
+    "cue_sham",
+    "five_agents",
+    "frontier_APIs",
+    "MMLU_MuSR_new_transfer",
+    "GPQA_Phase_B",
+    "MATH_expansion",
+    "MBPP_execution",
+    "LiveBench"
+  ]
+}

@@ -75,6 +75,7 @@ must satisfy the anchor-plus-peer oracle and final=anchor+rescue−harm identiti
 Historical free reconsideration and KEEP_ONLY remain historical controls only.
 
 See [exact local/Colab commands](gate_diagnostics_colab.md) and
-[offline findings](audits/PACT_GATE_DIAGNOSTICS_2026-10-15.md). Real selector behavior
-is GPU-unverified. Human/span review, transfer and full PACT remain deferred. No
+[offline findings](audits/PACT_GATE_DIAGNOSTICS_2026-10-15.md). The [completed child audit](audits/PACT_SELECTOR_CONTRACT_COMPLETE_2026-10-15.md)
+records returned GPU evidence for the frozen comparison. Human/span review, transfer
+and full PACT remain deferred. No
 result authorizes another design or reallocates the already exposed 224 groups.

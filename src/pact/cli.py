@@ -173,6 +173,9 @@ def parser():
 
 def main(argv=None) -> int:
     routed = list(sys.argv[1:] if argv is None else argv)
+    if routed and routed[0] in ("revival", "update-probe"):
+        from .revival.__main__ import main as revival_main
+        return revival_main(routed[1:], probe_cli=routed[0]=="update-probe")
     if routed and routed[0] == "gate-diagnostics":
         from .selective.diagnostics import main as diagnostics_main
         return diagnostics_main(routed[1:])
