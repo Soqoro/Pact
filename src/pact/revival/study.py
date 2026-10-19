@@ -110,7 +110,7 @@ def attack_for(root,r):
     v=read_json(root/'attacks'/f'{digest(tid(r))}.json');return v if v['accepted'] else None
 
 
-def fit_bank(root,p):
+def fit_bank(root,p,*,inspect_only=False):
     read_json(root/'fit_complete.json');n=len(records(p,'main_fit'));bank={};support={}
     for f in c.FAMILIES:
         rows=[];raw=[]
@@ -129,6 +129,7 @@ def fit_bank(root,p):
         for cond in support[f]:
             support[f][cond]['invalid_own_tasks']=len({r['task_id'] for r in bank[f] if r['condition']==cond and r['invalid_own']})
     value={'version':c.VERSION,'plan_hash':digest(p),'bank':bank,'support':support,'tasks':n,'specialization_weight':0,'dpo':False}
+    if inspect_only:return value
     immutable(root/'training_bank.json',value);return {'tasks':n,'support':support}
 
 
@@ -153,7 +154,7 @@ def groups_for(root,p,backend,family,arm,selected=None,private_only=False):
     return groups
 
 
-def train_agent(root,p,cache,arm,family,*,resume=False,factory=None,persistent=None):
+def train_agent(root,p,cache,arm,family,*,resume=False,factory=None,persistent=None,initial_check=None,stop_after=None):
     if arm not in c.ARMS[1:] or family not in c.FAMILIES:raise ValueError('Train all Q/L/M on one declared arm')
     if not (root/'sanity_complete.json').exists():raise ValueError('Bounded scratch training sanity must complete first')
     backend=load_backend(root,family,cache,None,factory)
@@ -161,11 +162,12 @@ def train_agent(root,p,cache,arm,family,*,resume=False,factory=None,persistent=N
         shapes=neural.attach(backend.model,c.SEED+c.FAMILIES.index(family))
         if hasattr(backend.model,'gradient_checkpointing_enable'):
             backend.model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={'use_reentrant':False})
+        if initial_check is not None:initial_check(backend)
         gs=groups_for(root,p,backend,family,arm)
         identity={'plan':digest(p),'family':family,'arm':arm,'native':backend.identity,'shapes':shapes}
         immutable(root/'initializations'/f'{family}.json',{'hash':neural._weights_hash(neural.parameters(backend.model)),'shapes':shapes})
         started=time.monotonic()
-        out=neural.train(backend.model,gs,trained(root,arm,family),identity,resume=resume,callback=lambda:runtime.checkpoint(root,persistent))
+        out=neural.train(backend.model,gs,trained(root,arm,family),identity,resume=resume,stop_after=stop_after,callback=lambda:runtime.checkpoint(root,persistent))
         write_json(trained(root,arm,family)/'resources.json',{'invocation_seconds':time.monotonic()-started,**backend.resource_usage()})
         return out
     finally:backend.close()

@@ -1,3 +1,7 @@
+> The interrupted original training run must not resume. For the reviewed replacement
+> attempt, use [the new eight-cell runbook](revival_replacement_colab.md). The original
+> prerequisite/stage commands below are historical and must not be rerun for the child.
+
 # Revival: exact commands and execution prerequisites
 
 **Current disposition: v2 source preparation must verify 400 ARC / 560 LogiQA.**
@@ -235,3 +239,11 @@ identities, frozen private bank and attack inventory, weighted training bank,
 per-family native identity and initialization hashes, actual adapter/optimizer
 checkpoints, update logs, live and peer-use metrics, Stage II rollback receipts,
 paired scores, allocation analyses and separate private/sanitized/recovery exports.
+
+## Storage incident stop (19 October 2026)
+
+Do not use the training/resume cells above for the interrupted incident run.
+Later snapshot state is missing; retained step28 is not an authorized rollback.
+The [storage correction and recovery boundary](revival_storage_recovery.md)
+describes the locally tested member-snapshot format, capacity stop, and outstanding
+migration/history decision. Pushing this patch alone does not authorize resumption.

@@ -1517,3 +1517,76 @@ Exact split quotas and three/five homogeneous blocks preserve total budgets.
 Implemented version guards reject v1 sources/plans; historical evidence is retained.
 560 eligible LogiQA groups remain unverified; CPU source preparation must precede
 a new plan or GPU smoke. No new allocation, model run, commit or push locally.
+
+## 2026-10-19 — Revival member snapshots and capacity stop
+
+Replace routine full recovery ZIP snapshots with `revival_files_v1`: the existing
+latest/step-zero/epoch file selection is copied into content-addressed objects per
+file. Explicit PRIVATE/SANITIZED/RECOVERY exports retain their prior contracts.
+A verified receipt binds the complete member map, plan and recovery-safety state.
+A durable SNAPSHOT_PENDING marker precedes writes and survives capacity/copy failure;
+restore never falls back behind it. A 32 GiB ceiling applies to the entire revival
+object directory, including unknown objects. No automatic deletion, quota increase,
+old-snapshot selection or legacy-to-new migration is implemented. Existing source
+identity guards remain unchanged. This is an engineering correction, not a change
+to optimizer, objective, scientific budgets or authorization of recovery.
+
+File deduplication eliminates repeated copies of unchanged weights and metadata,
+but changing optimizer/adapter tensors still accumulate. The ceiling intentionally
+stops progress if reached. It is not a claim that all 768 updates fit in 32 GiB;
+reviewed retention/compaction or a separately approved capacity policy is still
+needed for unattended long training. Exported bundles and snapshot indexes are
+outside this object-byte limit and remain the user's retained evidence.
+
+## 2026-10-19 — Opt-in retention and replacement-attempt review
+
+The user authorized preparation of a separately identified replacement proposal
+and tested retention, not a GPU restart. `revival_tensor_retention_v1` is opt-in
+inside a future frozen plan. Keep latest two snapshots' tensors (including initial
+and epoch references); delete only obsolete step tensor objects after verified
+publication, with durable manifest/per-object deletion receipts. Preserve all
+metadata, unknown/shared objects, bundles and legacy evidence. Failure leaves the
+snapshot pending marker. No latest fallback or automatic capacity increase.
+This supersedes the no-retention implementation only for explicitly opted-in plans.
+
+The replacement proposal is deliberately non-executable and bound to the reviewed
+scratch PRIVATE bundle and exact bank hash. It proposes 768 additional updates
+from original initialization; it does not subtract the parent's unknown work or
+pretend to resume step28. Parent journals must remain under their original identity.
+A child import/runner, initialization/runtime verification and GPU execution await
+artifact-bound review. See `docs/revival_replacement_plan.md` and its hashed JSON.
+
+## 2026-10-19 — Reviewed replacement child execution
+
+The user approved proceeding after the artifact-bound replacement proposal. Added
+`pact.revival.replacement` with its own version, run ID and frozen source identity.
+Import binds the unchanged parent PRIVATE ZIP and bank SHA, checks original journal
+records and bank reconstruction, and copies no trained state. Parent records remain
+byte-identical inside the original ZIP; they are not relabeled as child calls.
+The child permits 768 additional updates/18,432 forwards and zero generation,
+scratch reruns or evaluation. Historical lower bounds/unknown execution remain
+separate. The old review JSON is immutable historical evidence, not a live status.
+
+Preflight loads pristine Q/L/M sequentially and checks exact native identities,
+runtime fingerprint and recreated initial FP32 adapter hashes against the original
+scratch restoration receipts. Train checks those identities again. It uses the
+existing masked objective and optimizer; the only common-code additions are a
+read-only bank reconstruction option and optional initial-check/stop boundary hooks.
+Legacy CLI rejects child plans; the child journal rejects generation. Explicit
+cache repair validates the known official Mistral pointer/payload without changing
+model revision or hash. No dependency upgrade or GPU execution performed locally.
+
+A supplementary cross-Python bank reconstruction may differ by summation roundoff
+(max observed ~1.43e-15 under local Python 3.10). Only weight/support-mass comparison
+allows rel1e-12/abs1e-15 tolerance; labels, prompts and structure remain exact.
+Training always uses original SHA-bound bank bytes, never recomputed coefficients.
+Actual GPU runtime checks are unchanged and remain strict.
+
+After durable success, opt-in retention also prunes obsolete scratch tensor files,
+retaining two latest local steps, initial/epoch checkpoints and metadata/audit.
+This prevents scratch accumulation without deleting anything on persistence failure.
+The real parent projection shapes imply ~4.83 GiB object peak including structural
+margin; this is an estimate, not a Drive quota or throughput guarantee. Exported
+bundles and metadata remain separately retained. Eight thin Colab cells expose an
+included first optimizer step followed by explicit compatible completion of six
+fits. Evaluation/Stage II remain deferred until a separate results review.

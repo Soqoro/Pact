@@ -2067,3 +2067,127 @@ a new plan or GPU smoke. No new allocation, model run, commit or push locally.
 Validation: 23 revival CPU/mock tests passed (90.221s), including the full revised
 allocation round trip. Design arithmetic, notebook syntax, compilation, inventory
 freshness and diff checks passed. Real 560-LogiQA availability remains unverified.
+
+
+## Revival v2 source smoke imported
+
+[Verified source-smoke audit](audits/PACT_REVIVAL_SOURCE_SMOKE_2026-10-16.md):
+6/6 committed, zero unresolved, five valid packets, three correct valid answers
+on two fixed fitting tasks. One Mistral invalid-JSON failure is retained. No
+training or receiver evaluation yet. PRIVATE/SANITIZED hashes and member checksums
+verified; report reproduced locally. Native Q/L/M private generation observed;
+training and R generation remain GPU-unverified. Continue existing pinned plan
+without smoke retries; next milestone is fixed-bank collection and scratch check.
+
+
+## 2026-10-18 — Revival fixed bank and scratch training verified
+
+[Imported scratch audit](audits/PACT_REVIVAL_SCRATCH_2026-10-18.md): 2,438/2,438
+committed calls, zero unresolved; 1,536 fitting privates, 896 attack attempts
+(668 accepted / 228 rejected), six scratch generations. All 48 scratch updates
+have finite/nonzero gradients; all three recorded restoration hashes match.
+Two-task correct counts Q 2→2, L 1→2, M 0→2 are memorization/engineering evidence
+only. PRIVATE/SANITIZED checksums and journal verified; training bank/report
+reproduced and original smoke unchanged. Weight tensors are absent from review
+ZIPs, so local independent tensor restoration verification is unavailable.
+Main six-adapter fits and receiver evaluation remain unexecuted. No next assay
+or full-PACT efficacy claim; retain existing pinned source for continuation.
+
+
+## 2026-10-19 — Revival main-training persistence incident
+
+[Storage incident](audits/PACT_REVIVAL_STORAGE_INCIDENT_2026-10-19.md): user reports
+345.90 GiB in 480 objects; full recovery ZIP persistence before/after every update
+causes duplication. Latest two snapshot directories empty, next three reference
+missing archives including unsafe receipts. Newest inspected surviving archive
+records independent Q 28/128, other fits absent; subsequent progress unknown.
+Archive member statuses checked in Colab, whole-archive hashes pending. No safe
+resume or training-completion claim. No deletion or older-snapshot fallback;
+retention verification and a bounded-storage correction are required.
+
+
+## 2026-10-19 — Revival storage cleanup completed (returned evidence)
+
+User-reported execution of reviewed cleanup manifest removed 235 historical
+state objects / 335.93 GiB, leaving 245 objects / 9.97 GiB. All three verified
+retained archives, snapshot metadata and exported bundles remain. Manifest and
+deletion journal are saved under the run's `cleanup-audit/` directory. No resume
+is authorized: later missing optimizer history remains unresolved and the
+full-archive persistence implementation still requires correction. See the
+[incident audit](audits/PACT_REVIVAL_STORAGE_INCIDENT_2026-10-19.md).
+
+## 2026-10-19 — Bounded revival persistence correction (CPU-tested)
+
+Routine snapshots now store selected recovery files as individual content-addressed
+objects, reusing unchanged bytes instead of repackaging a multi-GiB ZIP twice per
+update. Durable pending markers survive failures; admission stops at 32 GiB of
+objects without automatic deletion. New-format restore verifies all bytes and
+execution safety. Legacy roots require explicit migration, and the incident run's
+later missing state still blocks resume. Export bundle contracts remain unchanged.
+
+Validation: `PYTHONPATH=src python -m unittest discover -s tests -p
+ 'test_revival*.py' -v`: 29 tests passed, plus three optional neural test classes
+skipped because torch/safetensors are unavailable in this interpreter. Storage
+suite: 5 passed; artifact suite: 5 passed. Initial invocation without PYTHONPATH
+failed to import the local package; rerun with src succeeded. `git diff --check`
+passed. No model downloads, GPU runs, commits, pushes, remote deletion or resume.
+Drive performance and real-GPU operation are unverified. Changing tensors still
+accumulate; a separately reviewed retention policy is needed before claiming long
+unattended training is supported. See `docs/revival_storage_recovery.md`.
+
+## 2026-10-19 — Retention CPU tests and replacement review artifact
+
+Implemented opt-in tensor retention with two full latest snapshots, initial/epoch
+protection through the existing member selection, metadata/unknown-object protection
+and durable deletion audit. Interrupted cleanup blocks recovery. Existing plans
+without the exact policy retain all objects; legacy stores cannot opt in implicitly.
+
+Executed revival suite: 36 tests passed, three optional neural classes skipped
+(torch/safetensors unavailable). Storage and artifact suites: 5 passed each.
+The repeated 20-update fixture retained only initial, epoch, previous and current
+tensor objects, preserved all 21 snapshot indexes and restored the latest state.
+Other tests cover pruning interruption, unsafe latest state, shared/unknown object
+protection, unexplained missing history and policy mismatch. Actual imported
+scratch PRIVATE archive/member checksums and bank/plan hashes reverified by the
+new offline proposal CLI; zero model calls. `git diff --check` passed.
+
+Produced `docs/revival_replacement_review.json`, SHA256
+`a67a7000801c4c96d19cd3b6d8521ee9d5fa9f5b2305c101eded1e11b4a066a3`.
+Status remains review-required/non-executable. Real GPU/Drive performance,
+capacity headroom and executable child import/training are deferred. No commit,
+push, Drive mutation, legacy rollback or GPU work performed.
+
+## 2026-10-19 — Executable replacement child (CPU-tested, GPU-unverified)
+
+Implemented reviewed `pact-heterogeneous-receiver-training-replacement-002` through
+`python -m pact.revival.replacement`: exact parent import, capacity/identity preflight,
+explicit pinned Mistral cache repair, real adapter training with guarded resume,
+report and PRIVATE/SANITIZED/RECOVERY exports. Original journals and bank bytes remain
+unchanged; initialized FP32 adapters must match the original scratch restoration
+hashes. No trained parent tensors enter the child. No collection, generation,
+scratch rerun, evaluation or Stage II command is exposed. Parent history remains
+unresolved and charged separately; this is not an exact continuation.
+
+Executed final regression suite with installed Python3.10 CPU Torch2.9.0 and
+safetensors0.6.2: **57 revival tests passed, no skips** (128.258s). This includes
+real tiny neural updates across six fixture fits, one-step persistence followed by
+restore/resume, checkpoint export/import and privacy checks, identity/bank tamper
+rejection and unsafe/retention failure paths. Five storage and five artifact tests
+also passed. Eight notebook cells parse and match the copy/paste runbook exactly;
+`git diff --check` passed. No model downloads or GPU training occurred locally.
+
+The real PRIVATE parent import was reverified under a simulated clean source
+identity, with temporary private data outside Git: 2,438 original journal records,
+exact bank/member hashes and zero new calls/updates. Initial test attempts exposed
+and fixed empty journal-directory handling; the cross-Python bank rebuild was
+made diagnostic-only with strict context/label checks and narrow coefficient
+roundoff tolerance, retaining original bank bytes. The environment's /tmp Git
+marker required a private /var/tmp temporary directory for this audit, not disabling
+privacy checks. That test does not establish a real clean Colab checkout/runtime.
+
+Files: `src/pact/revival/replacement.py`, `mistral_cache.py`, extensions to existing
+study/runtime/retention guards, `tests/test_revival_replacement.py`,
+`notebooks/25_revival_replacement_colab.ipynb` and
+`docs/revival_replacement_colab.md`. Actual GPU identity/load/gradient/Drive behavior
+remains unverified until the user returns evidence. No commit/push, Drive mutation,
+parent recovery or evaluation performed.

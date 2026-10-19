@@ -6,7 +6,7 @@ import zipfile
 import time
 import hashlib
 from ..util import read_json,write_json,digest,file_hash,canonical
-from ..artifacts import ShardStore,safe_relative,sync_run
+from ..artifacts import ShardStore,safe_relative
 from ..backends.native import NativeBackend,metadata
 from ..config import Limits
 from ..environment import code_identity
@@ -65,6 +65,7 @@ class Journal:
             n=sum(i['identity']['budget_stage']==stage for i in self.intents.values())
             if n>c.BUDGETS[stage]['generation']:raise ValueError('Generation budget exceeded')
     def request(self,backend,req,logical,persistent=None):
+        if self.plan.get('version')=='revival_replacement_training_v1':raise ValueError('Replacement generation is not authorized')
         identity={'plan_hash':self.hash,'budget_stage':self.stage,'model':backend.identity,'request':asdict(req),'logical':logical}
         key=digest(identity)
         if key in self.results:return self.results[key]
@@ -87,21 +88,26 @@ class Journal:
         return result
 
 
+def recovery_files(root):
+    """One selection contract for file snapshots and explicit recovery exports."""
+    for f in sorted(root.rglob('*')):
+        if f.is_symlink():raise ValueError('Symlink in run')
+        if not f.is_file() or f.name=='.lock' or 'bundles' in f.relative_to(root).parts:continue
+        if f.suffix=='.safetensors':
+            base=f.parent.parent;keep={sorted(base.glob('step-*'))[-1].name,'step-000000'}
+            for ep in base.parent.glob('epoch*.json'):keep.add(f"step-{read_json(ep)['step']:06d}")
+            if f.parent.name not in keep:continue
+        yield f
+
+
 def package(root,path,*,weights=False,sanitized=False):
-    """Streaming archives; no executable deserialization. Recovery includes real tensors."""
+    """Streaming explicit exports; routine snapshots do not create recovery ZIPs."""
     path.parent.mkdir(parents=True,exist_ok=True);checks={}
     with zipfile.ZipFile(path,'w',zipfile.ZIP_DEFLATED) as z:
-        for f in sorted(root.rglob('*')):
-            if f.is_symlink():raise ValueError('Symlink in run')
-            if not f.is_file() or f.name=='.lock' or 'bundles' in f.relative_to(root).parts:continue
+        for f in recovery_files(root):
             rel=f.relative_to(root).as_posix()
             if sanitized and rel not in ('summary.json','probe_summary.json','reviewed_stage_i_summary.json'):continue
             if not weights and f.suffix=='.safetensors':continue
-            # Recover latest and epoch snapshots; old step metadata remains reviewable.
-            if weights and f.suffix=='.safetensors':
-                base=f.parent.parent;keep={sorted(base.glob('step-*'))[-1].name,'step-000000'}
-                for ep in base.parent.glob('epoch*.json'):keep.add(f"step-{read_json(ep)['step']:06d}")
-                if f.parent.name not in keep:continue
             checks[rel]=file_hash(f);z.write(f,rel)
         meta={'kind':'sanitized' if sanitized else 'recovery' if weights else 'private_review','version':c.VERSION}
         z.writestr('HANDOFF.json',canonical(meta));z.writestr('checksums.json',canonical(checks))
@@ -135,39 +141,48 @@ def unpack(bundle,sha,root):
     Journal(root)
 
 
+def recovery_safe(root):
+    """An optimizer intent is as binding as a generation or scoring intent."""
+    safe={p.stem for p in (root/'intents').glob('*.json')}=={p.stem for p in (root/'calls/shards').glob('*.sha256')}
+    safe &= {p.stem for p in (root/'score_intents').glob('*.json')}=={p.stem for p in (root/'probe_scores/shards').glob('*.sha256')}
+    for p in root.rglob('update_attempt.json'):
+        steps=sorted((p.parent/'checkpoints').glob('step-*'))
+        if steps:
+            from ..training.checkpoints import read_checkpoint
+            meta=read_checkpoint(steps[-1],read_json(p.parent/'contract.json'))
+            safe &= meta['step']>=read_json(p)['step']
+        else:safe=False
+    return bool(safe)
+
+
 def checkpoint(root,persistent):
     if persistent is None:return
-    import tempfile,shutil
-    with tempfile.TemporaryDirectory(dir=root.parent) as d:
-        t=Path(d);r=package(root,t/'state.zip',weights=True)
-        # Unsafe dispatches or training intents must survive interruption.
-        intents=list((root/'intents').glob('*.json'));results=list((root/'calls/shards').glob('*.sha256'))
-        safe={p.stem for p in intents}=={p.stem for p in results} and {p.stem for p in (root/'score_intents').glob('*.json')}=={p.stem for p in (root/'probe_scores/shards').glob('*.sha256')}
-        for p in root.rglob('update_attempt.json'):
-            steps=sorted((p.parent/'checkpoints').glob('step-*'))
-            if steps:
-                from ..training.checkpoints import read_checkpoint
-                meta=read_checkpoint(steps[-1],read_json(p.parent/'contract.json'))
-                safe &= meta['step']>=read_json(p)['step']
-            else:safe=False
-        write_json(t/'receipt.json',{'sha256':r['sha256'],'plan_hash':digest(read_json(root/'plan.json')),'recovery_safe':bool(safe)})
-        sync_run(t,persistent,timeout_seconds=600)
-        if safe:(persistent/'INFLIGHT.json').unlink(missing_ok=True)
+    from ..storage import storage_operation
+    # Worker writes a durable pending marker before any snapshot mutation. Failure
+    # or deadline leaves it in place, including a failed post-optimizer snapshot.
+    storage_operation('revival-snapshot',root,persistent,timeout_seconds=600)
+    from .retention import prune_scratch
+    prune_scratch(root)
 
 
 def restore_latest(persistent,root):
     """No older snapshot fallback; unfinished durable dispatch stays unsafe."""
+    if (persistent/'SNAPSHOT_PENDING.json').exists():raise ValueError('Unfinished snapshot; no older fallback')
     if (persistent/'INFLIGHT.json').exists():raise ValueError('Latest durable dispatch unresolved; forensic export required, no older fallback')
     snaps=sorted((persistent/'snapshots').glob('*'))
     if not snaps:raise ValueError('No durable snapshot')
     latest=snaps[-1];idx=read_json(latest/'index.json')
-    if (latest/'COMPLETE').read_text().strip()!=file_hash(latest/'index.json') or set(idx['files'])!={'receipt.json','state.zip'}:raise ValueError('Invalid latest snapshot')
+    if (latest/'COMPLETE').read_text().strip()!=file_hash(latest/'index.json') :raise ValueError('Invalid latest snapshot')
     def obj(name):
         h=idx['files'][name]
         if len(h)!=64 or any(x not in '0123456789abcdef' for x in h):raise ValueError('Bad object identifier')
         path=persistent/'objects'/h
         if path.is_symlink() or file_hash(path)!=h:raise ValueError('Corrupt snapshot object')
         return path
+    if 'recovery.json' in idx['files']:
+        from .persistence import restore_files
+        return restore_files(persistent,root,idx,obj)
+    if set(idx['files'])!={'receipt.json','state.zip'}:raise ValueError('Invalid legacy snapshot')
     receipt=read_json(obj('receipt.json'))
     if not receipt['recovery_safe'] or receipt['sha256']!=idx['files']['state.zip']:raise ValueError('Latest snapshot unsafe')
     unpack(obj('state.zip'),receipt['sha256'],root)

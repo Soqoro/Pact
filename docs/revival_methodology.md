@@ -137,3 +137,9 @@ References used for implementation checks: the existing pinned native backend,
 [LoRA initialization documentation](https://huggingface.co/docs/peft/v0.18.1/developer_guides/lora),
 and [AdamW documentation](https://docs.pytorch.org/docs/stable/generated/torch.optim.AdamW.html).
 No dependency versions were upgraded.
+
+Routine persistence now uses the engineering-only
+[member snapshot correction](revival_storage_recovery.md), with a 32 GiB object
+capacity stop. Explicit recovery ZIP exports remain unchanged. The interrupted
+October training run remains blocked; historical missing updates are not repaired
+by deduplication or the earlier cleanup.

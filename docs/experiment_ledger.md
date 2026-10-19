@@ -2672,3 +2672,87 @@ Exact split quotas and three/five homogeneous blocks preserve total budgets.
 Implemented version guards reject v1 sources/plans; historical evidence is retained.
 560 eligible LogiQA groups remain unverified; CPU source preparation must precede
 a new plan or GPU smoke. No new allocation, model run, commit or push locally.
+
+
+## Revival v2 source smoke imported
+
+[Verified source-smoke audit](audits/PACT_REVIVAL_SOURCE_SMOKE_2026-10-16.md):
+6/6 committed, zero unresolved, five valid packets, three correct valid answers
+on two fixed fitting tasks. One Mistral invalid-JSON failure is retained. No
+training or receiver evaluation yet. PRIVATE/SANITIZED hashes and member checksums
+verified; report reproduced locally. Native Q/L/M private generation observed;
+training and R generation remain GPU-unverified. Continue existing pinned plan
+without smoke retries; next milestone is fixed-bank collection and scratch check.
+
+
+## 2026-10-18 — Revival fixed bank and scratch training verified
+
+[Imported scratch audit](audits/PACT_REVIVAL_SCRATCH_2026-10-18.md): 2,438/2,438
+committed calls, zero unresolved; 1,536 fitting privates, 896 attack attempts
+(668 accepted / 228 rejected), six scratch generations. All 48 scratch updates
+have finite/nonzero gradients; all three recorded restoration hashes match.
+Two-task correct counts Q 2→2, L 1→2, M 0→2 are memorization/engineering evidence
+only. PRIVATE/SANITIZED checksums and journal verified; training bank/report
+reproduced and original smoke unchanged. Weight tensors are absent from review
+ZIPs, so local independent tensor restoration verification is unavailable.
+Main six-adapter fits and receiver evaluation remain unexecuted. No next assay
+or full-PACT efficacy claim; retain existing pinned source for continuation.
+
+
+## 2026-10-19 — Revival main-training persistence incident
+
+[Storage incident](audits/PACT_REVIVAL_STORAGE_INCIDENT_2026-10-19.md): user reports
+345.90 GiB in 480 objects; full recovery ZIP persistence before/after every update
+causes duplication. Latest two snapshot directories empty, next three reference
+missing archives including unsafe receipts. Newest inspected surviving archive
+records independent Q 28/128, other fits absent; subsequent progress unknown.
+Archive member statuses checked in Colab, whole-archive hashes pending. No safe
+resume or training-completion claim. No deletion or older-snapshot fallback;
+retention verification and a bounded-storage correction are required.
+
+
+## 2026-10-19 — Revival storage cleanup completed (returned evidence)
+
+User-reported execution of reviewed cleanup manifest removed 235 historical
+state objects / 335.93 GiB, leaving 245 objects / 9.97 GiB. All three verified
+retained archives, snapshot metadata and exported bundles remain. Manifest and
+deletion journal are saved under the run's `cleanup-audit/` directory. No resume
+is authorized: later missing optimizer history remains unresolved and the
+full-archive persistence implementation still requires correction. See the
+[incident audit](audits/PACT_REVIVAL_STORAGE_INCIDENT_2026-10-19.md).
+
+### 2026-10-19 — Revival storage patch, no experiment executed
+
+Local member-addressed checkpoint persistence and a 32 GiB object cap replace
+routine full-ZIP duplication. CPU evidence: 29 revival tests passed (three optional
+neural classes skipped), storage 5/5 and artifacts 5/5. Legacy migration and
+incident recovery remain blocked pending review; no calls, updates, resume, new
+run or remote artifact mutations. This is not scientific efficacy evidence.
+
+### 2026-10-19 — Replacement proposal, not a launched run
+
+Proposed ID `pact-heterogeneous-receiver-training-replacement-002`; review artifact
+SHA256 `a67a7000801c4c96d19cd3b6d8521ee9d5fa9f5b2305c101eded1e11b4a066a3`.
+Exact parent bank reused; proposal adds 768 main updates/18,432 training forwards,
+zero collection/scratch/evaluation calls. Parent at-least-28 main updates and unknown
+later execution remain charged separately, alongside 48 scratch updates and 2,438
+confirmed generations. No scientific improvement or new training execution claimed.
+Retention: 36 revival tests passed with three optional neural classes skipped;
+5 storage and 5 artifact tests passed. Await proposal review and executable child
+import/identity checks before any Colab launch. Parent storage remains untouched.
+
+### 2026-10-19 — Replacement runner ready for pinned Colab execution
+
+Following user review, implemented the separate child for the approved additional
+768 updates from original initialization. Exact bank and inherited 2,438-call
+journal verified; original parent is unchanged and not resumed. New work remains
+zero locally. Historical actual main updates remain unknown beyond the confirmed
+28; no cost is erased. Evaluation/Stage II remain deferred.
+
+Evidence: 57 revival CPU tests passed without skips, including tiny neural
+train/restore/resume and actual private-bank import; storage5/artifacts5 passed.
+Eight-cell notebook/runbook syntax and equality verified. Local source identity in
+the real-bank test was simulated clean; no real GPU or Drive result is claimed.
+Next: user review/commit/push, pinned replacement notebook, then return PRIVATE and
+SANITIZED bundles; preserve RECOVERY on Drive. Separate child root prevents reuse
+of the incident's missing/unsafe snapshots.
