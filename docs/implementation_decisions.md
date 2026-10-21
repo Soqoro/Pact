@@ -1590,3 +1590,41 @@ margin; this is an estimate, not a Drive quota or throughput guarantee. Exported
 bundles and metadata remain separately retained. Eight thin Colab cells expose an
 included first optimizer step followed by explicit compatible completion of six
 fits. Evaluation/Stage II remain deferred until a separate results review.
+
+
+## 2026-10-21 — Replacement interruption forensic review
+
+Verified private forensic archive `bb9d759af00b2ee7942ad25236bced0b6ebf95cbdaccf2f582a22586148d9015`, all 48 members and four checkpoint contracts/inventories/tensor hashes. Recorded progress is 477/768 updates; joint Q step 94 remains unresolved. Pinned callback ordering does not resolve the unbound pending transaction as pre- versus post-update. No resume, fallback, marker deletion or new run authorized. See [the audit](revival_replacement_interruption_audit.md). No efficacy claim or live GPU restoration verification.
+
+## 2026-10-22 — Phase-bound persistence and scoped retention optimization
+
+Explicit training boundary callbacks carry phase, fit and step to persistence.
+Pending records bind saved intent/status/contract hashes and a unique transaction;
+verified completion records bind the snapshot index. No old marker interpretation,
+unsafe retry or source migration is introduced. Retention caches presence and
+content verification per invocation only, retaining all cross-invocation corruption
+checks and historical audit validation. The artifact-bound continuation proposal in
+`revival_continuation_review.md` requires a new decision, not implied authorization.
+
+## 2026-10-22 — Explicit amended continuation child
+
+After the user's instruction to proceed with the concrete continuation proposal,
+implemented a separate `revival_amended_continuation_v1` child, not an implicit
+resume. Exact forensic and original PRIVATE bank archives are prerequisites.
+Completed independent fits remain immutable. The original unresolved Q intent is
+retained under lineage; joint Q explicitly starts a new branch at step 93 using
+unchanged neural contract/optimizer/RNG/sampler state. The new outer plan binds
+current source and amended accounting separately. Joint L/M start from verified
+original seeded initializations. No independent updates, generation, evaluation,
+Stage II or final-test entry point exists. Both old incident histories remain
+explicit. The review digest binds 291 new committed updates, 6,984 new forwards,
+and at most one unknown historical step (up to 24 forwards), separately from the
+original pre-replacement incident. No old run or marker is edited.
+
+The first new Q update is INCLUDED in that 291 count. Inherited Q log prefixes are
+immutable and report accounting is checked against checkpoint state metadata,
+using decoded dictionary equality (serialized dictionary insertion order is not
+semantic). Existing latest-only restore, source/runtime matching, pending-transaction
+and unknown-attempt refusal remain active. See `revival_continuation_review.md`
+and the eight-cell `revival_continuation_colab.md` / notebook 26. GPU execution is
+left to the user after review/commit/push; none was performed locally.

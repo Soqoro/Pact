@@ -2,6 +2,7 @@
 import os
 import shutil
 import tempfile
+import uuid
 from pathlib import Path
 
 from ..artifacts import _sync_run, safe_relative
@@ -11,7 +12,33 @@ FORMAT = 'revival_files_v1'
 MAX_OBJECT_BYTES = 32 * 1024**3
 
 
-def persist_files(root, destination, *, progress=lambda message: None):
+def boundary_record(root, boundary):
+    """Bind the caller's phase to scratch evidence; never infer an old transaction."""
+    if boundary is None:
+        return {'phase': 'checkpoint'}
+    from . import contracts as c
+    if (set(boundary) != {'phase','step','arm','family'}
+            or boundary['phase'] not in ('pre_update','post_update')
+            or boundary['arm'] not in c.ARMS[1:] or boundary['family'] not in c.FAMILIES
+            or type(boundary['step']) is not int or boundary['step'] < 1):
+        raise ValueError('Invalid optimizer persistence boundary')
+    folder = root/'training'/boundary['arm']/boundary['family']
+    intent = read_json(folder/'update_attempt.json')
+    status_path = folder/'status.json'
+    status = read_json(status_path) if status_path.exists() else {}
+    committed = status.get('completed_steps', 0)
+    expected = boundary['step'] - (boundary['phase'] == 'pre_update')
+    if intent['step'] != boundary['step'] or committed != expected:
+        raise ValueError('Optimizer persistence boundary disagrees with saved progress')
+    contract_hash = file_hash(folder/'contract.json')
+    if intent['contract_hash'] != digest(read_json(folder/'contract.json')):
+        raise ValueError('Optimizer intent contract mismatch')
+    return {**boundary, 'committed_steps': committed, 'contract_sha256': contract_hash,
+            'intent_sha256': file_hash(folder/'update_attempt.json'),
+            'status_sha256': file_hash(status_path) if status_path.exists() else None}
+
+
+def persist_files(root, destination, *, progress=lambda message: None, boundary=None):
     from .runtime import recovery_files, recovery_safe
     root, destination = Path(root), Path(destination)
     pending = destination / 'SNAPSHOT_PENDING.json'
@@ -42,7 +69,9 @@ def persist_files(root, destination, *, progress=lambda message: None):
         raise ValueError('Unknown retention policy')
     if snapshots and previous.get('retention_policy') != policy:
         raise ValueError('Retention policy changed; no migration')
-    marker = {'format': FORMAT, 'plan_hash': digest(read_json(root/'plan.json'))}
+    marker = {'format': FORMAT, 'plan_hash': digest(read_json(root/'plan.json')),
+              'transaction_version': 1, 'transaction_id': uuid.uuid4().hex,
+              'boundary': boundary_record(root, boundary)}
     write_json(pending, marker)
     if read_json(pending) != marker:
         raise OSError('Snapshot pending marker verification failed')
@@ -88,6 +117,13 @@ def persist_files(root, destination, *, progress=lambda message: None):
             prune(destination, receipt['plan_hash'])
         if receipt['recovery_safe']:
             (destination/'INFLIGHT.json').unlink(missing_ok=True)
+        completion = {**marker, 'snapshot': snapshot.name,
+                      'index_sha256': file_hash(snapshot/'index.json'),
+                      'recovery_safe': receipt['recovery_safe']}
+        record = destination/'transactions'/f"{marker['transaction_id']}.json"
+        write_json(record, completion)
+        if read_json(record) != completion:
+            raise OSError('Persistence transaction completion verification failed')
         pending.unlink()
         return {'snapshot': str(snapshot), 'format': FORMAT,
                 'projected_object_bytes': projected, 'max_object_bytes': MAX_OBJECT_BYTES, 'retention_policy': policy}

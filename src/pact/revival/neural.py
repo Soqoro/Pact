@@ -110,7 +110,7 @@ def load(root,identity,model,optimizer=None):
     return meta['step'],state
 
 
-def train(model,groups,root,identity,*,epochs=2,batch=8,warmup=8,resume=False,stop_after=None,callback=lambda:None):
+def train(model,groups,root,identity,*,epochs=2,batch=8,warmup=8,resume=False,stop_after=None,callback=lambda:None,boundary_callback=None):
     """Each group contains already GLOBAL coefficients. N/batch converts to unbiased minibatch loss."""
     import torch
     root=Path(root);root.mkdir(parents=True,exist_ok=True)
@@ -137,7 +137,8 @@ def train(model,groups,root,identity,*,epochs=2,batch=8,warmup=8,resume=False,st
     for entry in schedule[step:]:
         if stop_after is not None and step>=stop_after:break
         write_json(intent,{'step':step+1,'contract_hash':digest(contract)})
-        callback()  # Persist the unsafe intent before optimizer execution.
+        (boundary_callback("pre_update", step+1) if boundary_callback else callback())
+        # No forward or optimizer work occurs until this synchronous call returns.
         optimizer.zero_grad(set_to_none=True);total=0.;forwards=0
         for i in entry['indices']:
             for e in groups[i]['contexts']:
@@ -160,6 +161,6 @@ def train(model,groups,root,identity,*,epochs=2,batch=8,warmup=8,resume=False,st
         if step==len(schedule) or schedule[step]['epoch']!=entry['epoch']:
             write_json(root/f"epoch{entry['epoch']}.json",{'step':step,'adapter_hash':_weights_hash(ps),'contract':contract})
         write_json(root/'status.json',{'complete':step==len(schedule),'completed_steps':step,'planned_steps':len(schedule),'forwards':sum(x['supervised_forwards'] for x in logs),'adapter_hash':_weights_hash(ps),'logs':logs})
-        callback();print(f'Training {identity.get("family")} {step}/{len(schedule)} loss={total:.5f}',flush=True)
+        (boundary_callback("post_update", step) if boundary_callback else callback());print(f'Training {identity.get("family")} {step}/{len(schedule)} loss={total:.5f}',flush=True)
     optimizer.zero_grad(set_to_none=True);model.eval()
     return read_json(root/'status.json')

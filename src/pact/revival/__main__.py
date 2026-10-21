@@ -20,8 +20,8 @@ def main(argv=None,probe_cli=False):
     p.add_argument('--family',choices=c.FAMILIES);p.add_argument('--arm',choices=c.ARMS);p.add_argument('--split',choices=['validation','source_evaluation'])
     p.add_argument('--block',type=int,choices=range(8));p.add_argument('--bundle',type=Path);p.add_argument('--sha256')
     a=p.parse_args(argv);root=a.run_dir
-    if (root/'plan.json').exists() and read_json(root/'plan.json').get('version')=='revival_replacement_training_v1':
-        raise ValueError('Use pact.revival.replacement for this isolated child')
+    if (root/'plan.json').exists() and read_json(root/'plan.json').get('version') in ('revival_replacement_training_v1','revival_amended_continuation_v1'):
+        raise ValueError('Use the dedicated replacement/continuation CLI for this isolated child')
     if a.stage=='restore':
         if a.persistent:runtime.restore_latest(a.persistent,root)
         elif a.bundle:runtime.unpack(a.bundle,a.sha256,root)

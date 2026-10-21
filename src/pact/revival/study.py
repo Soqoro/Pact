@@ -167,7 +167,8 @@ def train_agent(root,p,cache,arm,family,*,resume=False,factory=None,persistent=N
         identity={'plan':digest(p),'family':family,'arm':arm,'native':backend.identity,'shapes':shapes}
         immutable(root/'initializations'/f'{family}.json',{'hash':neural._weights_hash(neural.parameters(backend.model)),'shapes':shapes})
         started=time.monotonic()
-        out=neural.train(backend.model,gs,trained(root,arm,family),identity,resume=resume,stop_after=stop_after,callback=lambda:runtime.checkpoint(root,persistent))
+        out=neural.train(backend.model,gs,trained(root,arm,family),identity,resume=resume,stop_after=stop_after,boundary_callback=lambda phase,step:runtime.checkpoint(root,persistent,
+            boundary={"phase":phase,"step":step,"arm":arm,"family":family}))
         write_json(trained(root,arm,family)/'resources.json',{'invocation_seconds':time.monotonic()-started,**backend.resource_usage()})
         return out
     finally:backend.close()

@@ -2756,3 +2756,27 @@ the real-bank test was simulated clean; no real GPU or Drive result is claimed.
 Next: user review/commit/push, pinned replacement notebook, then return PRIVATE and
 SANITIZED bundles; preserve RECOVERY on Drive. Separate child root prevents reuse
 of the incident's missing/unsafe snapshots.
+
+
+## 2026-10-21 — Replacement interruption forensic review
+
+Verified private forensic archive `bb9d759af00b2ee7942ad25236bced0b6ebf95cbdaccf2f582a22586148d9015`, all 48 members and four checkpoint contracts/inventories/tensor hashes. Recorded progress is 477/768 updates; joint Q step 94 remains unresolved. Pinned callback ordering does not resolve the unbound pending transaction as pre- versus post-update. No resume, fallback, marker deletion or new run authorized. See [the audit](revival_replacement_interruption_audit.md). No efficacy claim or live GPU restoration verification.
+
+## 2026-10-22 — Continuation remains proposed only
+
+No new experiment started. Replacement-002 remains partial at 477 committed updates,
+with joint Q step 94 unresolved. `revival_continuation_review.md` specifies a possible
+291-update continuation and the required explicit unknown-work/budget amendment.
+No resume, evaluation, Stage II, new GPU calls or parent mutation performed.
+
+## 2026-10-22 — Continuation-003 locally implemented; GPU not executed
+
+`pact-heterogeneous-receiver-training-continuation-003` is a distinct amended child
+of replacement-002. Review hash:
+`2546efe226d2f6d80d0b13bb04930a482487ea7477a892ec821f763de618f0db`.
+The user requested proceeding after the artifact-bound proposal. Local CPU tests
+verified fixed-bank prerequisites, real archive preparation, and tiny exact
+optimizer/RNG continuation. No actual new GPU optimizer updates, model generation,
+evaluation or Stage II occurred. Historical replacement-002 remains 477 committed
+updates with step 94 unresolved; successful child preparation does not change that
+historical safety status. Full-model restore and Drive timing remain unverified.

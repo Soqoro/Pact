@@ -2191,3 +2191,64 @@ study/runtime/retention guards, `tests/test_revival_replacement.py`,
 `docs/revival_replacement_colab.md`. Actual GPU identity/load/gradient/Drive behavior
 remains unverified until the user returns evidence. No commit/push, Drive mutation,
 parent recovery or evaluation performed.
+
+
+## 2026-10-21 — Replacement interruption forensic review
+
+Verified private forensic archive `bb9d759af00b2ee7942ad25236bced0b6ebf95cbdaccf2f582a22586148d9015`, all 48 members and four checkpoint contracts/inventories/tensor hashes. Recorded progress is 477/768 updates; joint Q step 94 remains unresolved. Pinned callback ordering does not resolve the unbound pending transaction as pre- versus post-update. No resume, fallback, marker deletion or new run authorized. See [the audit](revival_replacement_interruption_audit.md). No efficacy claim or live GPU restoration verification.
+
+## 2026-10-22 — Persistence boundary hardening (CPU-tested; GPU/Drive unverified)
+
+Implemented explicit pre/post optimizer callbacks, phase/step/fit and saved-progress
+hash binding, unique pending transaction IDs, and verified completion records linked
+to snapshot indexes. Existing pending/unsafe restore rejection remains unchanged.
+Retention now deduplicates object existence and hash checks within one invocation;
+no persistent verification cache or historical audit bypass was introduced.
+Historical metadata scanning still grows with the run; no constant-time or measured
+Colab performance claim is made. No existing run was resumed or rewritten.
+
+Validation executed with PYTHONPATH=src: full revival discovery under the existing
+CPU Torch environment ran 62 tests in 129.478s, OK with one skip (private import
+requires a temp directory outside Git). The subsequently added neural callback
+failure-injection test was included in a separate six-test transaction suite, all
+passing, including pre-update failure before any forward and post-update checkpoint
+preservation. Persistence 11, retention 8, storage 5 and artifacts 5 focused tests
+also passed. Initial base-environment invocation without PYTHONPATH failed at import;
+corrected invocations above passed. git diff --check passed. No pretrained downloads,
+GPU runs, commits or pushes. Real Drive timing and full-model behavior unverified.
+
+The separate continuation proposal is in `revival_continuation_review.md`. It is not
+an executable recovery path and does not authorize replay of ambiguous step 94.
+
+## 2026-10-22 — Executable amended continuation-003 (CPU-tested; GPU-unverified)
+
+Implemented `pact.revival.continuation` with artifact-bound review, exact two-archive
+preparation, independent checkpoint immutability, joint-only training, real native
+identity/initialization and Q restoration preflight, guarded latest-child restore,
+and private/sanitized/recovery exports. The old unresolved intent remains evidence;
+no historical marker is cleared. The outer child plan binds new source and amended
+accounting while the inherited neural contract remains exact for optimizer/RNG
+continuation. New and inherited work, the unknown parent step, and earlier original
+incident history remain separately reported. No evaluation or generation is enabled.
+
+Tests executed: full revival discovery ran 67 tests in 132.527s, OK with one skipped
+private import test. After the final report-accounting checks, continuation discovery
+ran five tests in 14.355s, OK with one private-temp test skipped by the Git privacy
+guard. That real-bundle preparation test was run separately in /var/tmp and passed
+in 13.777s: zero new updates, 477 inherited updates, intact old intent and independent
+checkpoints. It simulated a future clean source identity for offline import only;
+it did not verify Colab or GPU behavior. Read-only actual archive tests verified
+original bank/access/initialization bindings and finite FP32 Q step-93 optimizer
+state, sampler/scheduler position and recorded CPU/CUDA RNG structure. Tiny-model
+continuation matched uninterrupted adapter, optimizer and RNG tensors exactly;
+restore, unknown-new-attempt reporting, source/review guards, and sanitized export
+boundaries passed. An initial fixture constructor mismatch and an overly literal
+serialized dictionary-order comparison were fixed; final tests above passed.
+
+All eight notebook cells parse and match `docs/revival_continuation_colab.md`.
+`git diff --check` passed. No pretrained downloads, real-model forwards, GPU updates,
+commits, pushes, original-run writes or final-test access. Required next workflow:
+user review/commit/push, then pinned notebook 26. Runtime identity is still strict;
+real-model GPU restore, throughput and Drive latency remain unverified. The new
+child starts from the supplied final/step-93 checkpoints, not a reconstruction of
+missing intermediate epoch checkpoints; original evidence stays on Drive.

@@ -65,7 +65,7 @@ class Journal:
             n=sum(i['identity']['budget_stage']==stage for i in self.intents.values())
             if n>c.BUDGETS[stage]['generation']:raise ValueError('Generation budget exceeded')
     def request(self,backend,req,logical,persistent=None):
-        if self.plan.get('version')=='revival_replacement_training_v1':raise ValueError('Replacement generation is not authorized')
+        if self.plan.get('version') in ('revival_replacement_training_v1','revival_amended_continuation_v1'):raise ValueError('Replacement generation is not authorized')
         identity={'plan_hash':self.hash,'budget_stage':self.stage,'model':backend.identity,'request':asdict(req),'logical':logical}
         key=digest(identity)
         if key in self.results:return self.results[key]
@@ -155,12 +155,12 @@ def recovery_safe(root):
     return bool(safe)
 
 
-def checkpoint(root,persistent):
+def checkpoint(root,persistent,*,boundary=None):
     if persistent is None:return
     from ..storage import storage_operation
     # Worker writes a durable pending marker before any snapshot mutation. Failure
     # or deadline leaves it in place, including a failed post-optimizer snapshot.
-    storage_operation('revival-snapshot',root,persistent,timeout_seconds=600)
+    storage_operation('revival-snapshot',root,persistent,timeout_seconds=600, boundary=boundary)
     from .retention import prune_scratch
     prune_scratch(root)
 

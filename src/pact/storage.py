@@ -83,7 +83,7 @@ def _worker(control: Path) -> int:
     try:
         if request["operation"] == "revival-snapshot":
             from .revival.persistence import persist_files
-            result = persist_files(source, destination, progress=progress)
+            result = persist_files(source, destination, progress=progress, **request["options"])
         elif request["operation"] == "preparation-references-restore":
             from .training.preparation_restore import _restore_preparation_references
             result = _restore_preparation_references(source,destination,progress=progress)

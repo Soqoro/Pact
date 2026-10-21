@@ -115,6 +115,11 @@ def validate(root, plan_hash=None, *, check_source=False):
         raise ValueError('Replacement contract mismatch')
     if plan_hash is not None and digest(p)!=plan_hash:raise ValueError('Replacement plan hash mismatch')
     if check_source and p['source_code']!=source_identity():raise ValueError('Child source changed; no implicit migration')
+    return validate_inherited(root, p)
+
+
+def validate_inherited(root, p):
+    """Check immutable source/bank/initialization bindings without changing lineage."""
     for name, sha in p['imported_files'].items():
         path=root/safe_relative(name)
         if path.is_symlink() or file_hash(path)!=sha:raise ValueError('Imported parent evidence changed')

@@ -27,16 +27,27 @@ def retention_plan(destination, plan_hash):
                 raise ValueError('Retention deletion receipt mismatch')
         deleted.update(manifest['candidates'])
     refs, protect, indexes = set(), set(), {}
-    for snap in snapshots:
-        idx = read_json(snap/'index.json')
-        if (snap/'COMPLETE').read_text().strip() != file_hash(snap/'index.json'):
-            raise ValueError('Incomplete snapshot; no retention')
-        indexes[snap.name] = file_hash(snap/'index.json')
-        def verified(sha):
-            if not re.fullmatch('[0-9a-f]{64}', sha):raise ValueError('Invalid object name')
+    # Invocation-local only: the caller holds the single-writer run lock. Never
+    # reuse trust across checkpoints/processes or skip hashing on restore.
+    verified_objects = {}
+    presence = {}
+    def exists(sha):
+        if sha not in presence:
+            presence[sha] = (destination/'objects'/sha).exists()
+        return presence[sha]
+    def verified(sha):
+        if not re.fullmatch('[0-9a-f]{64}', sha):raise ValueError('Invalid object name')
+        if sha not in verified_objects:
             obj = destination/'objects'/sha
             if obj.is_symlink() or file_hash(obj) != sha:raise ValueError('Corrupt retention reference')
-            return obj
+            verified_objects[sha] = obj
+        return verified_objects[sha]
+    for snap in snapshots:
+        idx = read_json(snap/'index.json')
+        index_hash = file_hash(snap/'index.json')
+        if (snap/'COMPLETE').read_text().strip() != index_hash:
+            raise ValueError('Incomplete snapshot; no retention')
+        indexes[snap.name] = index_hash
         receipt = read_json(verified(idx['files']['recovery.json']))
         if (receipt['format'] != FORMAT or receipt['plan_hash'] != plan_hash
                 or receipt.get('retention_policy') != POLICY):
@@ -50,18 +61,16 @@ def retention_plan(destination, plan_hash):
             if snap in snapshots[-2:] or not TENSOR.fullmatch(name):
                 protect.add(sha)
             obj = destination/'objects'/sha
-            if not obj.exists() and sha not in deleted:
+            if not exists(sha) and sha not in deleted:
                 raise ValueError('Unexplained missing historical object; no retention')
     # Latest two receipts may be unsafe; they are still fully protected evidence.
     for sha in protect:
-        obj = destination/'objects'/sha
-        if obj.is_symlink() or file_hash(obj) != sha:
-            raise ValueError('Protected object missing/corrupt')
+        verified(sha)
     candidates = {}
     for sha in sorted(refs - protect):
         obj = destination/'objects'/sha
-        if not obj.exists() and sha in deleted:continue
-        if obj.is_symlink() or file_hash(obj) != sha:raise ValueError('Candidate corrupt')
+        if not exists(sha) and sha in deleted:continue
+        verified(sha)
         candidates[sha] = obj.stat().st_size
     return {'policy': POLICY, 'plan_hash': plan_hash, 'indexes': indexes,
             'protected_objects': sorted(protect), 'candidates': candidates,
