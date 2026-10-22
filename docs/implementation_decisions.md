@@ -1628,3 +1628,29 @@ semantic). Existing latest-only restore, source/runtime matching, pending-transa
 and unknown-attempt refusal remain active. See `revival_continuation_review.md`
 and the eight-cell `revival_continuation_colab.md` / notebook 26. GPU execution is
 left to the user after review/commit/push; none was performed locally.
+
+## 2026-10-22 — Stage I evaluation descendant contract resolution
+
+Implemented the v2 checkpoint-verification/evaluation request using native custom
+LoRA rather than PEFT (the trained artifacts are not PEFT-format adapters). Final
+step128 inference tensors are selected explicitly by bound metadata/ancestry;
+optimizer recovery remains a separate unsupported claim. Activation/removal is
+explicit and exact FP32 hashes are checked at each arm change. Per-request checks
+use frozen parameter identities/version counters rather than repeating GPU-to-CPU
+weight hashing on every generation. Synthetic base-restoration tolerance is
+predeclared exact equality within the inherited runtime,16 forwards maximum.
+
+Executed source allocation remains120 ARC/136 LogiQA for source evaluation. The
+new brief's128/128 instruction is reported as a blocking conflict, not applied.
+The original milestone contains all384 evaluation attack attempts; they are
+canonical-request-bound reuses, including rejections, not a fresh wallet. Original
+later execution is not closed by this milestone; ownership remains blocked until
+reviewed evidence closes it. No automatic override or quota replacement exists.
+See `stage1_evaluation_methodology.md` for the frozen budgets and limitations.
+
+The new code keeps 768 committed amended-path updates and the unknown original
+replacement step94/at-most769 bound intact. No historical artifacts, training
+method, masks or recovery safety flags were modified. No evaluation result follows
+from implementation or fixture outcomes. Real tensor/GPU verification remains
+pending user execution; source/budget conflicts do not prohibit that read-only
+verification stage but do prohibit freezing a scientific evaluation plan.

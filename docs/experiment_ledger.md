@@ -2780,3 +2780,33 @@ optimizer/RNG continuation. No actual new GPU optimizer updates, model generatio
 evaluation or Stage II occurred. Historical replacement-002 remains 477 committed
 updates with step 94 unresolved; successful child preparation does not change that
 historical safety status. Full-model restore and Drive timing remain unverified.
+
+
+## 2026-10-22 — Continuation-003 completed training evidence imported
+
+Uploaded PRIVATE/SANITIZED bundles verified locally: 918/1 manifest-listed payload
+hashes passed, summaries agree, six checkpoint metadata/log sequences and forward
+accounting checked. All six fits record 128 updates: 477 inherited + 291 new = 768;
+6,319 new forwards, zero child generation/evaluation. Real Colab training is now
+supported by imported evidence. Final tensor bytes/live reload remain unverified
+because review exports omit weights. Unknown parent step 94 remains unknown;
+no efficacy, full-PACT, evaluation or Stage-II claim. See
+[the completion audit](revival_continuation_completion_audit.md).
+
+## 2026-10-22 — Stage I evaluation child implemented, not executed
+
+Reserved child `pact-revival-stage1-evaluation-001` links completed continuation003
+plan `bbd6decefbd9ba4808de22b31c87f02f4d19094ee1b4035383db0285000d5897`.
+Actual review bundles and embedded original acquisition journal were inspected;
+no final inference tensors were supplied locally. All384 evaluation attack
+acquisitions already exist in the verified2438-call original milestone. Conditional
+remaining ceiling14592 generations is not a fresh authorization while original
+later ownership is unresolved. The frozen source allocation remains120 ARC/136
+LogiQA despite the new brief's128/128 wording; no task was replaced.
+
+Checkpoint-only verification and all subsequent evaluation stages are implemented
+and CPU/mock tested. Real scientific plan freezing has explicit source/budget
+blockers. No GPU verification, benchmark call, retraining or StageII occurred.
+No efficacy claim or manuscript result update. Preserve all parent RECOVERY and
+snapshots, including unknown old step94. Exact user commands are in notebook27
+and `docs/stage1_evaluation_colab.md`; default Run All performs inspection only.

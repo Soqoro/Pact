@@ -2252,3 +2252,64 @@ user review/commit/push, then pinned notebook 26. Runtime identity is still stri
 real-model GPU restore, throughput and Drive latency remain unverified. The new
 child starts from the supplied final/step-93 checkpoints, not a reconstruction of
 missing intermediate epoch checkpoints; original evidence stays on Drive.
+
+
+## 2026-10-22 — Continuation-003 completed training evidence imported
+
+Uploaded PRIVATE/SANITIZED bundles verified locally: 918/1 manifest-listed payload
+hashes passed, summaries agree, six checkpoint metadata/log sequences and forward
+accounting checked. All six fits record 128 updates: 477 inherited + 291 new = 768;
+6,319 new forwards, zero child generation/evaluation. Real Colab training is now
+supported by imported evidence. Final tensor bytes/live reload remain unverified
+because review exports omit weights. Unknown parent step 94 remains unknown;
+no efficacy, full-PACT, evaluation or Stage-II claim. See
+[the completion audit](revival_continuation_completion_audit.md).
+
+## 2026-10-22 — Stage I checkpoint verification/evaluation implemented
+
+Implemented `pact.revival.stage1` and notebook27/runbook: exact review archive
+bindings, per-fit historical final metadata, external tensor mapping/RECOVERY
+extraction, safe FP32 inference-only reads, explicit custom-LoRA activation and
+pristine restoration, all-four-model verification with16 bounded synthetic
+forwards, immutable evaluation freeze, separately invoked smoke/validation/source
+and fixed-history stages, canonical reuse, inherited attack/budget reconciliation,
+paired task-level analysis and private/sanitized exports with trusted local audit.
+No legacy training files or completed artifacts were changed.
+
+Actual archive inspection confirms original milestone2438 resolved attempts:
+1536 fit-private +896 attacks +6 scratch. The attacks already include all384
+validation/source-evaluation acquisitions. Conditional remaining generation ceiling
+is14592, not14976 fresh calls. Real freezing remains blocked by the explicit
+120/136-versus128/128 source quota conflict and unclosed original later generation
+history. Checkpoint verification can proceed independently with supplied tensors;
+no real tensors/GPU/Drive operations were performed locally. Unknown old optimizer
+step94 and the768 committed/at-most769 physical amended-path accounting remain.
+
+Validation actually executed (existing gmats CPU environment, PYTHONPATH=src):
+
+- Final focused suite:27 tests in22.722s, all passed, no skips. Covers complete mock
+  round trip and trusted audit, actual uploaded archive/budget inspection, tensor
+  corruption/nonfiniteness, precision/activation/isolation, no-generation synthetic
+  checks/cap/interruption, exposure and lineage guards, strict parsing/missingness,
+  canonical inherited reuse, rejected attacks, on-policy own histories, common
+  strata/interaction, budgets and lost-batch persistence guards.
+- Broader revival regression:93 tests in156.762s, OK with two skips. Both skips
+  require an actual private-import temporary directory outside Git; they were not
+  counted as passes. This regression preceded final new-module-only CLI/cache and
+  batching refinements; the focused suite above covers the final new-module changes.
+- Existing artifact tests:5 passed in0.260s; storage tests:5 passed in2.831s.
+- Actual CLI subprocess round trip:fixture → verify → freeze → smoke → validation
+  → source_evaluation → fixed_history succeeded; four-task-per-split fixture,
+  16 synthetic forwards,312 physical generations after exact reuse, all intended
+  fixture outputs present. This is mock evidence only, not a full-sized GPU run.
+- Six notebook cells parse and match the runbook. `git diff --check` passed.
+
+During development a missing shard schema field and JSON-key normalization in
+trusted audit were corrected. Fixture counts were corrected to account for valid
+exact canonical reuse. One broad run correctly rejected source changes made while
+it was running; the stable-source rerun above passed. A CLI indentation regression
+was caught by the CLI smoke, fixed, and the complete CLI sequence rerun successfully.
+No pretrained download, actual model inference, training, commit, push, secret
+access or final-test use. Real activation, context-memory limits, tokenization,
+throughput and Drive behavior remain GPU-unverified. See `CODEX_HANDOFF.md` and
+`stage1_evaluation_methodology.md` for prerequisites and exact scope.
