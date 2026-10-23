@@ -8,7 +8,7 @@ from ...util import file_hash,read_json,write_json,canonical,digest
 from ...artifacts import safe_relative, artifact_files
 from ...storage import storage_operation,persist_bundle
 from ...studies.heterogeneity import immutable
-from . import evidence
+from . import evidence, amendment
 
 
 def safety(root):
@@ -19,6 +19,8 @@ def safety(root):
 
 def persist(root,destination):
     if destination is None:return
+    resolution=read_json(root/'contract_resolution.json')
+    if not resolution['fixture'] and destination.name!=amendment.run_id(root):raise ValueError('Wrong persistence owner')
     marker=destination/'SNAPSHOT_PENDING.json'
     inflight=destination/'INFLIGHT.json'
     if inflight.exists():
@@ -26,8 +28,8 @@ def persist(root,destination):
         local={p.stem for p in (root/'intents').glob('*.json')}
         if not expected<=local:raise ValueError('Durable attempts absent from scratch; preserve marker')
     if marker.exists():raise ValueError('Pending child snapshot; no retry')
-    write_json(marker,{'run_id':evidence.RUN,'resolution_hash':digest(read_json(root/'contract_resolution.json'))})
-    write_json(root/'recovery.json',{'run_id':evidence.RUN,'recovery_safe':safety(root),'resolution_hash':digest(read_json(root/'contract_resolution.json'))})
+    write_json(marker,{'run_id':amendment.run_id(root),'resolution_hash':digest(read_json(root/'contract_resolution.json'))})
+    write_json(root/'recovery.json',{'run_id':amendment.run_id(root),'recovery_safe':safety(root),'resolution_hash':digest(read_json(root/'contract_resolution.json'))})
     compact_snapshot(root,destination)
     marker.unlink()
     if safety(root):(destination/'INFLIGHT.json').unlink(missing_ok=True)
@@ -121,7 +123,7 @@ def export(root,stage,destination=None):
     public=('summary.json','paired_metrics.json','peer_access_interaction.json','runtime_and_cost_report.json')
     out={}
     for kind in ('PRIVATE','SANITIZED'):
-        path=root.parent/'bundles'/f'{evidence.RUN}-{kind}-{time.time_ns()}.zip';path.parent.mkdir(exist_ok=True)
+        path=root.parent/'bundles'/f'{amendment.run_id(root)}-{kind}-{time.time_ns()}.zip';path.parent.mkdir(exist_ok=True)
         checks={}
         with zipfile.ZipFile(path,'w',zipfile.ZIP_DEFLATED) as z:
             for f in sorted(root.rglob('*')):
@@ -134,6 +136,7 @@ def export(root,stage,destination=None):
             meta={'version':evidence.VERSION,'kind':kind,'stage':stage,'recovery_safe':safety(root),
                   'synthetic_attempts':len(list((root/'synthetic/intents').glob('*.json'))),
                   'verification_ready':read_json(root/'checkpoint_verification_receipt.json')['ready'] if (root/'checkpoint_verification_receipt.json').exists() else False}
+            if amendment.is_amended(root):meta.update(run_id=amendment.RUN,amendment_hash=amendment.PROPOSAL_HASH)
             z.writestr('HANDOFF.json',canonical(meta));z.writestr('checksums.json',canonical(checks))
         out[kind]={'path':str(path),'sha256':file_hash(path),'bytes':path.stat().st_size}
         if destination:out[kind]['persistent']=persist_bundle(path,destination/'bundles'/path.name,out[kind]['sha256'],timeout_seconds=600)
@@ -207,7 +210,7 @@ class BatchedPersistence:
                 v=read_json(p);self.pending[p.stem]={'component':v['component'],'plan_hash':v['plan_hash']};self.known.add(p.stem)
         if not self.pending:return
         if len(self.pending)>32:raise ValueError('Pending batch bound exceeded')
-        marker={'run_id':evidence.RUN,'attempts':self.pending,'reserved_output_tokens':512*len(self.pending)}
+        marker={'run_id':amendment.run_id(self.root),'attempts':self.pending,'reserved_output_tokens':512*len(self.pending)}
         path=self.destination/'INFLIGHT.json';write_json(path,marker)
         if read_json(path)!=marker:raise ValueError('Durable dispatch marker verification failed')
         if len(self.pending)==32 and safety(self.root):

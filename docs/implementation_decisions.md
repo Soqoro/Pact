@@ -1667,3 +1667,33 @@ original source identity with a separate, clean execution-source transition
 receipt. Bind unchanged scientific code by a frozen protected-file inventory hash.
 This changes storage only; no budget, task, runtime, adapter or evaluation contract
 is amended. See stage1_evaluation_methodology.md for exclusions and failure rules.
+
+### 2026-10-23 — Accept returned verification evidence within its tested scope
+
+Treat the audited 16-forward return as real checkpoint/activation verification,
+while keeping local receipt validation distinct from independent tensor/logit
+reexecution. Do not repeat the consumed synthetic allowance. Do not interpret
+ready=true as evaluation authorization: both frozen resolution blockers remain.
+No methodology, task allocation, budget or historical ambiguity was amended.
+
+### 2026-10-23 — Proposed amendment for irrecoverable generation history
+
+Prepared an artifact-bound proposal (49de20c60cb493467fb940b5f27e98280bd7ba0021d612db69c6cb86125642a6),
+not an implementation or approval, for a separately accounted evaluation child.
+It explicitly requests an additional 14,592-generation ceiling and acceptance of
+possible physical repeats from unrecoverable original history. Preserve that
+history as unknown, all 384 attack decisions, existing verified checkpoints and
+exact 120/136 allocation. No inferred unused budget, automatic model work or
+original-resolution edit. See stage1_evaluation_accounting_amendment_proposal.md.
+
+### 2026-10-23 — Implement explicitly approved accounting amendment
+
+The user answered “proceed” to the artifact-bound approval question. Implement a
+separate evaluation-amended-002, with explicit additional 14,592-call envelope,
+possible repeats of unrecoverable original requests and an unclosed historical
+ledger. Preserve the proposal hash and original parent resolution/budget. Inherit
+the verified 16-forward evidence without new synthetic calls; prohibit attack
+acquisition; keep exact executed 120/136 source IDs. Every new intent carries a
+child/plan-bound physical-attempt identity. No implicit GPU launch or training.
+The old storage-only source guard remains restricted to its old pinned science
+code; the new child is a fresh approved plan, not a bypass of that guard.

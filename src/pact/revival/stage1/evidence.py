@@ -175,6 +175,12 @@ def guard(root):
     if digest(read_json(root/'exposure.json'))!=r['exposure']['inventory_sha256']:raise ValueError('Exposure inventory changed')
     for n,h in read_json(root/'evidence_inventory.json').items():
         if file_hash(root/safe_relative(n))!=h:raise ValueError('Evidence changed')
+    from . import amendment
+    if r['version']==amendment.VERSION:
+        amendment.validate(root,r)
+        if not r['fixture']:
+            exposure_check(read_json(root/'evidence/plan.json')['source'],read_json(root/'exposure.json'))
+        return r
     if not r['fixture']:
         current=code_identity(Path(__file__).resolve().parents[4])
         if r['source_code']!=current:

@@ -128,3 +128,11 @@ requires 400 ARC / 560 LogiQA with three/five homogeneous probe blocks; source
 preparation must verify availability. Reject v1 source/plan resume. No silent
 quota/source change. Coupled real training needs a new finite
 MethodSpec; current coupling orchestration is fixture-only.
+
+[Stage I accounting amendment](docs/stage1_amended_evaluation_methodology.md)
+creates only `pact-revival-stage1-evaluation-amended-002` from the exact verified
+parent. Explicit approval binds proposal 49de20c6…; additional ceilings are
+14,592 generations / 7,471,104 reserved tokens, with an included <=66-call smoke.
+Preserve unclosed original history and exact 120/136 source allocation. No new
+attacks, synthetic verification, training or final tests. Every stage exports and
+stops; ambiguous child dispatch is never retried. Parent records remain immutable.

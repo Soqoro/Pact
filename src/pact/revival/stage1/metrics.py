@@ -158,6 +158,12 @@ def report(root):
         'inherited_attempts':budget['verified_ancestor_attempts'],'optimizer_updates':0,'training_forwards':0,'teacher_forced_forwards':0,
         'synthetic_attempts':len(list((root/'synthetic/intents').glob('*.json'))),'compute_units':None,
         'reuse_links':sum(read_json(f)['origin']=='ancestor' for f in (root/'links').glob('*.json'))}
+    if p.get('amendment_hash'):
+        accounting.update(budget_ownership='approved_additional_envelope',
+            new_generation_cap=budget['new_attempt_cap'],
+            historical_accounting=budget['historical_accounting'],
+            inherited_verification_forwards=16,amendment_hash=p['amendment_hash'],
+            possible_repeats_of_unrecoverable_history=True)
     accounting['resource_records']=[read_json(f) for f in sorted((root/'resources').glob('*.json'))]
     accounting['context_incompatibilities']=len(list((root/'incompatibilities').glob('*.json')))
     accounting['format_status_counts']=dict(Counter(v['packet']['status'] for v in results))

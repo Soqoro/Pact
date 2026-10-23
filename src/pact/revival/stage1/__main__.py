@@ -3,22 +3,29 @@ import argparse
 from pathlib import Path
 from ...artifacts import run_lock
 from ...util import canonical,read_json,write_json,digest
-from . import evidence,weights,engine,metrics,io
+from . import evidence,weights,engine,metrics,io,amendment
 
 
 def main(argv=None):
     ap=argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('stage',choices=['recover-inspection','resolve','inspect','verify','freeze','smoke','validation','source_evaluation','fixed_history','report','export','restore','map-recovery','fixture','audit','repair-tokenizer-cache'])
+    ap.add_argument('stage',choices=['init-amended','recover-inspection','resolve','inspect','verify','freeze','smoke','validation','source_evaluation','fixed_history','report','export','restore','map-recovery','fixture','audit','repair-tokenizer-cache'])
     ap.add_argument('--run-dir',type=Path,required=True);ap.add_argument('--persistent',type=Path)
     ap.add_argument('--private',type=Path);ap.add_argument('--sanitized',type=Path);ap.add_argument('--exposure',type=Path)
     ap.add_argument('--checkpoint-map',type=Path);ap.add_argument('--cache-dir',type=Path)
     ap.add_argument('--recovery-bundle',type=Path);ap.add_argument('--recovery-sha');ap.add_argument('--tensor-dir',type=Path)
     ap.add_argument('--execute',action='store_true');ap.add_argument('--plan-hash');ap.add_argument('--mock',action='store_true')
+    ap.add_argument('--approval-hash')
     ap.add_argument('--export-stage',default='inspect')
     a=ap.parse_args(argv);root=a.run_dir
-    if not a.mock and a.stage!='audit' and root.name!=evidence.RUN:raise ValueError('Separate reserved evaluation run directory required')
-    if a.persistent is not None and a.persistent.name!=evidence.RUN:raise ValueError('Separate evaluation persistence root required; parents are read-only')
-    if a.stage=='recover-inspection':
+    if not a.mock and a.stage!='audit' and root.name not in (evidence.RUN,amendment.RUN):raise ValueError('Separate reserved evaluation run directory required')
+    if a.persistent is not None and (a.persistent.name!=root.name or a.persistent.name not in (evidence.RUN,amendment.RUN)):raise ValueError('Separate evaluation persistence root required; parents are read-only')
+    if a.stage in ('resolve','recover-inspection') and not a.mock and root.name!=evidence.RUN:raise ValueError('Original child stage cannot create amended run')
+    if a.stage=='init-amended':
+        if a.mock or root.name!=amendment.RUN:raise ValueError('Explicit reserved real amendment child required')
+        if a.persistent is not None and a.persistent.exists() and any(a.persistent.iterdir()):raise ValueError('Durable child already exists; restore instead')
+        out=amendment.initialize(root,a.private,a.approval_hash)
+        io.export(root,'inspect',a.persistent)
+    elif a.stage=='recover-inspection':
         if not a.execute or a.mock:raise ValueError('Explicit real storage recovery required')
         from .storage_recovery import recover
         out=recover(root,a.persistent,a.private,a.plan_hash)
@@ -53,7 +60,7 @@ def main(argv=None):
                 out=weights.verify(root,a.cache_dir,factory,persist)
                 io.export(root,'verify',a.persistent)
             elif a.stage=='freeze':
-                if not (root/'exports/verify.json').exists():raise ValueError('Export verification and stop first')
+                if resolution['version']!=amendment.VERSION and not (root/'exports/verify.json').exists():raise ValueError('Export verification and stop first')
                 out=engine.freeze(root);persist()
             elif a.stage in ('smoke','validation','source_evaluation','fixed_history'):
                 if not a.execute or not a.plan_hash:raise ValueError('Explicit stage and frozen plan hash required')

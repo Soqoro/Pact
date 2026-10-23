@@ -295,6 +295,9 @@ class RoundTrip(unittest.TestCase):
         z,checks=evidence.archive(bundle,recovery.BUNDLE)
         with z:r=json.loads(z.read('contract_resolution.json'))
         current={'git_commit':'a'*40,'dirty':False,'source_hash':'b'*64}
+        # This historical recovery is only valid on its old pinned science code.
+        source_patch=patch.object(recovery,'protected_code_hash',return_value=recovery.PROTECTED)
+        source_patch.start();self.addCleanup(source_patch.stop)
         receipt=recovery.transition(r,current)
         write_json(self.root/'storage_transition.json',receipt)
         recovery.validate_transition(self.root,r,current)
@@ -312,7 +315,7 @@ class RoundTrip(unittest.TestCase):
         current={'git_commit':'a'*40,'dirty':False,'source_hash':'b'*64}
         # Test-only temporary roots and clean-source attestation; real contracts stay intact.
         def private(path,fixture=False):path.mkdir(parents=True)
-        with patch.object(recovery,'code_identity',return_value=current), patch.object(evidence,'code_identity',return_value=current), patch('pact.studies.forensics.private_root',side_effect=private):
+        with patch.object(recovery,'protected_code_hash',return_value=recovery.PROTECTED), patch.object(recovery,'code_identity',return_value=current), patch.object(evidence,'code_identity',return_value=current), patch('pact.studies.forensics.private_root',side_effect=private):
             result=recovery.recover(root,drive,bundle,recovery.RESOLUTION)
             self.assertEqual(result['model_calls'],0)
             self.assertFalse((drive/'SNAPSHOT_PENDING.json').exists())

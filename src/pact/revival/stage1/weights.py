@@ -97,6 +97,8 @@ def backend(root,family,cache):
 
 def verify(root,cache,factory=None,persist=lambda:None):
     r=guard(root)
+    from . import amendment
+    if r['version']==amendment.VERSION:raise ValueError('Inherited verification only; new synthetic forwards forbidden')
     if not r['fixture'] and (r['source_code']['dirty'] or not r['source_code']['git_commit']):raise ValueError('Reviewed clean pinned evaluation source required')
     if factory is not None and not r['fixture']:raise ValueError('No mock factory for real evidence')
     if (root/'checkpoint_verification_receipt.json').exists():raise ValueError('Verification already completed; no additional synthetic forwards')

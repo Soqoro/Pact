@@ -2329,3 +2329,61 @@ Tests include corrupted packed objects, unsafe state, timeout/pending retention,
 later durable work, source-transition tampering and protected-code mismatch.
 Colab recovery and checkpoint verification remain unexecuted/unverified. No commit
 or push was performed. See stage1_compact_recovery_colab.md for the staged handoff.
+
+### 2026-10-23 — Returned Stage I GPU checkpoint verification audited
+
+Actual Colab PRIVATE 6836c626fbfb502c7da4f59db2f70280669db84611ef155280fcc73f8626efda
+and SANITIZED 86b29cf813b729e3af57fe7726cecbd33c15e86a811831154c438fe1fcf7d687
+passed outer/member checks. All 8,845 original inspection payloads are unchanged
+inside the 8,883-payload return. Six final adapters have matching historical
+file/content-hash records; 16 linked synthetic forwards and six exact base-restoration
+checks passed. All four models exited pristine; runtime matches the recorded
+fingerprint. This scope is now supported by returned real GPU evidence, not mocks.
+No benchmark generation, training or optimizer updates occurred. Local review did
+not reread tensor bytes or recompute logits. Both evaluation blockers remain;
+see stage1_checkpoint_verification_audit.md. Compact persistence has returned Colab
+success evidence. No commit, push or new model execution performed locally.
+
+### 2026-10-23 — Post-verification prerequisite review
+
+Reviewed approved v2 allocation, executed resolver, original storage incident,
+replacement historical accounting and original evaluation dispatch prerequisites.
+The prior authorized split supports retaining exact ARC120/LogiQA136 source IDs;
+no reallocation is justified. Original later-generation closure remains genuinely
+missing: frozen-arm evaluation did not require completed training, so incomplete
+training cannot prove absence of evaluation. No terminal original inventory was
+found among available local returns. Added stage1_evaluation_prerequisite_review.md
+with evidence requirements and conditional component ceilings; did not remove
+blockers, amend budgets or start model work. Documentation-only review; no new
+CPU/neural tests were required or run.
+
+### 2026-10-23 — Approved amended evaluation child implemented and CPU-tested
+
+Implemented `init-amended` and the separate
+`pact-revival-stage1-evaluation-amended-002` plan, binding the explicitly approved
+proposal and exact real verification archive. Parent artifacts stay unchanged;
+new attempts have separate owner/physical identities. Enforced 14,592 additional
+calls / 7,471,104 reserved tokens, 66 included smoke calls, zero new attacks and
+zero repeated synthetic verification. Preserved exact 120/136 allocation and
+unknown original later history. Added immutable imported evidence, source/plan
+checks, inherited-attack refusal on mismatch/missingness, child-owned compact
+persistence/exports, and explicit accounting in sanitized reports. Progress prints
+identify model loads and committed child calls without benchmark text.
+
+Final local validation: 45 Stage I tests passed in 57.825s (no skips), including
+actual parent adoption without models, six-adapter tiny fixture, all four mock
+stages, parent immutability, exact attack reuse, total/component/smoke budgets,
+physical-owner tamper, interrupted-call refusal, source/approval/plan tamper and
+compact restore. Existing storage 5/5 (2.669s) and artifacts 5/5 (0.254s) passed.
+Notebook28/runbook Python cells are identical and parse; CLI help and git diff
+whitespace checks passed. An initial old-recovery regression correctly rejected
+changed science code; historical transport tests now simulate their original
+pinned protected-source digest, and a new test explicitly asserts that the current
+amended source is rejected by the old storage transition. No production guard was
+relaxed for that historical path.
+
+No GPU/model downloads, external inference, training, commit or push occurred.
+New child scientific results remain unexecuted/GPU-unverified. The parent GPU
+verification evidence remains accepted within its audited scope. Use notebook28
+or stage1_amended_evaluation_colab.md after review/push/pin; first GPU invocation
+is the included smoke and export/stop only. No full-PACT efficacy claim follows.

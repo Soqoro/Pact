@@ -2821,3 +2821,27 @@ completed Drive snapshot exists in the reported diagnostic; pending marker remai
 Compact storage recovery is implemented for local testing, not yet executed in
 Colab. Checkpoint verification and scientific evaluation remain unexecuted in this
 return. Allocation and original-generation-history blockers are unchanged.
+
+### 2026-10-23 — Stage I checkpoint verification complete, evaluation blocked
+
+Audited verification PRIVATE SHA256
+6836c626fbfb502c7da4f59db2f70280669db84611ef155280fcc73f8626efda;
+SANITIZED SHA256 86b29cf813b729e3af57fe7726cecbd33c15e86a811831154c438fe1fcf7d687.
+Six historically bound final adapter records, 16/16 synthetic forwards, six exact
+base-restoration checks, Q/L/M/R pristine exits. Zero generation calls, training
+forwards, scoring forwards or optimizer updates in this child verification.
+No scientific efficacy result. Allocation and original later-generation accounting
+remain unresolved; no next run authorized. Full audit: stage1_checkpoint_verification_audit.md.
+
+### 2026-10-23 — Approved additional evaluation child (implemented, not run)
+
+User explicitly approved proposal
+49de20c60cb493467fb940b5f27e98280bd7ba0021d612db69c6cb86125642a6.
+Reserved run: pact-revival-stage1-evaluation-amended-002. Parent verification
+PRIVATE remains 6836c626fbfb502c7da4f59db2f70280669db84611ef155280fcc73f8626efda.
+This is a separate approved 14,592-call additional envelope, not an inferred unused
+remainder. Original later calls stay unknown; possible historical repeats are
+explicitly accepted/accounted. New attacks/training/synthetic checks are zero;
+the <=66-call smoke is included. Exact 120/136 source IDs and all attack decisions
+are retained. Implementation is CPU/mock-tested only; no child GPU calls/results.
+See stage1_amended_evaluation_methodology.md and notebook28.

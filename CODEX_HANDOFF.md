@@ -65,3 +65,17 @@ installed trusted code and reconstructs summaries; it never executes archive cod
 Tests and exact outcomes are recorded in `docs/implementation_status.md`. Existing
 unrelated documentation and uploaded archives were preserved. No commit, push,
 credentials, GPU/Drive calls, external model download or final-test access occurred.
+
+## Approved amended evaluation handoff
+
+User approved accounting proposal 49de20c6… explicitly. Use new separate child
+pact-revival-stage1-evaluation-amended-002, never overwrite evaluation-001.
+Implementation: src/pact/revival/stage1/amendment.py plus existing engine/CLI/guard/
+storage/report integration. Approval and historical proposal are separate files.
+Source/parent identities, budgets and possible historical-repeat accounting are
+explicit. 45 Stage I tests plus 10 storage/artifact tests passed locally. Actual
+new-child GPU execution is unverified and has not started. Notebook28 and
+stage1_amended_evaluation_colab.md contain exact fresh-runtime setup, import,
+plan freeze, external tensor mapping and opt-in <=66-call smoke with export/stop.
+RUN_SMOKE defaults false. Preserve the old source for old-parent operations;
+new code must not be used to bypass the old storage-only source guard.

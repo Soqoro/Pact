@@ -18,7 +18,7 @@ EDITABLE = {'src/pact/revival/stage1/'+n for n in
             ('io.py','evidence.py','__main__.py','storage_recovery.py')}
 
 
-def transition(resolution,current):
+def protected_code_hash():
     repo=Path(__file__).resolve().parents[4]
     files=[p for folder in ('src','configs','experiments') for p in (repo/folder).rglob('*')
            if p.is_file() and '__pycache__' not in p.parts
@@ -26,6 +26,11 @@ def transition(resolution,current):
     files.append(repo/'pyproject.toml')
     protected=digest({p.relative_to(repo).as_posix():file_hash(p) for p in sorted(files)
                       if p.relative_to(repo).as_posix() not in EDITABLE})
+    return protected
+
+
+def transition(resolution,current):
+    protected=protected_code_hash()
     if protected!=PROTECTED:raise ValueError('Non-storage execution code changed')
     if current.get('dirty') or not current.get('git_commit'):raise ValueError('Clean pinned recovery source required')
     if digest(resolution)!=RESOLUTION or resolution['source_code']!=ORIGINAL:
