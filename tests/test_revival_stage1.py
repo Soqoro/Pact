@@ -241,6 +241,88 @@ class RoundTrip(unittest.TestCase):
         self.assertTrue((drive/'INFLIGHT.json').exists())
         with self.assertRaisesRegex(ValueError,'Pending'):storage.restore(drive,self.base/'restored')
 
+    def test_compact_snapshot_round_trip(self):
+        from pact.revival.stage1 import io as storage
+        drive=self.base/'drive'
+        storage.persist(self.root,drive)
+        snap=next((drive/'snapshots').iterdir())
+        self.assertEqual(set(read_json(snap/'index.json')['files']),{'state.zip','receipt.json'})
+        self.assertFalse((drive/'SNAPSHOT_PENDING.json').exists())
+        restored=self.base/'restored'
+        result=storage.restore(drive,restored)
+        self.assertEqual(result['format'],storage.COMPACT_FORMAT)
+        self.assertEqual(read_json(restored/'contract_resolution.json'),read_json(self.root/'contract_resolution.json'))
+        self.assertEqual(file_hash(restored/'evidence_inventory.json'),file_hash(self.root/'evidence_inventory.json'))
+
+    def test_compact_timeout_preserves_pending(self):
+        from pact.revival.stage1 import io as storage
+        drive=self.base/'drive'
+        with patch.object(storage,'storage_operation',side_effect=TimeoutError('fixture')):
+            with self.assertRaises(TimeoutError):storage.persist(self.root,drive)
+        self.assertTrue((drive/'SNAPSHOT_PENDING.json').exists())
+        with self.assertRaisesRegex(ValueError,'Pending'):storage.persist(self.root,drive)
+
+    def test_compact_corruption_no_restore(self):
+        from pact.revival.stage1 import io as storage
+        drive=self.base/'drive';storage.persist(self.root,drive)
+        snap=next((drive/'snapshots').iterdir())
+        idx=read_json(snap/'index.json')['files']
+        (drive/'objects'/idx['state.zip']).write_bytes(b'corrupt')
+        with self.assertRaisesRegex(ValueError,'corrupt'):storage.restore(drive,self.base/'restored')
+        self.assertFalse((self.base/'restored').exists())
+
+    def test_compact_unsafe_no_restore(self):
+        from pact.revival.stage1 import io as storage
+        write_json(self.root/'synthetic/intents/x.json',{})
+        drive=self.base/'drive';storage.persist(self.root,drive)
+        with self.assertRaisesRegex(ValueError,'Unsafe'):storage.restore(drive,self.base/'restored')
+
+    def test_inspection_recovery_refuses_later_durable_work(self):
+        from pact.revival.stage1 import storage_recovery as recovery
+        drive=self.base/evidence.RUN;root=self.base/'target'/evidence.RUN
+        write_json(drive/'SNAPSHOT_PENDING.json',{'run_id':evidence.RUN,'resolution_hash':recovery.RESOLUTION})
+        write_json(drive/'INFLIGHT.json',{})
+        with self.assertRaisesRegex(ValueError,'Later'):recovery.recover(root,drive,self.private,recovery.RESOLUTION)
+        (drive/'INFLIGHT.json').unlink()
+        (drive/'snapshots/newer').mkdir(parents=True)
+        with self.assertRaisesRegex(ValueError,'Later'):recovery.recover(root,drive,self.private,recovery.RESOLUTION)
+        self.assertTrue((drive/'SNAPSHOT_PENDING.json').exists())
+
+    def test_storage_transition_binds_source_and_protected_code(self):
+        from pact.revival.stage1 import storage_recovery as recovery
+        bundle=Path(__file__).resolve().parents[1]/'pact-revival-stage1-evaluation-001-PRIVATE-1792657561217646069.zip'
+        if not bundle.exists():self.skipTest('Optional real inspection archive absent')
+        z,checks=evidence.archive(bundle,recovery.BUNDLE)
+        with z:r=json.loads(z.read('contract_resolution.json'))
+        current={'git_commit':'a'*40,'dirty':False,'source_hash':'b'*64}
+        receipt=recovery.transition(r,current)
+        write_json(self.root/'storage_transition.json',receipt)
+        recovery.validate_transition(self.root,r,current)
+        with self.assertRaises(ValueError):recovery.validate_transition(self.root,r,{**current,'source_hash':'c'*64})
+        with self.assertRaises(ValueError):recovery.transition(r,{**current,'dirty':True})
+        with patch.object(recovery,'PROTECTED','0'*64):
+            with self.assertRaisesRegex(ValueError,'Non-storage'):recovery.transition(r,current)
+
+    def test_exact_inspection_recovery_round_trip(self):
+        from pact.revival.stage1 import storage_recovery as recovery, io as storage
+        bundle=Path(__file__).resolve().parents[1]/'pact-revival-stage1-evaluation-001-PRIVATE-1792657561217646069.zip'
+        if not bundle.exists():self.skipTest('Optional real inspection archive absent')
+        root=self.base/'active'/evidence.RUN;drive=self.base/'drive'/evidence.RUN
+        write_json(drive/'SNAPSHOT_PENDING.json',{'run_id':evidence.RUN,'resolution_hash':recovery.RESOLUTION})
+        current={'git_commit':'a'*40,'dirty':False,'source_hash':'b'*64}
+        # Test-only temporary roots and clean-source attestation; real contracts stay intact.
+        def private(path,fixture=False):path.mkdir(parents=True)
+        with patch.object(recovery,'code_identity',return_value=current), patch.object(evidence,'code_identity',return_value=current), patch('pact.studies.forensics.private_root',side_effect=private):
+            result=recovery.recover(root,drive,bundle,recovery.RESOLUTION)
+            self.assertEqual(result['model_calls'],0)
+            self.assertFalse((drive/'SNAPSHOT_PENDING.json').exists())
+            self.assertEqual(digest(read_json(root/'contract_resolution.json')),recovery.RESOLUTION)
+            self.assertEqual(evidence.guard(root)['source_code'],recovery.ORIGINAL)
+            restored=self.base/'again'/evidence.RUN
+            storage.restore(drive,restored)
+            self.assertEqual(read_json(root/'storage_transition.json'),read_json(restored/'storage_transition.json'))
+            with self.assertRaises(ValueError):recovery.recover(root,drive,bundle,recovery.RESOLUTION)
+
     def test_freeze_blocker(self):
         weights.verify(self.root,None,self.backend)
         p=self.root/'contract_resolution.json';r=read_json(p);r['blockers']=['unresolved_budget'];write_json(p,r)

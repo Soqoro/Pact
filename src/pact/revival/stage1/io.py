@@ -5,7 +5,7 @@ import tempfile
 import time
 import zipfile
 from ...util import file_hash,read_json,write_json,canonical,digest
-from ...artifacts import safe_relative
+from ...artifacts import safe_relative, artifact_files
 from ...storage import storage_operation,persist_bundle
 from ...studies.heterogeneity import immutable
 from . import evidence
@@ -28,9 +28,60 @@ def persist(root,destination):
     if marker.exists():raise ValueError('Pending child snapshot; no retry')
     write_json(marker,{'run_id':evidence.RUN,'resolution_hash':digest(read_json(root/'contract_resolution.json'))})
     write_json(root/'recovery.json',{'run_id':evidence.RUN,'recovery_safe':safety(root),'resolution_hash':digest(read_json(root/'contract_resolution.json'))})
-    storage_operation('snapshot',root,destination,timeout_seconds=600)
+    compact_snapshot(root,destination)
     marker.unlink()
     if safety(root):(destination/'INFLIGHT.json').unlink(missing_ok=True)
+
+
+COMPACT_FORMAT = 'stage1_compact_snapshot_v1'
+
+
+def compact_snapshot(root,destination):
+    """Build on scratch; existing worker verifies only two durable objects."""
+    with tempfile.TemporaryDirectory(dir=root.parent, prefix='.stage1-pack-') as tmp:
+        transport=Path(tmp)
+        checks={}
+        print('Packing Stage I snapshot on scratch...',flush=True)
+        with zipfile.ZipFile(transport/'state.zip','w',zipfile.ZIP_DEFLATED) as z:
+            for f in artifact_files(root):
+                if f.suffix=='.safetensors':raise ValueError('Weights must stay external')
+                n=f.relative_to(root).as_posix()
+                if n in ('HANDOFF.json','checksums.json'):raise ValueError('Reserved snapshot member')
+                checks[n]=file_hash(f);z.write(f,n)
+            z.writestr('checksums.json',canonical(checks))
+            z.writestr('HANDOFF.json',canonical({'kind':'PRIVATE','format':COMPACT_FORMAT}))
+        # Check the packed bytes locally before attempting persistence.
+        z,_=evidence.archive(transport/'state.zip');z.close()
+        receipt={'format':COMPACT_FORMAT,'sha256':file_hash(transport/'state.zip'),
+                 'recovery_safe':safety(root),
+                 'resolution_hash':digest(read_json(root/'contract_resolution.json'))}
+        write_json(transport/'receipt.json',receipt)
+        print(f'Persisting compact snapshot: {len(checks)} files in two objects',flush=True)
+        return storage_operation('snapshot',transport,destination,timeout_seconds=600)
+
+
+def restore_compact(obj,root):
+    receipt=read_json(obj('receipt.json'))
+    if receipt.get('format')!=COMPACT_FORMAT or receipt.get('recovery_safe') is not True:
+        raise ValueError('Unsafe/unknown compact snapshot')
+    root.parent.mkdir(parents=True,exist_ok=True)
+    with tempfile.TemporaryDirectory(dir=root.parent,prefix='.stage1-unpack-') as tmp:
+        local=Path(tmp)/'state.zip'
+        shutil.copyfile(obj('state.zip'),local)
+        z,checks=evidence.archive(local,receipt['sha256'])
+        try:
+            resolution=__import__('json').loads(z.read('contract_resolution.json'))
+            if digest(resolution)!=receipt['resolution_hash']:raise ValueError('Resolution mismatch')
+            from ...studies.forensics import private_root
+            stage=Path(tmp)/'run';private_root(stage,resolution['fixture'])
+            for n in checks:
+                target=stage/safe_relative(n);target.parent.mkdir(parents=True,exist_ok=True)
+                with z.open(n) as src,target.open('wb') as dst:shutil.copyfileobj(src,dst)
+            if not safety(stage) or not read_json(stage/'recovery.json')['recovery_safe']:
+                raise ValueError('Unresolved dispatch in packed state')
+            evidence.guard(stage)
+            stage.rename(root)
+        finally:z.close()
 
 
 def restore(destination,root):
@@ -45,6 +96,9 @@ def restore(destination,root):
         h=evidence.sha(idx[n]);p=destination/'objects'/h
         if p.is_symlink() or file_hash(p)!=h:raise ValueError('Snapshot object missing/corrupt')
         return p
+    if set(idx)=={'state.zip','receipt.json'}:
+        restore_compact(obj,root)
+        return {'restored':True,'snapshot':snap.name,'tensors_restored':False,'format':COMPACT_FORMAT}
     if not read_json(obj('recovery.json'))['recovery_safe']:raise ValueError('Unresolved dispatch; no restore')
     resolution=read_json(obj('contract_resolution.json'))
     from ...studies.forensics import private_root

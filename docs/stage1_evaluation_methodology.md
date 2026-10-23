@@ -145,3 +145,30 @@ cache repair (Git blob and payload hashes verified, no model calls). No dependen
 model revision or tokenizer content substitution is introduced. Initial-versus-final
 adapter hashes are compared when the historical contract supplies an initialization
 identity; initial tensor bytes are not claimed verified without their own artifact.
+
+## Compact storage maintenance (2026-10-23)
+
+After the inspected zero-attempt return, Stage I snapshots use
+`stage1_compact_snapshot_v1`: all run files are packed and checksum-verified on
+scratch, then the existing bounded storage worker persists only `state.zip` and
+`receipt.json` as content-addressed objects. COMPLETE still follows verification;
+weights remain external. Latest-only restore supports both historical per-file
+snapshots and the compact format. Pending/unsafe dispatch still blocks restore.
+No parent objects or snapshots are deleted. Packing repeats the metadata archive
+per snapshot; it is not a storage-retention policy or a measured Drive speedup.
+
+`recover-inspection` is a one-time storage-only recovery bound to PRIVATE SHA256
+`3f0d2c8b0b85a8e56b62bfd41cdd7cc8c109563d30ed69cae7f06bcc603aecc3`
+and resolution `1a201309fe4b4e3d518eec18e754c294dae6b3ecf316d5865bd7aedeeae93f28`.
+It requires the exact pending marker, no inflight marker, no snapshot entries and
+an absent active scratch destination. It verifies all 8,845 archived files and
+zero child attempts. The pending marker is cleared only after a verified compact
+snapshot. Failure preserves it and never automatically retries.
+
+The original resolution and source identity remain byte-for-byte unchanged.
+`storage_transition.json` separately binds the clean execution revision and a
+protected-code hash: all src/configs/experiments/pyproject files except the four
+explicit storage/CLI/guard maintenance files must match the inspected revision.
+The guard verifies that receipt on every operation. This is an explicit storage
+maintenance transition, not a general source-migration switch. Both scientific
+blockers remain. Recovery neither verifies tensors nor resumes model forwards.

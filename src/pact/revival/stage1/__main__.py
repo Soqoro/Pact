@@ -8,7 +8,7 @@ from . import evidence,weights,engine,metrics,io
 
 def main(argv=None):
     ap=argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('stage',choices=['resolve','inspect','verify','freeze','smoke','validation','source_evaluation','fixed_history','report','export','restore','map-recovery','fixture','audit','repair-tokenizer-cache'])
+    ap.add_argument('stage',choices=['recover-inspection','resolve','inspect','verify','freeze','smoke','validation','source_evaluation','fixed_history','report','export','restore','map-recovery','fixture','audit','repair-tokenizer-cache'])
     ap.add_argument('--run-dir',type=Path,required=True);ap.add_argument('--persistent',type=Path)
     ap.add_argument('--private',type=Path);ap.add_argument('--sanitized',type=Path);ap.add_argument('--exposure',type=Path)
     ap.add_argument('--checkpoint-map',type=Path);ap.add_argument('--cache-dir',type=Path)
@@ -18,7 +18,11 @@ def main(argv=None):
     a=ap.parse_args(argv);root=a.run_dir
     if not a.mock and a.stage!='audit' and root.name!=evidence.RUN:raise ValueError('Separate reserved evaluation run directory required')
     if a.persistent is not None and a.persistent.name!=evidence.RUN:raise ValueError('Separate evaluation persistence root required; parents are read-only')
-    if a.stage=='fixture':
+    if a.stage=='recover-inspection':
+        if not a.execute or a.mock:raise ValueError('Explicit real storage recovery required')
+        from .storage_recovery import recover
+        out=recover(root,a.persistent,a.private,a.plan_hash)
+    elif a.stage=='fixture':
         if not a.mock:raise ValueError('Explicit --mock required')
         from .fixture import build
         private,sanitized,mapping=build(root.parent/'fixture-inputs')

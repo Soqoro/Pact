@@ -2313,3 +2313,19 @@ No pretrained download, actual model inference, training, commit, push, secret
 access or final-test use. Real activation, context-memory limits, tokenization,
 throughput and Drive behavior remain GPU-unverified. See `CODEX_HANDOFF.md` and
 `stage1_evaluation_methodology.md` for prerequisites and exact scope.
+
+### 2026-10-23 — Stage I compact storage recovery
+
+Implemented compact snapshot persistence/restoration and an exact-archive,
+zero-attempt inspection recovery CLI. Historical resolution and source are retained;
+a separate source-transition receipt binds the clean maintenance checkout and
+unchanged non-storage code. No pending marker clears before verified persistence.
+Focused CPU suite: 33 tests passed (26.286s); an additional integration test using
+the actual 8,845-file PRIVATE archive passed (9.277s), including compact snapshot
+and restore. The integration test mocks only the clean checkout identity and
+outside-Git scratch guard; it executes real archive hashes, contract guard, packing,
+storage worker and restoration on local disk. No model downloads or GPU calls.
+Tests include corrupted packed objects, unsafe state, timeout/pending retention,
+later durable work, source-transition tampering and protected-code mismatch.
+Colab recovery and checkpoint verification remain unexecuted/unverified. No commit
+or push was performed. See stage1_compact_recovery_colab.md for the staged handoff.

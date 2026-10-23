@@ -176,6 +176,9 @@ def guard(root):
     for n,h in read_json(root/'evidence_inventory.json').items():
         if file_hash(root/safe_relative(n))!=h:raise ValueError('Evidence changed')
     if not r['fixture']:
-        if r['source_code']!=code_identity(Path(__file__).resolve().parents[4]):raise ValueError('Pinned evaluation source changed')
+        current=code_identity(Path(__file__).resolve().parents[4])
+        if r['source_code']!=current:
+            from .storage_recovery import validate_transition
+            validate_transition(root,r,current)
         exposure_check(read_json(root/'evidence/plan.json')['source'],read_json(root/'exposure.json'))
     return r

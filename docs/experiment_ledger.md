@@ -2810,3 +2810,14 @@ blockers. No GPU verification, benchmark call, retraining or StageII occurred.
 No efficacy claim or manuscript result update. Preserve all parent RECOVERY and
 snapshots, including unknown old step94. Exact user commands are in notebook27
 and `docs/stage1_evaluation_colab.md`; default Run All performs inspection only.
+
+### 2026-10-23 — Stage I inspection storage recovery (no model work)
+
+PRIVATE 3f0d2c8b0b85a8e56b62bfd41cdd7cc8c109563d30ed69cae7f06bcc603aecc3
+and SANITIZED 5be10c971238cfb0397913fedac83e5727a00b040e64af04bc15e1faa3e48488
+verified locally; 8,845 PRIVATE payload checksums passed. User verified the Drive
+copies and later restored the same files to scratch without model calls. No
+completed Drive snapshot exists in the reported diagnostic; pending marker remains.
+Compact storage recovery is implemented for local testing, not yet executed in
+Colab. Checkpoint verification and scientific evaluation remain unexecuted in this
+return. Allocation and original-generation-history blockers are unchanged.

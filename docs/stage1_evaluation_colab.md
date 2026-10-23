@@ -201,3 +201,11 @@ Local trusted audit (no archive code execution):
 ```bash
 PYTHONPATH=src python -m pact.revival.stage1 audit --run-dir /outside/git/stage1-audit --private /path/to/PRIVATE.zip
 ```
+
+## Pending inspection snapshot incident
+
+For the audited 1792657561217646069 inspection return with a pending marker and
+no snapshot, use [the compact recovery sequence](stage1_compact_recovery_colab.md)
+after pushing the maintenance revision. Do not rerun Cell 5 or manually clear the
+marker. This separately invoked recovery preserves the old resolution, records a
+storage-only source transition, persists a compact archive and stops without models.

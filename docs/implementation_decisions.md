@@ -1654,3 +1654,16 @@ method, masks or recovery safety flags were modified. No evaluation result follo
 from implementation or fixture outcomes. Real tensor/GPU verification remains
 pending user execution; source/budget conflicts do not prohibit that read-only
 verification stage but do prohibit freezing a scientific evaluation plan.
+
+### 2026-10-23 — Stage I compact persistence and exact inspection recovery
+
+The returned inspection archive contains 8,845 files and zero child attempts.
+Following two incomplete per-file persistence attempts, use scratch-built ZIP
+transport with two verified content-addressed objects through the existing worker.
+Keep latest-only restore and pending markers; do not extend the old retry loop or
+remove failed objects. Add a recovery restricted to the exact audited archive,
+resolution, pending marker and absence of any later durable state. Preserve the
+original source identity with a separate, clean execution-source transition
+receipt. Bind unchanged scientific code by a frozen protected-file inventory hash.
+This changes storage only; no budget, task, runtime, adapter or evaluation contract
+is amended. See stage1_evaluation_methodology.md for exclusions and failure rules.
