@@ -116,3 +116,114 @@ access, model downloads, GPU inference or migration execution occurred locally.
 A small PDF reader was installed only under /tmp to read the user's documents.
 The initial probe is ready for user execution; environment compatibility, snapshot
 transport, checkpoint mapping and fixed-history GPU execution remain pending.
+
+## Returned AAI probe: job1106306 (2026-10-26)
+
+The user returned metadata-only probe output from node01. GPU name exactly matches
+NVIDIA A100-SXM4-80GB; driver570.133.20, Linux x86_64, glibc2.39. Slurm supplied
+CUDA_VISIBLE_DEVICES=0 and SLURM_JOB_GPUS=5; these are different visibility/index
+namespaces and are not an error to fix by overriding GPU selection. No Torch
+visibility test has yet run. Python3.13.11 and no recorded ML packages were found
+in the current base environment. Only slurm/slurm/24.11 is loaded; apptainer and
+singularity were not on PATH, which does not establish absence from modules.
+
+/tmp has only1.8GiB available; do not use it for model downloads, environments or
+archives. Home is on a shared109TiB filesystem with26TiB reported available; this
+is filesystem availability, not the user's quota or node-local scratch. /content
+is absent. All these are prerequisites still to resolve, not scientific failures.
+
+NVIDIA's CUDA compatibility documentation states ordinary CUDA13.x compatibility
+requires driver580+. The official forward-compatibility matrix lists
+cuda-compat-13-0 with570+ as compatible for supported systems, including data-center
+GPUs. Therefore driver570 is a blocker to ordinary use of cu130, not proof that
+all deployment routes fail. Check site-supported compatibility libraries/container
+modules and test explicitly before model work; do not silently downgrade Torch to
+CUDA12 or edit the recorded runtime. A container alone does not replace the host
+kernel driver. A compatibility-library deployment would need its actual loaded
+libraries recorded in migration provenance, even if the existing fingerprint
+matches, and does not prove bitwise equivalence.
+
+Sources checked 2026-10-26:
+- https://docs.nvidia.com/deploy/cuda-compatibility/610/minor-version-compatibility.html
+- https://docs.nvidia.com/deploy/cuda-compatibility/forward-compatibility.html
+
+Next read-only information needed: available module catalog (containers and CUDA
+compatibility), scheduler wall-time limits, personal storage quota and supported
+node-local scratch. No dependency installation, transfer, restoration or inference
+is yet prescribed by this probe result.
+
+## Module and partition return; compatibility probe prepared
+
+User reports apptainer/1.24 in shared modules, NA100q UP with only node01,
+MaxTime=UNLIMITED and no partition account/group restriction. This does not prove
+unlimited account/QoS time or personal disk quota. quota command is unavailable;
+shared filesystem free space is not personal entitlement. Python3.13.11 remains
+sufficient for the diagnostic scripts only, not the frozen experiment runtime.
+
+Prepared tools/aai_prepare_compat.py and tools/aai_cuda_compat_probe.py/.sbatch.
+The preparer reads NVIDIA's official HTTPS repository metadata, selects only
+cuda-compat-13-0 version580.82.07-0ubuntu1 amd64, verifies package size/SHA256 and
+extracts into a user directory with dpkg-deb (no system installation or sudo).
+This exact package is listed by NVIDIA and uses the580.82.07 user-mode library
+version seen in prior Colab NVIDIA-SMI output; the host kernel driver stays570.
+Verification is against metadata received over official HTTPS, not an independently
+verified repository signature. No silent alternate package is selected.
+
+Use a small Ubuntu24.04 diagnostic Apptainer image and record its local SIF SHA256.
+The tag is a setup input, not an immutable scientific container identity; any later
+experiment environment must bind its actual immutable image/libraries/provenance.
+Bind the prepared user directory to /content and inspect all required path parents
+for symlinks. Slurm visibility is passed explicitly through --cleanenv, and the
+compatibility-library path precedes host libraries. The probe requires cuInit,
+CUDA13 driver API, exactly one correctly named visible GPU, a4096-byte allocation
+and free, and the actual mapped libcuda path under the verified package. It does
+not import Torch, load models, launch a model/kernel computation, restore checkpoints
+or modify study state. Passing proves only these driver/path operations, not Torch,
+PTX/compiler interoperability or numerical equivalence of the full workload.
+
+Local checks: both Python files compile, sbatch passes bash -n, exact package
+metadata selection and five rejection cases pass (duplicate record, wrong version,
+unsafe filename, excessive size, malformed checksum). No downloads or GPU work
+were performed locally for this probe. Keep package/cache/tmp directories under
+the user-selected preflight root; actual node-local scratch for experiment hot
+files still needs to be identified before scientific execution.
+
+### User commands after pushing tooling
+
+In the AAI Jupyter Terminal:
+
+```bash
+cd "$HOME/Pact"
+git pull --ff-only
+module load apptainer/1.24
+apptainer --version
+command -v dpkg-deb
+export PACT_AAI_PROBE_ROOT="$HOME/pact-aai-preflight/compat-probe"
+mkdir -p "$PACT_AAI_PROBE_ROOT"/{tmp,cache,content/pact-stage1/verified-final-tensors}
+export APPTAINER_TMPDIR="$PACT_AAI_PROBE_ROOT/tmp"
+export APPTAINER_CACHEDIR="$PACT_AAI_PROBE_ROOT/cache"
+export TMPDIR="$PACT_AAI_PROBE_ROOT/tmp"
+python3 "$HOME/Pact/tools/aai_prepare_compat.py" "$PACT_AAI_PROBE_ROOT"
+```
+
+Stop on failure. Then prepare the diagnostic image and copy the probe script:
+
+```bash
+apptainer pull "$PACT_AAI_PROBE_ROOT/ubuntu24.04.sif" docker://ubuntu:24.04
+sha256sum "$PACT_AAI_PROBE_ROOT/ubuntu24.04.sif"
+cp "$HOME/Pact/tools/aai_cuda_compat_probe.py" "$PACT_AAI_PROBE_ROOT/"
+cd "$HOME/pact-aai-preflight"
+sbatch "$HOME/Pact/tools/aai_cuda_compat_probe.sbatch"
+squeue -u "$USER"
+```
+
+Read pact-compat-probe-JOBID.out and .err. Return preparation receipt, image hash,
+Apptainer version and both job logs. No shell retry loop and no experiment dispatch.
+An existing prepared directory/package/image is preserved on failure; inspect it
+instead of deleting or silently replacing it. Do not install full Torch/model
+weights or transfer large evidence until this smaller compatibility test is reviewed.
+
+Reference documentation:
+- https://apptainer.org/docs/user/latest/gpu.html
+- https://apptainer.org/docs/user/latest/bind_paths_and_mounts.html
+- https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/

@@ -1742,3 +1742,21 @@ H100/PCIe/40GB or bypass fingerprints. Container binding may preserve immutable
 /content tensor paths, but availability and driver compatibility require returned
 cluster evidence. No migration or scientific execution was launched. See
 stage1_aai_migration.md.
+
+### 2026-10-26 — Do not infer cu130 compatibility from matching A100 alone
+
+Retain the recorded Torch/CUDA build and runtime guards. Driver570 needs an
+explicit supported compatibility route or administrator-provided upgrade before
+cu130 execution; do not downgrade Torch or spoof fingerprints. Treat home-space
+availability separately from user quota and scratch; /tmp is too small. Inspect
+modules before concluding containers are unavailable. No additional model checks
+or experiment calls authorized by the metadata probe itself.
+
+### 2026-10-26 — Test user-space compatibility before full AAI installation
+
+Use the exact official cuda-compat-13-0 580.82.07 package, verified against NVIDIA
+HTTPS metadata, inside an Apptainer driver-only probe. Preserve host kernel driver,
+Slurm visibility and all scientific evidence. Record actual loaded libcuda and
+image hashes; do not equate a matching runtime fingerprint or driver-only success
+with full Torch/numerical verification. No Torch downgrade or new synthetic model
+forward allowance. Separate small environment diagnostics from experiment budgets.

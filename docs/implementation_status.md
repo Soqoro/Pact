@@ -2440,3 +2440,24 @@ Shell syntax check passed. No cluster access/submission, pretrained download,
 GPU work or change to scientific execution code. Pending user-returned driver,
 node/partition, container, storage and software information before exact transport
 and fixed-history execution commands can be finalized.
+
+### 2026-10-26 — AAI environment probe returned; runtime not ready
+
+User job1106306 confirms node01 A100-SXM4-80GB, driver570.133.20, glibc2.39,
+Python3.13.11, no ML packages in current environment, /content absent, /tmp only
+1.8GiB free. Container tools are not on PATH; module availability is unresolved.
+Ordinary CUDA13 requires580+; NVIDIA documents a supported forward-compatibility
+route for data-center GPUs on570, which remains untested/site-unconfirmed here.
+No inference or scientific-state changes. Need module/storage/limit information;
+preserve exact frozen software, tensor paths and GPU selection.
+
+### 2026-10-26 — AAI compatibility probe implemented, GPU-unverified
+
+Returned module catalog exposes apptainer/1.24; NA100q partition is UP with no
+partition-level time limit. Added exact official CUDA13 compatibility-package
+preparation and Slurm/Apptainer driver/path probe, independent of PACT execution.
+Python compilation, shell syntax and exact metadata plus five rejection checks
+passed locally. No package/image/model downloads or GPU probe executed locally.
+Remote user will test CUDA driver initialization, one visible A10080, a tiny
+allocation/free and non-symlink /content binding before full runtime installation.
+Torch compatibility, quota, local scratch and artifact transfer remain unresolved.
