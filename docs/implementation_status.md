@@ -2471,3 +2471,12 @@ on shared storage. Added a CPU-only exact-image lifecycle sbatch probe using a
 bounded node-local temporary directory; bash -n passed. No local cluster/GPU
 execution, study restoration or scientific calls. Remote exit status and lifecycle
 result are pending; this is not approval to bypass runtime/provenance guards.
+
+### 2026-10-26 — AAI container lifecycle passed; environment jobs prepared
+
+User job1106748 COMPLETED/0:0 confirms node-local small-container extraction and
+cleanup. Added isolated exact-version Python/Torch setup and a separate one-A100
+BF16/fingerprint probe; no scientific execution or model downloads. Local shell
+syntax, Python compile and reference fingerprint serialization checks passed.
+Full remote Torch compatibility, artifact transport and workload scratch remain
+unverified; no commits/push or cluster operations performed by the assistant.

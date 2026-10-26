@@ -1768,3 +1768,14 @@ runtime validation. Test the existing small image's lifecycle on node-local /tmp
 using sbatch and no GPU, with capacity guard and non-destructive cleanup. Preserve
 the prior shared-storage leftovers until inspected. Full environment/model storage
 must not use the small /tmp filesystem. No scientific contract changes.
+
+### 2026-10-26 — Isolate AAI runtime installation and Torch validation
+
+Install managed Python3.13.15 and recorded package pins into a new user-owned venv,
+without altering base Conda or the frozen scientific source. Capture bootstrap
+version, all resolved packages and Python executable hash; newly resolved transitive
+packages are not historical identity evidence. Use official cu130 Torch index and
+stop on unavailable pins. Separate CPU setup from GPU primitive tests and preserve
+Slurm visibility. Passing runtime checks does not authorize scientific dispatch or
+prove numerical identity across host drivers. Container temporary extraction uses
+node-local /tmp; large installs use shared home, pending later hot-file storage.

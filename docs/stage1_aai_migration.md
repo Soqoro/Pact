@@ -251,3 +251,43 @@ storage still needs adequate space elsewhere. The probe runs /bin/true, records
 exit status and uses rmdir only on its own directory, preserving nonempty failures.
 It does not remove the earlier leftover directory, download, use GPU or touch
 study state. Shell syntax passed locally; remote lifecycle test remains pending.
+
+## Container lifecycle verified; exact environment setup prepared
+
+User returned job1106748 COMPLETED/0:0, including clean temporary sandbox removal
+on node-local /tmp. Missing FUSE helpers are informational for this working route.
+Added aai_runtime_setup.sbatch + aai_runtime_install.sh and aai_runtime_probe.py /
+aai_runtime_gpu_probe.sbatch. All use sbatch on node01; setup requests no GPU.
+Setup exclusively creates ~/pact-aai-preflight/runtime-v1, preserving interrupted
+installs for review rather than reusing them. It requires40GiB filesystem free
+space (not a personal-quota guarantee), installs uv into its own bootstrap target,
+records uv version, installs managed Python3.13.15, and builds an isolated venv.
+Only the small container extraction uses /tmp (1GiB free-space guard); installation
+cache/temp and Python live under home. This is environment preparation, not a
+resolution of scientific hot-file scratch placement. No system packages change.
+
+Torch2.11.0+cu130 is explicitly fetched from the official cu130 index. Recorded
+fingerprint packages are exact-pinned; pyarrow22.0.0 and chat-template dependencies
+are included. Transitive packages are resolved anew and inventoried, not claimed
+to be the identical unrecorded Colab environment. uv is a bootstrap tool outside
+the venv, version recorded rather than claimed part of the scientific fingerprint.
+Network/package/Python availability failures stop without substituting versions.
+No pretrained model downloads occur. Source/study code is not installed or changed.
+
+A separate GPU job requires the install receipt, verifies the captured probe tools,
+container and CUDA library hashes, imports the exact packages, checks the recorded
+fingerprint and runs small BF16 matrix/SDPA checks without a model. It records the
+actual mapped libcuda, full package inventory and Python executable hash. A passing
+receipt is environment evidence only: no training, checkpoint restoration, repeated
+synthetic/model verification or fixed-history dispatch. It cannot prove full-model
+numerical equivalence. Artifact transport and scientific hot-file storage remain
+pending. Return both stdout/stderr and Slurm status before study execution.
+
+Local checks: bash -n for both batch files and installation script, Python compile,
+and GPU-free fingerprint serialization reference check passed. No dependency
+installation, pretrained downloads or GPU tests executed locally.
+
+Official instructions consulted:
+- https://docs.astral.sh/uv/guides/install-python/
+- https://docs.astral.sh/uv/reference/storage/
+- https://pytorch.org/get-started/previous-versions/
