@@ -384,3 +384,49 @@ site usage policy, quotas, allocation lifetime and suitable capacity must be
 resolved from returned evidence before choosing the execution layout. No model
 cache download, restore retry, inference submission or automatic requeue is added.
 Shell and embedded Python syntax checks passed locally; remote probe is pending.
+
+## Node-local storage found: job1106885
+
+Returned job1106885 COMPLETED/0:0. /local is a separate node01 XFS filesystem
+(/dev/sda6),425.45GiB total,416.94GiB available at inspection, with user write/search
+access and sticky world-writable root. Select an exclusive mode0700 per-job directory
+there for scientific hot files, /content binding, model cache and container temporary
+files. Recheck capacity at launch; available shared space is not a reservation.
+/local persistence across jobs/reboots is not established, so it is never the sole
+durable copy or an implicit resume source. Keep original restoration-v1 untouched.
+
+Use shared-home durable storage for existing verified inputs and a separately
+staged execution persistence root; preserve pending/inflight markers and latest-only
+restore semantics. Do not point execution persistence at the immutable transport
+copy. /dataset/suaq0001 is writable NFS, not local scratch. /dev/shm is RAM-backed
+and unnecessary; /tmp1.78GiB and /var/tmp4.29GiB remain too small for the workload.
+No further filesystem-discovery job is needed. Live staging, official model access,
+cache preparation and bounded fixed_history submission remain unexecuted.
+
+## Site dataset policy: private durable inputs under /dataset
+
+User supplied site guidance recommending /dataset for datasets and /dataset/common
+for shareable datasets. This supersedes the earlier shared-home durable-data layout:
+use /dataset/suaq0001/PACT for private durable inputs and eventual outputs, keep
+code/environment under home, and keep live hot files under private /local staging.
+Do not use /dataset/common for private benchmark traces, bundles or checkpoints.
+
+Prepared aai_dataset_stage.py/.sbatch, CPU-only1CPU/2GiB/30min on node01. It
+requires an existing user-owned /dataset/<user>, then exclusively creates private
+PACT/stage1-migration-v1. It copies the independently verified transport ZIP, its
+six already-restored input files (including the compact snapshot), the restoration
+receipt, six final tensors and unchanged checkpoint map. All copied bytes are
+hash-verified; the six tensor file hashes are bound to returned successful historical
+verification evidence. Directories are0700 and files0600 under umask077. Symlink
+paths and existing destination are rejected; partial failures are preserved for
+review. A final receipt is written/read back only after every copy passes.
+
+No existing dataset permissions are changed; no home evidence or Drive data is
+deleted/moved. No unpacking of raw benchmark state, model download, inference,
+training or synthetic forward is performed. verified-inputs/persistent remains a
+starting-evidence copy, not the eventual writable execution persistence root.
+Record filesystem capacity as shared/unreserved, not personal quota. Future jobs
+must stage a separate execution copy and preserve durable ambiguity markers.
+Four focused CPU copy tests passed (private modes/source preservation, overwrite
+refusal, corruption rejection, symlink-parent refusal), plus shell/Python syntax.
+Actual /dataset transfer remains pending user execution.

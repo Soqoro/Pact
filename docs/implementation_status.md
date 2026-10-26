@@ -2506,3 +2506,20 @@ adapter identity/structural checks. All scientific forward/update counts remain0
 fixed_history not started. Prepared a read-only CPU Slurm scratch-discovery script;
 shell and embedded Python syntax passed. Remote filesystem capacity/policy evidence
 is still needed before selecting scientific hot storage or prescribing inference.
+
+### 2026-10-26 — Node01 /local selected for scientific hot storage
+
+User job1106885 COMPLETED/0:0 identifies writable node-local XFS /local with
+416.94GiB free. Use private per-job staging with launch-time capacity guard and
+shared-home durable snapshots; preserve the verified restoration and transport.
+Space is shared/unreserved and scratch survival is unknown. No live staging,
+model download or fixed_history generation has yet occurred on AAI.
+
+### 2026-10-26 — Private /dataset staging prepared under supplied site policy
+
+User site guidance recommends /dataset for datasets; /dataset/common is shareable
+only. Added CPU-only batch transfer to /dataset/<user>/PACT/stage1-migration-v1,
+with private permissions, fixed transport/tensor identities, per-file verification,
+exclusive destination and final receipt. Existing home/Drive evidence is preserved.
+Four filesystem regression tests and syntax checks passed. Remote dataset staging
+and fixed-history inference remain unexecuted.

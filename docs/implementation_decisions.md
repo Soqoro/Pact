@@ -1806,3 +1806,20 @@ mounts, user access and capacities without recursive scans or test writes; do no
 infer that shared-home free space or tmpfs size is reserved scientific scratch.
 No GPU request for this probe, no moves/deletions or automatic fallback. Continue
 using sbatch only. Scientific work awaits a suitable reviewed storage layout.
+
+### 2026-10-26 — Use /local, not RAM-backed storage, for AAI hot files
+
+Select discovered node01 /local XFS for a private per-job working directory and
+model cache, checking current capacity at launch. Retain shared-home verified
+inputs and separate execution persistence. Never assume /local survives allocation
+or node loss, erase old scratch automatically, or resume past ambiguous durable
+markers. Existing restoration remains untouched; no additional discovery probe
+is needed from the returned mount evidence.
+
+### 2026-10-26 — Follow site /dataset policy without publishing private evidence
+
+Use user-owned /dataset/<user>/PACT for durable private data/checkpoints/results;
+reserve /dataset/common for genuinely shareable material, not these bundles.
+Maintain per-job /local hot copies and code/environment under home. Migrate by
+verified copy, not move; never remove the home recovery evidence as part of setup.
+The initial evidence snapshot remains separate from future writable persistence.
