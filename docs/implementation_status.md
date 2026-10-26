@@ -2498,3 +2498,11 @@ and six tensor_inventory checks, preserving historical paths via container bind.
 Local shell/Python checks, real isolated Git checks and five transport regressions
 passed. Remote restore/tensor identity checks and scientific scratch remain pending;
 no models, training or study inference executed locally.
+
+### 2026-10-26 — AAI restored state and six tensors verified remotely
+
+User job1106879 COMPLETED/0:0 confirms pinned snapshot restoration and six final
+adapter identity/structural checks. All scientific forward/update counts remain0;
+fixed_history not started. Prepared a read-only CPU Slurm scratch-discovery script;
+shell and embedded Python syntax passed. Remote filesystem capacity/policy evidence
+is still needed before selecting scientific hot storage or prescribing inference.

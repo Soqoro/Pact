@@ -1798,3 +1798,11 @@ never substitute stored answers or edit the fingerprint. Invoke only existing
 restore, map_recovery and tensor_inventory readers; do not rerun synthetic
 verification. Keep receipt outside study and treat shared-home restoration as an
 inspection step, not resolved scientific hot storage. Preserve failed targets.
+
+### 2026-10-26 — Inspect scratch metadata before staging live inference
+
+Retain successful storage rehearsal as the migration boundary. Discover node01
+mounts, user access and capacities without recursive scans or test writes; do not
+infer that shared-home free space or tmpfs size is reserved scientific scratch.
+No GPU request for this probe, no moves/deletions or automatic fallback. Continue
+using sbatch only. Scientific work awaits a suitable reviewed storage layout.

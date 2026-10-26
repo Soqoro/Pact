@@ -362,3 +362,25 @@ scientific_hot_storage_ready=false. No inference job is prescribed yet.
 Local bash syntax/Python compilation passed; isolated real Git version/HEAD/status
 and exclusive-target rejection checks passed. Five transport CPU regressions passed.
 Actual remote restoration and tensor validation remain pending.
+
+## Remote restoration passed; scientific scratch discovery
+
+User job1106879 COMPLETED/0:0 in2m57s. STORAGE_RESTORE_AND_SIX_TENSORS_OK
+and the storage receipt report all six structural/historical tensor checks passed.
+No generation, training, optimizer or synthetic forwards occurred; fixed_history
+remains unstarted and scientific_hot_storage_ready=false. Restored files and
+transport remain the immutable starting evidence for migration.
+
+Prepared tools/aai_storage_probe.sbatch, CPU-only node01,1CPU/2GiB/5min.
+It reads mountinfo and metadata for conventional scratch paths, local filesystem
+mounts and user-specific child paths (no recursive directory listing). It reports
+mount type, available capacity/inodes, access permissions, owner and RAM-backed
+status; quota query is bounded to20seconds if installed. No files or scientific
+state are written by the probe; Slurm itself writes requested stdout/stderr logs.
+/tmp's previously measured1.8GiB is insufficient for model cache/live study.
+Shared-home restoration does not resolve the scratch requirement. tmpfs capacity,
+if reported, is shared memory and is not a free reserved disk allocation. Actual
+site usage policy, quotas, allocation lifetime and suitable capacity must be
+resolved from returned evidence before choosing the execution layout. No model
+cache download, restore retry, inference submission or automatic requeue is added.
+Shell and embedded Python syntax checks passed locally; remote probe is pending.
