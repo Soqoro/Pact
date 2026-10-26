@@ -2488,3 +2488,13 @@ checks and container cleanup passed on A10080 with verified compatibility librar
 Prepared storage-only latest-snapshot plus continuation-weight-archive transport.
 Five focused CPU tests and Python compilation passed. Actual transfer, tensor
 mapping and fixed-history execution remain pending; no scientific calls locally.
+
+### 2026-10-26 — AAI transport independently matched; restore prepared
+
+User AAI transfer verification and separate CPU Drive comparison matched all six
+files at latest safe snapshot1792943847412356837-322db60bca6f. Added CPU-only,
+exact-transport-bound restoration job using pinned scientific restore/map readers
+and six tensor_inventory checks, preserving historical paths via container bind.
+Local shell/Python checks, real isolated Git checks and five transport regressions
+passed. Remote restore/tensor identity checks and scientific scratch remain pending;
+no models, training or study inference executed locally.

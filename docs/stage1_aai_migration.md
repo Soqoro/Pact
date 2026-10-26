@@ -326,3 +326,39 @@ output before restoring study/tensors. Hot-file storage and full workload remain
 pending. Five focused CPU tests passed: path rejection, pending marker refusal,
 latest-incomplete no fallback, outer/inner corruption detection, existing-output
 preservation. No real artifacts or model downloads used locally.
+
+## Independent transport comparison passed; storage restore job prepared
+
+User uploaded1,480,806,479-byte transport SHA256
+13219f390910046bfcd7c065a0353cb823ca3a3ca2f95fcec032bcd88da4f411.
+Original outer checksum was lost when Colab reset. AAI internal checks passed,
+then a separate CPU Colab independently hashed all six Drive source files and
+confirmed the same latest safe snapshot1792943847412356837-322db60bca6f with no
+pending/inflight markers. This establishes content agreement without inventing
+a recovered original outer checksum. Continuation RECOVERY hash independently
+matched2ea19eae5697a12470c9cca55c3be55ba847fbe5f0a22bb71b5e1af92a0a48ba.
+
+Added aai_stage1_restore.py/.sbatch for a CPU-only node01 storage rehearsal.
+It requires the exact independently checked transport SHA and a clean detached
+scientific checkout at a2ad51f60530e6dafaf1377eba03d0753f87ff92, separate from
+updated ~/Pact tooling. It copies the real node Git binary and linked libraries
+into an isolated Git-only launcher so the minimal Ubuntu image can run the real
+code_identity checks, without overriding Python's library path or forging Git
+answers. The package environment is unchanged. All preparation targets are
+exclusive; partial failures are retained for review, not automatically retried.
+
+Host restoration-v1/content is bound to /content, preserving recorded tensor
+paths without symlinks or lineage edits. The pinned io.restore and map_recovery
+readers verify the compact snapshot and recovery archive, then tensor_inventory
+checks all six final FP32 adapter tensors, file/content identities, shapes and
+finite values against immutable lineage. No optimizer is restored. No verify,
+freeze, synthetic sequence, report/export, model loading or execution stage runs.
+Guard and saved completed-stage checks run read-only. Receipt and tooling hashes
+are stored outside the restored study. Drive and transferred input ZIP are untouched.
+
+This prepares files on shared home for inspection only. Scientific hot-file
+scratch/durable execution layout remains unresolved; the receipt explicitly marks
+scientific_hot_storage_ready=false. No inference job is prescribed yet.
+Local bash syntax/Python compilation passed; isolated real Git version/HEAD/status
+and exclusive-target rejection checks passed. Five transport CPU regressions passed.
+Actual remote restoration and tensor validation remain pending.

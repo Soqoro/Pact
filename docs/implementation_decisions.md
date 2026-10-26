@@ -1788,3 +1788,13 @@ PRIVATE and RECOVERY archives for later existing map-recovery validation. Packag
 only on local CPU scratch, recheck source boundary, never clear markers or choose
 an older snapshot. AAI initial verification is hash-only without restoration.
 Sidecar integrity is not proof of final tensor identity; keep that check pending.
+
+### 2026-10-26 — Restore rehearsal preserves pinned code and tensor paths
+
+Bind a new user-owned content directory to /content for storage-only validation,
+with clean detached scientific source separate from mutable tooling. Use actual
+node Git plus isolated linked libraries for code identity inside minimal Ubuntu;
+never substitute stored answers or edit the fingerprint. Invoke only existing
+restore, map_recovery and tensor_inventory readers; do not rerun synthetic
+verification. Keep receipt outside study and treat shared-home restoration as an
+inspection step, not resolved scientific hot storage. Preserve failed targets.
