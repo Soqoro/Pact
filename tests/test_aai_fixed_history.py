@@ -62,6 +62,33 @@ class FixedHistoryEntryTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, 'already recorded'):
                     m.boundary(root)
 
+    def test_reviewed_continuation_owner_and_stops(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            execution = base / 'execution'
+            local = base / 'local'
+            run = local / 'run'
+            run.mkdir(parents=True)
+            execution.mkdir()
+            persistent = execution / 'persistent' / m.transport.RUN
+            persistent.mkdir(parents=True)
+            start = {'job_id': m.PREVIOUS_JOB, 'plan_hash': m.transport.PLAN, 'local': str(local)}
+            (execution / 'STARTED.json').write_text(json.dumps(start))
+            (execution / 'local-path.txt').write_text(str(local))
+            (execution / 'container-exit-code.txt').write_text('1')
+            with patch.object(m, 'PREVIOUS_LOCAL', str(local)), patch.object(m, 'boundary') as bound:
+                self.assertEqual(m.continuation_owner(execution, local, run), persistent)
+                bound.assert_called_once_with(run)
+                for marker in (persistent / 'INFLIGHT.json', persistent / 'SNAPSHOT_PENDING.json',
+                               run / '.lock', execution / 'execution-provenance.json', execution / 'COMPLETED.json'):
+                    marker.write_text('{}')
+                    with self.assertRaises(ValueError):
+                        m.continuation_owner(execution, local, run)
+                    marker.unlink()
+                (execution / 'STARTED.json').write_text(json.dumps({**start, 'job_id': 'different'}))
+                with self.assertRaisesRegex(ValueError, 'dispatch owner'):
+                    m.continuation_owner(execution, local, run)
+
 
 if __name__ == '__main__':
     unittest.main()

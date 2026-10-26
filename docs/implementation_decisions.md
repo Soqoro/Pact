@@ -1834,3 +1834,12 @@ and inherit exact saved model receipts. New receipts remain outside scientific
 state. Credentials enter only the preflight process and are removed before the
 offline scientific subprocess. Exclusive durable owner plus --no-requeue prevents
 accidental duplicate submission; any failure requires inspecting retained evidence.
+
+### 2026-10-26 — Permit only reviewed zero-dispatch preflight continuation
+
+After successful Llama access diagnostic and user proceed, allow the exact failed
+job1106891 scratch owner to continue only if all study files equal the original
+verified snapshot and no new component intent, lock or ambiguity marker exists.
+Do not clear guards, replace source, recreate persistence or retry a generation.
+Write separate continuation provenance and preserve the failed preflight evidence.
+Repeat runtime/access/weight checks before the already authorized fixed-history stage.

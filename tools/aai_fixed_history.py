@@ -52,18 +52,79 @@ def load_token(path):
     return token
 
 
+PREVIOUS_JOB = '1106891'
+PREVIOUS_LOCAL = '/local/pact-suaq0001-1106891-d2PoqB'
+
+
+def continuation_owner(execution, local, run):
+    """Accept only the reviewed metadata-only failure, never a generic resume."""
+    require = transport.require
+    no_symlinks(execution)
+    no_symlinks(local)
+    require(str(local) == PREVIOUS_LOCAL, 'Wrong reviewed scratch path')
+    started = json.loads((execution / 'STARTED.json').read_text())
+    require(started == {'job_id': PREVIOUS_JOB, 'plan_hash': transport.PLAN, 'local': PREVIOUS_LOCAL},
+            'Wrong previous dispatch owner')
+    require((execution / 'local-path.txt').read_text().strip() == PREVIOUS_LOCAL, 'Scratch receipt mismatch')
+    require((execution / 'container-exit-code.txt').read_text().strip() == '1', 'Expected failed preflight')
+    for n in ('execution-provenance.json', 'COMPLETED.json'):
+        require(not (execution / n).exists(), 'Previous job may have entered execution')
+    persistent = execution / 'persistent' / transport.RUN
+    for n in ('INFLIGHT.json', 'SNAPSHOT_PENDING.json'):
+        require(not (persistent / n).exists(), 'Unsafe durable marker; no continuation')
+    require(not (run / '.lock').exists(), 'Study lock exists; no continuation')
+    boundary(run)
+    return persistent
+
+
+def unchanged_run(run, persistent, source, receipt):
+    """Compare every restored byte with the independently verified starting snapshot."""
+    from pact.revival.stage1 import evidence
+    from pact.util import file_hash
+    snap, raw, index = transport.safe_boundary(persistent)
+    prefix = 'verified-inputs/persistent/' + transport.RUN + '/'
+    expected_snapshot = source / prefix
+    original, original_raw, original_index = transport.safe_boundary(expected_snapshot)
+    transport.require(snap.name == original.name and raw == original_raw and index == original_index,
+                      'Durable snapshot changed after preflight')
+    for n, h in receipt['files'].items():
+        if n.startswith(prefix):
+            transport.require(file_hash(persistent / n[len(prefix):]) == h, 'Durable evidence changed')
+    z, checks = evidence.archive(persistent / 'objects' / index['state.zip'], index['state.zip'])
+    try:
+        actual = {p.relative_to(run).as_posix() for p in run.rglob('*') if p.is_file()}
+        transport.require(actual == set(checks), 'Run inventory changed after preflight')
+        for i, (n, h) in enumerate(checks.items(), 1):
+            no_symlinks(run / n)
+            transport.require(file_hash(run / n) == h, 'Run content changed after preflight')
+            if i % 10000 == 0:
+                print(f'Unchanged starting files: {i}/{len(checks)}', flush=True)
+    finally:
+        z.close()
+
+
 def main(a):
     os.umask(0o077)
     require = transport.require
     source = a.dataset / 'stage1-migration-v1'
     execution = a.dataset / 'stage1-execution-v1'
-    require(execution.is_dir() and not (execution / 'STARTED.json').exists(), 'Execution already started')
-    # The batch script exclusively creates execution before launching this process.
-    with (execution / 'STARTED.json').open('x') as started:
-        json.dump({'job_id': os.environ.get('SLURM_JOB_ID'),
-                   'plan_hash': transport.PLAN, 'local': str(a.local)}, started)
-        started.flush()
-        os.fsync(started.fileno())
+    continuing = a.continue_preflight_1106891
+    run = Path('/content/pact-stage1/runs') / transport.RUN
+    records = execution / 'preflight-continuation-1106891' if continuing else execution
+    if continuing:
+        require(records.is_dir(), 'Exclusive continuation owner required')
+        continuation_owner(execution, a.local, run)
+        with (records / 'STARTED.json').open('x') as started:
+            json.dump({'previous_job': PREVIOUS_JOB, 'job_id': os.environ.get('SLURM_JOB_ID'),
+                       'plan_hash': transport.PLAN, 'local': str(a.local)}, started)
+    else:
+        require(execution.is_dir() and not (execution / 'STARTED.json').exists(), 'Execution already started')
+        # The batch script exclusively creates execution before launching this process.
+        with (execution / 'STARTED.json').open('x') as started:
+            json.dump({'job_id': os.environ.get('SLURM_JOB_ID'),
+                       'plan_hash': transport.PLAN, 'local': str(a.local)}, started)
+            started.flush()
+            os.fsync(started.fileno())
     require(subprocess.check_output(['git', '-C', str(a.checkout), 'rev-parse', 'HEAD'], text=True).strip() == COMMIT,
             'Wrong pinned scientific source')
     require(not subprocess.check_output(['git', '-C', str(a.checkout), 'status', '--porcelain'], text=True).strip(),
@@ -86,21 +147,32 @@ def main(a):
         no_symlinks(source / name)
         require(file_hash(source / name) == h, 'Dataset evidence checksum mismatch')
         print(f'Verified dataset file {i}/{len(receipt["files"])}', flush=True)
-    tensors = Path('/content/pact-stage1/verified-final-tensors')
-    for fit, h in TENSORS.items():
-        relative = 'content/pact-stage1/verified-final-tensors/' + fit + '/tensors.safetensors'
-        write_copy(source / relative, tensors / fit / 'tensors.safetensors', h)
-    relative = 'content/pact-stage1/verified-final-tensors/checkpoint-map.json'
-    write_copy(source / relative, tensors / 'checkpoint-map.json', receipt['files'][relative])
-    persistent = execution / 'persistent' / transport.RUN
-    persistent.mkdir(parents=True)
-    for name, h in receipt['files'].items():
-        prefix = 'verified-inputs/persistent/' + transport.RUN + '/'
-        if name.startswith(prefix):
-            write_copy(source / name, persistent / name[len(prefix):], h)
-    run = Path('/content/pact-stage1/runs') / transport.RUN
-    print('Restoring safe source-evaluation boundary onto /local...', flush=True)
-    io.restore(persistent, run)
+    if continuing:
+        persistent = continuation_owner(execution, a.local, run)
+        unchanged_run(run, persistent, source, receipt)
+        for name, h in receipt['files'].items():
+            if name.startswith('content/'):
+                require(file_hash(Path('/content') / name[len('content/'):]) == h,
+                        'Staged tensor/map bytes changed')
+        write_json(records / 'PRE_DISPATCH_BOUNDARY_VERIFIED.json', {
+            'previous_job': PREVIOUS_JOB, 'initial_committed': 11712,
+            'new_fixed_history_attempts': 0, 'starting_files_unchanged': True})
+    else:
+        tensors = Path('/content/pact-stage1/verified-final-tensors')
+        for fit, h in TENSORS.items():
+            relative = 'content/pact-stage1/verified-final-tensors/' + fit + '/tensors.safetensors'
+            write_copy(source / relative, tensors / fit / 'tensors.safetensors', h)
+        relative = 'content/pact-stage1/verified-final-tensors/checkpoint-map.json'
+        write_copy(source / relative, tensors / 'checkpoint-map.json', receipt['files'][relative])
+        persistent = execution / 'persistent' / transport.RUN
+        persistent.mkdir(parents=True)
+        for name, h in receipt['files'].items():
+            prefix = 'verified-inputs/persistent/' + transport.RUN + '/'
+            if name.startswith(prefix):
+                write_copy(source / name, persistent / name[len(prefix):], h)
+        run = Path('/content/pact-stage1/runs') / transport.RUN
+        print('Restoring safe source-evaluation boundary onto /local...', flush=True)
+        io.restore(persistent, run)
     boundary(run)
     evidence.guard(run)
     for fit in sorted(TENSORS):
@@ -110,7 +182,10 @@ def main(a):
     token = load_token(a.token_file)
     os.environ['HF_TOKEN'] = token
     cache = a.local / 'model-cache'
-    cache.mkdir()
+    if continuing:
+        require(cache.is_dir(), 'Reviewed model cache missing')
+    else:
+        cache.mkdir()
     from pact.revival.mistral_cache import repair
     from pact.backends.native import metadata
     from huggingface_hub import snapshot_download
@@ -131,7 +206,7 @@ def main(a):
                                      token=token))
         hashes = {n: file_hash(path / n) for n in [*saved['metadata_hashes'], *saved['weight_files']]}
         require(hashes == identities[family]['pristine_identity']['file_hashes'], 'Model file identity mismatch')
-    write_json(execution / 'execution-provenance.json', {
+    write_json(records / 'execution-provenance.json', {
         'plan_hash': transport.PLAN, 'scientific_commit': COMMIT, 'runtime_fingerprint': FINGERPRINT,
         'dataset_receipt_sha256': DATASET_RECEIPT, 'job_id': os.environ.get('SLURM_JOB_ID'),
         'node': os.environ.get('SLURMD_NODENAME'), 'local': str(a.local), 'initial_committed': 11712,
@@ -155,7 +230,7 @@ def main(a):
               'generation_accounting': read_json(run / 'summary.json')['accounting'],
               'bundles': [{ 'name': p.name, 'sha256': file_hash(p), 'bytes': p.stat().st_size}
                           for p in sorted((persistent / 'bundles').glob('*.zip'))]}
-    write_json(execution / 'COMPLETED.json', result)
+    write_json(records / 'COMPLETED.json', result)
     print(json.dumps(result, indent=2), flush=True)
 
 
@@ -163,6 +238,7 @@ if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__)
     for name in ('dataset', 'local', 'checkout', 'token-file'):
         p.add_argument('--' + name, type=Path, required=True)
+    p.add_argument('--continue-preflight-1106891', action='store_true')
     args = p.parse_args()
     try:
         main(args)

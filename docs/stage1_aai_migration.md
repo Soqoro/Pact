@@ -484,3 +484,37 @@ fixed-only command, private token permissions, changed-plan and completed-stage
 refusal; shell/Python syntax and diff checks passed. No actual model downloads,
 Slurm submissions or inference were performed locally. Full remote job remains
 unverified until the user returns execution artifacts.
+
+## Reviewed preflight-only continuation of job1106891
+
+Job1106891 failed before dispatch at L metadata access with GatedRepoError401.
+CPU diagnostic1106894 confirmed prior-only counts7836source+3876validation;
+after token replacement diagnostic1106895 returned LLAMA_METADATA_ACCESS_OK
+with the same counts. Neither diagnostic generated or trained. The user explicitly
+requested continuation after reviewing this result. CPU metadata success does not
+replace exact GPU runtime checks.
+
+Added tools/aai_fixed_history_continue.sbatch and a narrowly named
+--continue-preflight-1106891 mode in the external execution wrapper. Only the exact
+previous failed job, plan, scratch path/local-path receipt and exit1 are accepted.
+The original job must be FAILED and absent from the active queue. An exclusive
+preflight-continuation-1106891 directory records new tools/logs/provenance; all
+original job records remain untouched. Existing continuation directory stops
+resubmission. This is not a generic retry/ambiguous-dispatch resume mechanism.
+
+Before repeating access checks, require no durable pending/inflight marker, study
+lock, previous dispatch provenance or completion. Require exact11712 prior-only
+calls. Compare the current durable snapshot to the independently verified initial
+snapshot, all its object hashes, and every local study file to the archived starting
+inventory. Extra/missing/changed run files stop. All staged tensor/map bytes and
+six inventories, pinned source and GPU runtime are reverified. No restoration,
+overwrite or marker removal occurs on this path. Reuse metadata cache but continue
+exact official access/weight checks; dispatch still only fixed_history with the
+original1920 ceiling. No new scientific source commit or model identities.
+
+Continuation final receipt is
+stage1-execution-v1/preflight-continuation-1106891/COMPLETED.json; scientific
+bundles remain under the same execution persistent/<amended-run-id>/bundles.
+Fourteen focused AAI CPU tests passed, including rejection of wrong previous job,
+locks, pending markers and possible previous dispatch, plus shell/Python syntax.
+Remote continuation/model execution remains unverified. No credentials recorded.

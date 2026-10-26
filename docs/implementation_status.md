@@ -2533,3 +2533,11 @@ metadata and model-file verification, offline fixed-history-only subprocess, no
 requeue/retry/fallback. All13 focused AAI CPU tests and syntax checks passed.
 The wrapper does not alter study code/methodology. Model cache preparation and
 actual fixed-history inference have not run locally or been returned from AAI.
+
+### 2026-10-26 — Llama access resolved; preflight-only continuation prepared
+
+Job1106891 stopped at L metadata HTTP401 before new intents. Diagnostic1106895
+succeeded after token replacement; counts remain11712 prior calls. Added a scoped
+continuation batch job requiring unchanged snapshot/run/tensor bytes, no dispatch
+markers and the exact failed owner. Original logs/tools remain preserved. Fourteen
+focused AAI CPU tests and syntax checks passed; remote continuation is unexecuted.
