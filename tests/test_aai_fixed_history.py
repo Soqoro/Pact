@@ -125,6 +125,41 @@ class FixedHistoryEntryTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'second preflight owner'):
                 m.repaired_preflight_owner(base, Path('/local/wrong'), base / 'repair')
 
+    def test_certificate_failure_owner_and_dispatch_guard(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            prior = base / 'preflight-continuation-1106899'
+            prior.mkdir()
+            local = Path('/local/fixture')
+            (prior / 'STARTED.json').write_text(json.dumps({
+                'previous_job': '1106899', 'job_id': '1106916',
+                'plan_hash': m.transport.PLAN, 'local': str(local)}))
+            (prior / 'container-exit-code.txt').write_text('1')
+            (prior / 'PRE_DISPATCH_BOUNDARY_VERIFIED.json').write_text(json.dumps({
+                'previous_job': m.PREVIOUS_JOB, 'initial_committed': 11712,
+                'new_fixed_history_attempts': 0, 'starting_files_unchanged': True}))
+            m.certificate_preflight_owner(base, local)
+            (prior / 'execution-provenance.json').write_text('{}')
+            with self.assertRaisesRegex(ValueError, 'entered execution'):
+                m.certificate_preflight_owner(base, local)
+
+    def test_certificate_identity_and_environment_guards(self):
+        from unittest.mock import MagicMock
+        context = MagicMock()
+        context.get_ca_certs.return_value = [{}] * 146
+        env = {k: '/etc/ssl/certs/ca-certificates.crt'
+               for k in ('SSL_CERT_FILE', 'REQUESTS_CA_BUNDLE', 'CURL_CA_BUNDLE')}
+        with patch.object(m.transport, 'file_sha', return_value=m.CERTIFICATE_SHA256), \
+             patch('ssl.create_default_context', return_value=context), \
+             patch.dict(os.environ, env):
+            self.assertTrue(m.certificate_receipt()['tls_verification_enabled'])
+            with patch.object(m.transport, 'file_sha', return_value='changed'):
+                with self.assertRaisesRegex(ValueError, 'store changed'):
+                    m.certificate_receipt()
+            with patch.dict(os.environ, {'SSL_CERT_FILE': '/wrong'}):
+                with self.assertRaisesRegex(ValueError, 'environment mismatch'):
+                    m.certificate_receipt()
+
 
 if __name__ == '__main__':
     unittest.main()

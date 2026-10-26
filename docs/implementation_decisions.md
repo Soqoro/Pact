@@ -1860,3 +1860,21 @@ retaining1106891 ownership and unchanged-state gates. Verify additive environmen
 repair against the returned metadata hashes and current full package inventory.
 Use a new exclusive audit directory; no deletion, reset, scientific code migration,
 relaxed fingerprint, generic resume or additional generation budget.
+
+
+### AAI certificate preflight recovery (2026-10-26)
+
+Returned job 1106916 failed during R metadata access because the container Xet
+client had no CA certificates. Q/L/M metadata matched; dispatch was not reached.
+CPU job 1106920 completed with R metadata matching, 146 trusted CAs, certificate
+bundle SHA256 `6d84ab71cb726c0641b0af84303c316e3fa50db941dc8507d09045eb2fa5d238`,
+and the unchanged 11,712-call starting boundary.
+
+`tools/aai_fixed_history_after_certificates.sbatch` binds the reviewed node CA
+store read-only with explicit certificate environment variables; TLS verification
+remains enabled. Its exclusive `preflight-continuation-1106916` records preserve
+all earlier owners. The Python guard checks the failed owner, absence of dispatch,
+certificate identity, prior additive tokenizer repair, and all existing runtime,
+source, tensor, snapshot and scientific-budget guards. Only the existing pinned
+fixed_history stage may execute. No new scientific source, model, or budget change.
+The new batch continuation is GPU-unverified; no cluster job was launched locally.

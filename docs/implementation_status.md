@@ -2557,3 +2557,25 @@ metadata/template/probe identity. Prepared scoped continuation of failed1106899,
 requiring unchanged initial study state, no dispatch evidence, exact repair receipt
 and installed-package inventory; preserves both failed owners. Twenty focused AAI
 CPU tests and syntax checks passed. GPU recheck and fixed-history execution pending.
+
+
+### AAI certificate preflight recovery (2026-10-26)
+
+Returned job 1106916 failed during R metadata access because the container Xet
+client had no CA certificates. Q/L/M metadata matched; dispatch was not reached.
+CPU job 1106920 completed with R metadata matching, 146 trusted CAs, certificate
+bundle SHA256 `6d84ab71cb726c0641b0af84303c316e3fa50db941dc8507d09045eb2fa5d238`,
+and the unchanged 11,712-call starting boundary.
+
+`tools/aai_fixed_history_after_certificates.sbatch` binds the reviewed node CA
+store read-only with explicit certificate environment variables; TLS verification
+remains enabled. Its exclusive `preflight-continuation-1106916` records preserve
+all earlier owners. The Python guard checks the failed owner, absence of dispatch,
+certificate identity, prior additive tokenizer repair, and all existing runtime,
+source, tensor, snapshot and scientific-budget guards. Only the existing pinned
+fixed_history stage may execute. No new scientific source, model, or budget change.
+The new batch continuation is GPU-unverified; no cluster job was launched locally.
+
+Local validation: all 22 focused `test_aai*.py` CPU tests passed; Python compilation,
+new batch-script Bash syntax, and `git diff --check` passed. No local model downloads,
+GPU operations, commits or pushes were performed.

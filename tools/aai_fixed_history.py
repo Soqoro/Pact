@@ -111,6 +111,39 @@ def repaired_preflight_owner(execution, local, repair):
     return {n: transport.file_sha(repair / n) for n in ('before.json', 'after.json', 'VERIFIED.json')}
 
 
+CERTIFICATE_SHA256 = '6d84ab71cb726c0641b0af84303c316e3fa50db941dc8507d09045eb2fa5d238'
+
+
+def certificate_preflight_owner(execution, local):
+    """Reject any dispatch after the reviewed certificate-only failure."""
+    require = transport.require
+    prior = execution / 'preflight-continuation-1106899'
+    require(json.loads((prior / 'STARTED.json').read_text()) == {
+        'previous_job': '1106899', 'job_id': '1106916',
+        'plan_hash': transport.PLAN, 'local': str(local)}, 'Wrong certificate preflight owner')
+    require((prior / 'container-exit-code.txt').read_text().strip() == '1',
+            'Expected failed certificate preflight')
+    require(json.loads((prior / 'PRE_DISPATCH_BOUNDARY_VERIFIED.json').read_text()) == {
+        'previous_job': PREVIOUS_JOB, 'initial_committed': 11712,
+        'new_fixed_history_attempts': 0, 'starting_files_unchanged': True},
+        'Missing certificate preflight boundary evidence')
+    for name in ('execution-provenance.json', 'COMPLETED.json'):
+        require(not (prior / name).exists(), 'Certificate failure may have entered execution')
+
+
+def certificate_receipt():
+    import ssl
+    certificate = Path('/etc/ssl/certs/ca-certificates.crt')
+    require = transport.require
+    require(transport.file_sha(certificate) == CERTIFICATE_SHA256, 'Certificate store changed')
+    for key in ('SSL_CERT_FILE', 'REQUESTS_CA_BUNDLE', 'CURL_CA_BUNDLE'):
+        require(os.environ.get(key) == str(certificate), 'Certificate environment mismatch')
+    count = len(ssl.create_default_context().get_ca_certs())
+    require(count == 146, 'Reviewed trusted CA count changed')
+    return {'certificate_bundle_sha256': CERTIFICATE_SHA256, 'trusted_ca_count': count,
+            'reviewed_metadata_job': '1106920', 'tls_verification_enabled': True}
+
+
 def unchanged_run(run, persistent, source, receipt):
     """Compare every restored byte with the independently verified starting snapshot."""
     from pact.revival.stage1 import evidence
@@ -142,13 +175,21 @@ def main(a):
     require = transport.require
     source = a.dataset / 'stage1-migration-v1'
     execution = a.dataset / 'stage1-execution-v1'
-    repaired = a.continue_preflight_1106899
+    certified = a.continue_preflight_1106916
+    repaired = a.continue_preflight_1106899 or certified
     continuing = a.continue_preflight_1106891 or repaired
     run = Path('/content/pact-stage1/runs') / transport.RUN
     records = execution / ('preflight-continuation-1106899' if repaired else 'preflight-continuation-1106891') if continuing else execution
+    if certified:
+        records = execution / 'preflight-continuation-1106916'
     if continuing:
         require(records.is_dir(), 'Exclusive continuation owner required')
         continuation_owner(execution, a.local, run)
+        if certified:
+            certificate_preflight_owner(execution, a.local)
+            cert = certificate_receipt()
+            with (records / 'certificate-receipt.json').open('x') as f:
+                json.dump(cert, f, indent=2)
         repair_hashes = None
         if repaired:
             repair = Path.home() / 'pact-aai-preflight/runtime-v1/tokenizer-dependencies-v1'
@@ -156,7 +197,7 @@ def main(a):
             for name, h in repair_hashes.items():
                 write_copy(repair / name, records / 'tokenizer-repair' / name, h)
         with (records / 'STARTED.json').open('x') as started:
-            json.dump({'previous_job': '1106899' if repaired else PREVIOUS_JOB, 'job_id': os.environ.get('SLURM_JOB_ID'),
+            json.dump({'previous_job': '1106916' if certified else ('1106899' if repaired else PREVIOUS_JOB), 'job_id': os.environ.get('SLURM_JOB_ID'),
                        'plan_hash': transport.PLAN, 'local': str(a.local)}, started)
     else:
         require(execution.is_dir() and not (execution / 'STARTED.json').exists(), 'Execution already started')
@@ -282,6 +323,7 @@ if __name__ == '__main__':
     continuation = p.add_mutually_exclusive_group()
     continuation.add_argument('--continue-preflight-1106891', action='store_true')
     continuation.add_argument('--continue-preflight-1106899', action='store_true')
+    continuation.add_argument('--continue-preflight-1106916', action='store_true')
     args = p.parse_args()
     try:
         main(args)
