@@ -1697,3 +1697,48 @@ acquisition; keep exact executed 120/136 source IDs. Every new intent carries a
 child/plan-bound physical-attempt identity. No implicit GPU launch or training.
 The old storage-only source guard remains restricted to its old pinned science
 code; the new child is a fresh approved plan, not a bypass of that guard.
+
+
+### 2026-10-24 — Accept amended smoke integrity; retain invalid outcomes
+
+The exact returned smoke archives pass local integrity, journal and report
+reconstruction checks. Retain all five invalid packets under the frozen scoring
+contract; do not repair or retry them. Treat the two-task outcomes only as smoke
+observations. The next existing stage is validation with exact within-child reuse,
+not a new study or budget. Original historical uncertainty remains explicit.
+See stage1_amended_smoke_audit.md; no methodology or execution code changed.
+
+
+### 2026-10-25 — Accept validation integrity without outcome-driven changes
+
+Validation records reconcile to 3,876 calls: all clean/private work and exchange
+only for the 99 accepted historical attacks. Keep the 29 rejected attack outcomes
+missing, and retain invalid/abstaining model completions as failures. Compare arms
+on matched task groups with equal-source weighting; do not infer joint superiority
+from its four extra accepted-subset correct answers. Preserve the frozen source
+evaluation and fixed-history plans, exact identities and stage-by-stage export
+review. No protocol, scoring, checkpoint or budget amendment is made by this audit.
+See stage1_amended_validation_audit.md.
+
+
+### 2026-10-26 — Accept source-evaluation evidence; preserve planned controls
+
+Accept artifact integrity and exact accounting of the source return. Report the
+positive clean joint-minus-independent development difference separately from
+the inconclusive attacked difference and from prior validation. Keep51 rejected
+attack outcomes missing. On-policy trajectory changes are not causal evidence
+of improved peer use; retain the already frozen fixed-history comparison as the
+next stage, without changing the method or transferring unused call ceilings.
+No new stage, training or final-test evaluation was launched by this audit.
+See stage1_amended_source_evaluation_audit.md.
+
+### 2026-10-26 — Prepare user-executed AAI migration diagnostics
+
+User explicitly requested Jupyter/Slurm execution after Colab compute exhaustion.
+Read both supplied AAI PDFs fully; node01/NA100q is the documented A10080GB SXM4
+candidate. Prepare metadata-only batch diagnostics, preserving one-GPU execution,
+exact runtime/checkpoint paths and existing fixed-history budget. Do not substitute
+H100/PCIe/40GB or bypass fingerprints. Container binding may preserve immutable
+/content tensor paths, but availability and driver compatibility require returned
+cluster evidence. No migration or scientific execution was launched. See
+stage1_aai_migration.md.

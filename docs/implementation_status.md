@@ -2387,3 +2387,56 @@ New child scientific results remain unexecuted/GPU-unverified. The parent GPU
 verification evidence remains accepted within its audited scope. Use notebook28
 or stage1_amended_evaluation_colab.md after review/push/pin; first GPU invocation
 is the included smoke and export/stop only. No full-PACT efficacy claim follows.
+
+
+### 2026-10-24 — Amended Stage I smoke audited
+
+Returned amended-002 smoke PRIVATE 5132b4df… / SANITIZED 45ddad0c… verified:
+9,260/4 payload checksums, 8,885 imported inventory hashes, 66 journal calls and
+all four recomputed aggregate reports passed. Real Colab evidence records 66/66
+committed calls, zero unresolved, 33,792 reserved tokens and no new training or
+synthetic verification. Five parser-invalid packets remain failures. Frozen and
+independent final readouts are 2/2 clean and attacked; joint is 1/2 clean, 2/2
+attacked on only two smoke tasks. No efficacy conclusion. Next is separately
+invoked validation reusing smoke, at most 4,158 additional calls. No model work
+launched locally; full evaluation and unknown original history remain open.
+See [the smoke audit](stage1_amended_smoke_audit.md).
+
+
+### 2026-10-25 — Amended Stage I validation completed and audited
+
+PRIVATE 8d5201f3… / SANITIZED 1c2f6f09… passed outer and 28,712/4 payload
+hashes, 8,885 immutable inventory checks, 337 unchanged smoke records, all 3,876
+journal reconstructions and exact recomputation of four reports. Zero unresolved
+dispatches, training or new synthetic forwards. All 128 historical attack attempts
+were reused; 99 accepted and 29 rejected explain the 348-call reduction from cap.
+Clean final correct: frozen90/128, independent95/128, joint95/128. Exchange on
+the common accepted subset: frozen63/99, independent68/99, joint72/99. Primary
+joint-minus-independent descriptive intervals span zero; missing attack outcomes
+remain explicit. No established joint-training benefit or full-PACT claim.
+Next existing stage is source evaluation (ceiling8,448), then export/review;
+no further stage was launched. Full audit: [validation return](stage1_amended_validation_audit.md).
+
+
+### 2026-10-26 — Amended Stage I source evaluation audited
+
+PRIVATE 9d57f182… / SANITIZED b81a48cd… verified: 68,684/4 payload checksums,
+8,885 immutable imported files, 19,766 unchanged validation records and 11,712
+cumulative journal calls. Four aggregate reports recompute exactly. Source uses
+7,836 calls; cumulative11,712, zero unresolved or new training. Its51 rejected
+attacks explain612 skipped calls;205 accepted exchange tasks remain shared.
+Clean correct: frozen144/256, independent159/256, joint175/256. Accepted exchange:
+frozen88/205, independent119/205, joint128/205. Joint-minus-independent equal-source
+clean +5.98pp (descriptive interval +1.17,+11.77); exchange +4.56pp (−2.39,+12.37).
+Positive clean development evidence, not established robustness or peer-use mechanism.
+Fixed-history controls remain pending; no next stage launched locally.
+See [source-evaluation audit](stage1_amended_source_evaluation_audit.md).
+
+### 2026-10-26 — AAI migration preparation, remote behavior unverified
+
+Read AAI resource list (2 pages) and user guide (11 pages). Added a single-GPU,
+four-CPU metadata-only Slurm probe and transfer/environment prerequisite guide.
+Shell syntax check passed. No cluster access/submission, pretrained download,
+GPU work or change to scientific execution code. Pending user-returned driver,
+node/partition, container, storage and software information before exact transport
+and fixed-history execution commands can be finalized.
