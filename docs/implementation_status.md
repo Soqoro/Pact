@@ -2480,3 +2480,11 @@ BF16/fingerprint probe; no scientific execution or model downloads. Local shell
 syntax, Python compile and reference fingerprint serialization checks passed.
 Full remote Torch compatibility, artifact transport and workload scratch remain
 unverified; no commits/push or cluster operations performed by the assistant.
+
+### 2026-10-26 — AAI exact-runtime success; transfer helper CPU-tested
+
+Returned job1106841 COMPLETED/0:0: exact recorded fingerprint, BF16 matrix/SDPA
+checks and container cleanup passed on A10080 with verified compatibility library.
+Prepared storage-only latest-snapshot plus continuation-weight-archive transport.
+Five focused CPU tests and Python compilation passed. Actual transfer, tensor
+mapping and fixed-history execution remain pending; no scientific calls locally.

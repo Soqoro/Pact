@@ -1779,3 +1779,12 @@ stop on unavailable pins. Separate CPU setup from GPU primitive tests and preser
 Slurm visibility. Passing runtime checks does not authorize scientific dispatch or
 prove numerical identity across host drivers. Container temporary extraction uses
 node-local /tmp; large installs use shared home, pending later hot-file storage.
+
+### 2026-10-26 — Transfer durable state, not a substituted review export
+
+Preserve latest compact snapshot index/COMPLETE and both content-addressed objects;
+the source-evaluation review ZIP predates its export receipt. Include exact training
+PRIVATE and RECOVERY archives for later existing map-recovery validation. Package
+only on local CPU scratch, recheck source boundary, never clear markers or choose
+an older snapshot. AAI initial verification is hash-only without restoration.
+Sidecar integrity is not proof of final tensor identity; keep that check pending.

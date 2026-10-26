@@ -291,3 +291,38 @@ Official instructions consulted:
 - https://docs.astral.sh/uv/guides/install-python/
 - https://docs.astral.sh/uv/reference/storage/
 - https://pytorch.org/get-started/previous-versions/
+
+## Returned exact-runtime probe; storage-only transfer preparation
+
+User job1106841 COMPLETED/0:0 on node01. Captured tools/image/libcuda hashes
+verified; Python3.13.15 and all nine recorded packages match, fingerprint
+ e4e0376b3dc5b25abcec3b0bc314936d209d519b0b862af52f5255f7bd6532b0.
+BF16 matrix and SDPA checks passed, container exited0 and cleaned up. This is
+remote environment evidence, not full-model numerical equivalence or study work.
+
+Added tools/aai_stage1_transport.py (stdlib only). Run pack on a CPU Colab with
+Drive mounted; it writes only local scratch. Latest snapshot must have no pending
+markers, a valid COMPLETE/index, exactly state.zip/receipt.json objects with valid
+hashes, safe resolution and plan, all state-member checksums and the expected
+11,712 matched call/intents. Smoke/validation/source-evaluation stages and final
+source export receipt must be complete. Fixed history must not already be recorded.
+It copies continuation003 PRIVATE1792630912628874679 (known audited SHA) and
+RECOVERY1792630916259050432 (Drive sidecar SHA) without loading tensors. Recovery
+content/weight-map validation still belongs to the existing map-recovery path.
+The recovery sidecar establishes transfer integrity, not independent weight identity.
+
+Pack rechecks latest snapshot and markers before closing, preserves older snapshots
+and all source evidence, and refuses existing output. Output uses ZIP_STORED to
+avoid recompressing large nested archives. It requires twice copied input size plus
+1GiB locally. It contains only the latest snapshot index/COMPLETE/two objects and
+the two prerequisite archives plus transport manifest. No credentials, tools/code,
+new model requests, restore or Drive writes. Keep Colab scientific execution stopped
+during/after transfer so that AAI can eventually be the sole execution site.
+
+Upload the resulting PRIVATE transport ZIP through Jupyter to
+~/pact-aai-transfer/incoming/, then use verify with its independently returned outer
+SHA256. It validates all member hashes without extraction/restoration. Return that
+output before restoring study/tensors. Hot-file storage and full workload remain
+pending. Five focused CPU tests passed: path rejection, pending marker refusal,
+latest-incomplete no fallback, outer/inner corruption detection, existing-output
+preservation. No real artifacts or model downloads used locally.
