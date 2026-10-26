@@ -1843,3 +1843,12 @@ verified snapshot and no new component intent, lock or ambiguity marker exists.
 Do not clear guards, replace source, recreate persistence or retry a generation.
 Write separate continuation provenance and preserve the failed preflight evidence.
 Repeat runtime/access/weight checks before the already authorized fixed-history stage.
+
+### 2026-10-26 — Add missing tokenizer dependencies without changing the protocol
+
+The setup omitted optional SentencePiece/Protobuf required by the existing Mistral
+loader. Add explicitly pinned0.2.1/6.33.0 only; preserve all installed versions and
+record the supplemental environment inventory. Do not infer historical optional
+versions, install tiktoken fallback, switch tokenizers or modify model/cache bytes.
+Require exact native metadata/template equality apart from CPU runtime field;
+recheck full GPU fingerprint before any later scientific dispatch.

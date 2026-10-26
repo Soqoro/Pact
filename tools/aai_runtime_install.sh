@@ -22,6 +22,7 @@ PYTHON="$PACT_ENV_ROOT/venv/bin/python"
   'peft==0.18.1' 'accelerate==1.12.0' 'tokenizers==0.22.2' \
   'huggingface-hub==0.36.2' 'jinja2==3.1.6' 'numpy==2.1.3' \
   'safetensors==0.8.0' 'pyarrow==22.0.0' \
+  'sentencepiece==0.2.1' 'protobuf==6.33.0' \
   --index-url https://pypi.org/simple
 "$UV" pip check --python "$PYTHON"
 "$UV" pip freeze --python "$PYTHON" > "$PACT_ENV_ROOT/installed-requirements.txt"

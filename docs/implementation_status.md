@@ -2541,3 +2541,11 @@ succeeded after token replacement; counts remain11712 prior calls. Added a scope
 continuation batch job requiring unchanged snapshot/run/tensor bytes, no dispatch
 markers and the exact failed owner. Original logs/tools remain preserved. Fourteen
 focused AAI CPU tests and syntax checks passed; remote continuation is unexecuted.
+
+### 2026-10-26 — Missing tokenizer dependencies identified; additive repair prepared
+
+Returned1106906 identifies missing SentencePiece/Protobuf masking Mistral tokenizer
+loading. Prepared CPU-only two-package pinned addition with before/after inventory,
+no-dependency upgrades, and saved tokenizer metadata identity comparison. Updated
+fresh environment setup. Eighteen focused AAI tests and syntax checks passed.
+No dependencies downloaded locally; remote repair and further continuation pending.

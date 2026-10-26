@@ -518,3 +518,32 @@ bundles remain under the same execution persistent/<amended-run-id>/bundles.
 Fourteen focused AAI CPU tests passed, including rejection of wrong previous job,
 locks, pending markers and possible previous dispatch, plus shell/Python syntax.
 Remote continuation/model execution remains unverified. No credentials recorded.
+
+## Mistral optional dependencies missing: explicit additive environment repair
+
+Continuation1106899 verified68,685 unchanged starting files and Q/L metadata,
+then failed at M tokenizer construction before dispatch. Diagnostic1106906 confirms
+SentencePiece and Protobuf absent; original ValueError requires SentencePiece,
+while missing Protobuf masks that exception. tiktoken is also absent but is not
+required by this identified conversion path; do not install a fallback tokenizer.
+The environment installer omitted these optional dependencies. This is an installer
+omission, not a permission/CUDA issue or new scientific attempt.
+
+Added CPU-only aai_tokenizer_dependencies.py/.sbatch. It requires failed inactive
+owners1106891/1106899 and an exclusive repair directory, inventories all installed
+packages, and adds only sentencepiece0.2.1 and protobuf6.33.0 via official PyPI
+wheels with --no-deps. Existing package-version changes or any additional package
+are rejected. Before/after inventories and success receipt supplement, never
+replace, the original environment receipt. Updated fresh environment setup to
+include the same two pins. These are explicitly chosen missing dependency pins,
+not a claim that unrecorded historical Colab optional versions are known.
+Official release metadata checked at https://pypi.org/pypi/sentencepiece/0.2.1/json
+and https://pypi.org/pypi/protobuf/6.33.0/json.
+
+After installation the repair job checks native M metadata on CPU against every
+saved field except runtime_fingerprint (CPU lacks the GPU). Tokenizer files,
+template and template-probe identities must match; no saved receipt is modified.
+GPU runtime must be rechecked by the eventual controlled continuation. No token
+arrays, model weights or study outputs are generated; no study markers are removed.
+No new continuation is automatically submitted. Eighteen focused AAI CPU tests
+and syntax checks passed; remote repair remains unverified.
