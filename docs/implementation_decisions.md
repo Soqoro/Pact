@@ -1823,3 +1823,14 @@ reserve /dataset/common for genuinely shareable material, not these bundles.
 Maintain per-job /local hot copies and code/environment under home. Migrate by
 verified copy, not move; never remove the home recovery evidence as part of setup.
 The initial evidence snapshot remains separate from future writable persistence.
+
+### 2026-10-26 — Dispatch only remaining fixed history from verified AAI boundary
+
+Following the user's proceed request, add a first-dispatch wrapper, not a new
+study or resume-policy change. Starting count11712 and dataset receipt are bound;
+original journal limits and ambiguity markers remain authoritative. Download and
+hash-check Q/L/M before dispatch, access-check pristine R without generation,
+and inherit exact saved model receipts. New receipts remain outside scientific
+state. Credentials enter only the preflight process and are removed before the
+offline scientific subprocess. Exclusive durable owner plus --no-requeue prevents
+accidental duplicate submission; any failure requires inspecting retained evidence.

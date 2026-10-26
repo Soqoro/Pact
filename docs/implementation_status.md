@@ -2523,3 +2523,13 @@ with private permissions, fixed transport/tensor identities, per-file verificati
 exclusive destination and final receipt. Existing home/Drive evidence is preserved.
 Four filesystem regression tests and syntax checks passed. Remote dataset staging
 and fixed-history inference remain unexecuted.
+
+### 2026-10-26 — AAI fixed-history execution wrapper CPU-tested, GPU-unverified
+
+User job1106888 verified all15 private /dataset copies. Prepared first-dispatch
+fixed_history sbatch wrapper: exclusive per-job /local staging, separate durable
+/dataset execution owner, exact pinned source/runtime/tensor checks, official
+metadata and model-file verification, offline fixed-history-only subprocess, no
+requeue/retry/fallback. All13 focused AAI CPU tests and syntax checks passed.
+The wrapper does not alter study code/methodology. Model cache preparation and
+actual fixed-history inference have not run locally or been returned from AAI.

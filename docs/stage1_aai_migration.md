@@ -430,3 +430,57 @@ must stage a separate execution copy and preserve durable ambiguity markers.
 Four focused CPU copy tests passed (private modes/source preservation, overwrite
 refusal, corruption rejection, symlink-parent refusal), plus shell/Python syntax.
 Actual /dataset transfer remains pending user execution.
+
+## Private dataset copy verified; bounded fixed-history job prepared
+
+User job1106888 COMPLETED/0:0,15 files/3,858,657,553bytes verified at
+/dataset/suaq0001/PACT/stage1-migration-v1; receipt SHA256
+f6d691e8f821bc8cd91759e27ab686bcdfa7c6bae02c83f129f356fe680103da.
+Home evidence is preserved; execution had not started. User then requested proceeding
+with the previously scoped remaining fixed_history stage.
+
+Prepared tools/aai_fixed_history.py/.sbatch, a first-dispatch wrapper around the
+unchanged pinned a2ad51f60530e6dafaf1377eba03d0753f87ff92 study CLI. It requests
+node01/NA100q,one A100,4CPUs,96GiB RAM,48h, --no-requeue. Scheduler rejection is
+not permission to silently choose another resource. Requires120GiB available on
+/local and20GiB on /dataset at launch; these are checks, not reservations. Creates
+an exclusive private /local per-job directory bound to /content; container temp,
+model cache, restored study and tensors reside there. Runtime/code remain in home.
+No automatic cleanup, restart or fallback; partial scratch and durable markers
+are retained. Do not execute another scientific copy in Colab.
+
+New exclusive durable owner: /dataset/<user>/PACT/stage1-execution-v1, with
+persistent/<original-amended-run-id>. It copies the verified initial compact
+snapshot into that new persistence root without changing starting-evidence files.
+Restoration and six tensor inventories use existing pinned readers; full initial
+call inventory must be3876validation+7836source=11712 with no other component,
+completed source export and no fixed-history completion. Receipt/source/runtime,
+container and libcuda identities are checked. Migration receipts/tool hashes stay
+outside scientific state; no fingerprint, lineage or plan edits.
+
+Credentials: user supplies a private0600 token file at ~/.config/pact/hf-token.
+Only the running Python process reads it; never put its value in sbatch arguments,
+Git or logs. Existing official Mistral pointer repair is reused on the new local
+cache. Native metadata/access is checked for Q/L/M/R against the exact stored
+receipts. Only Q/L/M weight files are downloaded for this revision-only stage;
+all match frozen pristine-identity hashes before dispatch. R is not generated.
+Credentials are removed from the environment before launching a fresh offline
+study subprocess. Failure diagnostics emit exception class/location/status only,
+not HTTP text or private request content. No new template, sampling or model probe
+forwards are added to the study.
+
+The only scientific CLI invocation is fixed_history --execute with frozen plan
+288a2f9bd5bcbe95c52fd9b7d99cdefd2cb52ebd69c71a0c2939c2428dc72bf5.
+The original journal enforces1920additional attempts/983040reserved tokens and
+exact reuse; snapshot cadence and durable dispatch ambiguity rules are unchanged.
+The pinned CLI reports/exports/persists after the stage. Completion metadata and
+bundle hashes are additionally saved outside study in stage1-execution-v1/COMPLETED.json.
+No training, original-stage repeats, synthetic verification, final-test data or
+later experiment is invoked. If interrupted, return logs/markers; the submitted
+wrapper intentionally rejects another submission to its existing owner directory.
+
+Local validation:13 focused AAI CPU tests passed, covering copy/transport guards,
+fixed-only command, private token permissions, changed-plan and completed-stage
+refusal; shell/Python syntax and diff checks passed. No actual model downloads,
+Slurm submissions or inference were performed locally. Full remote job remains
+unverified until the user returns execution artifacts.
