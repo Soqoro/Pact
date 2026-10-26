@@ -227,3 +227,27 @@ Reference documentation:
 - https://apptainer.org/docs/user/latest/gpu.html
 - https://apptainer.org/docs/user/latest/bind_paths_and_mounts.html
 - https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/
+
+## Returned driver probe: job1106405; container cleanup pending
+
+User evidence confirms driver_api_and_bind_probe_passed on node01: one visible
+A100-SXM4-80GB, CUDA driver API13000,4096-byte allocation/free and the required
+/content directory binding. Actual libcuda was the verified580.82.07 compatibility
+library. Host driver remains570.133.20. Torch was not imported or verified.
+Image SHA256: bbf8c5438967427787be2514ebc2f101ba7dd89ae6995414f5e0c532e40a12e3.
+Probe SHA256: c44f582c3e9a524fc9e245aa1bfb512f9d895b3515583151bec47169d8dbbc1e.
+
+Apptainer works on compute node01 (version1.4.2+280-g290e552fe), despite the
+login node missing libsubid.so.4. Run container commands through sbatch, never
+srun, per user preference. Earlier login-node image commands above are superseded.
+
+Apptainer lacked squashfuse and extracted the SIF into a temporary sandbox. Its
+cleanup reported directory-not-empty under the shared-home tmp directory after
+successful probe output. The cause is not conclusively established; obtain Slurm
+ExitCode and test container lifecycle separately. Added a CPU-only node01 sbatch
+probe using the exact existing image and a unique /tmp directory, with at least
+1GiB free required. Only the small image goes there; model/environment/evidence
+storage still needs adequate space elsewhere. The probe runs /bin/true, records
+exit status and uses rmdir only on its own directory, preserving nonempty failures.
+It does not remove the earlier leftover directory, download, use GPU or touch
+study state. Shell syntax passed locally; remote lifecycle test remains pending.

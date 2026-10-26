@@ -1760,3 +1760,11 @@ Slurm visibility and all scientific evidence. Record actual loaded libcuda and
 image hashes; do not equate a matching runtime fingerprint or driver-only success
 with full Torch/numerical verification. No Torch downgrade or new synthetic model
 forward allowance. Separate small environment diagnostics from experiment budgets.
+
+### 2026-10-26 — Separate driver success from container cleanup failure
+
+Retain successful job1106405 driver/bind evidence without treating it as complete
+runtime validation. Test the existing small image's lifecycle on node-local /tmp
+using sbatch and no GPU, with capacity guard and non-destructive cleanup. Preserve
+the prior shared-storage leftovers until inspected. Full environment/model storage
+must not use the small /tmp filesystem. No scientific contract changes.

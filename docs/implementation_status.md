@@ -2461,3 +2461,13 @@ passed locally. No package/image/model downloads or GPU probe executed locally.
 Remote user will test CUDA driver initialization, one visible A10080, a tiny
 allocation/free and non-symlink /content binding before full runtime installation.
 Torch compatibility, quota, local scratch and artifact transfer remain unresolved.
+
+### 2026-10-26 — AAI driver/bind success; container lifecycle pending
+
+Returned job1106405 passed the CUDA13 compatibility-library initialization,
+one-A100 visibility,4096-byte allocation/free and /content binding checks.
+Torch remains unverified. Apptainer subsequently failed temporary-rootfs cleanup
+on shared storage. Added a CPU-only exact-image lifecycle sbatch probe using a
+bounded node-local temporary directory; bash -n passed. No local cluster/GPU
+execution, study restoration or scientific calls. Remote exit status and lifecycle
+result are pending; this is not approval to bypass runtime/provenance guards.
