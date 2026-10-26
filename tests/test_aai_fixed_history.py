@@ -89,6 +89,42 @@ class FixedHistoryEntryTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, 'dispatch owner'):
                     m.continuation_owner(execution, local, run)
 
+    def test_second_preflight_rejects_dispatch_or_environment_drift(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            execution = base / 'execution'
+            prior = execution / 'preflight-continuation-1106891'
+            prior.mkdir(parents=True)
+            local = base / 'local'
+            repair = base / 'repair'
+            repair.mkdir()
+            (prior / 'STARTED.json').write_text(json.dumps({
+                'previous_job': m.PREVIOUS_JOB, 'job_id': '1106899',
+                'plan_hash': m.transport.PLAN, 'local': str(local)}))
+            (prior / 'container-exit-code.txt').write_text('1')
+            (prior / 'PRE_DISPATCH_BOUNDARY_VERIFIED.json').write_text(json.dumps({
+                'previous_job': m.PREVIOUS_JOB, 'initial_committed': 11712,
+                'new_fixed_history_attempts': 0, 'starting_files_unchanged': True}))
+            dispatch = prior / 'execution-provenance.json'
+            dispatch.write_text('{}')
+            with self.assertRaisesRegex(ValueError, 'entered execution'):
+                m.repaired_preflight_owner(execution, local, repair)
+            dispatch.unlink()
+            (repair / 'before.json').write_text('{}')
+            (repair / 'after.json').write_text(json.dumps({'sentencepiece': '0.2.1', 'protobuf': '6.33.0'}))
+            with patch('importlib.metadata.distributions', return_value=[]):
+                with self.assertRaisesRegex(ValueError, 'differs from verified repair'):
+                    m.repaired_preflight_owner(execution, local, repair)
+
+    def test_second_preflight_wrong_owner_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            prior = base / 'preflight-continuation-1106891'
+            prior.mkdir()
+            (prior / 'STARTED.json').write_text('{}')
+            with self.assertRaisesRegex(ValueError, 'second preflight owner'):
+                m.repaired_preflight_owner(base, Path('/local/wrong'), base / 'repair')
+
 
 if __name__ == '__main__':
     unittest.main()

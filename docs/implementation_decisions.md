@@ -1852,3 +1852,11 @@ record the supplemental environment inventory. Do not infer historical optional
 versions, install tiktoken fallback, switch tokenizers or modify model/cache bytes.
 Require exact native metadata/template equality apart from CPU runtime field;
 recheck full GPU fingerprint before any later scientific dispatch.
+
+### 2026-10-26 — Bind repaired continuation to both failed preflights
+
+After user proceed, allow only the reviewed1106899 preflight continuation while
+retaining1106891 ownership and unchanged-state gates. Verify additive environment
+repair against the returned metadata hashes and current full package inventory.
+Use a new exclusive audit directory; no deletion, reset, scientific code migration,
+relaxed fingerprint, generic resume or additional generation budget.

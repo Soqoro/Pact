@@ -77,6 +77,40 @@ def continuation_owner(execution, local, run):
     return persistent
 
 
+def repaired_preflight_owner(execution, local, repair):
+    """Bind the second zero-dispatch failure and the returned additive repair."""
+    require = transport.require
+    prior = execution / 'preflight-continuation-1106891'
+    started = json.loads((prior / 'STARTED.json').read_text())
+    require(started == {'previous_job': PREVIOUS_JOB, 'job_id': '1106899',
+                        'plan_hash': transport.PLAN, 'local': str(local)}, 'Wrong second preflight owner')
+    require((prior / 'container-exit-code.txt').read_text().strip() == '1', 'Expected failed second preflight')
+    verified = json.loads((prior / 'PRE_DISPATCH_BOUNDARY_VERIFIED.json').read_text())
+    require(verified == {'previous_job': PREVIOUS_JOB, 'initial_committed': 11712,
+                         'new_fixed_history_attempts': 0, 'starting_files_unchanged': True},
+            'Missing second preflight boundary evidence')
+    for n in ('execution-provenance.json', 'COMPLETED.json'):
+        require(not (prior / n).exists(), 'Second job may have entered execution')
+    import importlib.metadata as md
+    pins = {'sentencepiece': '0.2.1', 'protobuf': '6.33.0'}
+    before = json.loads((repair / 'before.json').read_text())
+    after = json.loads((repair / 'after.json').read_text())
+    require(not set(pins) & set(before) and after == {**before, **pins}, 'Unexpected dependency repair changes')
+    actual = {d.metadata['Name'].lower().replace('_', '-'): d.version
+              for d in md.distributions() if d.metadata['Name']}
+    require(actual == after, 'Installed environment differs from verified repair')
+    expected = {
+        'status': 'tokenizer_dependencies_added_and_metadata_matched', 'added': pins,
+        'all_preexisting_package_versions_unchanged': True,
+        'metadata_excluding_runtime_sha256': 'e0b7a0fb5f189ea6a7b055a57e42e175f64d8845997928bfb2beb03880435db4',
+        'template_hash': 'b3fcbc404295814f21f15e626e6403753def5c2359d8e797d3aea5fd47f47a72',
+        'template_probe_hash': '9745fc78f969b53ac7960ce3aa5e93e57878edb2f9ba0417be1dc008292f06ab',
+        'gpu_runtime_rechecked': False, 'generation_calls': 0, 'study_state_changed': False,
+    }
+    require(json.loads((repair / 'VERIFIED.json').read_text()) == expected, 'Tokenizer repair receipt mismatch')
+    return {n: transport.file_sha(repair / n) for n in ('before.json', 'after.json', 'VERIFIED.json')}
+
+
 def unchanged_run(run, persistent, source, receipt):
     """Compare every restored byte with the independently verified starting snapshot."""
     from pact.revival.stage1 import evidence
@@ -108,14 +142,21 @@ def main(a):
     require = transport.require
     source = a.dataset / 'stage1-migration-v1'
     execution = a.dataset / 'stage1-execution-v1'
-    continuing = a.continue_preflight_1106891
+    repaired = a.continue_preflight_1106899
+    continuing = a.continue_preflight_1106891 or repaired
     run = Path('/content/pact-stage1/runs') / transport.RUN
-    records = execution / 'preflight-continuation-1106891' if continuing else execution
+    records = execution / ('preflight-continuation-1106899' if repaired else 'preflight-continuation-1106891') if continuing else execution
     if continuing:
         require(records.is_dir(), 'Exclusive continuation owner required')
         continuation_owner(execution, a.local, run)
+        repair_hashes = None
+        if repaired:
+            repair = Path.home() / 'pact-aai-preflight/runtime-v1/tokenizer-dependencies-v1'
+            repair_hashes = repaired_preflight_owner(execution, a.local, repair)
+            for name, h in repair_hashes.items():
+                write_copy(repair / name, records / 'tokenizer-repair' / name, h)
         with (records / 'STARTED.json').open('x') as started:
-            json.dump({'previous_job': PREVIOUS_JOB, 'job_id': os.environ.get('SLURM_JOB_ID'),
+            json.dump({'previous_job': '1106899' if repaired else PREVIOUS_JOB, 'job_id': os.environ.get('SLURM_JOB_ID'),
                        'plan_hash': transport.PLAN, 'local': str(a.local)}, started)
     else:
         require(execution.is_dir() and not (execution / 'STARTED.json').exists(), 'Execution already started')
@@ -238,7 +279,9 @@ if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__)
     for name in ('dataset', 'local', 'checkout', 'token-file'):
         p.add_argument('--' + name, type=Path, required=True)
-    p.add_argument('--continue-preflight-1106891', action='store_true')
+    continuation = p.add_mutually_exclusive_group()
+    continuation.add_argument('--continue-preflight-1106891', action='store_true')
+    continuation.add_argument('--continue-preflight-1106899', action='store_true')
     args = p.parse_args()
     try:
         main(args)

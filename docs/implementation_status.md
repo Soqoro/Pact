@@ -2549,3 +2549,11 @@ loading. Prepared CPU-only two-package pinned addition with before/after invento
 no-dependency upgrades, and saved tokenizer metadata identity comparison. Updated
 fresh environment setup. Eighteen focused AAI tests and syntax checks passed.
 No dependencies downloaded locally; remote repair and further continuation pending.
+
+### 2026-10-26 — Tokenizer repair verified; second preflight continuation prepared
+
+User job1106911 completed0:0 with only two additive packages and exact saved M
+metadata/template/probe identity. Prepared scoped continuation of failed1106899,
+requiring unchanged initial study state, no dispatch evidence, exact repair receipt
+and installed-package inventory; preserves both failed owners. Twenty focused AAI
+CPU tests and syntax checks passed. GPU recheck and fixed-history execution pending.

@@ -547,3 +547,30 @@ GPU runtime must be rechecked by the eventual controlled continuation. No token
 arrays, model weights or study outputs are generated; no study markers are removed.
 No new continuation is automatically submitted. Eighteen focused AAI CPU tests
 and syntax checks passed; remote repair remains unverified.
+
+## Tokenizer repair verified: continuation of preflight job1106899
+
+User repair job1106911 COMPLETED/0:0: added only SentencePiece0.2.1 and
+Protobuf6.33.0; all prior package versions unchanged. M metadata excluding runtime
+hash e0b7a0fb5f189ea6a7b055a57e42e175f64d8845997928bfb2beb03880435db4,
+template b3fcbc404295814f21f15e626e6403753def5c2359d8e797d3aea5fd47f47a72,
+probe9745fc78f969b53ac7960ce3aa5e93e57878edb2f9ba0417be1dc008292f06ab
+match the saved identity. No generation or study changes occurred. User requested
+proceeding after this evidence; no extra scientific allowance is introduced.
+
+Added aai_fixed_history_after_tokenizer.sbatch and a mutually exclusive
+--continue-preflight-1106899 mode. Both previous jobs must be failed/inactive.
+The first owner's strict gates, byte-for-byte starting snapshot comparison and
+11712 prior-only intent boundary remain mandatory. Additionally require exact
+second-job STARTED/boundary/exit evidence and absence of dispatch provenance or
+completion, full repair before/after inventory proving only two additions, current
+installed inventory equality, and the exact returned tokenizer-repair receipt.
+Copy repair evidence into a new exclusive preflight-continuation-1106899 record
+directory; never overwrite either failed job's records. Full GPU fingerprint and
+Q/L/M/R access/template checks still run before pinned Q/L/M downloads and the
+single original fixed_history CLI. No repeated synthetic/model probe forwards.
+
+Logs: pact-fixed-repaired-JOBID.out/.err. Completion receipt:
+/dataset/<user>/PACT/stage1-execution-v1/preflight-continuation-1106899/COMPLETED.json.
+The scientific persistence root is unchanged. Twenty focused AAI CPU tests and
+shell/Python syntax checks passed; actual repaired continuation remains unverified.
