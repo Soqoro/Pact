@@ -2793,3 +2793,19 @@ No raw source data, source contracts, exclusions, budgets or previous archives
 changed. No download, remote job or model work was performed locally. User may
 explicitly rerun the same CPU audit configuration after pushing the correction;
 existing locks/partial outputs remain subject to the original guard.
+
+### 2026-11-01 — remote source evidence and reconciliation helper
+
+User-returned source-acquisition1112958 verified official bytes with zero model
+work. CPU audit1112981 completed BLOCKED. Diagnostic1113022 reports448 GPQA Main
+rows,198 Diamond-protected rows and249 groups with only exposure-scope uncertainty;
+this is not certified eligibility. LogiQA has7,376 audited items,1,335 denied and
+6,041 unknown (not certified unique eligible groups). No local history conflicts
+were reported; external spending remains unresolved. Benchmark-ledger binding
+matches; four new review bindings are missing, not demonstrated contradictions.
+
+Added a standalone CPU reconciliation draft helper and pinned sbatch wrapper.
+Four synthetic tests passed: monotone union/input preservation, malformed identity
+rejection, audit/config tampering, draft/privacy/checksum/collision boundaries.
+No raw GPQA content was inspected locally; no cluster job, download or model work
+was executed. Real reconciliation output remains pending the user's job.

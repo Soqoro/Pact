@@ -2995,3 +2995,14 @@ Conditional ceilings remain8,112/15,616 generations,3,072 updates,2,640 diagnost
 forwards; spent/remaining ownership is unresolved, not reset. PRIVATE GPQA data
 must remain user-controlled on the cluster; return sanitized receipts only.
 See `stage2_gpqa_logiqa_review.md` for readiness and validation details.
+
+### 2026-11-01 — GPQA/LogiQA source audit remains blocked
+
+User-returned jobs1112958 (official source acquisition),1112981 (CPU audit) and
+1113022 (aggregate diagnostic) report verified source bytes, no model calls, and
+no certified cohort. GPQA has249 unique groups whose only reported restriction
+is unverified exposure scope; LogiQA has6,041 unverified items after1,335 exclusions.
+All Diamond protections remain. These are provisional capacity observations,
+not permission, eligibility or scientific performance. Current project coverage,
+semantic overlap and external Stage II consumption remain unresolved. A separate
+CPU exclusion-union draft is prepared; it cannot approve source use or spending.

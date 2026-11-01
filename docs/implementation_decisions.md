@@ -2033,3 +2033,19 @@ the existing strict read_json helper. Keep the shared helper and private error
 redaction unchanged. This fixes a reproducible pre-audit AttributeError without
 loosening lineage, source eligibility or resume checks. Preserve job1112978 logs
 and rerun only the CPU audit explicitly with the corrected pinned checkout.
+
+### 2026-11-01 — exposure reconciliation remains an evidence draft
+
+User-returned CPU audit1112981 and diagnostic1113022 distinguish a missing new
+coverage contract from proven contradictory lineage: experiment-ledger,
+parent-source, coverage and overlap-review fields are absent in the historical
+inventory. Do not backfill approval flags. The new standalone
+`tools/aai_stage2_exposure_reconcile.py` re-verifies executed Stage I lineage,
+audit hashes/config, historical GPQA partitions and current repository selections,
+then produces a monotone exclusion union in a deliberately non-accepted draft
+schema. The historical inventory, source audit and source-amendment code remain
+unchanged. Binding current document hashes records evidence, not coverage approval.
+Scope gaps, semantic overlap and external consumption remain unresolved; no
+accepted exposure/history receipt, candidate, seal or budget reset is produced.
+Existing known-root history scans are repeated, including GPQA child owners.
+PRIVATE identifiers remain cluster-side; stdout is an aggregate allowlist.

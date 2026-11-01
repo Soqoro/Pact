@@ -214,3 +214,43 @@ Only those eight source files and the GPQA receipt are durably copied and hashed
 `VERIFIED.json` follows verification; on failure the pending marker and evidence
 remain. No automatic retry, eligibility selection, model fetch or follow-on job.
 Return the aggregate stdout/receipt only, not raw source files.
+
+## Reconcile the blocked real audit without certifying exposure
+
+After reviewing and pushing the standalone helper/wrapper, submit this CPU-only
+step. It uses the existing audit config and creates a new private directory. It
+never updates the old exposure file or audit, sets review flags, downloads data,
+selects a cohort, or authorizes spending. Current ledger hashes are recorded for
+review, not automatically accepted as evidence of complete coverage.
+
+```bash
+cd "$HOME/Pact"
+git pull --ff-only
+export PACT_CHECKOUT="$HOME/Pact"
+export PACT_COMMIT="$(git rev-parse HEAD)"
+export PACT_CONFIG="$HOME/pact-aai-preflight/stage2-gpqa-audit-v1.json"
+export PACT_OUTPUT="/dataset/$USER/PACT/stage2-exposure-reconciliation-v1"
+test -f "$PACT_CONFIG"
+test ! -e "$PACT_OUTPUT"
+cd "$HOME/pact-aai-preflight"
+JOB_ID=$(sbatch --parsable "$PACT_CHECKOUT/tools/aai_stage2_exposure_reconcile.sbatch")
+JOB_ID=${JOB_ID%%;*}
+echo "CPU reconciliation job: $JOB_ID"
+squeue -j "$JOB_ID"
+```
+
+After completion:
+
+```bash
+cat "pact-exposure-reconcile-${JOB_ID}.out"
+cat "pact-exposure-reconcile-${JOB_ID}.err"
+sacct -j "$JOB_ID" --format=JobID,State,ExitCode,Elapsed
+```
+
+Return stdout or `summary.sanitized.json` only. Keep `reconciliation.private.json`
+and its exclusion identities on the cluster. `checksums.json` binds both files.
+The draft lists scoped roots, input/selection hashes, old source receipts, union
+additions and remaining review questions. It deliberately cannot be passed as an
+approved `exposure` or `history` input. Further coverage/overlap review must resolve
+actual evidence gaps; unknown historical consumption remains unknown. No next
+source audit or GPU job is chained automatically.
