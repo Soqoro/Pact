@@ -1878,3 +1878,150 @@ certificate identity, prior additive tokenizer repair, and all existing runtime,
 source, tensor, snapshot and scientific-budget guards. Only the existing pinned
 fixed_history stage may execute. No new scientific source, model, or budget change.
 The new batch continuation is GPU-unverified; no cluster job was launched locally.
+
+### 2026-10-27 — Close amended Stage I execution, keep mechanism claims bounded
+
+Accept the returned fixed-history evidence after outer/member integrity, production
+Journal and CPU report-reproduction checks. Separate successful AAI execution from
+scientific efficacy: both aggregate peer-access interaction intervals span zero.
+Retain rejected exchange conditions, original historical uncertainty and family
+heterogeneity. Do not infer authorization for Stage II or full PACT. Record that
+the preceding source ZIP is unavailable for a new raw byte comparison.
+See [audit](stage1_amended_fixed_history_audit.md).
+
+## 2026-10-27 — Reviewed-v2 Stage II allocation implementation
+
+- Implemented a separate `pact allocation` path for retrospective synthesis,
+  crossed temporary updates and actual five-policy/two-seed continuation/evaluation;
+  historical Stage II and completed Stage I remain unchanged.
+- Real planning fails closed: the exact executed parent has three/five fitting
+  blocks and 24/40 probes, incompatible with retaining them while requiring four/four
+  and 32/32. No source amendment is inferred. Fresh 128 eligibility and external
+  probe-consumption history additionally require actual reviewed inputs.
+- Loss routing is private answer-prefix supervision only, ordinary unit task mean;
+  allocation changes optimizer slots/exposure, not a duplicated receiver/base loss.
+  Exact full execution aliases share work; no budget recycling.
+- Disjoint assay/policy wallets share one physical portfolio root and record the
+  logical policy-child ID. Unknown dispatch/update/score attempts block execution;
+  raw unsafe evidence remains exportable. Zero new synthetic forwards are used.
+- Original Stage I reports reproduce unchanged. A companion derived table handles
+  exchange private metrics that the historical summary did not aggregate; historical
+  zeros are not reinterpreted as observed zero accuracy.
+- Methodology and exact gated CLI sequence: `stage2_allocation_methodology.md` and
+  `stage2_allocation_runbook.md`. Real GPU behavior remains unverified.
+
+## 2026-10-27 — Executed-source Stage II v3 (implementation approved only)
+
+The v3 instruction approves implementation of the executed 3/5-block,24/40-probe
+contract. Added a separate versioned `allocation-v3` route/package and new child
+IDs; v2 code/plans/history are not rewritten or implicitly resumed. Exact source,
+block, lineage and checkpoint-manifest hashes are pinned from the verified parent.
+The eight-row mean remains 3/8 ARC,5/8 LogiQA; final metrics remain source-equal.
+Integer source-family balancing is joint/exact, with deterministic witnesses for
+invalid constraints, and shuffles use actual three/five-block derangements.
+
+A newly explicit independent prerequisite blocks real planning: original eligible
+ARC406 minus all400 allocated groups leaves at most6, short of64 by at least58.
+This is a verified-receipt monotone upper bound, not a fresh raw-source measurement.
+External old Stage II/probe-consumption history is also unresolved. No cohort was
+substituted, no probe unlocked and no real plan/model stage authorized. Later source
+exclusions cannot expand this original pool. Any alternative requires another
+explicit eligibility amendment; there is no bypass flag.
+
+V3 includes intended/common support reports and bounded missingness sensitivity,
+per-family training tokens/resources, complete runtime-bound aliases and separate
+physical/logical budgets. Copied v2 execution code is version-frozen in its new v3
+namespace to preserve the old route's contracts; this is not a general refactor.
+See `stage2_allocation_v3_methodology.md` and `stage2_allocation_v3_runbook.md`.
+
+
+### V3 fresh-source feasibility review — 28 October 2026
+
+Rechecked the original allocation implementation and exact source identities.
+The 406 ARC eligibility count precedes all 400 unique Stage I allocations;
+v3 preserves the original exclusions. At most six remain. No methodological
+alternative was selected. See `stage2_v3_fresh_source_decision.md` for concrete
+decision options and outstanding independent prerequisites. GPU planning remains
+blocked; this follow-up only records the review.
+
+### 28 October 2026 — Proposed evaluation-source amendment, CPU only
+
+Implemented `evaluation-source` as a separate non-executable review route, not an
+in-place v3 plan migration. No source or GPU approval follows from the user's
+implementation instruction. The proposed OpenBookQA main/train + original LogiQA
+cohort changes the estimand to closed-book science transfer and within-source
+logical-reasoning development, post Stage I; project-unexposed is not pretraining-clean.
+Actual raw bytes and rights were not established for either current candidate audit.
+No cohort selected. Source identity reviews and terms require actual hash-verified
+local receipt files; no downloader or automatic approval helper is provided.
+
+Kept the original grouping code, historical 1,200 exclusions, full original
+train/validation exclusion reconstruction and reviewed exposure policy. Current
+experiment-ledger coverage and material overlap findings are explicit additional
+receipt requirements. Historical group IDs remain aliases when combined-source
+lexical components change. No test or additional OpenBookQA data is used.
+
+The complete pre-outcome graph reserves outcome-dependent update slots rather than
+inventing their later family schedules. Runtime checkpoint/prompt/packet identities
+remain late bindings; it is not a dispatchable experiment. Conditional counts are
+recomputed from actual 3/5 block/probe memberships; fixture graph reconciles all
+23,728 generation nodes and included smoke subsets. Five-policy learning remains
+in the unchanged v3 implementation. The new source review cannot invoke it.
+
+Private outputs may use the existing explicitly ignored/untracked results_import
+area or a directory outside Git, with symlink/overwrite guards. SANITIZED export
+uses an aggregate allowlist and recomputes mock summary before publication. See
+`stage2_evaluation_source_amendment_methodology.md` and its runbook.
+
+
+### 2026-10-28 — OpenBookQA acquisition metadata candidate
+
+Official metadata now identifies revision `388097ea7776314e93a529163e0fea805b8a6454`,
+main/train Parquet payload SHA256 `98148f8a54e62eb862346a75192d5fb824d6cbb68f2f59aecd793d39ecb5cd8b`,
+and 495,845 advertised bytes. No dataset payload was fetched or verified.
+The CPU acquisition-plan command passed with approval false and rights unresolved.
+This is a proposed access packet, not eligibility, rights approval or execution.
+See [source-access review](stage2_evaluation_source_access_review.md).
+Historical exported reviews and the blocked v3 plan remain unchanged.
+
+
+### 2026-10-28 — Source-rights follow-up and preview exposure
+
+Official documentation inspection did not resolve dataset-item usage rights.
+The Ai2 landing-page redirect returned an OpenBookQA additional/train preview;
+nine exposed IDs are recorded in [the access review](stage2_evaluation_source_access_review.md)
+and must be included in the refreshed exclusion inventory. No dataset payload
+was downloaded, no eligibility or permission asserted, and no model work run.
+Human/source-owner rights evidence remains required by the reviewed amendment.
+
+### 2026-10-28 — GPQA Main / original LogiQA evaluation-source proposal
+
+Implemented the separately versioned reviewed-v2 source amendment in
+`revival/gpqa_source`; old v3 and OpenBookQA paths remain unchanged. Reuse native
+GPQA permutation/integrity, original training/overlap and source-exposure audit,
+allocation mathematics, RNG, Wallet and checkpoint loader. All Diamond groups
+remain protected in Main, not merely previously generated groups. Existing scoped
+source-access receipts are reused. Wrong-option construction is explicitly
+label-aware offline, while defender inputs contain no label metadata.
+
+CPU candidate sealing binds the MethodSpec hash and separates prospective data
+from training inputs. It creates no wallet and no executable GPU plan. Historical
+spending remains unknown until scoped reconciliation. Native static tokenizer
+checks use staged assets only. Reports enforce both-seed task means and equal
+source weights; technical missingness cannot define the primary sample.
+
+Integration boundary is explicit: new source/graph/seal/report/CPU Slurm path is
+implemented; guarded GPU dispatch of this child is deferred pending source and
+owned-budget/checkpoint decisions. See `stage2_gpqa_logiqa_runbook.md` and the
+review report for actual evidence and tests, rather than treating mock success as
+execution or source feasibility.
+
+### 2026-11-01 — explicit acquisition approval, separate from study execution
+
+After the user-approved historical GPQA archive verification, the user's “proceed”
+authorized the explicitly proposed official dataset-only download. The new AAI
+wrapper acquires GPQA Main/Diamond/terms and original ARC/LogiQA train/validation,
+using fixed revisions and hashes, without model downloads, candidate selection or
+GPU work. Authentication uses the existing HF_TOKEN_PATH via the library; credentials
+are never printed or passed as token-valued command arguments. Preserve failure
+markers and partial inputs rather than retrying or deleting evidence.

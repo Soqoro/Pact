@@ -173,6 +173,18 @@ def parser():
 
 def main(argv=None) -> int:
     routed = list(sys.argv[1:] if argv is None else argv)
+    if routed and routed[0] == "gpqa-source":
+        from .revival.gpqa_source.__main__ import main as gpqa_source_main
+        return gpqa_source_main(routed[1:])
+    if routed and routed[0] == "evaluation-source":
+        from .revival.evaluation_source.__main__ import main as evaluation_source_main
+        return evaluation_source_main(routed[1:])
+    if routed and routed[0] == "allocation-v3":
+        from .revival.allocation_v3.__main__ import main as allocation_v3_main
+        return allocation_v3_main(routed[1:])
+    if routed and routed[0] == "allocation":
+        from .revival.allocation.__main__ import main as allocation_main
+        return allocation_main(routed[1:])
     if routed and routed[0] in ("revival", "update-probe"):
         from .revival.__main__ import main as revival_main
         return revival_main(routed[1:], probe_cli=routed[0]=="update-probe")

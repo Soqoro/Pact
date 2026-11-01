@@ -2579,3 +2579,204 @@ The new batch continuation is GPU-unverified; no cluster job was launched locall
 Local validation: all 22 focused `test_aai*.py` CPU tests passed; Python compilation,
 new batch-script Bash syntax, and `git diff --check` passed. No local model downloads,
 GPU operations, commits or pushes were performed.
+
+### 2026-10-27 — AAI fixed-history return audited
+
+The amended Stage I child is complete: 1,755 fixed-history calls, 13,467 total,
+zero unresolved. Both returned ZIP identities and 78,172/4 payload hashes passed;
+production Journal validation and all four CPU-regenerated reports passed. The
+uploaded completion accounting agrees. Aggregate peer-access interactions are
++2.08 pp clean (−5.73,+9.38) and +5.67 pp accepted exchange (−1.60,+13.83):
+no established positive additional peer-access benefit. This is returned real GPU
+evidence, not a local GPU test. Prior source archive byte comparison unavailable
+locally; original unknown history remains separate.
+See [completed fixed-history audit](stage1_amended_fixed_history_audit.md).
+
+## 2026-10-27 — Reviewed-v2 Stage II allocation
+
+**Implemented:** dedicated allocation CLI and versioned pure design; exact-parent
+import/retrospective synthesis; source/history blockers; sealed fresh-source selection;
+real native temporary adapter optimization/rollback and persistent-optimizer continuation;
+pristine-R raw/capped diagnostic scoring; five integer-slot policies/two seeds with
+full-contract aliases; fresh shared-pool evaluation and task-cluster reports; owned
+physical wallets; private/sanitized/recovery exports; compact metadata plus separately
+addressed typed-tensor persistence; thin notebook and exact staged runbook.
+
+**Actual read-only evidence:** exact Stage I archive and committed journal validated;
+all four original reports reproduced. Real plan attempt stopped on the 3/5 versus
+4/4 blocks and 24/40 versus 32/32 probes, plus missing external history review.
+No real Stage II plan, new task exposure, generation, training or protected data access.
+
+**Executed local checks:** 19 focused allocation CPU tests passed with local Torch,
+including real tiny scheduled updates, exact rollback, aliases, mask, missingness,
+wallet ceilings, privacy, latest-only snapshot restore and typed-tensor reimport.
+Historical revival suite: 113 tests, 106 passed / seven skipped. Training/assignment
+suite: 16 tests, 15 passed / one explicit optional Torch test skipped (independent
+coordinate-bisection assignment reference included). Default environment discovery
+also passes with explicit optional-neural/full-roundtrip skips. Compileall and
+`git diff --check` passed.
+
+**Complete standalone CPU round trip executed:** invented source -> 24 real tiny
+adapter branches -> 2,496 pristine tiny-reader scores -> all five policies -> actual
+tiny continuation -> mock natural-protocol evaluation -> reports -> checksummed
+PRIVATE/SANITIZED/RECOVERY export and reimport. Exact fixture policy aliases leave two
+unique seed runs. Assay: 7,680 generation calls / 192 updates / 1,536 training forwards.
+Policy: 4,352 calls / 576 updates / 4,608 forwards; alias-expanded logical evaluation
+is 15,616 calls. Zero unresolved attempts. A subsequent final-code CPU audit passed,
+including 48 branch/condition aggregate tables and logical/physical cost separation.
+Generated answers in this round trip are mocks; no scientific efficacy is inferred.
+The opt-in reproducer is `tests/test_allocation_v2_roundtrip.py`.
+
+**GPU-unverified / blocked / deferred:** every new real model path, performance and
+full-study storage provisioning remain unverified. Resolve the actual source-contract
+conflict explicitly, review external probe consumption, verify 128 eligible fresh
+groups, and review/push a clean pinned revision before real planning. Stage III,
+full PACT, final tests, semantic review and automatic snapshot pruning remain deferred.
+No commit, push, cluster job, model download or historical artifact cleanup performed.
+
+
+## Stage II executed-source v3 — implemented and CPU-tested (27 October 2026)
+
+**Implemented:** separate `allocation-v3` CLI and eight-module execution path,
+`stage2-allocation-executed-source-v3`, with new reserved children
+`pact-update-allocation-crossed-v3-003` and
+`pact-allocation-policy-evaluation-v3-002`. V2 and all completed evidence are
+unchanged. Real native temporary updates, exact rollback, frozen-scorer credit,
+five integer-scheduled continuation policies, task-paired evaluation, intended
+missingness bounds, per-family costs and private/sanitized/recovery exports are
+implemented. Notebook 30 and the v3 runbook provide explicit stage commands.
+
+**Actual source verification:** the exact completed PRIVATE parent and all seven
+pinned source/lineage/checkpoint metadata files passed hash verification. Actual
+identities preserve 3 ARC / 5 LogiQA fitting blocks, 192/320 fit tasks and 24/40
+probes. Source hash is `85b414bb995aee54fe4b75c52e53df7261e9651b0d1598e2fbbc0774503c6c4b`.
+This was an archive/evidence CPU check, not a new tensor or GPU validation.
+Local imported-history search found no Stage II attempts; external history remains
+unverified. Source review files are private and ignored in `results_import/stage2-v3-review/`.
+
+**Genuine prerequisite blocker:** verified historical eligibility contains 406 ARC
+groups, of which 400 were allocated. Therefore at most six fresh ARC groups remain,
+versus 64 required. This conservative upper bound is not a new raw-source census.
+Later exposure exclusions cannot increase it. Real planning returns blocked with
+`prospective_eval_not_feasible`; it does not create a cohort or real child plan.
+External probe-consumption review also remains required. No exclusion was relaxed.
+
+**Tests executed this turn:** 24 focused v3 tests passed (final code rerun); the
+opt-in full CPU round-trip test passed in 951.676 seconds; historical revival
+regression ran 113 tests, 106 passed and seven explicitly skipped; all 19 v2
+focused regression tests passed. Compileall, notebook code-cell compilation and
+`git diff --check` passed. No pretrained weights were downloaded.
+
+The full invented fixture executed all 24 actual tiny-adapter branches, exact
+rollback and 2,640 tiny frozen-scorer forwards. Its mock-generation assay consumed
+8,112 calls, 192 updates and 1,536 supervised forwards. All five fixture policies
+were exact aliases, leaving two unique seed continuations: 4,352 physical policy
+calls, 576 updates and 4,608 forwards, with 15,616 alias-expanded logical evaluation
+calls. Zero unresolved attempts. This exercises alias handling, not five distinct
+scientific outcomes. Latest-code re-audit independently verified the completed
+PRIVATE fixture, reconstructed 48 branch/condition tables, common support, costs
+and logical accounting, reproduced reports byte-for-byte, and exported new
+PRIVATE/SANITIZED/RECOVERY bundles. Mock answers are not scientific results.
+
+**GPU NOT AUTHORIZED / GPU-unverified:** native model execution, runtime resource
+use, current tensor restoration and real study effectiveness remain unverified.
+Full ceilings remain 23,728 calls / 12,148,736 reserved tokens / 3,072 updates /
+24,576 supervised forwards / 2,640 diagnostic forwards; real consumption is zero.
+No commit, push, cluster job, secrets access, final-test access or historical
+cleanup was performed. Any source-eligibility change needs a separate reviewed
+amendment; implementation approval does not authorize it or GPU execution.
+
+## 28 October 2026 — Evaluation-source amendment implemented / CPU-audited
+
+Added `src/pact/revival/evaluation_source/` and the `evaluation-source` CLI route.
+The route imports bounded local OpenBookQA main/train bytes, preserves option/gold
+mapping and label isolation, verifies receipt/terms bytes, audits both sources
+against existing exposure/grouping rules, selects a deterministic private candidate
+only if prerequisites pass, compiles a proposed dependency graph, scores invented
+packets with the existing parser, and exports/reconstructs PRIVATE/SANITIZED review
+bundles. Actual five-policy schedule math is reused, not a placeholder allocator.
+No native model executor is exposed by this CPU-only amendment.
+
+Real audit: exact Stage I parent archive hash and seven authoritative files verified,
+plus completed summary consistency. Historical journal audit remains the previous
+completed Stage I evidence; this source review did not replay model calls or newly
+verify GPU logits/current tensor loads. Candidate source bytes were unavailable in
+inspected local paths. No eligible count, source revision/digest for OpenBookQA,
+new LogiQA cohort or sealed evaluation is asserted. Rights, current complete exposure
+coverage, external probe-use history and future native checkpoint reload remain open.
+
+Tests executed: new source-amendment suite **20 passed**, including complete invented
+raw import/canonicalization/selection -> dependency graph -> strict mock scoring ->
+PRIVATE/SANITIZED reconstruction; existing v3 suite **24 passed** with locally
+installed CPU Torch; training-data regression **9 passed**; exposure-inventory
+regression **4 passed**. Early test failures were a wrong test expectation for the
+allocator return type and JSON tuple/list comparison; both were corrected and the
+passing suites rerun. No fixture result establishes source eligibility or model
+performance. Python compilation and `git diff --check` passed.
+
+The graph fixture has 8,112 assay +15,616 policy generation nodes, 192+2,880 update
+reservations, 1,536+23,040 supervised forwards and 2,640 diagnostic nodes; 24/244
+smoke IDs are included subsets. Conditional limits are not approved expenditure.
+Full runtime request identities depend on future frozen schedules/checkpoints and
+generated messages; the proposed graph explicitly remains non-dispatchable.
+
+Implemented commands/prerequisites: `stage2_evaluation_source_amendment_runbook.md`.
+Decision report: `stage2_evaluation_source_amendment_review.md`. Old v3 and historical
+records remain unchanged. No source download, model load/training/inference,
+cluster/Colab action, secrets access, commit, push or cleanup occurred.
+
+
+### 2026-10-28 — OpenBookQA acquisition metadata candidate
+
+Official metadata now identifies revision `388097ea7776314e93a529163e0fea805b8a6454`,
+main/train Parquet payload SHA256 `98148f8a54e62eb862346a75192d5fb824d6cbb68f2f59aecd793d39ecb5cd8b`,
+and 495,845 advertised bytes. No dataset payload was fetched or verified.
+The CPU acquisition-plan command passed with approval false and rights unresolved.
+This is a proposed access packet, not eligibility, rights approval or execution.
+See [source-access review](stage2_evaluation_source_access_review.md).
+Historical exported reviews and the blocked v3 plan remain unchanged.
+
+
+### 2026-10-28 — Source-rights follow-up and preview exposure
+
+Official documentation inspection did not resolve dataset-item usage rights.
+The Ai2 landing-page redirect returned an OpenBookQA additional/train preview;
+nine exposed IDs are recorded in [the access review](stage2_evaluation_source_access_review.md)
+and must be included in the refreshed exclusion inventory. No dataset payload
+was downloaded, no eligibility or permission asserted, and no model work run.
+Human/source-owner rights evidence remains required by the reviewed amendment.
+
+### 2026-10-28 — GPQA Main / LogiQA proposed source amendment, CPU handoff
+
+Implemented `pact gpqa-source` loader/auditor, immutable candidate seal, complete
+conditional graph, two-source report, private/sanitized exports, durable-owner
+checks, staged-tokenizer check and thin offline AAI CPU wrapper. Source substitution
+and scheduler metadata leave scientific memberships/RNG/policy mathematics unchanged.
+Old v3 and OpenBookQA proposals were preserved. GPU dispatch of this child remains
+unconnected/unapproved; no executable readiness is claimed.
+
+Real local metadata audit verified the final Stage I lineage and returned BLOCKED:
+no raw Main/original training+validation bytes or refreshed source/exclusion and
+scoped external-consumption evidence. Candidate=false, frozen=false, execution=false;
+spent/remaining ownership unknown. The conditional ceilings reconcile to23,728
+calls/12,148,736 tokens/3,072 updates/2,640 diagnostic forwards. This task used zero
+real model calls/forwards/updates and did not acquire data or contact the cluster.
+
+Actual tests:20 new amendment tests passed;20 v3 tests passed with optional neural
+class skipped;20 prior source-amendment tests passed. Native GPQA regression:
+17 passed,2 environmental errors at the existing outside-Git temporary-path guard.
+Shell syntax, compilation, diff whitespace and blocked real audit/validate/export
+passed. No full-suite or GPU pass claimed. Details and artifact hashes:
+`stage2_gpqa_logiqa_review.md`; exact commands: `stage2_gpqa_logiqa_runbook.md`.
+
+### 2026-11-01 — source-only acquisition handoff
+
+User-returned AAI job1112946 verifies the two historical GPQA partitions and
+inventory hash1f013791c6995cf9f6419d29ddfa92098f1ad69aa82e393357ea67fd8a8be9ad.
+The user then explicitly authorized pinned source acquisition. Added CPU-only
+AAI acquisition helper/wrapper reusing existing runtime, authentication path and
+CA trust. New scratch/durable destinations reject collisions; failed acquisition
+preserves pending evidence; durable copies are hashed before VERIFIED.json.
+Four invented-file CPU tests passed; shell syntax and diff whitespace checks
+passed. No local download or remote job was executed by Codex. Actual acquisition,
+current exposure audit, new64+64 eligibility and execution remain unverified.

@@ -1,0 +1,18 @@
+{
+  "repository": "allenai/openbookqa",
+  "config": "main",
+  "split": "train",
+  "revision": "388097ea7776314e93a529163e0fea805b8a6454",
+  "path": "main/train-00000-of-00001.parquet",
+  "format": "parquet",
+  "sha256": "98148f8a54e62eb862346a75192d5fb824d6cbb68f2f59aecd793d39ecb5cd8b",
+  "expected_rows": 4957,
+  "upstream_reported_bytes": 495845,
+  "status": "metadata_candidate_only",
+  "raw_bytes_verified": false,
+  "acquisition_approved": false,
+  "identity_review": {},
+  "rights_review": {},
+  "logiqa_rights_review": {},
+  "metadata_source": "https://huggingface.co/datasets/allenai/openbookqa/commit/388097ea7776314e93a529163e0fea805b8a6454"
+}

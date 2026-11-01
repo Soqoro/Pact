@@ -2889,3 +2889,109 @@ clean +5.98pp (descriptive interval +1.17,+11.77); exchange +4.56pp (−2.39,+12
 Positive clean development evidence, not established robustness or peer-use mechanism.
 Fixed-history controls remain pending; no next stage launched locally.
 See [source-evaluation audit](stage1_amended_source_evaluation_audit.md).
+
+### 2026-10-27 — Amended Stage I fixed history complete
+
+PRIVATE 754dad78… / SANITIZED 1c4474a5… validated, 78,172/4 payloads. All 13,467
+calls passed Journal and four aggregate reports recomputed exactly. Fixed history:
+64 clean tasks, 53 accepted exchanges, 1,755 fresh calls plus 351 exact child reuses.
+Zero unresolved/new training. Joint-minus-independent receiver gains are
++16.15 pp present / +14.06 withheld clean and +9.40 / +3.73 accepted exchange.
+Peer-access interactions +2.08 / +5.67 pp both have descriptive intervals spanning
+zero. All existing amended evaluation stages complete; no next run authorized.
+See [fixed-history audit](stage1_amended_fixed_history_audit.md).
+
+## 2026-10-27 — Stage II reviewed-v2 implementation / source resolution
+
+Proposed IDs `pact-update-allocation-crossed-002` and
+`pact-allocation-policy-evaluation-001` have **no real plan or model execution**.
+Verified exact completed Stage I PRIVATE SHA256
+`754dad78534104fbd10b198fcc4842d9217b4d08d424dfa1dd00bb24eea1e3a0`; reproduced its
+four aggregate reports from 13,467 committed calls with no new forwards. Retrospective
+synthesis is in ignored `results_import/stage2-allocation-review/mechanism_synthesis.json`.
+Actual source conflict: three ARC/five LogiQA fitting blocks and 24/40 probes,
+versus reviewed-v2 four/four and 32/32 while retaining the original groups.
+No groups newly selected/exposed; no old probes unlocked, no fresh 128 availability
+claimed. CPU invented fixtures are engineering evidence only. Existing historical
+unknown work and deferred semantic review remain unchanged. No Stage III authorized.
+
+## 2026-10-27 — Stage II executed-source v3 implementation and source verification
+
+Version `stage2-allocation-executed-source-v3`, candidate children
+`pact-update-allocation-crossed-v3-003` / `pact-allocation-policy-evaluation-v3-002`.
+**GPU NOT AUTHORIZED; no real child plan created or new exposure.** Exact completed
+Stage I PRIVATE archive and seven authoritative source/lineage/checkpoint files
+reverified. Source hash85b414bb…; block hash40892bfd…; actual three/five blocks and
+24/40 probes preserved. Local imported-history search found no Stage II attempts;
+external consumption remains unverified, not presumed zero.
+Verified original eligibility ARC406 minus allocated400 gives a fresh upper bound6,
+below required64. Real planning returns prospective_eval_not_feasible before assay.
+Source-only review artifacts: ignored `results_import/stage2-v3-review/`.
+Budgets replace proposed v2 ceilings: 23,728 calls /12,148,736 reserved tokens;
+3,072 updates /24,576 training forwards;2,640 diagnostic forwards. Implementation
+and invented CPU fixtures do not establish allocation efficacy or authorize Stage III.
+
+
+### Stage II v3 feasibility follow-up — 28 October 2026
+
+Repeated CPU-only authoritative source verification and unique split/group counts
+confirm the at-most-six fresh ARC bound. No new cohort or real child plan; no
+model calls. Decision review: `stage2_v3_fresh_source_decision.md`. No new source,
+exclusion release, cohort reduction or GPU execution authorized.
+
+### 2026-10-28 — Proposed OpenBookQA/LogiQA source amendment CPU review
+
+`pact-stage2-openbookqa-logiqa-eval-amendment-v2-001` is a proposed source-review
+identity, not an activated experiment. Exact parent PRIVATE and seven authoritative
+Stage I metadata identities rechecked; 3/5 fitting blocks and 24/40 probes retained.
+Old v3 remains blocked. No raw candidate source bytes found in inspected local
+repository/cache paths; OpenBookQA revision/raw digest and rights are unresolved.
+Original LogiQA registry is pinned, but current raw bytes/eligibility and rights
+review remain unavailable. Current complete exposure coverage and external probe
+history are unresolved. No selected cohort, new exposure, model call or update.
+
+CPU fixtures test source parsing, grouping, selection, graph, strict scoring and
+PRIVATE/SANITIZED reconstruction. Conditional ceilings remain 23,728 generations,
+12,148,736 reserved tokens, 3,072 updates and 2,640 diagnostic forwards. Mock
+outcomes are not scientific evidence. Final private review is under ignored
+`results_import/evaluation-source-amendment-v2-final-reviewed/`; see the source
+amendment review/runbook. No source acquisition or GPU work authorized.
+
+
+### 2026-10-28 — OpenBookQA acquisition metadata candidate
+
+Official metadata now identifies revision `388097ea7776314e93a529163e0fea805b8a6454`,
+main/train Parquet payload SHA256 `98148f8a54e62eb862346a75192d5fb824d6cbb68f2f59aecd793d39ecb5cd8b`,
+and 495,845 advertised bytes. No dataset payload was fetched or verified.
+The CPU acquisition-plan command passed with approval false and rights unresolved.
+This is a proposed access packet, not eligibility, rights approval or execution.
+See [source-access review](stage2_evaluation_source_access_review.md).
+Historical exported reviews and the blocked v3 plan remain unchanged.
+
+
+### 2026-10-28 — Source-rights follow-up and preview exposure
+
+Official documentation inspection did not resolve dataset-item usage rights.
+The Ai2 landing-page redirect returned an OpenBookQA additional/train preview;
+nine exposed IDs are recorded in [the access review](stage2_evaluation_source_access_review.md)
+and must be included in the refreshed exclusion inventory. No dataset payload
+was downloaded, no eligibility or permission asserted, and no model work run.
+Human/source-owner rights evidence remains required by the reviewed amendment.
+
+### 2026-10-28 — PROPOSED GPQA Main / LogiQA Stage II source amendment
+
+Child `pact-stage2-gpqa-logiqa-eval-amendment-v2-001`; proposed assay
+`pact-update-allocation-gpqa-logiqa-v2-005` and policy
+`pact-allocation-policy-gpqa-logiqa-v2-004`. New destinations reject collisions;
+no historical plan was migrated. Local CPU implementation only; exact completed
+Stage I lineage checked. No real GPQA Main/original source bytes were found in
+the inspected local inventory, so no real64+64 candidate or freeze is certified.
+Current exposure/partition and scoped external Stage II consumption evidence
+remain prerequisites. Existing v3 infeasibility and OpenBookQA preview exclusions
+remain authoritative. Zero real generation, scoring/training forwards or updates;
+no source acquisition, model download, job submission or secret access.
+
+Conditional ceilings remain8,112/15,616 generations,3,072 updates,2,640 diagnostic
+forwards; spent/remaining ownership is unresolved, not reset. PRIVATE GPQA data
+must remain user-controlled on the cluster; return sanitized receipts only.
+See `stage2_gpqa_logiqa_review.md` for readiness and validation details.

@@ -136,3 +136,41 @@ parent. Explicit approval binds proposal 49de20c6…; additional ceilings are
 Preserve unclosed original history and exact 120/136 source allocation. No new
 attacks, synthetic verification, training or final tests. Every stage exports and
 stops; ambiguous child dispatch is never retried. Parent records remain immutable.
+
+[Reviewed-v2 Stage II allocation](docs/stage2_allocation_methodology.md) is a separate
+static allocation study, not Stage III/full PACT. Preserve the exact completed
+uniform_joint_sft S0 and historical unknown work. The executed 3/5 fitting blocks
+and 24/40 probes conflict with the new brief's 4/4 and 32/32; real planning must
+stop until explicitly amended. Do not silently repartition. Use same-source shared
+probes, exact temporary rollback, pristine-R capped NLL, actual base/extra update
+schedules and full-contract aliases. Seal fresh 128-task evaluation until all
+policies/checkpoints/analyses lock. Enforce separate 7,680/15,616 call wallets,
+3,072 total updates and 2,496 diagnostic forwards. Every explicit stage exports
+and stops; fixture success neither resolves data conflicts nor verifies GPU work.
+
+[Executed-source Stage II v3](docs/stage2_allocation_v3_methodology.md) supersedes
+v2's proposed source/budget assumptions for NEW v3 children only. Keep actual
+3/5 immutable blocks and 24/40 shared probes, eight-row 3/8–5/8 solver weighting,
+and equal-source prospective metrics. New wallets cap 8,112 assay /15,616 policy
+calls, 2,640 diagnostic forwards and 3,072 updates. No synthetic GPU allowance.
+Do not migrate v2 plans or unlock real execution from implementation approval.
+Verify exact source hashes, external probe history and fresh 64+64 eligibility
+before assay. The verified original ARC pool leaves at most six fresh groups;
+report prospective_eval_not_feasible, never substitute or loosen exclusions.
+
+[Proposed Stage II evaluation-source amendment](docs/stage2_evaluation_source_amendment_methodology.md)
+is CPU-only and separate from blocked v3. Candidate sources are OpenBookQA main/train
+and original English LogiQA, 64 project-unexposed groups each only after actual
+bytes, rights, current exposure and lineage review. Pretraining exposure remains
+unknown. Preserve exact 3/5 fitting blocks, 24/40 probes, S0 and all v3 learning
+contracts. No automatic source fetch, cohort approval or model execution. Candidate
+selection and conditional budget compilation never authorize GPU work; old v3
+remains prospective_eval_not_feasible. Private reports stay ignored/outside Git.
+
+[GPQA Main / LogiQA Stage II source amendment](docs/stage2_gpqa_logiqa_methodology.md)
+implements a separate PROPOSED CPU-audited candidate, graph and explicit seal.
+Retain actual Stage I S0, 3/5 fitting blocks, 24/40 probes, fixed scientific seeds
+and prior unknown spending. Exactly64+64 requires real bytes/current exclusions;
+all Diamond protections survive in Main. No automatic acquisition or GPU dispatch.
+GPQA PRIVATE text/labels/maps stay outside Git and hosted assistant context;
+return SANITIZED receipts only. Slurm IDs never seed work or reset wallets.
