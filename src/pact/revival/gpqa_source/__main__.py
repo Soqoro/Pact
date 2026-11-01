@@ -36,7 +36,7 @@ def main(argv=None):
                     out=review.validate(root)
                 else:
                     kwargs={k:cfg.get(k) for k in ('parent_bundle','gpqa_dir','data_dir')}
-                    for name in ('exposure','inventory','history'):kwargs[name]=read_json(cfg[name]) if cfg.get(name) else None
+                    for name in ('exposure','inventory','history'):kwargs[name]=read_json(Path(cfg[name])) if cfg.get(name) else None
                     out=review.audit(root,Path(cfg['parent_dir']),history_roots=cfg.get('history_roots',[]),**kwargs)
                     write_json(root/'audit-input.json',{'sha256':digest(cfg)})
         else:

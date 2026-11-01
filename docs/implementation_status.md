@@ -2780,3 +2780,16 @@ preserves pending evidence; durable copies are hashed before VERIFIED.json.
 Four invented-file CPU tests passed; shell syntax and diff whitespace checks
 passed. No local download or remote job was executed by Codex. Actual acquisition,
 current exposure audit, new64+64 eligibility and execution remain unverified.
+
+### 2026-11-01 — CPU source-audit CLI path correction
+
+AAI job1112978 at commit352db019a2f8b25c2f9d2b7f87ecc5d50393a64f reported
+AttributeError before producing an eligibility result. Reproduced the identical
+sanitized failure locally: config JSON filenames for exposure/inventory/history
+were strings passed to read_json, which requires pathlib.Path. Corrected those
+three optional inputs at the CLI boundary. The regression test failed before the
+fix, then all21 GPQA amendment tests passed, including input-byte preservation.
+No raw source data, source contracts, exclusions, budgets or previous archives
+changed. No download, remote job or model work was performed locally. User may
+explicitly rerun the same CPU audit configuration after pushing the correction;
+existing locks/partial outputs remain subject to the original guard.

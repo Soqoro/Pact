@@ -2025,3 +2025,11 @@ using fixed revisions and hashes, without model downloads, candidate selection o
 GPU work. Authentication uses the existing HF_TOKEN_PATH via the library; credentials
 are never printed or passed as token-valued command arguments. Preserve failure
 markers and partial inputs rather than retrying or deleting evidence.
+
+### 2026-11-01 — normalize JSON configuration paths at the audit CLI boundary
+
+Convert optional exposure, inventory and history filenames to Path before using
+the existing strict read_json helper. Keep the shared helper and private error
+redaction unchanged. This fixes a reproducible pre-audit AttributeError without
+loosening lineage, source eligibility or resume checks. Preserve job1112978 logs
+and rerun only the CPU audit explicitly with the corrected pinned checkout.

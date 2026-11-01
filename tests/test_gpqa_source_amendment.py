@@ -191,4 +191,31 @@ class Amendment(unittest.TestCase):
                 self.assertNotIn(self.raw[0]['Question'].encode(),raw)
                 self.assertNotIn(b'source_to_canonical',raw)
 
+
+class AuditCliPaths(unittest.TestCase):
+    def test_json_config_paths_are_loaded_without_mutating_inputs(self):
+        import contextlib
+        import io
+        from pact.revival.gpqa_source.__main__ import main
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);run=root/'audit';cfg={'run_dir':str(run),'parent_dir':str(root/'parent')}
+            values={name:{'fixture':name} for name in ('exposure','inventory','history')}
+            saved={}
+            for name,value in values.items():
+                path=root/(name+'.json');path.write_text(canonical(value))
+                cfg[name]=str(path);saved[path]=path.read_bytes()
+            config=root/'config.json';config.write_text(canonical(cfg))
+            def audit(destination,parent,**kwargs):
+                self.assertEqual(parent,root/'parent')
+                for name,value in values.items():self.assertEqual(kwargs[name],value)
+                destination.mkdir()
+                return {'status':'BLOCKED','model_calls':0}
+            output=io.StringIO()
+            with patch.object(review,'audit',side_effect=audit) as call,contextlib.redirect_stdout(output):
+                code=main(['audit','--config',str(config)])
+            self.assertEqual(code,0,output.getvalue())
+            self.assertEqual(call.call_count,1)
+            self.assertEqual(read_json(run/'audit-input.json'),{'sha256':digest(cfg)})
+            for path,value in saved.items():self.assertEqual(path.read_bytes(),value)
+
 if __name__=='__main__':unittest.main()
