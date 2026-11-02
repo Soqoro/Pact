@@ -2049,3 +2049,16 @@ Scope gaps, semantic overlap and external consumption remain unresolved; no
 accepted exposure/history receipt, candidate, seal or budget reset is produced.
 Existing known-root history scans are repeated, including GPQA child owners.
 PRIVATE identifiers remain cluster-side; stdout is an aggregate allowlist.
+
+### 2026-11-02 — scoped discovery when Stage II execution is unknown
+
+The user is unsure whether Stage II work ever ran. Do not convert this into a
+negative execution attestation. Added a standard-library read-only discovery tool
+and CPU sbatch wrapper for the four recorded Slurm roots. Recognize explicit
+control-field identities and probe/journal paths, never prompt keywords. Plans
+are not proof of execution. Archives are listed, not opened; content-addressed
+objects/caches, depth/file/time/size limits, missing roots and parse errors are
+explicit gaps. A zero-match discovery cannot certify unconsumed budgets. Output
+is a new private inventory plus aggregate sanitized summary; no existing evidence,
+markers, wallets or approval fields change. Drive and any additional roots remain
+outside this first scope. No new review gate or methodological change is introduced.

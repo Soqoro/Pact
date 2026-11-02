@@ -2809,3 +2809,16 @@ Four synthetic tests passed: monotone union/input preservation, malformed identi
 rejection, audit/config tampering, draft/privacy/checksum/collision boundaries.
 No raw GPQA content was inspected locally; no cluster job, download or model work
 was executed. Real reconciliation output remains pending the user's job.
+
+### 2026-11-02 — history discovery prepared; consumption remains unresolved
+
+User-returned job1113032 completed the exposure draft with960 additional Stage I
+allocations in each exclusion field. Historical GPQA partitions added no new IDs;
+no model calls or evidence changes. Draft digest:
+fb31284ac87bc76cc55153b98fb78715413bb54865f9a601b07c9dae3c04722f.
+The user cannot attest whether Stage II ran. Prepared bounded CPU history discovery
+for known Slurm roots; no remote job submitted by Codex. Four invented-data tests
+passed for control-field recognition, plan/attempt distinction, private-output
+boundaries, read-only preservation, limits/missing evidence, and symlink handling.
+Shell syntax and diff checks passed. Drive/archive contents and actual history
+remain unaudited by this new tool until user-returned evidence is reviewed.

@@ -254,3 +254,49 @@ additions and remaining review questions. It deliberately cannot be passed as an
 approved `exposure` or `history` input. Further coverage/overlap review must resolve
 actual evidence gaps; unknown historical consumption remains unknown. No next
 source audit or GPU job is chained automatically.
+
+## Unknown Stage II history: read-only discovery
+
+`tools/stage2_history_inventory.py` uses only Python's standard library. It reads
+bounded JSON metadata under explicitly supplied roots, hashes candidate metadata,
+and emits PRIVATE paths/receipts separately from a sanitized count summary.
+Plans alone are not execution proof. It does not unpack archives or scan object
+payloads; skipped directories, missing roots, parse failures and limits are gaps.
+There is no assertion that absent matches mean zero prior work.
+
+After local review/commit/push, run on Jupyter:
+
+```bash
+cd "$HOME/Pact"
+git pull --ff-only
+export PACT_CHECKOUT="$HOME/Pact"
+export PACT_COMMIT="$(git rev-parse HEAD)"
+cd "$HOME/pact-aai-preflight"
+JOB_ID=$(sbatch --parsable "$PACT_CHECKOUT/tools/aai_stage2_history_inventory.sbatch")
+JOB_ID=${JOB_ID%%;*}
+echo "History inventory job: $JOB_ID"
+squeue -j "$JOB_ID"
+```
+
+After completion:
+
+```bash
+cat "pact-stage2-history-${JOB_ID}.out"
+cat "pact-stage2-history-${JOB_ID}.err"
+sacct -j "$JOB_ID" --format=JobID,State,ExitCode,Elapsed
+```
+
+New output: `/dataset/$USER/PACT/stage2-history-discovery-v1`. Return only stdout
+or `summary.sanitized.json`. Keep `inventory.private.json` on cluster. Existing
+output is never overwritten. The four roots are the recorded `/dataset/$USER/PACT`,
+`$HOME/pact-aai-transfer`, `$HOME/pact-aai-downloads`, and
+`/local/pact-suaq0001-1106891-d2PoqB`. Missing scratch is a gap, not no execution.
+The scan caps at200,000 files,22directory levels,16MiB per JSON and20minutes.
+No GPU, Apptainer, installs, network, scheduler requeue or subsequent stage.
+
+Drive remains a separate scope. The same portable helper can be uploaded to a
+CPU Colab session and explicitly invoked after mounting Drive with
+`--root /content/drive/MyDrive/PACT --output /content/stage2-drive-history-v1`.
+This is discovery only; retain the private report on user-controlled storage and
+return the sanitized summary. Do not remount/recreate old scientific runs or
+resume inference to inspect history.
