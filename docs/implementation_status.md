@@ -2892,3 +2892,34 @@ Conditional totals remain 23,728 generations / 12,148,736 reserved tokens,
 3,072 updates / 24,576 supervised forwards / 2,640 diagnostic forwards.
 No wallet, model forward, tensor verification, acquisition, cluster execution,
 commit or push occurred. See [readiness report](stage2_documented_child_readiness.md).
+
+### Returned real CPU source audit (AAI job 1114923)
+
+The user reports `fixture=false`, no screening blockers, 249/5,995 screened unique
+GPQA Main/LogiQA groups, proposed 64+64 cohort, exact unchanged training dependency
+and matching compiled conditional budgets. This advances remote source feasibility
+under the approved development standard; it does not establish freshness,
+semantic decontamination, current checkpoint verification or execution readiness.
+Evidence provenance is returned stdout/Slurm accounting; SANITIZED bundle review
+is pending. See the updated documented-child readiness report for exact digests.
+
+### SANITIZED evidence import completed
+
+Locally verified the uploaded job 1114925 archive (SHA256 `92b02b69…78a99d`),
+member inventory/checksum, returned candidate/graph identities and exact local
+budget equality. No code changes or model tests were needed for this evidence
+import. Private source/cohort payloads and current tensors remain on AAI and were
+not locally inspected. Concrete cohort acceptance and execution prerequisites
+remain outstanding; see the readiness report's final section.
+
+### Exact cohort seal prepared
+
+Implemented an external CPU-only freeze tool and Slurm wrapper, preserving the
+reviewed audit package's bound code bytes. Exact PRIVATE export, candidate, graph,
+training and S0 metadata are checked before immutable sealing; unknown historical
+spending and execution-disabled flags survive. No real seal was made locally:
+PRIVATE inputs remain on AAI. Regression tests use invented data only.
+
+Freeze validation: `PYTHONPATH=src python -m unittest discover -s tests -p
+ test_documented_freeze.py -v` — four tests passed; Slurm wrapper `bash -n` and
+`git diff --check` passed. No GPU/remote execution, commits or pushes performed.

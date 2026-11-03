@@ -2132,3 +2132,14 @@ when checkpoint/lock metadata match. No function creates an execution grant.
 A later execution integration/allowance remains separate from the CPU audit.
 See [implementation/readiness report](stage2_documented_child_readiness.md) for
 implemented stages, exact commands, real evidence gaps and limitations.
+
+### Exact documented cohort freeze, separate from spending
+
+The user's instruction “Proceed toward freezing the exact proposed cohort” is
+implemented as a CPU-only seal of candidate `66f13a4f…75e22`, graph
+`ddff2607…bea9a0`, and PRIVATE export `1bc27e0f…adc88d`. No new candidate selection
+or semantic/freshness certification occurs. The freeze tool lives outside
+`documented_child/` so its addition does not change the code hashes bound by the
+reviewed MethodSpec. Original audit files remain immutable; a separate verified
+copy and freeze receipt record the later instruction. No execution grant, wallet,
+policy-training lock, runtime or tensor verification is inferred from the seal.

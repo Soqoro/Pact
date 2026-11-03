@@ -3054,3 +3054,31 @@ not in the local audit inputs. Historical spending/remaining budget remain unkno
 Synthetic CPU graph tests are not scientific results. No inference, training,
 active wallet, Slurm submission, automatically accepted cohort or Stage III.
 Details and next CPU review procedure: [readiness](stage2_documented_child_readiness.md).
+
+### Returned job 1114923 — real documented-exclusion CPU candidate
+
+User-returned SANITIZED stdout/Slurm accounting reports successful CPU audit
+(COMPLETED 0:0, 37s), no screening blockers, 249 GPQA Main and 5,995 LogiQA
+screened unique groups. Proposed cohort is 64+64, candidate digest
+`66f13a4fae506c2ec944a0833fd6dab9f898375caa46bcb60d625ab131375e22`,
+graph digest `ddff260749cc7b9736265a258295f97e6d7c7fea36c95a6587e3bbcd8cbea9a0`.
+Compiled conditional counts match 8,112/15,616 generations. No model work,
+cohort freeze, wallet activation or execution authorization reported. Historical
+spending remains unknown. Export not yet imported/independently verified locally.
+
+### Local verification of job 1114925 SANITIZED export
+
+Verified uploaded archive SHA256
+`92b02b69acbc02cc002fcef2b2572291f88e98316287f8469971f367c078a99d`,
+three-member inventory and summary checksum. Candidate/graph/training digests
+match job 1114923; compiled budgets match the local contract. This is local
+verification of sanitized aggregate evidence only, not private candidate/source
+or tensor re-auditing. No cohort freeze, execution approval or wallet activation.
+
+### Exact cohort freezing prepared (no scientific execution)
+
+Following the user's instruction to proceed toward freezing, implemented a
+separate hash-bound CPU seal for the reviewed PRIVATE archive/candidate/graph.
+Four invented-data CPU tests passed. Original source-audit package and artifacts
+remain unchanged. Real AAI seal completion is pending; no physical-spending
+allowance, wallet, model call, optimizer update or Stage III authorization exists.

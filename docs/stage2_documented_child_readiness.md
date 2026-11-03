@@ -206,3 +206,80 @@ SANITIZED metadata audit bundle SHA256:
 
 These are local blocked-audit bundles, not new AAI source-audit evidence or
 experimental results. No source raw text was added to tracked outputs.
+
+## Returned AAI CPU audit — job 1114923
+
+User returned the SANITIZED stdout and Slurm accounting: `COMPLETED`, exit `0:0`,
+elapsed 37 seconds. This is returned remote evidence, not a locally inspected
+PRIVATE source audit or independently verified export. It supersedes the *remote*
+source-availability uncertainty; the earlier local blocked result is preserved.
+
+The real (`fixture=false`) audit reports no screening blockers, 249 screened unique
+GPQA Main groups and 5,995 screened unique original English LogiQA groups. It
+proposes 64 groups from each source under the documented-exclusion development
+standard, with no certification of project freshness or semantic decontamination.
+
+- Candidate digest: `66f13a4fae506c2ec944a0833fd6dab9f898375caa46bcb60d625ab131375e22`.
+- Graph digest: `ddff260749cc7b9736265a258295f97e6d7c7fea36c95a6587e3bbcd8cbea9a0`.
+- Training dependency digest remains `d01160bb00a9da7292a305331275139d026d4c21dc5cc274609ab272afbfaf49`.
+- Compiled graph: 8,112 assay + 15,616 policy generations; 3,072 updates,
+  24,576 supervised forwards and 2,640 diagnostic forwards; 12,148,736 reserved
+  output tokens. These are conditional limits, not expenditure or an active wallet.
+- `cohort_frozen=false`, `execution_authorized=false`, `wallet_active=false`;
+  historical spending/remaining balance unknown; model calls/training forwards zero.
+
+Next: validate and export this exact existing CPU audit via its `export` stage,
+then return only the SANITIZED ZIP and its SHA256. Do not rerun acquisition,
+change the cohort, or start a model stage. Review of the exported evidence and
+separate cohort/execution decisions remain outstanding. This task did not submit
+a cluster job or commit/push changes.
+
+## Locally verified SANITIZED export — AAI job 1114925
+
+The uploaded 1,478-byte SANITIZED archive was verified locally against SHA256
+`92b02b69acbc02cc002fcef2b2572291f88e98316287f8469971f367c078a99d`.
+Its exact three-member inventory, internal summary checksum, child/version/kind,
+candidate and graph digests, and conditional budgets match the returned audit and
+local budget contract. The summary contains no raw task text, task IDs, labels,
+prompts or tokens. Verification copies and a local receipt are preserved under
+ignored `results_import/stage2-documented-child-aai-1114925-sanitized/`.
+
+This verifies the exported aggregate evidence, not the private source bytes,
+individual candidate membership or checkpoint tensors on AAI. The reported
+249/5,995 screened groups support the proposed 64+64 development cohort under the
+accepted standard. The candidate remains unfrozen and unapproved for execution.
+All residual limitations and unknown historical spending remain unchanged.
+
+The CPU export/review handoff is now complete. The next decision is explicit
+acceptance of the concrete candidate and graph above for freezing, separately
+from any physical-spending approval. Current checkpoint/runtime verification and
+reviewed execution integration remain required before real assay work. No new
+experiment, wallet or GPU work was initiated by importing this archive.
+
+## Exact cohort freeze handoff
+
+The user instructed: “Proceed toward freezing the exact proposed cohort.”
+`pact.revival.documented_freeze` implements that CPU-only action with hard-bound
+candidate, graph, training and PRIVATE archive hashes listed above. It validates
+the original audit with its unchanged implementation, matches every PRIVATE ZIP
+member to the live audit, checks the training-only interface/S0 metadata, and
+writes a new seal through verified staging. A matching existing seal is verified
+idempotently; incomplete, changed or symlink destinations stop without overwrite.
+The tool does not reselect data or alter the original `cohort_frozen=false` report.
+
+`tools/aai_documented_cohort_freeze.sbatch` requires the existing pinned environment,
+`PACT_CHECKOUT`, `PACT_COMMIT`, `PACT_CONFIG`, and new `PACT_FREEZE_OUTPUT`. It requests
+CPU only. The exact Python entry point inside that environment is:
+
+```bash
+python -B -u -m pact.revival.documented_freeze \
+  --config "$PACT_CONFIG" --freeze-output "$PACT_FREEZE_OUTPUT"
+```
+
+Recommended new destination:
+`/dataset/$USER/PACT/stage2-documented-cohort-frozen-v1`.
+Artifacts: immutable `evidence/` copies, `sealed/prospective.private.json`,
+`sealed/graph.private.json`, `training.private.json`, `freeze.sanitized.json`,
+`checksums.json`, and `COMPLETE`. Return stdout and the sanitized freeze receipt
+only. Keep all other evidence on AAI. Freezing is not yet reported as remotely
+completed until that evidence returns. Physical spending remains unauthorized.
