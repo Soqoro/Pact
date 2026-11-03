@@ -2822,3 +2822,38 @@ passed for control-field recognition, plan/attempt distinction, private-output
 boundaries, read-only preservation, limits/missing evidence, and symlink handling.
 Shell syntax and diff checks passed. Drive/archive contents and actual history
 remain unaudited by this new tool until user-returned evidence is reviewed.
+
+### 2026-11-02 — scoped Stage II history report
+
+Compiled user-returned Slurm job1114278, the partial Drive scan, latest revival
+snapshot inventories, and the exact retained original step-28 archive inspection.
+The archive contains2,438 Stage I intents and no Stage II intents/probe artifacts;
+no matching Stage II evidence was found in the inspected remote metadata. Later
+original history remains missing, not zero spending. Source coverage/overlap,
+64+64 eligibility, remaining budgets and execution remain unresolved. No remote
+system was accessed locally. Documentation only; no new model or CPU-test result
+is claimed. See `stage2_scoped_history_review_2026-11-02.md` for scope, hashes,
+limitations and the separation of CPU source work from execution decisions.
+
+### 2026-11-02 — reviewed-v2 exposure/accounting implementation
+
+Implemented `revival.exposure_accounting` and the existing-site CPU sbatch wrapper.
+The module reads a finite named metadata allowlist, verifies source/S0 identities,
+keeps remote aggregates explicitly reported, records mechanical bindings separately
+from acceptance, preserves monotone exclusions, and emits a private scope queue,
+sanitized readiness summary and INACTIVE finite future-work proposal. No active
+history validator, scientific compiler, source selector, checkpoint or wallet was
+changed. Completed scoped assessment does not establish zero spending. Real cohort
+absent/frozen=false; raw official source bytes remain remotely staged, not inspected
+locally in this task. Proposal ceilings are conditional, signatures unset.
+
+Actual tests:17 new decision-packet tests passed;21 GPQA amendment regression tests
+passed;20 prior source-amendment tests passed. No failures/skips in these58 tests.
+Shell syntax and diff whitespace checks passed. Tests cover fixture graph round
+trip, no model/network/subprocess work, physical/logical accounting, exact reuse
+without late refunds, idempotent immutable packets, privacy and inactive gates.
+No full-suite or GPU pass claimed. Exact named local parent/source metadata was
+also read by the real packet command; source grouping/maps were never printed.
+Outputs and decisions: `stage2_exposure_accounting_decision_v2.md`; commands:
+`stage2_gpqa_logiqa_runbook.md`. No acquisition, remote action, approval activation,
+commit/push, cleanup or model work occurred.

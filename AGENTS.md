@@ -174,3 +174,11 @@ and prior unknown spending. Exactly64+64 requires real bytes/current exclusions;
 all Diamond protections survive in Main. No automatic acquisition or GPU dispatch.
 GPQA PRIVATE text/labels/maps stay outside Git and hosted assistant context;
 return SANITIZED receipts only. Slurm IDs never seed work or reset wallets.
+
+[Scoped exposure/accounting decisions](docs/PACT_Stage2_Exposure_Accounting_Reviewed_v2.md)
+produce bounded CPU decision packets only. Separate source facts, scope acceptance,
+training-use probe adaptation, physical spending and execution authority. Do not
+infer completions from intents, zero spending from scoped absence, or eligibility
+from accounting approval. Keep the active zero-history gate unchanged; uncertainty
+alternatives and finite future allowances remain INACTIVE with signatures unset.
+No repeated broad scans, negative user attestation, automatic freeze or wallet reset.

@@ -162,3 +162,13 @@ PRIVATE artifacts must remain outside Git in restricted cluster storage; return
 only SANITIZED ZIP plus local audit receipt. Exact implemented commands and
 input schemas are in [the runbook](stage2_gpqa_logiqa_runbook.md). Scientific and
 privacy contracts are in [the methodology](stage2_gpqa_logiqa_methodology.md).
+
+## 2026-11-02 evidence update
+
+The initial missing-source state above is historical. User-returned acquisition
+and CPU audits now establish staged official bytes, but not a certified cohort.
+The [scoped history review](stage2_scoped_history_review_2026-11-02.md) consolidates
+provisional source counts, exposure additions, remote inventory evidence and the
+original retained archive. No Stage II activity was found within inspected scope;
+missing later original history prevents a zero-spending conclusion. Candidate,
+freeze and execution remain false. No additional allowance has been approved.

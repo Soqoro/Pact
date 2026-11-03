@@ -2062,3 +2062,35 @@ explicit gaps. A zero-match discovery cannot certify unconsumed budgets. Output
 is a new private inventory plus aggregate sanitized summary; no existing evidence,
 markers, wallets or approval fields change. Drive and any additional roots remain
 outside this first scope. No new review gate or methodological change is introduced.
+
+### 2026-11-02 — no negative execution attestation from scoped absence
+
+The user's uncertainty and the negative scoped history discoveries do not satisfy
+`reviewed_history`. Keep that gate unchanged. The verified original retained
+step-28 archive authenticates only that boundary; no restore fallback or later
+spending closure is implied. Do not automatically classify all missing Stage I
+work as Stage II consumption. Stop repeating the same broad scans; independent
+CPU source-eligibility work may continue. Any policy for irrecoverable relevant
+history requires a separate concrete accounting amendment and user decision.
+The scoped history report is documentation, not a machine-accepted approval.
+
+### 2026-11-02 — reviewed-v2 inactive exposure/accounting decision packets
+
+Implemented only the missing bounded decision/report layer in
+`revival.exposure_accounting`, outside `gpqa_source` so the scientific compiler
+and its source-hash contract are not modified. It verifies named local source/S0
+metadata, distinguishes reported remote evidence and conditional enforcement,
+classifies groups with exclusion precedence, and proposes mechanical bindings
+without filling acceptance fields. Allocation membership is conservative exclusion,
+not a gradient-use receipt. Training-use probe adaptation, prospective exposure,
+spending and permissions are separate dimensions.
+
+The active certified-zero `reviewed_history` validator remains unchanged. New
+packets finish the finite scope as assessment-complete with residual uncertainty;
+future physical allowances are conditional INACTIVE proposals with null signature,
+acceptance, effective boundary and remaining balances. Physical-event bookkeeping
+uses origin/physical ID, not logical request or optimizer step; exact future reuse
+cannot refund completed executions. No GPU bridge, acceptance migration or wallet
+is introduced. The private scope queue requires only concrete coverage/overlap
+judgments, not blanket semantic review. Same inputs reuse packets; changes require
+new versions. Read the concrete decision report before any forward-looking choice.

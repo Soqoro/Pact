@@ -300,3 +300,77 @@ CPU Colab session and explicitly invoked after mounting Drive with
 This is discovery only; retain the private report on user-controlled storage and
 return the sanitized summary. Do not remount/recreate old scientific runs or
 resume inference to inspect history.
+
+## Reviewed-v2 exposure/accounting decision packets (no scans or activation)
+
+Governing brief: `PACT_Stage2_Exposure_Accounting_Reviewed_v2.md`. Read the
+[decision report](stage2_exposure_accounting_decision_v2.md) before any further
+source decision. This command reuses a named existing audit. It does not re-audit
+source rows, fetch files, perform a recursive inventory, select/freeze a new cohort
+or turn a draft into an accepted exposure/history receipt.
+
+Local metadata-only packet (run from the repo; no source bytes required):
+
+```bash
+python - <<'PY'
+import json
+from pathlib import Path
+repo = Path.cwd()
+cfg = {
+    'audit_root': str(repo/'results_import/stage2-gpqa-logiqa-source-review-v2-final'),
+    'parent_dir': str(repo/'results_import/stage1-final-audit-1793033718300732417'),
+    'exposure': str(repo/'results_import/stage1-final-audit-1793033718300732417/exposure.json'),
+    'output': str(repo/'results_import/stage2-exposure-accounting-decision-v2-final'),
+}
+p = Path('/tmp/pact-stage2-decision-local.json')
+if p.exists():
+    assert json.loads(p.read_text()) == cfg, 'Existing different config; preserve it.'
+else:
+    p.write_text(json.dumps(cfg, indent=2)+'\n')
+PY
+PYTHONPATH=src python -m pact.revival.exposure_accounting \
+  --config /tmp/pact-stage2-decision-local.json
+```
+
+Actual artifact hashes determine repeat behavior: same evidence returns
+`identical_packet_reused`; changed ledger/code/evidence refuses overwrite and
+requires a new versioned output. Do not edit an old packet to fit new evidence.
+
+Optional targeted cluster metadata packet, after the user's local review and
+commit/push. This is a **prepared command**, not a submitted job. It reads the
+already completed source audit and exact exposure draft1113032 to provide the
+otherwise remote-only group-status metadata. No broad scan or source-audit repeat:
+
+```bash
+cd "$HOME/Pact"
+git pull --ff-only
+export PACT_CHECKOUT="$HOME/Pact"
+export PACT_COMMIT="$(git rev-parse HEAD)"
+export PACT_CONFIG="$HOME/pact-aai-preflight/stage2-gpqa-audit-v1.json"
+export PACT_OUTPUT="/dataset/$USER/PACT/stage2-exposure-accounting-decision-v2"
+cd "$HOME/pact-aai-preflight"
+JOB_ID=$(sbatch --parsable "$PACT_CHECKOUT/tools/aai_stage2_decision_packet.sbatch")
+JOB_ID=${JOB_ID%%;*}
+echo "CPU decision packet job: $JOB_ID"
+```
+
+When that explicit CPU job completes:
+
+```bash
+cat "pact-decision-packet-${JOB_ID}.out"
+cat "pact-decision-packet-${JOB_ID}.err"
+sacct -j "$JOB_ID" --format=JobID,State,ExitCode,Elapsed
+```
+
+The wrapper reuses NA100q/node01, the existing verified Apptainer container and
+runtime, with no GPU allocation and offline flags. It reads the known private
+config, its audit manifest/source/lineage, the parent's seven authoritative JSONs,
+prior exposure and `/dataset/$USER/PACT/stage2-exposure-reconciliation-v1/reconciliation.private.json`.
+The draft must match canonical digest
+`fb31284ac87bc76cc55153b98fb78715413bb54865f9a601b07c9dae3c04722f`.
+Missing/mismatched evidence stops; no replacement, download or arbitrary new roots.
+
+Return only `summary.sanitized.json`, `accounting-proposal.sanitized.json` and
+`cpu-receipt.json`. Keep `exposure-history.private.json` and any source/ID-bearing
+inputs on the cluster. `checksums.json` binds output files. All packets remain
+inactive; their presence cannot satisfy the active certified-zero history gate.

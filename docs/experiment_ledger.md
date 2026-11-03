@@ -3006,3 +3006,26 @@ All Diamond protections remain. These are provisional capacity observations,
 not permission, eligibility or scientific performance. Current project coverage,
 semantic overlap and external Stage II consumption remain unresolved. A separate
 CPU exclusion-union draft is prepared; it cannot approve source use or spending.
+
+### 2026-11-02 — scoped history reconciliation, no scientific execution
+
+User-returned Slurm job1114278 inspected30,707 JSON records under four recorded
+roots with no Stage II candidates. The Drive broad scan timed out after one JSON;
+its absence finding is not probative. Targeted replacement/continuation latest
+snapshot inventories have no probe artifacts. Exact original retained archive
+8371bafc… contains2,438 stage-I generation intents, zero stage-II intents, and no
+probe-training/scoring artifacts. Later original history remains unresolved.
+No new generation, training, source selection or budget authorization. See the
+[scoped history review](stage2_scoped_history_review_2026-11-02.md).
+
+### 2026-11-02 — inactive exposure/accounting packet, reviewed v2
+
+Implemented and locally evaluated a finite metadata decision packet. Exact executed
+source/S0 bindings verified against named local authoritative records; no GPQA raw
+bytes inspected locally. Remote249 GPQA unresolved groups /6,041 LogiQA unknown
+items remain attributed to returned evidence, not eligibility. History assessment
+is complete within the declared scope with residual uncertainty. Proposed future
+ceilings23,728 generations /12,148,736 tokens /3,072 updates /24,576 supervised
+forwards /2,640 scoring forwards remain conditional and inactive, not balances.
+No signature, approval, candidate freeze, active receipt or budget was created.
+No model work, source acquisition, remote command, restore or cleanup occurred.

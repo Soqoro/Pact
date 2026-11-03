@@ -1,0 +1,95 @@
+{
+  "accepted": null,
+  "active_schema_unchanged": "allocation_v3.evidence.reviewed_history still requires certified zero Stage II history",
+  "current_authorized_real_work": {
+    "forwards": 0,
+    "generation": 0,
+    "updates": 0
+  },
+  "effective_boundary": null,
+  "execution_authorized": false,
+  "finite_cumulative_past_plus_future_bound": null,
+  "future_request": {
+    "arithmetic": {
+      "actual_branch_task_views": 816,
+      "actual_probe_groups": 64,
+      "assay_baseline_and_attack_calls": 768,
+      "assay_branch_calls": 7344,
+      "assay_calls": 8112,
+      "diagnostic_forwards": 2640,
+      "new_expenditure_authorized": false,
+      "policy_calls_conditional": 15616,
+      "policy_team_identities_upper_bound": 11,
+      "prospective_slots_required_not_eligible_count": 128,
+      "reserved_tokens_conditional": 12148736,
+      "smokes_included": {
+        "assay": 24,
+        "policy": 244
+      },
+      "supervised_forwards": 24576,
+      "total_calls_conditional": 23728,
+      "updates": 3072
+    },
+    "basis": "conditional_schema_arithmetic",
+    "dependency_counts": null,
+    "dispatchable": false,
+    "graph_digest": null,
+    "late_bound_payloads_and_checkpoint_identities_required": true,
+    "proposed_future_physical_ceiling": {
+      "assay": {
+        "generation": 8112,
+        "scores": 2640,
+        "training_forwards": 1536,
+        "updates": 192
+      },
+      "generation": 23728,
+      "policy": {
+        "generation": 15616,
+        "scores": 0,
+        "training_forwards": 23040,
+        "updates": 2880
+      },
+      "reserved_tokens": 12148736,
+      "scores": 2640,
+      "synthetic": 0,
+      "synthetic_input_cap": 128,
+      "training_forwards": 24576,
+      "updates": 3072
+    },
+    "real_request_ids": null,
+    "runnable_balance": null,
+    "validated_exact_reuse_count": 0
+  },
+  "known_evidence": {
+    "known_stage_II_physical_total": null,
+    "reported_original_stage_I_intents": 2438,
+    "stage_I_completions_not_inferred_from_intents": true
+  },
+  "proposed_acceptance_text": "Accept only the stated scoped history assessment with residual uncertainty, not zero spending. Consider a separate finite future allowance conditional on fresh evaluation eligibility, probe adaptation/repeat disposition, checkpoint/runtime checks and runner integration.",
+  "reuse_repeat_rules": [
+    "Exports of one physical record count once; independent executions count separately even with identical logical IDs.",
+    "Only full contract/payload/lineage validation plus a separate reuse decision can avoid a future dispatch.",
+    "Unknown dispatch or optimizer attempt is not retryable; possible repeat requires explicit disposition and a newly reserved physical attempt.",
+    "Late duplicate discovery never refunds executed work, rewrites history or selects a favorable result.",
+    "No old unsafe optimizer/checkpoint state becomes resumable."
+  ],
+  "scientific_limitations": [
+    "possible prior development adaptation not independent first exposure",
+    "unknown cumulative cost prevents total-efficiency claim",
+    "accounting cannot certify prospective freshness"
+  ],
+  "scope_limit": "same S0, fitting/probe groups, five policies, seeds and evaluation contract; no new cohort selection rule",
+  "separate_decisions": [
+    "exposure scope and material overlap",
+    "training-probe adaptation/reuse claims",
+    "finite future accounting allowance with approval boundary",
+    "candidate review/freeze",
+    "runtime and actual execution"
+  ],
+  "signature": null,
+  "status": "INACTIVE_PROPOSAL",
+  "unknown_interval": "after retained original step28 boundary through later missing/incomplete snapshots",
+  "verified_remaining_budget": null,
+  "version": "stage2_exposure_accounting_proposal_v2",
+  "why_separate_decision": "Existing remaining ownership cannot be reconstructed; full graph is requested conditionally as future work, not granted or inferred unspent."
+}
