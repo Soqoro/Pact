@@ -3029,3 +3029,28 @@ ceilings23,728 generations /12,148,736 tokens /3,072 updates /24,576 supervised
 forwards /2,640 scoring forwards remain conditional and inactive, not balances.
 No signature, approval, candidate freeze, active receipt or budget was created.
 No model work, source acquisition, remote command, restore or cleanup occurred.
+
+### 2026-11-03 — inactive development-standard amendment, no experiment
+
+Prepared `pact-stage2-documented-exclusions-amendment-001` for explicit review.
+Proposes documented-exclusion-screened development with residual semantic and
+missing-history uncertainty disclosed; keeps known exclusions and concrete source
+conflicts. Requests conditional finite future physical work rather than claiming
+unknown prior spending is zero. Existing 64+64 cohort remains absent/unfrozen;
+no new allowance, receipt, model call, forward or optimizer update was activated.
+Proposal digest ddda40a0802b5d3e8b72640e22e72722c710dc32a7fcf1968c73f1c15f07da09;
+see `stage2_documented_exclusions_amendment_v1.md` for unchanged method, costs,
+49 passing CPU tests and deferred real runner integration. Historical packet and
+ledger hashes remain historical; this entry does not overwrite their bindings.
+
+### 2026-11-03 — pact-stage2-documented-exclusions-amendment-001 (CPU implementation)
+
+User accepted documented-exclusion-screened development and conditional ceilings
+for implementation/CPU validation only. Separate child audit/graph/export path
+implemented; no legacy certification flags changed. Exact executed source/S0
+metadata verified locally. Real local cohort remains absent: official source
+bytes, historical partition payloads and the returned exclusion union are on AAI,
+not in the local audit inputs. Historical spending/remaining budget remain unknown.
+Synthetic CPU graph tests are not scientific results. No inference, training,
+active wallet, Slurm submission, automatically accepted cohort or Stage III.
+Details and next CPU review procedure: [readiness](stage2_documented_child_readiness.md).

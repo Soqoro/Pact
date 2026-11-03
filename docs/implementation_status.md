@@ -2857,3 +2857,38 @@ also read by the real packet command; source grouping/maps were never printed.
 Outputs and decisions: `stage2_exposure_accounting_decision_v2.md`; commands:
 `stage2_gpqa_logiqa_runbook.md`. No acquisition, remote action, approval activation,
 commit/push, cleanup or model work occurred.
+
+### 2026-11-03 — development-standard amendment: implemented CPU proposal only
+
+Implemented `pact.revival.development_amendment`: exact sanitized receipt and local
+source/S0 bindings, inactive deterministic proposal, unchanged contract/budget
+compilation, proposed screening decision table with exclusion precedence and
+concrete-unknown stops, privacy-safe errors and collision rejection. No real-source
+selector or GPU dispatcher was connected. Approval/signature/effective boundary
+are null; no candidate or wallet exists. Exact runbook and remaining runner work:
+`stage2_documented_exclusions_amendment_v1.md`.
+
+Executed 11 new proposal tests +21 GPQA regressions +17 exposure/accounting tests:
+49 passed, zero failures/skips. Real metadata proposal built and reproduced exactly;
+synthetic actual dependency graph reconciled 23,728 calls /12,148,736 reserved
+tokens. Canonical proposal digest ddda40a0802b5d3e8b72640e22e72722c710dc32a7fcf1968c73f1c15f07da09.
+Raw sources/cohort/GPU behavior unverified in this task. No network, cluster, model,
+training, commit or push operation. Not a full-suite or scientific success claim.
+
+### 2026-11-03 — Documented-exclusion child CPU implementation
+
+Implemented separate source screening, component propagation, deterministic
+cohort proposal, child graph identities, policy compiler bridge, CPU-only guards,
+immutable audit/recovery and PRIVATE/SANITIZED exports. Added offline CPU Slurm
+wrapper; no job submitted. Legacy validators and completed Stage I artifacts are
+unchanged. New tests cover exclusions, unknown cases, source-specific included
+smokes, exact budgets, training/evaluation isolation, S0 guard, interrupted state,
+policy missingness, sanitization and archive recovery.
+
+Real local metadata audit: `SOURCE_AUDIT_BLOCKED`. The exact training dependency
+hash matches `d01160bb…af49`; raw sources, returned exclusion draft and partition
+manifests are not available locally. No real candidate/graph or freshness claim.
+Conditional totals remain 23,728 generations / 12,148,736 reserved tokens,
+3,072 updates / 24,576 supervised forwards / 2,640 diagnostic forwards.
+No wallet, model forward, tensor verification, acquisition, cluster execution,
+commit or push occurred. See [readiness report](stage2_documented_child_readiness.md).

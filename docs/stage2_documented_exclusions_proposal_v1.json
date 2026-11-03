@@ -1,0 +1,328 @@
+{
+  "approval": {
+    "accepted": null,
+    "effective_boundary": null,
+    "signature": null
+  },
+  "candidate_exists": false,
+  "candidate_frozen": false,
+  "changes": {
+    "accounting": "new_finite_future_physical_allowance_requested; not_old_remaining_balance",
+    "evaluation_claim": "documented-exclusion-screened development; residual contamination unknown",
+    "missing_interval": "conditional_original_frozen_source_scope; later_enforcement_unknown",
+    "probe_interpretation": "training_use; possible_prior_adaptation_disclosed",
+    "semantic_review": "absence_of_blanket_review_disclosed_not_certified"
+  },
+  "cumulative_past_plus_future_bound": null,
+  "current_authorized_work": {
+    "generation": 0,
+    "scores": 0,
+    "training_forwards": 0,
+    "updates": 0
+  },
+  "execution_enabled": false,
+  "fixture": false,
+  "future_work": {
+    "arithmetic": {
+      "actual_branch_task_views": 816,
+      "actual_probe_groups": 64,
+      "assay_baseline_and_attack_calls": 768,
+      "assay_branch_calls": 7344,
+      "assay_calls": 8112,
+      "diagnostic_forwards": 2640,
+      "new_expenditure_authorized": false,
+      "policy_calls_conditional": 15616,
+      "policy_team_identities_upper_bound": 11,
+      "prospective_slots_required_not_eligible_count": 128,
+      "reserved_tokens_conditional": 12148736,
+      "smokes_included": {
+        "assay": 24,
+        "policy": 244
+      },
+      "supervised_forwards": 24576,
+      "total_calls_conditional": 23728,
+      "updates": 3072
+    },
+    "basis": "conditional_schema_arithmetic",
+    "ceiling": {
+      "assay": {
+        "generation": 8112,
+        "scores": 2640,
+        "training_forwards": 1536,
+        "updates": 192
+      },
+      "generation": 23728,
+      "policy": {
+        "generation": 15616,
+        "scores": 0,
+        "training_forwards": 23040,
+        "updates": 2880
+      },
+      "reserved_tokens": 12148736,
+      "scores": 2640,
+      "synthetic": 0,
+      "synthetic_input_cap": 128,
+      "training_forwards": 24576,
+      "updates": 3072
+    },
+    "graph_hash": null,
+    "model_preflight_extra_forwards": 0,
+    "real_request_ids": null
+  },
+  "historical_spending": null,
+  "inherited_contract": {
+    "allocation_runner_contract_hash": "05f4418787710b2a673638d52684b6190c4545f8fa33a419be18956f2f15ef85",
+    "amendment_code_hashes": {
+      "__init__.py": "62f826e0b41aeeeebf51ca96e45bcb611d15c1b74249b40db25c8ee036ca7e10",
+      "__main__.py": "4fbd75029863499d51288d6313d21d11a6af9265a5ab4f20cfd5d59922f42da5",
+      "context.py": "1b7dd9a76b32a4cedef871c901d15499f635721d0eb16009c6c468b864757b7d",
+      "contracts.py": "df308727b00232542a4217df422e11f1786a1c25da3140f03367fc1440dba905",
+      "fixtures.py": "328b69dd1bb51e3e3f64e685e019f9bf30ba2c512e33270ba1864522f456eb7e",
+      "graph.py": "1ed7d2d1546add431f3fea720fbd02a1bf246b5f1ec83506dc0d9b67e0f189df",
+      "plan.py": "3ce390c1d876d6ee3b0c83575e72367d5573b1ba463ab907143bace52c7ce4bf",
+      "recovery.py": "e35398882bd4cfc3677072b42d78f61757a15b8f7663e2e1b7da1bb9398ccde0",
+      "results.py": "66a44959913806513af387013263b58ee7f5f90b37b10b11cae2a4e72eab9b0a",
+      "review.py": "46c8161a5a0cdebfb48143b6b40e887b5c76574bc45926f78b9dfcf8ebc4d102",
+      "sources.py": "8c7377b9716e1f64730f49d3e5c583e40d9062a83287c95a409b2f5d2dfeb1fd"
+    },
+    "analysis": {
+      "balance": 0.1,
+      "bootstrap_replicates": 10000,
+      "bootstrap_seed": 20261027,
+      "clean_tolerance": 0.02,
+      "condition_weights": [
+        0.5,
+        0.5
+      ],
+      "interval_levels": [
+        0.95,
+        0.975
+      ],
+      "loss_cap": 10.0,
+      "primary": [
+        "terminal_block-minus-uniform",
+        "terminal_block-minus-source_family"
+      ],
+      "tau": 0.2,
+      "unit": "source-stratified task groups; seeds and all views together"
+    },
+    "assay": "pact-update-allocation-gpqa-logiqa-v2-005",
+    "child": "pact-stage2-gpqa-logiqa-eval-amendment-v2-001",
+    "closed_book": true,
+    "conditional_attacks_not_population_robustness": true,
+    "continuation_seeds": [
+      113,
+      227
+    ],
+    "estimand": "post-Stage-I science transfer and within-source logical-reasoning development",
+    "evaluation_source_weights": {
+      "gpqa_main": 0.5,
+      "logiqa": 0.5
+    },
+    "max_output_tokens": 512,
+    "model_pretraining_exposure": "unknown",
+    "models": {
+      "L": {
+        "key": "L",
+        "repository": "meta-llama/Llama-3.1-8B-Instruct",
+        "revision": "0e9e39f249a16976918f6564b8830bc894c89659",
+        "template_policy": "native_system_user_v1",
+        "thinking": null
+      },
+      "M": {
+        "key": "M",
+        "repository": "mistralai/Mistral-7B-Instruct-v0.3",
+        "revision": "c170c708c41dac9275d15a8fff4eca08d52bab71",
+        "template_policy": "native_system_user_v1",
+        "thinking": null
+      },
+      "Q": {
+        "key": "Q",
+        "repository": "Qwen/Qwen2.5-7B-Instruct",
+        "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+        "template_policy": "native_system_user_v1",
+        "thinking": null
+      },
+      "R": {
+        "key": "R",
+        "repository": "Qwen/Qwen3-8B",
+        "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+        "template_policy": "native_system_user_v1",
+        "thinking": false
+      }
+    },
+    "namespace": "pact-stage2-gpqa-logiqa-v2",
+    "native_training_contract_hash": "4ab6e79925fae64a548a5218cb7c115122eb29c4ff86166ac9ff4104a35d1a31",
+    "paired_rollouts": {
+      "assay": 29,
+      "policy": 31
+    },
+    "policies": [
+      "terminal_block",
+      "uniform",
+      "source_family",
+      "private_bank",
+      "shuffled"
+    ],
+    "policy": "pact-allocation-policy-gpqa-logiqa-v2-004",
+    "prompt_contract_hash": "ad95ad5630608b7827985ae79ea73a3ebc30316e0ed20cba22148398988b7711",
+    "rollout_seed": 20261027,
+    "selection_seed": 20261016,
+    "total_context_cap": 8192,
+    "training": {
+      "batch": 8,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "clip": 1.0,
+      "eps": 1e-08,
+      "loss": "unit-weight mean private-answer token NLL",
+      "lr": 5e-05,
+      "warmup": 0,
+      "weight_decay": 0.0
+    },
+    "training_source_weights": {
+      "arc_challenge": 0.375,
+      "logiqa": 0.625
+    },
+    "version": "stage2-gpqa-logiqa-slurm-v2",
+    "wrong_target_seed": 20261027
+  },
+  "input_bindings": {
+    "decision_receipt_sha256": "a8d40a26492567ade50223ecea7ccdfaedd344847a0876cbd3a94599bcbf3583",
+    "decision_summary_sha256": "f71f912bc116f1936f8861d7a7661caa56d03a715a3bdbcf906c39d73942657e",
+    "executed_source_canonical": "85b414bb995aee54fe4b75c52e53df7261e9651b0d1598e2fbbc0774503c6c4b",
+    "implementation_sha256": "9302f6d734c092734cb4bae9b83eb1f0335e4698e36b39978136044cdadc0b0c",
+    "lineage_sha256": "fbfc4f85d34c3f563cb17b111848cfae174ce1c51d196b600fe976771d149242"
+  },
+  "old_remaining_balance": null,
+  "physical_rules": {
+    "accepted_historical_reuses": 0,
+    "fresh_assay_may_repeat_unobserved_historical_work": true,
+    "late_duplicate_refund": false,
+    "repeated_exports_not_new_executions": true,
+    "separate_executions_count_separately": true,
+    "unknown_attempt_automatic_retry": false,
+    "unsafe_optimizer_resume": false
+  },
+  "proposal_id": "pact-stage2-documented-exclusions-amendment-001",
+  "runner_integration": {
+    "implemented": false,
+    "required": [
+      "versioned_source_policy_without_forged_legacy_flags",
+      "real_candidate_and_graph_freeze",
+      "new_approval_boundary_bound_to_existing_physical_wallet",
+      "GPQA_policy_smoke_source_parameterization",
+      "exact_checkpoint_runtime_and_safe_resume",
+      "matched_source_reporting_and_private_exports"
+    ]
+  },
+  "screening": {
+    "disclosed_limitations": [
+      "exposure_scope_unverified",
+      "historical_spending_unknown",
+      "pretraining_exposure_unknown",
+      "semantic_review_not_performed"
+    ],
+    "hard_exclusions": [
+      "conflicting_answer_keys",
+      "cross_source_overlap",
+      "diamond_protected",
+      "duplicate_alias",
+      "duplicate_training_group",
+      "historical_or_protected_overlap",
+      "historical_partition",
+      "option_integrity",
+      "recorded_preview",
+      "schema_integrity",
+      "validation_overlap"
+    ],
+    "known_material_cases_action": "unresolved_until_resolved; no_silent_waiver",
+    "required_facts": [
+      "official_bytes_verified",
+      "source_mapping_verified",
+      "applicable_source_use_evidence",
+      "historical_partitions_verified",
+      "documented_exclusion_union_bound",
+      "lexical_component_checks_complete",
+      "preview_exclusions_accounted",
+      "candidate_specific_exposure_resolved",
+      "known_material_cases_resolved"
+    ],
+    "unknown_reason_action": "unresolved"
+  },
+  "status": "INACTIVE_PROPOSAL",
+  "training_dependency_hash": "d01160bb00a9da7292a305331275139d026d4c21dc5cc274609ab272afbfaf49",
+  "unchanged": {
+    "allocation_source_weights": {
+      "arc_challenge": 0.375,
+      "logiqa": 0.625
+    },
+    "analysis": {
+      "balance": 0.1,
+      "bootstrap_replicates": 10000,
+      "bootstrap_seed": 20261027,
+      "clean_tolerance": 0.02,
+      "condition_weights": [
+        0.5,
+        0.5
+      ],
+      "interval_levels": [
+        0.95,
+        0.975
+      ],
+      "loss_cap": 10.0,
+      "primary": [
+        "terminal_block-minus-uniform",
+        "terminal_block-minus-source_family"
+      ],
+      "tau": 0.2,
+      "unit": "source-stratified task groups; seeds and all views together"
+    },
+    "continuation_seeds": [
+      113,
+      227
+    ],
+    "evaluation_groups": {
+      "gpqa_main": 64,
+      "logiqa": 64
+    },
+    "evaluation_source_weights": {
+      "gpqa_main": 0.5,
+      "logiqa": 0.5
+    },
+    "fitting_blocks": {
+      "arc_challenge": 3,
+      "logiqa": 5
+    },
+    "policies": [
+      "terminal_block",
+      "uniform",
+      "source_family",
+      "private_bank",
+      "shuffled"
+    ],
+    "probes": {
+      "arc_challenge": 24,
+      "logiqa": 40
+    },
+    "selection_namespace": "pact-stage2-gpqa-logiqa-v2",
+    "selection_seed": 20261016,
+    "training": {
+      "batch": 8,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "clip": 1.0,
+      "eps": 1e-08,
+      "loss": "unit-weight mean private-answer token NLL",
+      "lr": 5e-05,
+      "warmup": 0,
+      "weight_decay": 0.0
+    }
+  },
+  "version": "stage2_documented_exclusions_proposal_v1",
+  "wallet_created": false
+}

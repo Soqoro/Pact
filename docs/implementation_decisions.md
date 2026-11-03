@@ -2094,3 +2094,41 @@ cannot refund completed executions. No GPU bridge, acceptance migration or walle
 is introduced. The private scope queue requires only concrete coverage/overlap
 judgments, not blanket semantic review. Same inputs reuse packets; changes require
 new versions. Read the concrete decision report before any forward-looking choice.
+
+### 2026-11-03 — proposed documented-exclusion development standard
+
+After the user's request to proceed with experiments, they authorized preparation
+of a concrete methodological amendment and CPU implementation for review. Added
+`development_amendment.py` as an inactive proposal compiler and testable proposed
+screening table. The proposed child would disclose unverified semantic contamination
+instead of manufacturing the legacy `no_unresolved_cases` receipt. Actual source
+integrity, source-use evidence, protections, lexical components, known material
+cases and candidate-specific exposure remain gates. Unknown historical spending
+is not zero: the conditional 23,728-generation allowance is requested future work,
+not an unspent old balance. No approval or wallet was activated.
+
+Training dependency/S0, 3/5 blocks, 24/40 probes, all seeds/policies/analysis and
+budgets remain bound to existing contracts. Inspected actual runner gaps: v3 guard
+ownership/history/ARC feasibility; ARC-only policy smoke; evaluation source weights;
+child plan/wallet integration and current checkpoint/runtime verification. These
+remain separate implementation after acceptance of the concrete proposal, not
+claimed complete. See `stage2_documented_exclusions_amendment_v1.md` and its bound
+JSON. Old policies and historical artifacts remain unchanged.
+
+### 2026-11-03 — Accepted documented-exclusion child, CPU scope only
+
+User approval for `pact-stage2-documented-exclusions-amendment-001` accepts the
+narrower development screening standard and conditional resource ceilings, not
+GPU work, a certified cohort, historical zero spending or wallet activation.
+Implemented a separate `pact.revival.documented_child` path; legacy exposure,
+history and Stage II validators are unchanged. The historical proposal is kept
+as written. Child-specific lexical grouping preserves evaluation splits and
+propagates exclusions/cases, rather than forging legacy review flags or treating
+GPQA as training data. Real source bytes and historical manifests must be supplied
+locally on the CPU worker; no downloads. Exact training/S0 digest is unchanged.
+
+The execution check always refuses physical work under this approval, including
+when checkpoint/lock metadata match. No function creates an execution grant.
+A later execution integration/allowance remains separate from the CPU audit.
+See [implementation/readiness report](stage2_documented_child_readiness.md) for
+implemented stages, exact commands, real evidence gaps and limitations.
