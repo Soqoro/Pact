@@ -2945,3 +2945,35 @@ Validation executed: five `test_documented_preflight.py` tests passed; wrapper
 unsafe paths, wrong arm/precision/checkpoint identity, evaluation-data exclusion,
 non-authorizing readiness metadata and package/GPU distinction. Real tensor reads
 remain remote prerequisites, not locally claimed tests.
+
+### 2026-11-05 — returned CPU checkpoint check passed
+
+AAI job 1115599 completed 0:0 in 17s. Returned real evidence reports current joint
+S0 Q/L/M CPU tensor identity/FP32 checks passed and recorded package versions
+matched. Returned file/adapter hashes match the locally imported Stage I registry.
+No tensors were read locally; receipt-file byte verification is pending. GPU,
+native-context/effective-loading checks and reviewed dispatch integration remain
+outstanding. Wallet and execution remain disabled; no methodological change.
+
+### 2026-11-05 — documented child native execution adapter (CPU review only)
+
+Implemented the separate `documented_execution` package and a single-stage,
+unsubmitted AAI wrapper. Preparation binds the exact cohort/graph/CPU receipt,
+parent identities and pinned checkout to a new inactive execution owner. Scientific
+stages reuse native training, exact rollback, scoring, accounting and persistence;
+policy evaluation uses GPQA/LogiQA graph smoke tasks and source-separated reporting.
+Real dispatch requires separate artifact-bound stage approval before model/wallet
+entry. No real approval, signature or active physical allowance was created.
+
+Executed validation: new adapter 14/14 passed; existing documented child/freeze/
+preflight 23/23 passed; GPQA-source amendment 21/21 passed; native v3 19 passed,
+2 optional neural tests skipped (local Torch/safetensors unavailable). The
+documented suite first ran 34 tests including the initial 11 adapter tests; the
+final expanded 14-test adapter suite was rerun successfully. `bash -n` and CLI
+help passed. Initial test invocation without `PYTHONPATH=src` failed to import the
+uninstalled package; subsequent tests used the source checkout explicitly.
+
+Tests used invented data/output fixtures and mocked training-call routing, not
+pretrained or real optimization runs. GPU/model-loading/context behavior and AAI
+wrapper execution remain unverified. Existing frozen packages and Stage I records
+were not changed. No experiment, download, commit or push was performed.

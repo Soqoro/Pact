@@ -2155,3 +2155,22 @@ A metadata execution bridge contains fitting/probe data only. It neither creates
 a wallet nor authorizes dispatch; source-specific evaluation dispatch integration
 and any physical allowance remain separate. CPU package checks cannot certify GPU
 runtime identity or effective native loading. No scientific-method change.
+
+### 2026-11-05 — Separate native execution adapter for the frozen documented child
+
+Implement `documented_execution/` outside every code directory bound into the
+existing cohort/graph freeze. Preserve the old validators and native training,
+rollback, scoring, aliasing and wallet implementations. Give the proposed adapter
+one new fixed execution owner and pin its absolute scratch path and clean source
+identity; do not activate it from the CPU receipt. Route training-only stages to
+the native runner. Read the frozen graph for source-specific smoke task identities
+and use the GPQA/LogiQA reporter over strict stored packet statuses. Native private
+and peer messages remain team-specific and labels remain evaluator-side.
+
+Require a separately supplied artifact-bound approval for each exact stage/scope
+before a wallet or model factory. The implementation supplies no real approval,
+signature or activated allowance. Preserve unknown historical spending. Validate
+all locked checkpoints before policy attacks; changed locks, unresolved attempts
+and unsafe durable boundaries stop. Reuse existing compact storage, with the child
+scientific version in its plan/summary. No GPU, source download or Slurm job was
+run. Details and exact CLI: [execution adapter](stage2_documented_execution_adapter.md).

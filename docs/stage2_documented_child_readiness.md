@@ -352,3 +352,55 @@ Outputs: `execution-contract.private.json`, `preflight.sanitized.json` and
 stdout and the sanitized receipt only. The actual CPU checkpoint read on AAI is
 still unverified until its result returns; local tests use invented metadata and
 exercise guards without downloading or loading a pretrained model.
+
+## Returned CPU checkpoint preflight — job 1115599 (5 November 2026)
+
+User-returned stdout and Slurm accounting report `COMPLETED`, exit `0:0`, elapsed
+17 seconds, `CPU_CHECKPOINTS_VERIFIED_EXECUTION_DISABLED`, `fixture=false`.
+All three uniform_joint_sft S0 checkpoints passed current CPU file/content,
+structural and FP32 checks on AAI. Their returned file and adapter hashes were
+also compared locally with the imported authoritative Stage I registry and match.
+No local tensor read is claimed. Python 3.13.15 and all nine recorded package
+versions match; GPU runtime, native access/context and effective model loading
+were explicitly not checked.
+
+- Sanitized preflight receipt SHA256: `b4c6d7433ed7fa1a2fa367027268b39cb26aabc5d08a7ba8a38ab3b54e74e7e8`.
+- Inactive execution-contract digest: `f4de413af58706d70ee95792c587437322ec94c56826d5ba5fe681dbd4bd057e`.
+- Frozen candidate/graph/training identities match the existing seal.
+- Model calls, synthetic/scoring/training model work and optimizer updates were
+  not initiated by this CPU preflight. Execution and wallet flags remain false;
+  historical spending and remaining budget remain unknown.
+
+Evidence provenance: returned stdout/accounting plus local registry comparison.
+The actual preflight receipt file is not yet imported, so its byte hash has not
+been independently checked locally. The original seal's historical
+`current_S0_tensors_verified=false` is preserved; this subsequent receipt records
+that the CPU tensor check has now passed on AAI.
+
+Remaining work: implement/review the child-specific physical dispatch integration,
+verify GPU/runtime/native loading and context limits, and obtain a separately
+scoped physical-spending approval. CPU success does not authorize model execution
+or require repeating the cohort audit or freeze.
+
+## Native adapter implemented for review — 5 November 2026
+
+The dispatch-integration implementation above is now available as
+`pact.revival.documented_execution`, outside the frozen audit code directories.
+It reuses native assay/optimizer/scorer/wallet code, implements GPQA/LogiQA policy
+dispatch from the frozen smoke graph, and binds policy locks, exact stage grants,
+checkpoint identities, recovery and separate private/sanitized exports. It also
+includes an unsubmitted single-stage AAI wrapper. See the
+[adapter review and exact CLI](stage2_documented_execution_adapter.md).
+
+Validation: 14 new CPU adapter tests passed, alongside the 23 existing documented
+child/freeze/preflight tests, 21 GPQA-source amendment tests, and 19 native v3 CPU
+tests. Two optional neural/round-trip tests skipped because their explicit local
+Torch/safetensors prerequisites were unavailable. Shell syntax and CLI help pass.
+No pretrained download, model forward, training, GPU or Slurm operation occurred.
+
+Ready for code review and subsequent CPU preparation of the separate inactive
+execution plan. The next artifact to review is that pinned execution plan, not a
+new cohort. Effective GPU/native preflight and any physical-spending stage each
+still require a separate explicit approval; no approval record or spending wallet
+was activated here. Unknown historical consumption and all development-standard
+limitations remain unchanged. There are no new Stage II scientific results.

@@ -3100,3 +3100,25 @@ checkpoints, plus package inspection and inactive execution-contract metadata.
 Five local CPU tests passed. No new source screen, cohort change, physical
 allowance, model call or optimizer update. AAI preflight result remains pending;
 GPU/native loading and policy-evaluation dispatch integration remain outstanding.
+
+### 2026-11-05 — CPU preflight job 1115599
+
+Returned nonfixture CPU checkpoint/package preflight passed (COMPLETED 0:0, 17s).
+Current uniform_joint_sft Q/L/M identities match frozen S0 and the local registry;
+Python/package versions match. Receipt SHA256 `b4c6d7433ed7fa1a2fa367027268b39cb26aabc5d08a7ba8a38ab3b54e74e7e8`;
+inactive contract digest `f4de413af58706d70ee95792c587437322ec94c56826d5ba5fe681dbd4bd057e`.
+Receipt bytes not yet imported. No model forwards/updates, active wallet or
+execution permission; historical spending remains unknown. GPU checks pending.
+
+### 2026-11-05 — documented Stage II dispatch adapter, no experiment
+
+Implemented separate native stage integration for the already frozen documented-
+exclusion-screened development cohort. Proposed execution owner:
+`pact-stage2-documented-execution-001`; no real execution plan or wallet activated
+locally. Conditional ceilings unchanged: 23,728 generations, 12,148,736 reserved
+output tokens, 3,072 updates, 24,576 supervised and 2,640 diagnostic forwards.
+Historical spending remains unknown; no finite future allowance has been granted.
+Fourteen new CPU adapter tests and 63 existing relevant CPU tests passed; two
+optional neural tests skipped. Zero real model calls, training forwards or jobs.
+The frozen cohort and completed Stage I result remain unchanged. Review path:
+[execution adapter](stage2_documented_execution_adapter.md).
