@@ -283,3 +283,72 @@ Artifacts: immutable `evidence/` copies, `sealed/prospective.private.json`,
 `checksums.json`, and `COMPLETE`. Return stdout and the sanitized freeze receipt
 only. Keep all other evidence on AAI. Freezing is not yet reported as remotely
 completed until that evidence returns. Physical spending remains unauthorized.
+
+## Returned freeze completion — AAI job 1114953
+
+User-returned stdout and Slurm accounting report `COMPLETED`, exit `0:0`, elapsed
+five seconds, `fixture=false`, `COHORT_FROZEN_EXECUTION_DISABLED`. Candidate and
+graph digests match the locally verified SANITIZED audit. This is confirmation
+from returned remote output; the freeze receipt file and private sealed files
+have not been independently inspected locally.
+
+- Candidate: `66f13a4fae506c2ec944a0833fd6dab9f898375caa46bcb60d625ab131375e22`.
+- Graph: `ddff260749cc7b9736265a258295f97e6d7c7fea36c95a6587e3bbcd8cbea9a0`.
+- Method: `13817d7b6ebdb6634e9028d8421c57203bf76f1d2483d297b8ddba39bfa184f7`.
+- Freeze receipt file SHA256: `0d1530b1658bcab6216eab9c6bb8dc311a2321b9efcb09f28960e7f233ad8921`.
+- Freeze manifest SHA256: `b13f9f7571cb6b8a6d6fb3a5d17020dc77976d3e76887af6e35440a80cdd45e7`.
+- Original audit manifest SHA256: `5b22b2477d9e47f1376ad592301e0d0eabe06368b1f0cd269925a58d335b58e0`.
+
+`candidate_frozen=true`; execution and wallet remain false. No model calls,
+training forwards or optimizer updates occurred. Current S0 tensors are not
+verified by this seal, and policies/trained checkpoints are not locked. The
+conditional ceilings and all exposure/history limitations remain unchanged.
+
+The next evidence handoff is only `freeze.sanitized.json`. After that, execution
+integration, current checkpoint/runtime verification and a separately scoped
+physical-spending decision remain prerequisites. No training, assay or GPU job
+is authorized by the returned freeze completion.
+
+## CPU checkpoint readiness integration — 5 November 2026
+
+`pact.revival.documented_preflight` is separate from the frozen audit package.
+It first verifies the exact freeze receipt/manifest identities reported by job
+1114953, all sealed files, original audit compilation and immutable candidate,
+graph and training digests. It then validates the seven authoritative Stage I
+metadata files and checks the three **uniform_joint_sft** S0 adapter files with
+`stage1.weights.tensor_inventory`, on CPU. File SHA256, effective adapter hash,
+FP32 dtype, key/shape registry and finite values must match the frozen registry.
+Independent-arm substitutions are rejected. Optimizer state is not restored.
+
+The output includes a training-only execution-contract bridge, preserving the
+five policies, original optimizer, 3/5 blocks, 24/40 probes, scientific seeds and
+conditional budgets. Prospective question text and labels are absent from this
+bridge. Existing assay/training stage functions are identified; the child-specific
+policy evaluation dispatch adapter remains unimplemented. The bridge is explicitly
+non-dispatchable. Neither a preflight result nor a modified authorization boolean
+can pass its execution gate. No physical wallet is instantiated.
+
+Package inspection checks the recorded Python/package versions without fetching
+anything. CPU-only package matching cannot verify the CUDA runtime, current GPU,
+native model loading or tokenizer/context behavior. Those remain separate
+prerequisites, along with reviewed execution integration and physical allowance.
+A package mismatch is reported explicitly even if CPU checkpoint identities pass.
+No scientific forward is included in this preflight.
+
+Prepared CPU wrapper: `tools/aai_documented_cpu_preflight.sbatch`. It uses the
+existing offline pinned environment; mounts the verified migration tensor tree
+read-only at its recorded `/content` path; and hides CUDA devices. Required env:
+`PACT_CHECKOUT`, `PACT_COMMIT`, `PACT_CONFIG` (existing audit config), `PACT_SEAL`,
+`PACT_PREFLIGHT_OUTPUT` (new absent private directory). No job was submitted by
+local development. The Python entry point inside the container is:
+
+```bash
+python -B -u -m pact.revival.documented_preflight \
+  --config "$PACT_CONFIG" --seal "$PACT_SEAL" --output "$PACT_PREFLIGHT_OUTPUT"
+```
+
+Outputs: `execution-contract.private.json`, `preflight.sanitized.json` and
+`checksums.json`. The original seal and parent remain unchanged. Return sanitized
+stdout and the sanitized receipt only. The actual CPU checkpoint read on AAI is
+still unverified until its result returns; local tests use invented metadata and
+exercise guards without downloading or loading a pretrained model.

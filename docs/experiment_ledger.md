@@ -3082,3 +3082,21 @@ separate hash-bound CPU seal for the reviewed PRIVATE archive/candidate/graph.
 Four invented-data CPU tests passed. Original source-audit package and artifacts
 remain unchanged. Real AAI seal completion is pending; no physical-spending
 allowance, wallet, model call, optimizer update or Stage III authorization exists.
+
+### Returned cohort freeze — job 1114953
+
+User-returned CPU job output reports COMPLETED 0:0 in 5s, exact reviewed candidate
+and graph frozen, `COHORT_FROZEN_EXECUTION_DISABLED`. Freeze receipt SHA256
+`0d1530b1658bcab6216eab9c6bb8dc311a2321b9efcb09f28960e7f233ad8921`;
+manifest `b13f9f7571cb6b8a6d6fb3a5d17020dc77976d3e76887af6e35440a80cdd45e7`.
+Receipt bytes not yet locally imported. No wallet/execution authority or model
+work. Current S0 verification and policy/checkpoint locks remain outstanding;
+historical spending remains unknown. Original audit records stay unchanged.
+
+### 2026-11-05 — readiness tooling only
+
+Prepared CPU verification of the exact sealed documented child and three joint S0
+checkpoints, plus package inspection and inactive execution-contract metadata.
+Five local CPU tests passed. No new source screen, cohort change, physical
+allowance, model call or optimizer update. AAI preflight result remains pending;
+GPU/native loading and policy-evaluation dispatch integration remain outstanding.

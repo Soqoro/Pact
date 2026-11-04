@@ -2143,3 +2143,15 @@ or semantic/freshness certification occurs. The freeze tool lives outside
 reviewed MethodSpec. Original audit files remain immutable; a separate verified
 copy and freeze receipt record the later instruction. No execution grant, wallet,
 policy-training lock, runtime or tensor verification is inferred from the seal.
+
+### 2026-11-05 — CPU checkpoint preflight after exact cohort seal
+
+Prepare readiness checks outside the frozen audit package. Reuse the authoritative
+Stage I tensor inventory reader for Q/L/M joint S0, with exact file/content hashes,
+FP32 dtype and shape checks; never restore unsafe optimizer history. Check the
+sealed receipt and complete file inventory before reading tensor paths. Bind the
+existing verified tensor tree read-only at `/content` in the CPU Slurm container.
+A metadata execution bridge contains fitting/probe data only. It neither creates
+a wallet nor authorizes dispatch; source-specific evaluation dispatch integration
+and any physical allowance remain separate. CPU package checks cannot certify GPU
+runtime identity or effective native loading. No scientific-method change.

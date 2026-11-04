@@ -2923,3 +2923,25 @@ PRIVATE inputs remain on AAI. Regression tests use invented data only.
 Freeze validation: `PYTHONPATH=src python -m unittest discover -s tests -p
  test_documented_freeze.py -v` — four tests passed; Slurm wrapper `bash -n` and
 `git diff --check` passed. No GPU/remote execution, commits or pushes performed.
+
+### Remote exact seal reported complete
+
+AAI job 1114953 returned successful nonfixture cohort/graph freeze, with matching
+reviewed identities and execution disabled. This advances the remote seal status,
+not model/runtime readiness. Receipt-file verification locally is pending; no
+private sealed data were accessed here. No implementation changes or additional
+tests were needed to record this returned evidence.
+
+### 2026-11-05 — CPU checkpoint/preflight tool prepared
+
+Added `documented_preflight.py` and an offline CPU Slurm wrapper. Exact seal,
+parent provenance, S0 tensors and package versions are checked before emitting
+private execution-contract metadata and a sanitized receipt. GPU/model/tokenizer
+preflight and physical execution remain unverified/disabled. No AAI job, model
+forward, pretrained download, wallet, commit or push was performed locally.
+
+Validation executed: five `test_documented_preflight.py` tests passed; wrapper
+`bash -n` and `git diff --check` passed. Tests cover inventory corruption/additions,
+unsafe paths, wrong arm/precision/checkpoint identity, evaluation-data exclusion,
+non-authorizing readiness metadata and package/GPU distinction. Real tensor reads
+remain remote prerequisites, not locally claimed tests.
