@@ -3122,3 +3122,14 @@ Fourteen new CPU adapter tests and 63 existing relevant CPU tests passed; two
 optional neural tests skipped. Zero real model calls, training forwards or jobs.
 The frozen cohort and completed Stage I result remain unchanged. Review path:
 [execution adapter](stage2_documented_execution_adapter.md).
+
+### 2026-11-14 — inactive-plan recovery, no scientific execution
+
+AAI job 1121664 completed 0:0 (26s), reconstructing inactive plan
+`5ff472604f74ed80cdbdecb574dc83c9306e6a912f0159249b1861a689fdd025` with an
+exact digest match under the original pinned checkout. Returned output verifies
+PRIVATE/SANITIZED/RECOVERY copies and snapshot `1794641113259988805-22b145006de1`.
+No model calls, training forwards or updates; execution and wallet remain disabled.
+This restores CPU planning/storage readiness, not Stage II experimental results.
+Unknown historical consumption and the frozen cohort are unchanged. Checksums and
+returned-evidence limitations are recorded in implementation_status.md.

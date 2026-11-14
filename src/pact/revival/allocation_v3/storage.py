@@ -280,6 +280,6 @@ def export(root, stage, destination=None):
         path = root.parent/'bundles'/f'{root.name}-{kind}-{time.time_ns()}.zip'
         out[kind] = package(root, path, kind)
         if destination:
-            persist_bundle(path, destination/'bundles'/path.name, timeout_seconds=600)
+            persist_bundle(path, destination/'bundles'/path.name, out[kind]['sha256'], timeout_seconds=600)
     persist(root, destination)
     return out

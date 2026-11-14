@@ -2977,3 +2977,69 @@ Tests used invented data/output fixtures and mocked training-call routing, not
 pretrained or real optimization runs. GPU/model-loading/context behavior and AAI
 wrapper execution remain unverified. Existing frozen packages and Stage I records
 were not changed. No experiment, download, commit or push was performed.
+
+### 2026-11-14 — inactive-plan durable export failure, job 1115617
+
+Returned AAI output records successful inactive plan creation under commit
+`995e814e0883414b1ed56c590faad2e240cdf9b1`, plan hash
+`5ff472604f74ed80cdbdecb574dc83c9306e6a912f0159249b1861a689fdd025`.
+Export then failed at `allocation_v3.storage.export`: its call to `persist_bundle`
+omitted the required third `sha256` argument. The first local ZIP and export marker
+can already exist; this call failed before bundle transfer or snapshot creation.
+No scientific execution was requested. This is returned-log evidence, not a remote
+filesystem inspection.
+
+Corrected that call locally to pass the checksum returned by `package`. Added a
+real temporary-filesystem CPU regression verifying PRIVATE, SANITIZED, RECOVERY,
+all durable ZIP checksums and the compact snapshot receipt/COMPLETE marker without
+creating attempts or events. The test passed. Earlier adapter tests exercised
+local exports and mocked snapshot transport but missed this actual durable API
+signature mismatch.
+
+Storage-only recovery can call `package`, the existing checksum-bearing
+`persist_bundle`, and `persist` under the original pinned checkout after validating
+the exact inactive plan and absence of scientific attempts/pending persistence.
+Do not re-plan, change the pinned checkout, clear markers or activate a wallet.
+Recovery remains unverified remotely until returned evidence. The local export fix
+changes source identity; any later scientific checkout transition must be reviewed
+explicitly rather than silently rewriting the existing plan hash.
+
+### 2026-11-14 — exact inactive-plan reconstruction completed, job 1121664
+
+Returned AAI logs report COMPLETED 0:0 in 26 seconds. After the expected scratch
+directories were found absent on mounted `/local` (job 1121663), the verified
+completed Stage I archive was restored to its original path. CPU reconstruction
+under unchanged commit `995e814e0883414b1ed56c590faad2e240cdf9b1` reproduced plan
+`5ff472604f74ed80cdbdecb574dc83c9306e6a912f0159249b1861a689fdd025` exactly.
+This was deterministic reconstruction, not recovery of a surviving original
+execution snapshot. The cause of scratch disappearance was not established.
+
+Reported verified durable exports:
+
+- PRIVATE `pact-stage2-documented-execution-001-PRIVATE-1794641112034385106.zip`,
+  SHA256 `3c65bf6f016237fd75002c1940e0c8c66e554aab483526513196332c01407060`.
+- SANITIZED `pact-stage2-documented-execution-001-SANITIZED-1794641112456408572.zip`,
+  SHA256 `8b5ae1ca16ab5cdbf98f3714baee780677eeb63924fa712f445dafde3247bcf1`.
+- RECOVERY `pact-stage2-documented-execution-001-RECOVERY-1794641112525243265.zip`,
+  SHA256 `8ab796616ae1e421036a6ced472744fa4971fe439a7a1b5664f1bdbd340baf0c`.
+
+Snapshot `1794641113259988805-22b145006de1` was reported verified under
+`/dataset/suaq0001/PACT/stage2-documented-execution-v1/pact-stage2-documented-execution-001`.
+Status `INACTIVE_PLAN_RECONSTRUCTED_AND_EXPORTED`; new model calls, training
+forwards and optimizer updates all zero; execution authorization and wallet false.
+Evidence is user-returned output, not an independent local import of those files.
+No new GPU/tensor loading verification or historical spending conclusion follows.
+The storage-only recovery passed the checksum explicitly without modifying the
+pinned source. The local export fix still needs a reviewed source transition
+before use with this source-bound plan; no silent checkout update is authorized.
+
+### 2026-11-14 — checksum-only source-transition review implemented
+
+Added standalone CPU comparison/proposal tool and unsubmitted node01 CPU wrapper.
+Local comparison against commit 995e814e… verified exactly one runtime file change:
+the required persist_bundle checksum argument; 206 other runtime/config files
+are unchanged. New runtime source hash c7dbf4bc…a4719, old 17465cd6…63d4a.
+Five focused CPU tests and shell syntax passed. Actual plan validation/proposal
+generation remains to be run by the user on AAI after committing/pushing a clean
+candidate. No existing plan, validator, approval, wallet or checkpoint was changed.
+See stage2_export_source_transition_review.md for hashes and the implemented CLI.

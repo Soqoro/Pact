@@ -2174,3 +2174,22 @@ all locked checkpoints before policy attacks; changed locks, unresolved attempts
 and unsafe durable boundaries stop. Reuse existing compact storage, with the child
 scientific version in its plan/summary. No GPU, source download or Slurm job was
 run. Details and exact CLI: [execution adapter](stage2_documented_execution_adapter.md).
+
+### 2026-11-14 — checksum-bearing export repair preserves the inactive plan
+
+Fix only the missing checksum argument in native durable export. Recovery of
+job 1115617 uses the unchanged pinned source and explicit existing storage APIs;
+it preserves the inactive plan, existing partial local ZIP and export marker.
+No module monkeypatch, source-fingerprint rewrite or re-planning is appropriate.
+Future execution with the repaired source requires a separately reviewed source
+transition because the inactive plan binds the older checkout.
+
+### 2026-11-14 — checksum-only source-transition proposal
+
+Add a standalone CPU tool outside source-hashed packages. Compare the exact old
+commit with the proposed checkout and accept only the one missing-checksum repair;
+reject any other runtime/configuration edit or inventory change. Validate the old
+plan in its own pinned process, never by monkeypatching the source guard. Emit a
+separate inactive proposal with signatures/approval unset, leaving the old plan
+and historical consumption untouched. No transition application or GPU authority
+is inferred from the user's instruction to proceed with this review.
