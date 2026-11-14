@@ -3043,3 +3043,25 @@ Five focused CPU tests and shell syntax passed. Actual plan validation/proposal
 generation remains to be run by the user on AAI after committing/pushing a clean
 candidate. No existing plan, validator, approval, wallet or checkpoint was changed.
 See stage2_export_source_transition_review.md for hashes and the implemented CLI.
+
+### 2026-11-14 — returned source-transition proposal, job 1121675
+
+CPU job completed 0:0 in 6s. Candidate commit 93b89ce3…eeeb and exact storage/tool
+hashes match local committed files. Returned proposal 6e217d91…76d6a verifies the
+old plan under its original checkout, the one checksum argument repair and 206
+unchanged runtime/config files. No plan mutation, transition approval/application,
+wallet activation or scientific work. Proposal-file bytes have not been imported;
+this records returned evidence and local source-hash comparison only. Recommend
+the narrow source transition for explicit user review, not model execution.
+
+### 2026-11-14 — approved source-transition application helper, CPU-tested
+
+User approved the exact 6e217d91… proposal / 93b89ce3… target transition while
+explicitly excluding GPU preflight and spending. Added CPU application helper and
+unsubmitted Slurm wrapper. It checks the original inactive child and recorded
+durable snapshot, preserves them, and writes an independently persisted successor
+changing only source_code and scratch_root. Runtime code/validators remain at the
+approved target; helper code is separately pinned. Four focused CPU tests passed,
+including real snapshot verification and refusal of pending/changed boundaries.
+Remote application/resulting plan hash remain pending; no model or cluster work
+was performed locally. No commit or push was performed by the assistant.

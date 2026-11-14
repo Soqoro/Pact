@@ -2193,3 +2193,13 @@ plan in its own pinned process, never by monkeypatching the source guard. Emit a
 separate inactive proposal with signatures/approval unset, leaving the old plan
 and historical consumption untouched. No transition application or GPU authority
 is inferred from the user's instruction to proceed with this review.
+
+### 2026-11-14 — apply approved source transition without overwriting the old plan
+
+The user's subsequent “proceed” answers the explicit exact-proposal approval
+question. Implement a CPU-only successor copy, preserving the old plan/snapshot.
+Change only source_code and scratch_root, retain the logical child owner and all
+scientific fields, and record the resulting hash and approved proposal in separate
+provenance. Keep the helper checkout separate from the approved runtime checkout.
+No validator weakening, re-planning, history-zero claim, GPU approval or spending
+activation. Abort on any changed/unsafe original boundary or existing destination.
