@@ -152,3 +152,327 @@ The AAI application has not yet been submitted or verified by this local work.
 Commit/push the helper, then submit the CPU wrapper with `PACT_HELPER_CHECKOUT` and
 `PACT_HELPER_COMMIT`. It uses the existing old checkout pointer and exact target
 path `checkouts/export-fix-93b89ce38be7`; it never updates either checkout.
+
+
+### 2026-11-14: returned source transition and scoped GPU-preflight approval
+
+User-returned job 1121682 completed 0:0 and reports
+`SOURCE_TRANSITION_APPLIED_EXECUTION_DISABLED`. The successor plan is
+`024f9ef5ffccb9f90bcebab2818971964943b2892aa7ed8e1932ef02e55659f9`;
+transition receipt SHA256 is
+`2781aaa1377a5538586fe3bef5fcde5279c6c371970617465dfe7dfe8cb8898a`.
+Only source_code and scratch_root changed; the original plan remains preserved.
+These are returned log receipts, not locally rehashed imported bundles.
+
+The user's subsequent “proceed” accepts preparation of the explicitly described
+GPU preflight for this successor only: native access/runtime, context limits and
+effective S0 loading. Use the existing preflight-only guard with spending_approved
+false and the exact runtime checkout 93b89ce38be743acd6a3aa38177237ce99a3eeeb.
+No generation, training, diagnostic forwards, spending-wallet activation or next
+stage is approved. Historical spending remains unknown. Operator submission uses
+sbatch; no cluster job was submitted locally. GPU outcome remains unverified.
+
+
+### 2026-11-15: imported assay-smoke SANITIZED review
+
+Locally verified archive `pact-stage2-documented-execution-001-SANITIZED-1794726627526519175.zip`
+SHA256 `8c0ae9c04d0c39f7e5b8adf3f389bc82fdb9d1f0a926b96408176cda7db8fbd4`.
+Verified unique membership (four files), exact payload inventory, both payload
+checksums, and SANITIZED handoff type. Contents comprise summary and assay support
+only, with checksum/handoff metadata; no task text or per-call traces present.
+
+Summary reports 24 assay generation attempts, 24 committed operations, zero
+unresolved, recovery_safe=true, 12,288 reserved output tokens, 8,370 input tokens
+and 990 output tokens. Scores, training forwards, updates and policy operations
+are all zero. Format statuses are 23 ok and one invalid. Invalid remains a failure;
+no regeneration or repair is approved. This aggregate bundle cannot locate the
+invalid call or determine its effects on downstream task outcomes.
+
+One attack was attempted and accepted for ARC, and one for LogiQA. The report's
+23 ARC and 39 LogiQA rejected_or_unavailable values cover the full 24/40 probe
+cohorts; with only one attempt per source, these are unattempted remainder here,
+not 62 observed rejected attacks. All contribution branch pairs are missing
+because branch training/scoring has not executed, not evidence of zero gains.
+There is no efficacy estimate or policy comparison at this stage.
+
+Decision: smoke accounting/integrity passes within this SANITIZED evidence scope.
+Per-call native identity, packet contents and invalid-call location were not
+independently audited. Next review should obtain a private-side CPU diagnostic
+with sanitized phase/family/status counts and the invalid-call category before
+requesting collection execution. No broader physical spending is authorized;
+historical spending and remaining historical budget remain null.
+
+
+### 2026-11-15: locally verified collection SANITIZED bundle
+
+Verified `pact-stage2-documented-execution-001-SANITIZED-1794730033344682597.zip`
+SHA256 `6ba1d2ff176b393ecd4273cd8adbd15d4e810c603c1ed0d19f28ae65b9b2ccfe`,
+unique four-member inventory and both payload checksums. Report is non-fixture,
+assay-smoke and collect complete, recovery_safe=true, unresolved=0.
+708 generation attempts and 708 committed operations include the prior 24 smoke
+calls: 684 new generations, within the approved additional ceiling of 744.
+Cumulative reserved tokens 362,496; new reserved tokens 350,208. Cumulative input
+tokens 251,115 and actual output tokens 33,732. All training/scoring/update and
+policy operation counts remain zero. Historical spending remains unknown.
+
+Attack attempts cover all 24 ARC and 40 LogiQA probes. Accepted: 17/24 ARC and
+32/40 LogiQA, totaling 49/64. The other 15 attacks were not accepted; this summary
+does not distinguish invalid/abstaining/wrong-target reasons. Call arithmetic
+reconciles exactly: 64*(1 attack+3 private+3 clean revisions+1 clean readout)
++49*(3 exchange revisions+1 exchange readout)=708. The 60 unexecuted conditional
+calls are not lost dispatches and must not be regenerated.
+
+Stored format counts: 668 ok, 33 invalid, 7 abstention. These are call counts,
+not task accuracy or scientific efficacy. The SANITIZED bundle does not locate
+failures by model/phase or show task-level outcomes. Branch pairs are all absent
+because branch training and scoring have not occurred. No allocation gain can
+be inferred. Next useful evidence is a private-side read-only CPU summary of
+format failures by model/phase and attack rejection categories; no changed parser,
+prompt, retry, branch training, scoring or later spending is authorized here.
+
+
+### 2026-11-15: returned Q lineage diagnostic, job 1122723
+
+User-returned CPU comparison completed 0:0 with no new inference. It reports
+verified Stage I archive 754dad78534104fbd10b198fcc4842d9217b4d08d424dfa1dd00bb24eea1e3a0
+and collection archive f9793a06b1a0cb431552117e8847d1b9f48d636d317cb319371558a606be40f1.
+Exact joint S0 Q adapter identity is shared. All four stage/phase combinations
+share model identity hash cc2dd6c4a59226e7a523064aae6f44cbdd712888569a960dade65c78d780d979,
+generation-parameter hash 5330d1946ee54727c0ffcca75971406aee7252ed2dd7ac7f6e1b5a549ea77d4d,
+and system-message hash 8b5833174af1a365c6e5a8f897ed9b7900a5876932a880e00763ac15a4ef85b1.
+Stage II pristine fields match the parent. Tensor bytes were not rechecked by
+this diagnostic, and full task/peer prompts naturally differ.
+
+Q private invalid counts: Stage I same S0 203/384 (52.9%); Stage II 30/64
+(46.9%). Revision invalid counts: Stage I 16/922 (1.7%); Stage II 0/113.
+These historical physical-call counts are descriptive, not independent task
+samples or a paired improvement estimate. Strong private-format failure predates
+Stage II; no mismatch was found in the recorded identities checked. This does
+not establish the causal mechanism or exclude every possible execution issue.
+Preserve failures and exact S0/prompt/parser contracts; do not silently repair
+the inherited behavior. There is no new inference or training authorization from
+this result. A separately scoped branch proposal is the next execution decision.
+
+
+### 2026-11-15: first temporary-branch proposal (not execution approval)
+
+Prepared in response to the user's request to proceed with the first bounded
+branch proposal. Proposed scope: branch/block=0/family=Q only, under successor
+plan 024f9ef5ffccb9f90bcebab2818971964943b2892aa7ed8e1932ef02e55659f9
+and runtime commit 93b89ce38be743acd6a3aa38177237ce99a3eeeb. Start from
+exact joint-trained Q S0; block 0 is the frozen first ARC fitting block. This is
+fixed order, not selection based on the observed Q formatting failures.
+
+The existing runner orders block fit tasks with temporary seed 17 and performs
+eight batches of eight: eight optimizer updates, 64 supervised training forwards.
+It saves a separate branch checkpoint and restores the live Q adapter and RNG
+state in finally; rollback.json must mark complete and equal initial/restored
+hashes before branch probe generation. The saved branch is then loaded for Q
+only; L/M use S0 and R is pristine. No fitting uses probe tokens.
+
+With 24 ARC probes and 17 already accepted frozen attacks, maximum additional
+generation work is 24 new Q private packets + 41 conditions * (3 revisions +
+1 readout) = 188, reserving 96,256 output tokens. The 48 L/M private calls reuse
+exact S0 requests. No new attacks or rejected-attack retries. The full predeclared
+all-attacks-accepted branch ceiling is 216; the reviewed observed-support scope
+is tighter at 188 and must not authorize expansion. Cumulative maximum after
+this branch: 896 generations, 458,752 reserved output tokens, eight updates and
+64 supervised forwards. Zero diagnostic scoring forwards. Prior unknown
+spending remains separate and unknown.
+
+Pre-submission preparation must bind the exact completed collection PRIVATE
+archive f9793a06b1a0cb431552117e8847d1b9f48d636d317cb319371558a606be40f1,
+preflight receipt 1e697a75aec6dd47fe2669235b1597f2010c85b05158f773c097880dd33ea8bb,
+verify 708 committed and zero unresolved at start, absence of earlier branch
+work, and the actual block/probe/attack counts. A mismatch stops preparation; no
+re-plan, replacement data or budget increase. Scope approval must be separate
+from this proposal, permit only branch 0/Q, and export/stop. No score, next branch,
+policy training, evaluation or Stage III is included. No job submitted, weights
+loaded, or approval signature fabricated by this local preparation.
+
+
+### 2026-11-15: locally verified block-0/Q SANITIZED export
+
+Verified ZIP `pact-stage2-documented-execution-001-SANITIZED-1794734201351042740.zip`
+SHA256 edda34ae52687dc527f79f45b61635e9396d2e50625c5f8ddd7871dbb439a198,
+unique exact four-member inventory and both payload checksums.
+Cumulative assay accounting: 896 generation attempts, eight optimizer updates,
+64 supervised forwards, zero diagnostic scores; 904 committed operations, zero
+unresolved, recovery_safe=true. Reserved output tokens 458,752. Relative to the
+verified collection summary, delta is 188 generations / 96,256 reserved tokens,
+171 ok, 16 invalid, one abstention. Cumulative formats: 839 ok,49 invalid,8
+abstention; input/output tokens 308,616/41,600. Attack acceptance remains17/24
+ARC and32/40 LogiQA. Policy operations remain zero.
+
+The bundle contains summary.json and assay_support.json plus manifest/checksums,
+not branches/block-0-Q/status.json, rollback.json or evaluated.json. Therefore
+rollback/checkpoint identity and branch completion cannot be independently
+verified from this export. The global stages list remains assay-smoke/collect;
+implementation writes branch completion under its branch directory, so absence
+from that list is not itself a failed branch. Returned job1122724 completed0:0
+and reports complete=true, but receipt inspection is still needed.
+
+No contribution scores exist; all branch paired score support remains zero.
+Next evidence: read-only private-side CPU inspection of branch status, exact S0
+rollback receipt, evaluated marker, checkpoint metadata and new call format
+breakdown, without new inference or tensor-changing operations. Do not infer
+accuracy from formatting or 904 generations from committed operation count.
+No next-branch or scoring authorization is granted by the uploaded ZIP.
+
+
+### 2026-11-15: locally verified block-0/L SANITIZED export
+
+Verified ZIP pact-stage2-documented-execution-001-SANITIZED-1794744018060185519.zip
+SHA256 3a018d811061aa821d70d8b75de77582b1c7b6ada989f60262a6c06c45f2c757,
+exact unique four-member inventory and both payload hashes; compared with the
+previous independently verified post-Q SANITIZED export. Cumulative:1084
+generations,16updates,128supervisedforwards,zero diagnostic scores;1100committed
+operations,zero unresolved,recovery_safe=true,555008reservedoutputtokens.
+Block-L delta:188generations,8updates,64forwards,96256reservedoutputtokens,
+187ok,zero invalid,one abstention. Cumulative formats1026ok/49invalid/9abstention.
+Input/output tokens364837/49678. Policy operations remainzero; unknown historical
+spending remainsnull. These aggregate format counts are not accuracy or gains.
+
+The SANITIZED archive does not contain L status/rollback/evaluated/checkpoint
+receipts; independent verification of those remains outstanding. Returned
+job1122780 reports branchcomplete and0:0,9m09s, but does not replace receipt
+inspection. Next read-only CPU review should verify L rollback/checkpoint and
+preservation of prior Q evidence. No next branch or scoring authorized.
+
+
+### 2026-11-15: locally verified block-0/M SANITIZED export
+
+Verified archive pact-stage2-documented-execution-001-SANITIZED-1794745498814850054.zip
+SHA2563518af207f8b541aa2abf1412282bbe96f1b5c9bae5dd4a4eddbd7bb28ef38f1,
+exact unique four-member inventory and both payload checksums. Compared with
+verified post-L export: delta188generations,8updates,64supervisedforwards,
+96256reservedtokens,187ok/1invalid/0abstention. Cumulative1272generations,
+24updates,192forwards,zero diagnostic scores,1296committedoperations,zero
+unresolved,recovery_safe=true,651264reservedtokens. Cumulative1213ok/50invalid/
+9abstention;420678inputtokens/57770outputtokens. No efficacy claims from format
+counts. All policy operation counts remain zero; historical spending unknown.
+
+Returned job1122786 reports block-0-M complete,0:0,9m04s. Earlier1122785 stopped
+in preparation before model dispatch due an incorrect L-absence assertion in
+the generated M script; corrected v2 requires M absent and preserves L. This
+was a wrapper correction, not a scientific or source-plan change.
+
+SANITIZED bundle lacks rollback/checkpoint/evaluated receipts; M private-side
+CPU verification and attribution of the one new invalid completion remain
+outstanding. Prior Q/L evidence should be checked unchanged. No block1, scoring
+or further execution approved from this import.
+
+
+### 2026-11-15: locally verified block-1/Q SANITIZED export
+
+Verified ZIP pact-stage2-documented-execution-001-SANITIZED-1794746725152886427.zip
+SHA25665533197dc770eafec91cc2be4d53c194f8fb2167447a7e051f7d90176d595a8,
+exact unique four-member inventory and both payload hashes. Compared with the
+verified post-M summary:188new generations,8updates,64supervisedforwards,
+96256reservedoutputtokens;177ok/10invalid/1abstention. Cumulative1460generations,
+32updates,256forwards,zero scores;1492committedoperations,zero unresolved,
+recovery_safe=true,747520reservedtokens. Cumulative1390ok/60invalid/10abstention;
+478687inputtokens/65213outputtokens. No accuracy or contribution-gain claim.
+Returned job1122789 completed0:0,8m41s and reported block-1-Qcomplete.
+The sanitized archive does not contain branch rollback/checkpoint/evaluated
+receipts or call-level failure attribution. Next private-side CPU review must
+verify those receipts and preserve prior1296events. No next branch/scoring
+authorization is inferred; historical spending remainsunknown.
+
+
+### 2026-11-15: locally verified block-1/L SANITIZED export
+
+Verified pact-stage2-documented-execution-001-SANITIZED-1794748571738340144.zip
+SHA2562b5451c1b3d19b66cb640c430b2bdade6ef15f477499c1adb89538dc6ab0800a,
+exact unique four-member inventory and both payload checksums. Compared with
+verified post-1Q summary:188newgenerations,8updates,64supervisedforwards,
+96256reservedtokens;187ok/0invalid/1abstention. Cumulative1648generations,
+40updates,320forwards,zero scores,1688committedoperations,zero unresolved,
+recovery_safe=true,843776reservedtokens. Cumulative1577ok/60invalid/11abstention;
+534387inputtokens/72999outputtokens. No accuracy/contribution-gain inference.
+Returned job1122802 completed0:0,9m26s and reports block-1-Lcomplete.
+The sanitized bundle lacks status/rollback/checkpoint/evaluated receipts.
+Read-only private-side verification and preservation of prior1492events remain
+outstanding. No next branch/scoring authorization inferred. Historical spending
+and remaining historical budget remain unknown.
+
+
+### 2026-11-16: locally verified block-1/M SANITIZED export
+
+Verified SANITIZED-1794750813047174401.zip, SHA256
+d9e1cee57d8ccbed0f85f796f02f7775105831f8a6b3fd45dbae8c5aad3c6820,
+unique four-member inventory and both payload checksums. Compared against the
+verified post-1/L bundle: 188 new generations, 8 updates, 64 supervised forwards,
+96,256 reserved output tokens; 187 valid-format and one abstention, no new invalid
+completions. Cumulative 1,836 generations, 48 updates, 384 training forwards,
+1,884 committed operations, zero unresolved, recovery_safe=true; zero diagnostic
+scores or policy work. Cumulative formats: 1,764 ok, 60 invalid, 12 abstentions.
+Reserved tokens 940,032; input tokens 589,881; output tokens 80,771.
+Returned job 1122816 completed 0:0 in 13m34s and reported block-1-M complete.
+This sanitized archive does not verify rollback, checkpoint tensors, or unchanged
+prior 1,688 events; those require the private-side CPU review. No accuracy or
+contribution benefit inferred. No later execution authorized by this review.
+Historical spending and remaining historical budget remain unknown.
+
+
+### 2026-11-16: block-2/Q sanitized accounting verified
+
+Locally verified SANITIZED-1794814255018159373.zip SHA256
+e951b953b36dd15db8e9fbcdcb8c181f7974201a0976053d16959d361903a7ac,
+unique four-member inventory and both payload checksums. Compared with verified
+post-1/M summary: 188 generations, 8 updates, 64 supervised forwards, 96,256
+reserved tokens added; 165 ok, 23 invalid, zero abstentions added. Cumulative
+2,024 generations, 56 updates, 448 forwards, 2,080 committed operations,
+zero unresolved, recovery_safe=true, no scores or policy work. Formats total
+1,929 ok / 83 invalid / 12 abstentions. Reserved output tokens 1,036,288;
+input tokens 645,554; output tokens 88,379.
+User-returned corrected job 1123074 completed 0:0 in 9m33s. Earlier job 1123068
+was rejected with PermissionError: config selected block 1/Q while approval
+selected block 2/Q. Separate v2 script corrected dispatch and training-block
+lookup, preserving v1 files. The new summary delta matches the one approved
+branch; individual prior event preservation remains to be verified privately.
+Sanitized data cannot localize the 23 invalid outputs by actor/phase, verify
+rollback or checkpoint bytes, or establish contribution gains. Next is a
+read-only private-side check of recovery e3ca5bee9f8a25e431b9b0877e98cbab538ab2b2b2a6a38bd818ad13e2089f2c
+and preservation of prior 1,884 events. No later execution authorization inferred.
+Historical spending and remaining historical budget remain unknown.
+
+
+### 2026-11-16: block-2/L sanitized accounting verified
+
+Locally verified SANITIZED-1794820696798100663.zip SHA256
+e35cbd0cc900d17ce3a25543ae468eec275b74f02f57fde855e538a1635c9b77,
+unique four-member inventory and both payload checksums. Compared with verified
+post-2/Q summary: 188 generations, 8 updates, 64 supervised forwards and 96,256
+reserved output tokens added; 186 valid-format, zero invalid and two abstentions.
+Cumulative 2,212 generations, 64 updates, 512 supervised forwards, 2,276 committed
+operations, zero unresolved, recovery_safe=true. No diagnostic scoring or policy
+work. Cumulative formats: 2,115 ok / 83 invalid / 14 abstentions. Reserved output
+tokens 1,132,544; input tokens 701,455; output tokens 96,432.
+Returned job 1123132 completed 0:0 in 13m31s and reported block-2-L complete.
+The sanitized export cannot verify rollback, checkpoint tensor bytes, preservation
+of prior 2,080 events, or actor/phase attribution of abstentions. Those checks
+remain pending private-side CPU review of recovery archive
+b88622912635c484d304a0b4cd423675da7911afdf2853aae6dd763e5a6f7ce3.
+No accuracy or contribution-gain inference; no later branch authorized. Historical
+spending and remaining historical budget remain unknown.
+
+
+### 2026-11-16: block-2/M sanitized accounting verified
+
+Verified SANITIZED-1794823060582525297.zip SHA256
+209f7dd1f79bb2792f7cdfdb36fb03fb2d390eb73fbded08d2995c73ad3b5ddd,
+unique four-member inventory and both payload checksums. Against verified
+post-2/L summary: 188 generations, 8 updates, 64 supervised forwards and
+96,256 reserved output tokens added; 187 ok / one invalid / zero abstentions.
+Cumulative: 2,400 generations, 72 updates, 576 forwards, 2,472 committed
+operations; zero unresolved, recovery_safe=true, no scores or policy work.
+Formats: 2,302 ok / 84 invalid / 14 abstentions. Input tokens 757,260; output
+tokens 104,450; reserved output tokens 1,228,800.
+Returned job 1123208 completed 0:0 in 11m24s. All nine ARC branches now reported
+execution complete; latest rollback, tensor verification and preservation of
+prior 2,276 events remain pending private-side CPU review. Recovery checksum:
+9bfa530b37ab4bbe671a2b72a40dd62b5ce4e53d13bb3d275b618b780bdf71ce.
+Sanitized data do not locate the invalid output by model/phase. No accuracy or
+contribution-gain inference; no LogiQA branch or scoring authorization inferred.
+Historical spending and remaining historical budget remain unknown.

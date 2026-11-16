@@ -2203,3 +2203,286 @@ scientific fields, and record the resulting hash and approved proposal in separa
 provenance. Keep the helper checkout separate from the approved runtime checkout.
 No validator weakening, re-planning, history-zero claim, GPU approval or spending
 activation. Abort on any changed/unsafe original boundary or existing destination.
+
+
+### 2026-11-14: returned source transition and scoped GPU-preflight approval
+
+User-returned job 1121682 completed 0:0 and reports
+`SOURCE_TRANSITION_APPLIED_EXECUTION_DISABLED`. The successor plan is
+`024f9ef5ffccb9f90bcebab2818971964943b2892aa7ed8e1932ef02e55659f9`;
+transition receipt SHA256 is
+`2781aaa1377a5538586fe3bef5fcde5279c6c371970617465dfe7dfe8cb8898a`.
+Only source_code and scratch_root changed; the original plan remains preserved.
+These are returned log receipts, not locally rehashed imported bundles.
+
+The user's subsequent “proceed” accepts preparation of the explicitly described
+GPU preflight for this successor only: native access/runtime, context limits and
+effective S0 loading. Use the existing preflight-only guard with spending_approved
+false and the exact runtime checkout 93b89ce38be743acd6a3aa38177237ce99a3eeeb.
+No generation, training, diagnostic forwards, spending-wallet activation or next
+stage is approved. Historical spending remains unknown. Operator submission uses
+sbatch; no cluster job was submitted locally. GPU outcome remains unverified.
+
+
+### 2026-11-15: GPU preflight returned; bounded assay smoke approval
+
+Returned AAI job 1121700 completed 0:0 in 2m52s. It reports ready=true,
+model_calls=0, spending_authorized=false and verified persistence. PRIVATE export
+SHA256 f786233bfeb27b1476e3cd94ce653b79a1c0482ebf4b5785f32af3f1323abea9
+binds the preflight artifact; this is user-returned evidence, not a locally
+imported archive. The user replied “proceed” to the explicit included 24-generation
+assay-smoke approval/commands proposal. Scope is assay-smoke only for successor
+024f9ef5ffccb9f90bcebab2818971964943b2892aa7ed8e1932ef02e55659f9,
+maximum 24 generations / 12,288 reserved output tokens, zero training updates
+or diagnostic scoring forwards. Counts remain within the existing assay wallet.
+No remaining assay, policy, evaluation, historical-budget reset or automatic retry
+is authorized. Preparation binds the actual saved preflight bytes to the exact
+returned PRIVATE archive, and rejects existing non-preflight approvals/attempts.
+The operator submits via sbatch; no job/model operation was executed locally.
+
+
+### 2026-11-15: invalid-packet diagnostic and collection scope
+
+Returned CPU job 1122664 verified 24 smoke events in PRIVATE archive
+60051bc1042f7a016e7792aebbcccb1a50d4b63793da065330b09c6c62f9c1a5.
+The one invalid event is Q/private/private, EOS true, 12 output tokens, invalid
+JSON. All 12 revisions and four final readouts are valid-format; correctness is
+not established. No packet repair, retry or methodological change is warranted
+by this observation. Existing invalid evidence remains unchanged.
+
+User replied “proceed” to explicit collect-only preparation: remaining 62 frozen
+allocation probes, reuse all 24 smoke calls, at most 744 additional generations
+(380,928 reserved output tokens), cumulative collection maximum 768 generations.
+No branch updates, scoring, policy stages or evaluation are authorized. Historical
+spending remains unknown. The source-pinned collect runner enumerates the fixed
+64-task graph and reuses exact physical requests through its existing wallet;
+each task contributes at most 12 calls, with rejected attacks reducing execution.
+Submission instructions bind the reviewed smoke archive and require the exact
+24-attempt starting boundary. This local work submits no Slurm jobs.
+
+
+### 2026-11-15: first temporary-branch proposal (not execution approval)
+
+Prepared in response to the user's request to proceed with the first bounded
+branch proposal. Proposed scope: branch/block=0/family=Q only, under successor
+plan 024f9ef5ffccb9f90bcebab2818971964943b2892aa7ed8e1932ef02e55659f9
+and runtime commit 93b89ce38be743acd6a3aa38177237ce99a3eeeb. Start from
+exact joint-trained Q S0; block 0 is the frozen first ARC fitting block. This is
+fixed order, not selection based on the observed Q formatting failures.
+
+The existing runner orders block fit tasks with temporary seed 17 and performs
+eight batches of eight: eight optimizer updates, 64 supervised training forwards.
+It saves a separate branch checkpoint and restores the live Q adapter and RNG
+state in finally; rollback.json must mark complete and equal initial/restored
+hashes before branch probe generation. The saved branch is then loaded for Q
+only; L/M use S0 and R is pristine. No fitting uses probe tokens.
+
+With 24 ARC probes and 17 already accepted frozen attacks, maximum additional
+generation work is 24 new Q private packets + 41 conditions * (3 revisions +
+1 readout) = 188, reserving 96,256 output tokens. The 48 L/M private calls reuse
+exact S0 requests. No new attacks or rejected-attack retries. The full predeclared
+all-attacks-accepted branch ceiling is 216; the reviewed observed-support scope
+is tighter at 188 and must not authorize expansion. Cumulative maximum after
+this branch: 896 generations, 458,752 reserved output tokens, eight updates and
+64 supervised forwards. Zero diagnostic scoring forwards. Prior unknown
+spending remains separate and unknown.
+
+Pre-submission preparation must bind the exact completed collection PRIVATE
+archive f9793a06b1a0cb431552117e8847d1b9f48d636d317cb319371558a606be40f1,
+preflight receipt 1e697a75aec6dd47fe2669235b1597f2010c85b05158f773c097880dd33ea8bb,
+verify 708 committed and zero unresolved at start, absence of earlier branch
+work, and the actual block/probe/attack counts. A mismatch stops preparation; no
+re-plan, replacement data or budget increase. Scope approval must be separate
+from this proposal, permit only branch 0/Q, and export/stop. No score, next branch,
+policy training, evaluation or Stage III is included. No job submitted, weights
+loaded, or approval signature fabricated by this local preparation.
+
+
+### 2026-11-15: explicit first-branch authorization
+
+User answered “proceed” to the exact block-0/Q proposal: 8 updates, 64 supervised
+forwards, at most 188 additional generations / 96,256 reserved output tokens,
+zero diagnostic scoring, export and stop. This authorizes only that branch on
+plan 024f9ef5ffccb9f90bcebab2818971964943b2892aa7ed8e1932ef02e55659f9.
+The operator's approval binds the preflight and reviewed collection evidence,
+retains unknown historical spending, and cannot approve other branch scopes.
+No Slurm job is submitted locally. Prospective GPQA/LogiQA evaluation remains
+sealed. No repair of existing Q invalid packets or prompt/parser changes.
+
+
+### 2026-11-15: returned Q checkpoint review and scoped block-0/L approval
+
+Returned read-only job1122777 completed0:0. Recovery archive
+078a8f6704b3e2bb0ab4c868567639af61f8447ee93f1b77ac4c1be456445a22
+verified; prior708 events unchanged, eight updates/64forwards/188generations.
+Recorded rollback initial/restored hashes equal Q S0. Step8 tensor file hash
+8ff040321b91cf5bbe46a685737cae42d2cd0934fd6b78b452dd449b6c773299 verified.
+Adapter hash 9431cc6603a1e0aecfd3fa82f240f7afacfd4a46984d64147946b379cb058f07
+is recorded, not independently recomputed. Q private packets:16invalid/24;
+123 revisions valid-format, final readouts40ok/1abstention. No efficacy inference
+or unmatched comparison to the whole64-task baseline.
+
+User replied “proceed” to single block-0/L execution preparation with the same
+eight-update/188-generation maximum and export stop. Start L from its own S0,
+not Q branch weights; Q/M use S0 in probe generation, R pristine. Additional
+limits:8updates,64supervisedforwards,188generations,96,256reservedoutputtokens,
+zero diagnostic scores. Cumulative maxima:1084generations,16updates,128forwards,
+555,008reservedtokens. Verify original Q branch records remain unchanged and
+no L attempt exists. No other branch, scoring, policy or evaluation is approved.
+No job submitted locally. Historical spending remains unknown.
+
+
+### 2026-11-15: returned L checkpoint review and block-0/M scope
+
+Returned CPU job1122783 verified L recovery archive
+8276191f8b0448cdd6069ae790f53c744bf5ddd9fe4de9d84f5c693d265f59c9,
+prior904events unchanged, recorded L S0 rollback matching, step8 tensor checksum
+24b045cb32126eee7e4232ef70d75ad598e748d9e0ae205c50af04dcc8d01333.
+Recorded trained adapter5e065a2637ab79a30f0f0bc67fdbbeb37991ca19c4b730a7c3f8b9f7d66302dc
+was not independently recomputed. New generation counts187ok/1abstention, no
+invalid. No fitting/probe overlap reported. No contribution-gain claim.
+
+User replied proceed to single block-0/M execution preparation: own M S0,
+eight updates/64supervisedforwards,at most188generations/96256reservedtokens,
+zero scoring, export and stop. Preserve both prior branches, use Q/L S0 for
+M-branch probes, pristine R, reuse unchanged packets/attacks. Starting boundary
+1084generations+16updates=1100events; maximum resulting1272generations,24updates,
+192supervisedforwards,651264reservedtokens. No other block or scoring authorized.
+No job submitted locally; historical spending remains unknown.
+
+
+### 2026-11-15: M receipt review and first block-1 approval
+
+Returned job1122787 completed0:0. It verifies the M recovery archive
+96fe3496cf542868275cf6432bc5d0cd0824a6d99c8915dd835fb4531d2280aa,
+prior1100events unchanged, M initial/restored S0 hashes equal, step8 tensor SHA
+5b2dd1b081eb3323add10e6bd29c60c72ccbec28c7c58c9f59b934012998f5bf.
+Recorded trained adapter61d188640a021bd857ea18e2e2d4d60c1c460817eb0fc16f8df47269d4c84805
+was not independently recomputed. All24 M private and41 R final completions are
+valid-format; the sole new invalid is M revision. No causal/performance claim.
+
+User replied proceed to single block-1/Q execution preparation: independent Q S0,
+frozen block1 order/seed,8updates/64supervisedforwards,maximum188generations and
+96256reservedtokens,zero scoring, export and stop. Must preserve all block0
+branches and exact1296-event starting boundary (1272generations+24updates),
+verify block1 is ARC with24 shared probes and17 accepted existing attacks.
+Maximum cumulative1460generations,32updates,256supervisedforwards,747520reserved
+tokens. No later branch or scoring approved; historical spending staysunknown.
+No job submitted locally; no runtime-source change.
+
+
+### 2026-11-15: returned block-1/Q review and scoped block-1/L approval
+
+Returned job1122794 completed0:0. Prior1296events unchanged, Q S0 rollback
+record matches, step8 tensor SHAe545123bb5326e882352e7a6c2bc724011be48a8d8287d59951a921c326241bd
+verified. Trained adapter65756825c79f4d1e203ad101e06e609794376ee0e4701c6e9844950e33c56946
+recorded, not independently recomputed. Q private14ok/10invalid; all123revisions
+valid-format, R40ok/1abstention. No scoring or efficacy inference.
+
+User replied proceed to block-1/L only, independently starting L S0. Limits
+8updates/64supervisedforwards/188newgenerations/96256reservedoutputtokens;
+zero diagnostic scores, export and stop. Starting1492events (1460generations+
+32updates); preserve block0 QLM and block1 Q. Resulting maxima1648generations,
+40updates,320forwards,843776reservedtokens. Check actual24ARCprobes/17accepted
+attacks and no prior1L attempt. No other branch/scoring/policy/evaluation approved.
+No local Slurm submission or model operation; historical spending staysunknown.
+
+
+### 2026-11-15: block-1/L review returned and block-1/M approved
+
+Returned job1122812 completed0:0. Verified L recovery
+f19ae47b2483e65a9df4c8b3d53b539db3dc0a049650c56f468116abb2b0f4d7,
+prior1492events unchanged, recorded S0 rollback matching. Step8 tensor checksum
+6216453c4b82b370c9b933c553570e7c8b0c818f0e476f5ee323227cc2e125eb
+verified; adapter c260700400688e6ec02b745b67d2e4b42c7ae1e069c9440f50c26dac4dda3e5a
+recorded, not recomputed. All24private and123revision packets valid-format,
+40valid readouts/1abstention. No efficacy/scoring claim.
+
+User explicitly approved block1/M only: independent M S0,8updates/64supervised
+forwards,at most188generations/96256reservedtokens,zero scoring,export and stop.
+Starting1688events (1648generations+40updates); preserve block0 QLM and block1 QL.
+Maximum resulting1836generations,48updates,384forwards,940032reservedtokens.
+Check existing17accepted ARC attacks and24probe cohort; reject earlier M work.
+No later block/scoring/policy/evaluation authorized. No local cluster submission.
+Historical spending remains unknown.
+
+
+### 2026-11-16: block-1/M CPU review returned; block-2/Q approved
+
+User returned job 1123067 (COMPLETED 0:0, 10s). The private-side diagnostic
+verified recovery archive a997b13821632ef9c22a1bbed7493d83a3e3c8218d0c953b23f04c2d76cb1bd8,
+prior 1,688 events unchanged, matching M S0 rollback, and step-8 tensor checksum
+0abad716771a6cb91ee03a7ebcd5d625ed4946c523bf1623de88ac4d0ae9ad47.
+Recorded trained adapter e1c16e19451faf1815e2bade5d8ac00e8a4e03508ed99a5783bd569e8a3ff78a
+was not recomputed from tensors. 24 probes, no training overlap; 187 valid-format
+outputs and one readout abstention. No efficacy inference or scoring.
+
+User explicitly approved block 2/Q only, independently from original Q S0:
+8 updates, 64 supervised forwards, at most 188 generations / 96,256 reserved
+output tokens, no scoring, export and stop. Starting boundary: 1,836 generations,
+48 updates, 384 forwards, 1,884 events. Resulting maxima: 2,024 generations,
+56 updates, 448 forwards, 2,080 events, 1,036,288 reserved output tokens.
+Preserve all block 0/1 QLM branches. No later stage authorized; historical spending
+remains unknown. Commands are for user submission; no local cluster work performed.
+
+
+### 2026-11-16: block-2/Q review returned; block-2/L approved
+
+Returned CPU job 1123124 completed 0:0 in 10s. Recovery archive
+e3ca5bee9f8a25e431b9b0877e98cbab538ab2b2b2a6a38bd818ad13e2089f2c
+verified; prior 1,884 events unchanged and recorded Q S0 rollback matched.
+Step-8 tensor checksum 14a550dba72cabc1a7bf8a46c9717f5ccc5470dd948da9a6aedba95cb0e19950
+verified; recorded adapter 826240dcc05126bee31d8c87ef8487bb4912e80586610dc488d53faa73d53f46
+not recomputed. Q private outputs: 23 invalid / 1 valid of 24; all 123 revisions
+and 41 readouts valid-format. No probe/training overlap. Invalid completions
+remain failures; format counts do not establish accuracy or causal training harm.
+
+User replied proceed to explicit block-2/L-only approval question. Authorized
+original L S0, 8 updates / 64 supervised forwards, at most 188 generations /
+96,256 reserved output tokens, zero diagnostic scores, export and stop. Starting
+boundary 2,024 generations, 56 updates, 448 forwards, 2,080 events. Resulting
+maxima 2,212 generations, 64 updates, 512 forwards, 2,276 events, 1,132,544
+reserved output tokens. Preserve blocks 0/1 QLM and block 2/Q. No later stage
+authorized; no local submission or model work. Historical spending stays unknown.
+
+
+### 2026-11-16: block-2/L review returned; block-2/M approved
+
+Returned job 1123178 completed 0:0 in 9s. Private-side diagnostic verified
+recovery b88622912635c484d304a0b4cd423675da7911afdf2853aae6dd763e5a6f7ce3,
+prior 2,080 events unchanged, matching L S0 rollback, and step-8 tensor checksum
+994fa30c2cf944e98f9d9a66ac1487a995e30fc97e6e881e07e1b23fa38baabb.
+Adapter 1f66c4f8f48e6240a4bb393473ec0b52c7fd2a28377080f0d3601cddbb73c1ad
+is recorded, not independently recomputed. All 24 private and 123 revision
+outputs valid-format; readout 39 valid / two abstentions. No probe/training overlap.
+
+User explicitly approved block 2/M only from original M S0: 8 updates, 64
+supervised forwards, at most 188 generations / 96,256 reserved output tokens,
+zero diagnostic scoring, export and stop. Preserve blocks 0/1 QLM and 2/QL.
+Starting 2,212 generations, 64 updates, 512 forwards, 2,276 events. Resulting
+maxima 2,400 generations, 72 updates, 576 forwards, 2,472 events, 1,228,800
+reserved tokens. No later stage authorized, no local cluster/model execution.
+Historical spending remains unknown; formatting is not an efficacy result.
+
+
+### 2026-11-16: ARC reviews complete; approved LogiQA block-3/Q wrapper
+
+Returned job 1123408 verified block-2/M recovery
+9bfa530b37ab4bbe671a2b72a40dd62b5ce4e53d13bb3d275b618b780bdf71ce,
+prior 2,276 events unchanged, recorded M S0 rollback and step-8 tensor checksum
+70a8753e00800295265169e7d88dfdbe7289a91aa43efd403c2e82c98896cf8e.
+Recorded trained adapter d2ed5de39060130b6a4a8dd28b97f6d9712c6c1b524a574bc924d2d6bc2f9ad2
+was not independently recomputed. One M revision invalid; all 24 private and
+41 readout outputs valid-format. No probe/training overlap.
+
+User approved block 3/Q only. Prepared tools/aai_documented_branch_3_q.sbatch
+from the actual supplied block-2/M wrapper. Pinned runtime unchanged. Checks
+all nine ARC branches, reviewed archive and 2,472-event starting boundary;
+uses original Q S0, block 3 LogiQA, 40 probes / 32 accepted attacks, unchanged
+64-example deterministic training selection. New scope: 8 updates, 64 forwards,
+328 generations / 167,936 reserved output tokens, zero diagnostic scores.
+Maximum resulting totals: 2,728 generations, 80 updates, 640 forwards, 2,808
+events and 1,396,736 reserved output tokens. Export and stop; no later scope.
+Shell syntax and embedded Python syntax validated; AST checks confirmed all
+three target dictionaries select block 3/Q. Not submitted or executed locally.
+Historical spending remains unknown. Wrapper validation is not model validation.
