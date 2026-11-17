@@ -2486,3 +2486,26 @@ events and 1,396,736 reserved output tokens. Export and stop; no later scope.
 Shell syntax and embedded Python syntax validated; AST checks confirmed all
 three target dictionaries select block 3/Q. Not submitted or executed locally.
 Historical spending remains unknown. Wrapper validation is not model validation.
+
+
+### 2026-11-16: block-3/Q reviewed; block-3/L wrapper approved
+
+Returned job 1123443 completed 0:0 in 11s. Recovery
+8626165be0adc981e17ec85c54398f5649d307628ec1fe7371e1e3ef3131c81c
+verified; prior 2,472 events unchanged; recorded Q S0 rollback matched; tensor
+checksum 8ed4c2d1c25cf8914969529fdf36110e50c93f450e93c5dcef21b63578e7aaf6 verified.
+Recorded adapter bed4a03e803786d83ac3c9d54fc562e667d02fad6489b595114dcc3523c7ec5a
+not independently recomputed. 40 probes, no training overlap. Invalids: nine Q
+private, one Q revision, one readout; one readout abstention. No efficacy claim.
+
+User explicitly approved block 3/L only. Prepared tools/aai_documented_branch_3_l.sbatch
+from actual checked-in Q wrapper: original L S0, 8 updates / 64 forwards,
+328 generations / 167,936 reserved tokens, zero diagnostic scores, export and stop.
+Preserves nine ARC branches and 3/Q; requires exact reviewed post-3/Q archive
+3f1ba6b32582f433cc011764d36d4ed441586e59555ff2e2b7f5cf01e4d3964d
+and 2,808-event boundary. Unchanged LogiQA 40 probes / 32 accepted attacks.
+Resulting maxima: 3,056 generations, 88 updates, 704 forwards, 3,144 events,
+1,564,672 reserved output tokens. Shell and embedded Python syntax passed;
+AST checks verified approval/config/block index, boundary and budget checks.
+Pinned model runtime unchanged; no local submission, training or inference.
+No later execution scope authorized; historical spending remains unknown.

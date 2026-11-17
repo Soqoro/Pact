@@ -476,3 +476,22 @@ prior 2,276 events remain pending private-side CPU review. Recovery checksum:
 Sanitized data do not locate the invalid output by model/phase. No accuracy or
 contribution-gain inference; no LogiQA branch or scoring authorization inferred.
 Historical spending and remaining historical budget remain unknown.
+
+
+### 2026-11-16: block-3/Q sanitized accounting verified
+
+Verified SANITIZED-1794839260628771575.zip SHA256
+8de0a474a2f93280828c65b977459c1f8dfa3b8b3767c4805d877e2ec70b4779,
+unique four-member inventory and both payload checksums. Compared with verified
+post-2/M summary: 328 generations, 8 updates, 64 supervised forwards, 167,936
+reserved output tokens added; 316 valid-format / 11 invalid / one abstention.
+Cumulative 2,728 generations, 80 updates, 640 forwards, 2,808 committed operations,
+zero unresolved, recovery_safe=true, zero scores and no policy work. Formats
+total 2,618 ok / 95 invalid / 15 abstentions. Input tokens 902,828; output tokens
+120,855; reserved output tokens 1,396,736.
+Returned job 1123423 completed 0:0 in 17m31s. Latest private-side review remains
+pending for rollback, checkpoint bytes, prior 2,472 events and actor/phase format
+attribution. Recovery archive SHA256
+8626165be0adc981e17ec85c54398f5649d307628ec1fe7371e1e3ef3131c81c.
+No accuracy or allocation-gain inference. No next branch authorized by this
+review; historical spending and remaining historical budget remain unknown.
