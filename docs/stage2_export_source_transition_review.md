@@ -513,3 +513,28 @@ actor/phase attribution remain pending private-side CPU review of recovery
 a1982a2fa027ae6cfbeb03824334d4f2c582c7b76a1c270eea2ed63d89d52572.
 No accuracy or contribution-gain inference; no next branch authorized. Historical
 spending and remaining historical budget remain unknown.
+
+
+### 2026-11-17: completed remaining-branch batch handoff verified
+
+Returned job 1123762 completed 0:0 in 6h03m20s, reporting all 13 remaining
+branches verified. Locally verified SANITIZED-1794916858241229664.zip SHA256
+b05fcacfdde6fd886eb34f5ec76126775edba5661e9ad187e17469a9da2d677b,
+unique four-member inventory and both payload checksums. Against post-3/L:
+4,264 generations, 104 updates, 832 training forwards; 4,176 valid-format,
+73 invalid, 15 abstentions. Cumulative 7,320 generations, 192 updates, 1,536
+training forwards, 7,512 committed operations, zero unresolved, recovery_safe
+true; 7,118 ok / 169 invalid / 33 abstentions. Input tokens 2,946,812, output
+tokens 350,972, reserved output tokens 3,747,840. Zero scores or policy work.
+All 24 branches completed according to returned batch/private-side checks;
+SANITIZED inspection itself does not independently re-read private checkpoints.
+
+Next proposed scope is score only. Native scorer uses pristine R with no
+adapters and no gradients to score saved packets and answer-prefix likelihood,
+not to generate or update weights. Actual expected diagnostic forwards:
+S0: 2*(24+40)+17+32 = 177; nine ARC branches: 9*(2*24+17)=585;
+fifteen LogiQA branches: 15*(2*40+32)=1,680; total 2,442, within the frozen
+2,640 ceiling. Zero new generations, training forwards or optimizer updates.
+Scoring is not yet approved by the batch authorization, which explicitly
+excluded it. No policy-freeze/training/evaluation authority inferred. Historical
+spending remains unknown and source limitations unchanged.

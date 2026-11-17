@@ -3686,3 +3686,54 @@ spending overrun/later work, scope and immutable approval writes. Existing
 14 documented-execution tests also passed. Shell syntax and Python compilation
 passed; git diff --check passed. Fixture checks are not real tensor/model execution.
 No job submitted, model loaded, training performed or dataset acquired locally.
+
+
+### 2026-11-17: completed remaining-branch batch handoff verified
+
+Returned job 1123762 completed 0:0 in 6h03m20s, reporting all 13 remaining
+branches verified. Locally verified SANITIZED-1794916858241229664.zip SHA256
+b05fcacfdde6fd886eb34f5ec76126775edba5661e9ad187e17469a9da2d677b,
+unique four-member inventory and both payload checksums. Against post-3/L:
+4,264 generations, 104 updates, 832 training forwards; 4,176 valid-format,
+73 invalid, 15 abstentions. Cumulative 7,320 generations, 192 updates, 1,536
+training forwards, 7,512 committed operations, zero unresolved, recovery_safe
+true; 7,118 ok / 169 invalid / 33 abstentions. Input tokens 2,946,812, output
+tokens 350,972, reserved output tokens 3,747,840. Zero scores or policy work.
+All 24 branches completed according to returned batch/private-side checks;
+SANITIZED inspection itself does not independently re-read private checkpoints.
+
+Next proposed scope is score only. Native scorer uses pristine R with no
+adapters and no gradients to score saved packets and answer-prefix likelihood,
+not to generate or update weights. Actual expected diagnostic forwards:
+S0: 2*(24+40)+17+32 = 177; nine ARC branches: 9*(2*24+17)=585;
+fifteen LogiQA branches: 15*(2*40+32)=1,680; total 2,442, within the frozen
+2,640 ceiling. Zero new generations, training forwards or optimizer updates.
+Scoring is not yet approved by the batch authorization, which explicitly
+excluded it. No policy-freeze/training/evaluation authority inferred. Historical
+spending remains unknown and source limitations unchanged.
+
+
+### 2026-11-17: approved scoring-only job prepared
+
+User explicitly approved score only after verified final batch handoff. Added
+tools/aai_documented_score.py and .sbatch, reusing read-only batch helpers.
+Scientific code and pinned runtime remain unchanged. Initial boundary requires
+final PRIVATE 8331213b321fc94dfd68f8bc3b291b3ec680da03c4e3c068bd56db388230874c,
+all 24 exact branch contracts/checkpoints/rollback records, 7,512 events, zero
+scores, and unchanged plan/preflight. Recomputes exact 2,442 logical scoring
+requests from saved probes and accepted attacks before any GPU dispatch.
+
+Separate score-scope approval binds user decision. Native pristine R scorer
+runs with no gradients; no generation or optimizer operation authorized. After
+execution, verifies all score intents/events/logical requests, pristine R identity,
+finite nonnegative raw NLL and cap10, score file consistency, all prior artifacts
+and events preserved, exact accounting (9,954 events, 2,442 scores), durable
+exports and snapshot objects. Rejects policy work or extra stage records.
+No retry/resume; existing audit directory blocks repeated automatic submission.
+Final sanitized receipt and logs saved under score-only-v1 in durable run root.
+
+Validation: four new CPU tests passed (actual graph counts/changed attacks, loss
+contract, extra training rejection, prior event mutation); seven batch guard
+tests passed. Shell syntax, Python compilation and git diff --check passed.
+No local GPU use, job submission, model download or scientific execution.
+Scoring does not authorize policy-freeze or later training/evaluation.
