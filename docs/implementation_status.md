@@ -3621,3 +3621,68 @@ Resulting maxima: 3,056 generations, 88 updates, 704 forwards, 3,144 events,
 AST checks verified approval/config/block index, boundary and budget checks.
 Pinned model runtime unchanged; no local submission, training or inference.
 No later execution scope authorized; historical spending remains unknown.
+
+
+### 2026-11-17: block-3/L sanitized accounting verified
+
+Locally verified SANITIZED-1794894062748675952.zip SHA256
+01271b66256505453591a3a586d4494d42a28e4e14a4abe5ac8826f8a43d1b78,
+unique four-member inventory and both payload checksums. Against verified
+post-3/Q summary: 328 generations, 8 updates, 64 supervised forwards and 167,936
+reserved output tokens added; 324 valid-format / one invalid / three abstentions.
+Cumulative: 3,056 generations, 88 updates, 704 forwards, 3,144 committed operations;
+zero unresolved, recovery_safe=true, no scores or policy work. Formats total
+2,942 ok / 96 invalid / 18 abstentions. Input tokens 1,049,111; output tokens
+136,865; reserved output tokens 1,564,672. Returned job 1123732 completed 0:0
+in 22m37s. Rollback, checkpoint bytes, preservation of prior 2,808 events and
+actor/phase attribution remain pending private-side CPU review of recovery
+a1982a2fa027ae6cfbeb03824334d4f2c582c7b76a1c270eea2ed63d89d52572.
+No accuracy or contribution-gain inference; no next branch authorized. Historical
+spending and remaining historical budget remain unknown.
+
+
+### 2026-11-17: explicitly approved remaining-assay batch
+
+User: "approve, just do a batch scope, this one job upload review cycle is taking
+too long." Scope interpreted and communicated as remaining 13 assay branches
+only: 3/M then 4,5,6,7 Q/L/M. No score, policy-freeze, continuation, evaluation
+or Stage III authorization. Each native stage still has a distinct exact-scope
+approval and exports; wrapper automates the formerly manual inter-branch review.
+
+Returned block-3/L CPU job 1123743 completed 0:0: prior 2,808 events unchanged,
+recorded L S0 rollback matched, step8 tensor checksum
+5038188e0a05dd1ca6e7debabffa4a56574f401cce837f786daa035b33e14e93 verified.
+Recorded adapter d0f255a31512baf7eff67cabcd6cd753cdfae158f7a7e0e50c79038888a1209c
+not independently recomputed. 40 private / 216 revisions valid; readout
+68 valid / one invalid / three abstentions. No accuracy claim.
+
+Added stdlib orchestration tools/aai_documented_remaining_batch.py and .sbatch.
+Scientific src and pinned runtime commit 93b89ce38be743acd6a3aa38177237ce99a3eeeb
+remain unchanged. Exact initial post-3/L PRIVATE checksum
+3aa1074a336e6992ba67518381389065d81d24d6f960452219c53ef6d7d18ae9
+and 3,144 events required. All eleven completed schedules, rollback records and
+checkpoint files verified before starting. Remaining branches are checked against
+LogiQA 40 probes / 32 accepted attacks and the unchanged 64-example selection.
+
+Batch added ceilings: 4,264 generations, 104 updates, 832 training forwards,
+2,183,168 reserved tokens; per branch 328/8/64/167,936. Final expected cumulative
+7,320 generations, 192 updates, 1,536 forwards, 7,512 events and 3,747,840 reserved
+tokens. Historical spending remains unknown; no historical wallet reset.
+
+After each branch: require exact accounting, complete matching intents/events,
+prior event/attempt hashes and prior protected artifacts unchanged, matching
+S0 rollback, exact deterministic schedule and probes, verified step8 checkpoint
+bytes/identity, all three durable exports hash-checked against scratch, and latest
+snapshot receipt/object integrity. Formats are reported without retry/repair;
+scientific invalidity is not a technical dispatch failure. A failed process or
+check stops the whole batch. Audit directory prevents automatic resubmission;
+no resume/skip-completed feature. Batch lock prevents duplicate batch launch.
+Logs and per-branch receipts retained in durable private batch audit directory.
+Final sanitized summary identifies last handoff bundles; no auto scoring.
+
+Validation: seven CPU guard tests passed, including archive/scratch tampering,
+checkpoint rollback/tensor corruption, unresolved intents, prior event mutation,
+spending overrun/later work, scope and immutable approval writes. Existing
+14 documented-execution tests also passed. Shell syntax and Python compilation
+passed; git diff --check passed. Fixture checks are not real tensor/model execution.
+No job submitted, model loaded, training performed or dataset acquired locally.

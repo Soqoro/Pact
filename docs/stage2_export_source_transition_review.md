@@ -495,3 +495,21 @@ attribution. Recovery archive SHA256
 8626165be0adc981e17ec85c54398f5649d307628ec1fe7371e1e3ef3131c81c.
 No accuracy or allocation-gain inference. No next branch authorized by this
 review; historical spending and remaining historical budget remain unknown.
+
+
+### 2026-11-17: block-3/L sanitized accounting verified
+
+Locally verified SANITIZED-1794894062748675952.zip SHA256
+01271b66256505453591a3a586d4494d42a28e4e14a4abe5ac8826f8a43d1b78,
+unique four-member inventory and both payload checksums. Against verified
+post-3/Q summary: 328 generations, 8 updates, 64 supervised forwards and 167,936
+reserved output tokens added; 324 valid-format / one invalid / three abstentions.
+Cumulative: 3,056 generations, 88 updates, 704 forwards, 3,144 committed operations;
+zero unresolved, recovery_safe=true, no scores or policy work. Formats total
+2,942 ok / 96 invalid / 18 abstentions. Input tokens 1,049,111; output tokens
+136,865; reserved output tokens 1,564,672. Returned job 1123732 completed 0:0
+in 22m37s. Rollback, checkpoint bytes, preservation of prior 2,808 events and
+actor/phase attribution remain pending private-side CPU review of recovery
+a1982a2fa027ae6cfbeb03824334d4f2c582c7b76a1c270eea2ed63d89d52572.
+No accuracy or contribution-gain inference; no next branch authorized. Historical
+spending and remaining historical budget remain unknown.
