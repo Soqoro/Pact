@@ -3737,3 +3737,31 @@ contract, extra training rejection, prior event mutation); seven batch guard
 tests passed. Shell syntax, Python compilation and git diff --check passed.
 No local GPU use, job submission, model download or scientific execution.
 Scoring does not authorize policy-freeze or later training/evaluation.
+
+### 2026-11-17: scored assay SANITIZED handoff reviewed
+
+Verified scored SANITIZED ZIP cbf23e81ba8d81362471089c0839c17f1467caf101b3c91d89bade3c0abd0e7d
+and payload checksums. Remote job 1123980 reports 2,442 diagnostic scoring forwards,
+no additional generation/training, and preservation of the prior 7,512 events.
+Local analysis reads sanitized aggregates only. All 24 branches have complete
+prescribed scoring support (ARC 24 clean/17 accepted attacks; LogiQA 40/32).
+ARC attacked correctness improves in eight branches and ties in one. LogiQA M
+attacked correctness declines in all five; Q improves in five, L in four with
+one tie. These are repeated allocation probes, not prospective policy results.
+See stage2_scored_assay_review_2026_11_17.md for tables, NLL sign and limitations.
+No GPU work, policy freeze, training or evaluation performed by this review.
+
+### 2026-11-17: CPU policy-freeze wrapper prepared
+
+Added tools/aai_documented_policy_freeze.py and .sbatch. Checks the scored PRIVATE
+archive 33f170101b18d949054597fd8055a2072408080b9611f84d26b328ccc272f87d,
+all retained branch checkpoints, exact 2,442 score records and 9,954 events;
+uses the original pinned compiler, verifies five policies, quotas, S0, complete
+schedule aliases and reproducibility. Requires unchanged physical accounting,
+prior evidence, verified durable bundles and snapshot. No GPU requested, no
+--nv bind, CUDA visibility empty and Hugging Face offline. Export and stop.
+
+Seven targeted CPU tests passed with PYTHONPATH=src (three new policy guards and
+four scoring guards); shell syntax checked. An initial test invocation without
+PYTHONPATH could not import pact; rerun with the repository source path passed.
+Cluster execution and actual policy freeze remain unexecuted locally.

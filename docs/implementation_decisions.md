@@ -2582,3 +2582,14 @@ contract, extra training rejection, prior event mutation); seven batch guard
 tests passed. Shell syntax, Python compilation and git diff --check passed.
 No local GPU use, job submission, model download or scientific execution.
 Scoring does not authorize policy-freeze or later training/evaluation.
+
+### 2026-11-17: CPU-only policy freeze after scored-assay review
+
+User replied “proceed” to review/freeze of the five predeclared policies. Added a
+separate CPU Slurm wrapper bound to the completed scored PRIVATE archive and
+original scientific checkout. It invokes only the existing policy-freeze stage;
+no solver, scientific source, S0, seed, policy or analysis changes. The existing
+non-preflight guard requires spending_approved=true even for this CPU stage;
+the recorded decision explicitly narrows this field to zero new physical work,
+and the wrapper verifies unchanged events and accounting. It grants no later
+continuation/evaluation scope. No automatic retry or next-stage submission.
