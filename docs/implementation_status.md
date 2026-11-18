@@ -3765,3 +3765,37 @@ Seven targeted CPU tests passed with PYTHONPATH=src (three new policy guards and
 four scoring guards); shell syntax checked. An initial test invocation without
 PYTHONPATH could not import pact; rerun with the repository source path passed.
 Cluster execution and actual policy freeze remain unexecuted locally.
+
+### 2026-11-18: remote CPU policy freeze completed
+
+User-supplied Slurm output reports job 1124183 COMPLETED 0:0 in 5m36s,
+POLICIES_FROZEN_NO_NEW_PHYSICAL_WORK. Policies SHA256:
+4a45e3ddfea573566fd31383b2530d14757640278060c30e143d25dd5b437896.
+All five policies and two seeds have distinct full-contract identities (10 teams);
+no unsupported terminal rows and shuffle is distinct. Primary remains terminal_block.
+Its extra-update totals Q/L/M are ARC 3/13/20 and LogiQA 34/24/2, total 37/37/22.
+With 64 base updates per actor this yields 101/101/86 updates per primary team.
+Reported prior 9,954 events unchanged; zero new generations, scores, supervised
+forwards or updates. PRIVATE/SANITIZED/RECOVERY and snapshot verified by remote
+wrapper. This local review checked supplied output arithmetic, not archive bytes.
+SANITIZED expected hash: 1d5160aea799df73c5b41dbdc68d3d82b715404ef1cf5f8e94b733d7e495e010.
+Continuation training and prospective evaluation remain unexecuted/unapproved
+by this freeze. Surrogate-only allocations do not establish held-out efficacy.
+
+### 2026-11-18: policy-training batch prepared locally
+
+Added tools/aai_documented_training_batch.py and .sbatch. Starting boundary binds
+policy SHA 4a45e3ddfea573566fd31383b2530d14757640278060c30e143d25dd5b437896
+and PRIVATE SHA 7e0f602afd38bbf0050c809500c27047d6c6cff128a46e57b98383b7d2d8a2be.
+Requires 9,954 verified events and no prior continuation work. Recomputes all 30
+schedule counts and fit/probe separation; ten distinct frozen teams required.
+Per-fit checks bind every new update to exact contract/path/batch/step, verify
+final checkpoint bytes and status, preserve earlier evidence, reconcile physical
+counters, verify all three durable exports and latest safe snapshot. Adapter hash
+is reported as recorded, not independently recomputed by the host wrapper.
+Stops before policy lock or evaluation, and blocks automatic re-entry.
+
+Validation: 12 targeted documented-stage CPU tests passed, including five new
+training-batch tests; after adding returned-status/continuation inventory/stage
+checks, five training-batch tests passed again. Bash syntax and diff whitespace
+checks passed. No model execution, Slurm submission, commits or pushes performed.

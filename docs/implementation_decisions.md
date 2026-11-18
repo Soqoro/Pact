@@ -2593,3 +2593,15 @@ non-preflight guard requires spending_approved=true even for this CPU stage;
 the recorded decision explicitly narrows this field to zero new physical work,
 and the wrapper verifies unchanged events and accounting. It grants no later
 continuation/evaluation scope. No automatic retry or next-stage submission.
+
+### 2026-11-18: approved frozen-policy training batch
+
+User approved the proposed ten-team/30-fit batch after reviewing policy freeze.
+Scope is 2,880 new policy updates / 23,040 supervised forwards, zero generations
+or diagnostic scores. Every fit independently starts from recorded S0 using the
+existing frozen per-policy/seed/family schedule. Use pinned scientific commit
+93b89ce38be743acd6a3aa38177237ce99a3eeeb; do not change methodology or source.
+Orchestration issues only exact continuation approvals within this batch, exports
+and verifies each fit, and stops on any failure without retry/resume. Policy lock
+and evaluation are excluded. Historical spending remains unknown. The seven-day
+Slurm walltime is an operational deadline, not an expanded scientific budget.
