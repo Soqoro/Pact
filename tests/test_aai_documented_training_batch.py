@@ -47,6 +47,14 @@ class TrainingBatchGuards(unittest.TestCase):
             (root/'events/shards'/f'{key}.json').write_text(json.dumps(event));(root/'attempts'/f'{key}.json').write_text(json.dumps(intent))
             t.delta(root,{}, {key:None},path,contract,schedule)
             with self.assertRaises(t.b.CheckFailed):t.delta(root,{}, {key:None},root/'continuations/uniform/113/L',contract,schedule)
+    def test_resume_counts_only_suffix(self):
+        prior={'original':('hash','intent')}
+        t.delta(None,prior,prior,None,None,[{}]*77,77)
+        with self.assertRaises(t.b.CheckFailed):
+            t.delta(None,prior,prior,None,None,[{}]*96,77)
+        with self.assertRaises(t.b.CheckFailed):
+            t.delta(None,prior,{},None,None,[{}]*77,77)
+
     def test_no_automatic_resume_or_next_stage(self):
         source=(Path(__file__).resolve().parents[1]/'tools/aai_documented_training_batch.py').read_text()
         self.assertNotIn("'resume':True",source)

@@ -3799,3 +3799,15 @@ Validation: 12 targeted documented-stage CPU tests passed, including five new
 training-batch tests; after adding returned-status/continuation inventory/stage
 checks, five training-batch tests passed again. Bash syntax and diff whitespace
 checks passed. No model execution, Slurm submission, commits or pushes performed.
+
+### 2026-11-19 — policy training recovery at step 77
+
+User-supplied receipts from jobs 1124403, 1124405 and 1124415 establish the
+preserved step-77 checkpoint, its 76-step prefix, typed optimizer and RNG state,
+and a new durable snapshot 1795063166457853918-9a7dc24d54c7. The ninth completed
+fit accounts for cumulative update 864. Fit ten adds 77 committed updates for
+941 total. The original persistence OSError lacks an errno in the supplied log.
+The explicit step-77 batch entry compares scratch with the new snapshot, skips
+nine completed fits and resumes only uniform/227/Q. It checks remaining space
+before each fit and verifies suffix steps in the event ledger. Thirteen targeted
+CPU tests passed. GPU RNG restoration and the remaining 1,939 updates await Slurm.

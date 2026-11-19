@@ -24,4 +24,4 @@ test "$(findmnt -n -o TARGET --target /local)" = /local
 test -d "$PACT_LOCAL"
 exec 9>"$PACT_LOCAL/remaining-branches-batch.lock"
 flock -n 9
-python3 -u "$PACT_TRAIN_CHECKOUT/tools/aai_documented_training_batch.py"
+python3 -u "$PACT_TRAIN_CHECKOUT/tools/aai_documented_training_batch.py" "$@"
