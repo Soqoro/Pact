@@ -3811,3 +3811,14 @@ The explicit step-77 batch entry compares scratch with the new snapshot, skips
 nine completed fits and resumes only uniform/227/Q. It checks remaining space
 before each fit and verifies suffix steps in the event ledger. Thirteen targeted
 CPU tests passed. GPU RNG restoration and the remaining 1,939 updates await Slurm.
+
+### 2026-11-20 — restored fit 15 and prepared remaining policy training
+
+Job 1124774 reports successful restoration of snapshot
+1795085568012921921-215202ff7324, 15 completed fits and 1,440 policy updates.
+The Stage I parent and scratch model cache were missing. The fit-15 entry point
+restages the hash-pinned parent and Q/L/M training inputs, compares current
+scratch evidence to the exact snapshot, and starts source_family/227/Q. The
+remaining 15 fits require 1,440 updates and 11,520 supervised forwards.
+Local checks cover rejection of the earlier snapshot and existing batch guards.
+Parent restoration, cache repopulation, and remaining fits require node01.

@@ -55,6 +55,13 @@ class TrainingBatchGuards(unittest.TestCase):
         with self.assertRaises(t.b.CheckFailed):
             t.delta(None,prior,{},None,None,[{}]*77,77)
 
+    def test_fit15_rejects_step77_snapshot(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root/'snapshots/1795063166457853918-9a7dc24d54c7').mkdir(parents=True)
+            with self.assertRaisesRegex(t.b.CheckFailed, 'recovery_snapshot_changed'):
+                t.verify_recovered_root(root, root, fit15=True)
+
     def test_no_automatic_resume_or_next_stage(self):
         source=(Path(__file__).resolve().parents[1]/'tools/aai_documented_training_batch.py').read_text()
         self.assertNotIn("'resume':True",source)

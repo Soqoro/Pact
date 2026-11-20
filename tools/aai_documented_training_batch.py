@@ -90,9 +90,10 @@ def durable(persistent):
     b.require(receipt['safe'] is True and receipt['plan_hash']==b.PLAN,'durable_receipt')
 
 
-def verify_recovered_root(root, persistent):
+def verify_recovered_root(root, persistent, fit15=False):
     latest = max((persistent / 'snapshots').iterdir())
-    b.require(latest.name == '1795063166457853918-9a7dc24d54c7', 'recovery_snapshot_changed')
+    expected = '1795085568012921921-215202ff7324' if fit15 else '1795063166457853918-9a7dc24d54c7'
+    b.require(latest.name == expected, 'recovery_snapshot_changed')
     files = b.read(latest / 'index.json')['files']
     receipt = b.read(persistent / 'objects' / files['receipt.json'])
     with zipfile.ZipFile(persistent / 'objects' / files['state.zip']) as archive:
@@ -103,6 +104,8 @@ def verify_recovered_root(root, persistent):
         recorded = {n for n in checks if n.startswith(folder + '/')}
         live = {p.relative_to(root).as_posix() for p in (root / folder).iterdir() if p.is_file()}
         b.require(live == recorded, 'ledger_inventory_changed')
+    if fit15:
+        return
     path = root / 'continuations/uniform/227/Q'
     latest_cp = max((path / 'checkpoints').glob('step-*'))
     b.require(latest_cp.name == 'step-000077' and b.sha(latest_cp / 'tensors.safetensors') ==
@@ -112,7 +115,10 @@ def verify_recovered_root(root, persistent):
               '9a55f09e7728ce781bfa82fa6cd7db97545faa2b21a9822f9f812f32f5eedf19', 'step77_status')
 
 
-def main(recovered=False):
+def main(recovered=False, fit15=False):
+    recovered = recovered or fit15
+    prior_fits = 15 if fit15 else 9
+    inherited = 1440 if fit15 else 941
     checkout=Path(os.environ['PACT_CHECKOUT']);local=Path(os.environ['PACT_LOCAL'])
     b.require(subprocess.check_output(['git','-C',str(checkout),'rev-parse','HEAD'],text=True).strip()==b.COMMIT,'runtime_commit')
     b.require(not subprocess.check_output(['git','-C',str(checkout),'status','--porcelain'],text=True).strip(),'runtime_dirty')
@@ -122,6 +128,9 @@ def main(recovered=False):
         persistent = persistent.parent.parent / 'stage2-documented-step77-recovery-v1' / b.RUN
         audit = persistent / 'training-from-step77-v1'
         work = local / 'training-from-step77-v1'
+    if fit15:
+        audit = persistent / 'training-from-fit15-v1'
+        work = local / 'training-from-fit15-v1'
     b.require(not audit.exists() and not work.exists(),'already_started_no_automatic_retry')
     plan=b.read(root/'plan.json');allocation=b.read(root/'policies.json')
     b.require(b.digest(plan)==b.PLAN and plan['fixture'] is False and plan['scratch_root']==str(root),'plan')
@@ -132,12 +141,12 @@ def main(recovered=False):
     original = b.read(root/'summary.json')
     durable(persistent)
     if recovered:
-        verify_recovered_root(root, persistent)
-        accounting(original,original,864)  # Last report was exported at fit nine.
-        b.require(len(before)==9954+941,'recovered_event_count')
-        expected_paths = {root/'continuations'/p/str(seed)/f for p,seed,f,_ in batch[:10]}
+        verify_recovered_root(root, persistent, fit15)
+        accounting(original,original,1440 if fit15 else 864)  # Last report was exported at fit nine.
+        b.require(len(before)==9954+inherited,'recovered_event_count')
+        expected_paths = {root/'continuations'/p/str(seed)/f for p,seed,f,_ in batch[:15 if fit15 else 10]}
         b.require({p.parent for p in (root/'continuations').rglob('contract.json')}==expected_paths,'initial_fit_inventory')
-        for policy,seed,family,schedule in batch[:9]:
+        for policy,seed,family,schedule in batch[:prior_fits]:
             checkpoint(root/'continuations'/policy/str(seed)/family,policy,seed,family,schedule)
         b.require(not (root/'policy-lock.json').exists(),'later_work')
     else:
@@ -155,15 +164,15 @@ def main(recovered=False):
     b.save(audit/'authorization.json',{'plan_hash':b.PLAN,'policies_sha256':POLICY_SHA,'user_decision':decision,'fits':30,'updates':2880,'training_forwards':23040,'generation':0,'scores':0})
     receipts=[];updates=0;completed_paths=set()
     if recovered:
-        updates=941
-        for policy,seed,family,_ in batch[:9]:
+        updates=inherited
+        for policy,seed,family,_ in batch[:prior_fits]:
             prior=root/'continuations'/policy/str(seed)/family
             completed_paths.add(prior)
             protected.update({str(p.relative_to(root)):b.sha(p) for p in prior.rglob('*') if p.is_file()})
     for index,(policy,seed,family,schedule) in enumerate(batch,1):
-        if recovered and index<=9:
+        if recovered and index<=prior_fits:
             continue
-        offset=77 if recovered and index==10 else 0
+        offset=77 if recovered and not fit15 and index==10 else 0
         path=root/'continuations'/policy/str(seed)/family
         b.require(bool(offset) == path.exists(),'fit_start_boundary')
         if recovered:
@@ -221,14 +230,17 @@ def main(recovered=False):
            'new_training_forwards':updates*8,'new_generations':0,'new_scores':0,'final_bundles':receipts[-1]['bundles'],
            'policy_lock_authorized':False,'evaluation_authorized':False,'historical_spending':None}
     if recovered:
-        final.update(inherited_updates=941,cumulative_updates=updates,new_updates=updates-941,new_training_forwards=(updates-941)*8)
+        final.update(inherited_updates=inherited,cumulative_updates=updates,new_updates=updates-inherited,new_training_forwards=(updates-inherited)*8)
     b.save(audit/'summary.sanitized.json',final);print(json.dumps(final),flush=True)
 
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser()
-    parser.add_argument('--from-verified-step77',action='store_true')
-    try:main(parser.parse_args().from_verified_step77)
+    mode=parser.add_mutually_exclusive_group()
+    mode.add_argument('--from-fit15',action='store_true')
+    mode.add_argument('--from-verified-step77',action='store_true')
+    args=parser.parse_args()
+    try:main(args.from_verified_step77,args.from_fit15)
     except Exception as error:
         print(json.dumps({'status':'TRAINING_BATCH_STOPPED_NO_AUTOMATIC_RETRY','exception_type':type(error).__name__,
             'check':str(error) if isinstance(error,b.CheckFailed) else None,'preserve_scratch_and_durable_evidence':True}),flush=True)
