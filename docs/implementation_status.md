@@ -3822,3 +3822,11 @@ scratch evidence to the exact snapshot, and starts source_family/227/Q. The
 remaining 15 fits require 1,440 updates and 11,520 supervised forwards.
 Local checks cover rejection of the earlier snapshot and existing batch guards.
 Parent restoration, cache repopulation, and remaining fits require node01.
+
+### 21 November completion update
+
+Slurm job 1124778 completed in 17h57m38s with exit 0:0. Its receipt reports all 30 actor fits verified and durable exports complete. The final batch added 1,440 optimizer updates and 11,520 supervised forwards to the 1,440 updates verified at fit 15. Cumulative policy training totals are 2,880 updates and 23,040 supervised forwards. The continuation added zero generations and zero diagnostic scores. All five policies now have two trained teams. The next decision is checkpoint lock; prospective accuracy remains unmeasured.
+
+The plan and policies hashes match the recorded freeze. The final SANITIZED archive is 8,730 bytes, SHA256 `a5049c02ef339b4ff3538fc43abe7d631b89ca0b9ed6e5230bf6db02ef94bad9`. The completion evidence reviewed here is the operator-supplied job output.
+
+The user approved the CPU checkpoint lock after reviewing fit 30. The prepared Slurm wrapper binds job 1124778's RECOVERY archive, checks all 30 final training schedules and compares the native lock's decoded adapter hashes with the checkpoint receipts. It verifies the three S0 adapters and preserves the 12,834-event ledger. It invokes the pinned lock and export routines directly because the generic post-stage report would open prospective outcomes as soon as a lock exists. The package's scope, approval, persistence and wallet checks still run. Sixteen local CPU orchestration tests passed. Cluster lock verification and prospective evaluation are pending.
