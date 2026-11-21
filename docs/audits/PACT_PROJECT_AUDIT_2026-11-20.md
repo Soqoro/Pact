@@ -1,6 +1,10 @@
 # PACT project audit — 20 November 2026
 
-### 21 November completion update
+### 21 November checkpoint lock
+
+Job 1125084 completed in 10m05s with exit 0:0. The operator-supplied receipt records 11 locked teams, 30 verified trained adapter hashes, three verified S0 adapters and 12,834 verified prior events. The lock added zero generations, diagnostic scores, optimizer updates and training forwards. The job reported all 56 persistent files verified. The lock SHA256 is `50f2aaa21f9716eb2b85999a9b5045ab9c1a6be1ec703c4944c3da27d74fa387` and the RECOVERY bundle SHA256 is `9fc6268f6d44f28f92ec2c3fbf306606d8b96f650258040847a6615ef6d342b5`. Prospective accuracy remains unmeasured. The next decision covers the two-task evaluation smoke only.
+
+### 21 November training completion update
 
 Slurm job 1124778 completed in 17h57m38s with exit 0:0. Its receipt reports all 30 actor fits verified and durable exports complete. The final batch added 1,440 optimizer updates and 11,520 supervised forwards to the 1,440 updates verified at fit 15. Cumulative policy training totals are 2,880 updates and 23,040 supervised forwards. The continuation added zero generations and zero diagnostic scores. All five policies now have two trained teams. The next decision is checkpoint lock; prospective accuracy remains unmeasured.
 
